@@ -1,0 +1,40 @@
+html, body {
+  font-family: 'Roboto mono';
+  font-size: 16px;
+}
+
+h1 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 2rem;
+  margin: 3rem;
+}
+
+#container {
+  background-color: #ffffff;
+  width: 540px;
+  border-radius: 1rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+#time {
+  color: #1e90ff;
+  font-size: 3rem;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0,139,253,0.25);
+  margin: .5rem;
+}
+
+#buttons {
+  font-size: 3rem;
+  text-align: center;
+}
+
+#start, #end, #stop, #reset, #retire {
+  font-size: 1.5rem;
+  border-radius: .3rem;
+  box-shadow: 0 0 20px rgba(77, 78, 79, 0.25);
+}
