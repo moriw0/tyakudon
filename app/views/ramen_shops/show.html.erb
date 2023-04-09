@@ -1,12 +1,35 @@
-<p style="color: green"><%= notice %></p>
-<%= render @ramen_shop %>
+<% content_for :js do %>
+  <%= javascript_import_module_tag "timer" %>
+<% end %>
 
+<p style="color: green"><%= notice %></p>
 <!-- Googleマップ表示エリア(地図を表示) -->
 <div id="map" style="width:620px; height:400px"></div>
+
+<%= render @ramen_shop %>
+
+<div id="container">
+  <div id="time">00:00:00.000</div>
+  <div id="buttons">
+    <input id="start" type="button" value="接続！">
+    <input id="stop" type="button" value="休憩" disabled="true">
+    <input id="end" type="button" value="着丼！" disabled="true">
+    <input id="reset" type="button" value="はじめから" disabled="true">
+    <input id="retire" type="button" value="離脱" disabled="true">
+  </div>
+</div>  
+
+<div>
+  <ul>
+    <% @ramen_shop.records.each do |record| %>
+    <li>created_at: <%= record.created_at.getutc.strftime("%F") %> 着丼: <%= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>    
+    <% end %>
+  </ul>
+</div>
+
 <div>
   <%= link_to "Back to ramen shops", ramen_shops_path %>
 </div>
-
 <!-- Googleマップ表示用の Javascript -->
 <script>
   function initMap(){
