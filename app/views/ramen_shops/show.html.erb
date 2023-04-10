@@ -33,29 +33,43 @@
 <!-- Googleマップ表示用の Javascript -->
 <script>
   function initMap(){
-    // 地図の位置情報(緯度・経度)を取得
-    let mapPosition = {lat: <%= @ramen_shop.latitude || 0 %> , lng: <%= @ramen_shop.longitude || 0 %> };
-    let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 17,
-      center: mapPosition
-    });
-    let transitLayer = new google.maps.TransitLayer();
-    transitLayer.setMap(map);
-    
-    let contentString = '【住所】<%= @ramen_shop.address %>';
-    let infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-    
-    let marker = new google.maps.Marker({
-      position: mapPosition,
-      map: map,
-      title: contentString
-    });
-    
-    marker.addListener('click', function(){
-      infowindow.open(map, marker);
-    });
+    const shopId = Number(location.pathname.match(/\d+$/)[0])
+    fetch(`/ramen_shops/${shopId}.json`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(shop) {
+        const latitude = shop.latitude
+        const longitude = shop.longitude
+        const shopName = shop.name
+
+        let mapPosition = {lat: latitude || 0 , lng: longitude || 0 };
+        let map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: mapPosition
+        });
+
+        let transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+
+        let infowindow = new google.maps.InfoWindow({
+          content: shopName
+        });
+
+        let marker = new google.maps.Marker({
+          position: mapPosition,
+          map: map,
+          title: shopName
+        });
+
+        marker.addListener('click', function(){
+          infowindow.open(map, marker);
+        });
+      })
+      .catch(function() {
+        alert("Failed to load shops.");
+      });
+      // 地図の位置情報(緯度・経度)を取得
   }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
