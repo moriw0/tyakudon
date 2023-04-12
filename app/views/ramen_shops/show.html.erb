@@ -1,38 +1,75 @@
-<p style="color: green"><%= notice %></p>
-<%= render @ramen_shop %>
+<% content_for :js do %>
+  <%= javascript_import_module_tag "timer" %>
+<% end %>
 
+<p style="color: green"><%= notice %></p>
 <!-- Googleマップ表示エリア(地図を表示) -->
 <div id="map" style="width:620px; height:400px"></div>
+
+<%= render @ramen_shop %>
+
+<div id="container">
+  <div id="time">00:00:00.000</div>
+  <div id="buttons">
+    <input id="start" type="button" value="接続！">
+    <input id="stop" type="button" value="休憩" disabled="true">
+    <input id="end" type="button" value="着丼！" disabled="true">
+    <input id="reset" type="button" value="はじめから" disabled="true">
+    <input id="retire" type="button" value="離脱" disabled="true">
+  </div>
+</div>  
+
+<div>
+  <ul>
+    <% @ramen_shop.records.each do |record| %>
+    <li>created_at: <%= record.created_at.getutc.strftime("%F") %> 着丼: <%= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>    
+    <% end %>
+  </ul>
+</div>
+
 <div>
   <%= link_to "Back to ramen shops", ramen_shops_path %>
 </div>
-
 <!-- Googleマップ表示用の Javascript -->
 <script>
   function initMap(){
-    // 地図の位置情報(緯度・経度)を取得
-    let mapPosition = {lat: <%= @ramen_shop.latitude || 0 %> , lng: <%= @ramen_shop.longitude || 0 %> };
-    let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 17,
-      center: mapPosition
-    });
-    let transitLayer = new google.maps.TransitLayer();
-    transitLayer.setMap(map);
-    
-    let contentString = '【住所】<%= @ramen_shop.address %>';
-    let infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-    
-    let marker = new google.maps.Marker({
-      position: mapPosition,
-      map: map,
-      title: contentString
-    });
-    
-    marker.addListener('click', function(){
-      infowindow.open(map, marker);
-    });
+    const shopId = Number(location.pathname.match(/\d+$/)[0])
+    fetch(`/ramen_shops/${shopId}.json`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(shop) {
+        const latitude = shop.latitude
+        const longitude = shop.longitude
+        const shopName = shop.name
+
+        let mapPosition = {lat: latitude || 0 , lng: longitude || 0 };
+        let map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: mapPosition
+        });
+
+        let transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+
+        let infowindow = new google.maps.InfoWindow({
+          content: shopName
+        });
+
+        let marker = new google.maps.Marker({
+          position: mapPosition,
+          map: map,
+          title: shopName
+        });
+
+        marker.addListener('click', function(){
+          infowindow.open(map, marker);
+        });
+      })
+      .catch(function() {
+        alert("Failed to load shops.");
+      });
+      // 地図の位置情報(緯度・経度)を取得
   }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>

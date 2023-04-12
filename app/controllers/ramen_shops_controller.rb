@@ -10,5 +10,10 @@ class RamenShopsController < ApplicationController
 
   def show
     @ramen_shop = RamenShop.find(params[:id])
+
+    respond_to do |format|
+      format.html 
+      format.json { render json: @ramen_shop } 
+    end
   end
 end
