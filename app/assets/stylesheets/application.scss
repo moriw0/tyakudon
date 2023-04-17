@@ -1,3 +1,4 @@
+@import "bootstrap";
 #container {
   background-color: #ffffff;
   width: 540px;
@@ -12,16 +13,14 @@
     border-radius: 1rem;
     margin: .5rem;
   }
-  
+
   #buttons {
     font-size: 3rem;
     text-align: center;
-  
+
     #start, #end, #stop, #reset, #retire {
       font-size: 1.5rem;
       border-radius: .3rem;
     }
   }
 }
-
-
