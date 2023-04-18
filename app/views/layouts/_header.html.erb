@@ -1,12 +1,15 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "チャクドン！", '#', id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home",   '#' %></li>
-        <li><%= link_to "Help",   '#' %></li>
-        <li><%= link_to "Log in", '#' %></li>
-      </ul>
-    </nav>
+<nav class="navbar navbar-expand-sm fixed-top navbar-light" style="background-color: #FFDA45;">
+  <div class="container-fluid">
+    <%= link_to "チャクドン！", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <%= link_to "トップ", root_path, class: "nav-link" %>
+        <%# <a class="nav-link active" aria-current="page" href="#">チャクドンとは</a> %>
+        <%= link_to "チャクドンとは", statics_about_path, class: "nav-link" %>
+      </div>
+    </div>
   </div>
-</header>
+</nav>
