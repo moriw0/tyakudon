@@ -7,9 +7,10 @@
     </li>
   <% end %>
 </ul>
-
 <!-- Googleマップ表示エリア(地図を表示) -->
-<div id="map" style="width:620px; height:400px"></div>
+<div id="map-container">
+  <div id="map"></div>
+</div>
 <!-- Googleマップ表示用の Javascript -->
 <script>
   function initMap() {
@@ -50,7 +51,7 @@
                 // マーカーがクリックされたときの処理
                 google.maps.event.addListener(marker, 'click', (function(data){
                   return function(){
-                    window.location.href = "/ramen_shops/" + data.id; 
+                    window.location.href = "/ramen_shops/" + data.id;
                   };
                 })(data[i]));
               }
@@ -78,5 +79,5 @@
     var distance = d * 1000; // kmからmに変換
     return distance;
   }
-</script> 
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>

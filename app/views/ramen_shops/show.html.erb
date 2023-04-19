@@ -1,13 +1,12 @@
 <% content_for :js do %>
   <%= javascript_import_module_tag "timer" %>
 <% end %>
-
 <p style="color: green"><%= notice %></p>
 <!-- Googleマップ表示エリア(地図を表示) -->
-<div id="map" style="width:620px; height:400px"></div>
-
+<div id="map-container">
+  <div id="map"></div>
+</div>
 <%= render @ramen_shop %>
-
 <div id="container">
   <div id="time">00:00:00.000</div>
   <div id="buttons">
@@ -17,16 +16,14 @@
     <input id="reset" type="button" value="はじめから" disabled="true">
     <input id="retire" type="button" value="離脱" disabled="true">
   </div>
-</div>  
-
+</div>
 <div>
   <ul>
     <% @ramen_shop.records.each do |record| %>
-    <li>created_at: <%= record.created_at.getutc.strftime("%F") %> 着丼: <%= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>    
+      <li>created_at: <%= record.created_at.getutc.strftime("%F") %> 着丼: <%= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>
     <% end %>
   </ul>
 </div>
-
 <div>
   <%= link_to "Back to ramen shops", ramen_shops_path %>
 </div>
@@ -71,5 +68,5 @@
       });
       // 地図の位置情報(緯度・経度)を取得
   }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
