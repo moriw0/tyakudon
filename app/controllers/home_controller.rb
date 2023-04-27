@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
-  def search
+  def index
+    @ramen_shops = RamenShop.all
+  end
 
+  def search
   end
 end
