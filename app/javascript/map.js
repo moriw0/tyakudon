@@ -74,59 +74,39 @@ function initMap() {
           zoom: 18,
         });
         // DBから店舗情報を取得
-        fetch("/ramen_shops.json")
+        fetch(
+          `/near_shops.json?lat=${currentLocation.lat}&lng=${currentLocation.lng}`
+        )
           .then(function (response) {
             return response.json();
           })
           .then(function (data) {
-            // 距離計算
             for (var i = 0; i < data.length; i++) {
               var shopLocation = {
                 lat: data[i].latitude,
                 lng: data[i].longitude,
               };
-              var distance = getDistance(currentLocation, shopLocation);
-              // 距離が100m以内の場合、マーカーを地図上に表示
-              if (distance <= 500) {
-                const url = "/ramen_shops/" + data[i].id;
-                popup = new Popup(
-                  new google.maps.LatLng(shopLocation.lat, shopLocation.lng),
-                  data[i].name,
-                  url
-                );
-                popup.setMap(map);
-              }
+              const url = "/ramen_shops/" + data[i].id;
+              popup = new Popup(
+                new google.maps.LatLng(shopLocation.lat, shopLocation.lng),
+                data[i].name,
+                url
+              );
+              popup.setMap(map);
             }
           })
           .catch(function (e) {
             console.log(e);
-            alert("Failed to load shops.");
+            alert("ショップ情報が取得できませんでした");
           });
       },
       function () {
-        alert("Failed to get current location.");
+        alert("現在地が取得できませんでした");
       }
     );
   } else {
-    alert("Geolocation is not supported by this browser.");
+    alert("お使いのブラウザではサポートされていません");
   }
 }
 
 window.initMap = initMap;
-
-// 2点間の距離を計算する関数
-function getDistance(start, end) {
-  var R = 6371; // 地球の半径（km）
-  var dLat = ((end.lat - start.lat) * Math.PI) / 180;
-  var dLon = ((end.lng - start.lng) * Math.PI) / 180;
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((start.lat * Math.PI) / 180) *
-      Math.cos((end.lat * Math.PI) / 180) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c; // 2点間の距離（km）
-  var distance = d * 1000; // kmからmに変換
-  return distance;
-}
