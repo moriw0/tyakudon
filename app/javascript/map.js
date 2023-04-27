@@ -1,11 +1,5 @@
 let map, popup, Popup;
 function initMap() {
-  const shop = { lat: 35.64826049515011, lng: 139.74171842709964 };
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: shop,
-    zoom: 18,
-  });
-
   class Popup extends google.maps.OverlayView {
     position;
     containerDiv;
@@ -56,8 +50,84 @@ function initMap() {
     }
   }
 
-  popup = new Popup(new google.maps.LatLng(shop.lat, shop.lng), "Hello world!");
-  popup.setMap(map);
+  // 現在地の緯度経度情報を取得
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        var currentLocation = {
+          // lat: 35.64826049515011, lng: 139.74171842709964 //三田本店
+          // lat: position.coords.latitude,
+          // lng: position.coords.longitude
+          lat: 35.7000396,
+          lng: 139.7752222,
+        };
+        // Google Maps APIを使用して地図を表示
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: currentLocation,
+          zoom: 18,
+        });
+        // DBから店舗情報を取得
+        fetch("/ramen_shops.json")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            // 距離計算
+            for (var i = 0; i < data.length; i++) {
+              var shopLocation = {
+                lat: data[i].latitude,
+                lng: data[i].longitude,
+              };
+              var distance = getDistance(currentLocation, shopLocation);
+              // 距離が100m以内の場合、マーカーを地図上に表示
+              if (distance <= 500) {
+                popup = new Popup(
+                  new google.maps.LatLng(shopLocation.lat, shopLocation.lng),
+                  data[i].name
+                );
+                popup.setMap(map);
+                // マーカーがクリックされたときの処理
+                google.maps.event.addListener(
+                  popup,
+                  "click",
+                  (function (data) {
+                    return function () {
+                      window.location.href = "/ramen_shops/" + data.id;
+                    };
+                  })(data[i])
+                );
+              }
+            }
+          })
+          .catch(function (e) {
+            console.log(e);
+            alert("Failed to load shops.");
+          });
+      },
+      function () {
+        alert("Failed to get current location.");
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
 }
 
 window.initMap = initMap;
+
+// 2点間の距離を計算する関数
+function getDistance(start, end) {
+  var R = 6371; // 地球の半径（km）
+  var dLat = ((end.lat - start.lat) * Math.PI) / 180;
+  var dLon = ((end.lng - start.lng) * Math.PI) / 180;
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((start.lat * Math.PI) / 180) *
+      Math.cos((end.lat * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c; // 2点間の距離（km）
+  var distance = d * 1000; // kmからmに変換
+  return distance;
+}
