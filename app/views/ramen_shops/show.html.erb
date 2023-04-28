@@ -2,10 +2,6 @@
   <%= javascript_import_module_tag "timer" %>
 <% end %>
 <p style="color: green"><%= notice %></p>
-<!-- Googleマップ表示エリア(地図を表示) -->
-<div id="map-container">
-  <div id="map"></div>
-</div>
 <%= render @ramen_shop %>
 <div id="container">
   <div id="time">00:00:00.000</div>
@@ -27,46 +23,3 @@
 <div>
   <%= link_to "Back to ramen shops", ramen_shops_path %>
 </div>
-<!-- Googleマップ表示用の Javascript -->
-<script>
-  function initMap(){
-    const shopId = Number(location.pathname.match(/\d+$/)[0])
-    fetch(`/ramen_shops/${shopId}.json`)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(shop) {
-        const latitude = shop.latitude
-        const longitude = shop.longitude
-        const shopName = shop.name
-
-        let mapPosition = {lat: latitude || 0 , lng: longitude || 0 };
-        let map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
-          center: mapPosition
-        });
-
-        let transitLayer = new google.maps.TransitLayer();
-        transitLayer.setMap(map);
-
-        let infowindow = new google.maps.InfoWindow({
-          content: shopName
-        });
-
-        let marker = new google.maps.Marker({
-          position: mapPosition,
-          map: map,
-          title: shopName
-        });
-
-        marker.addListener('click', function(){
-          infowindow.open(map, marker);
-        });
-      })
-      .catch(function() {
-        alert("Failed to load shops.");
-      });
-      // 地図の位置情報(緯度・経度)を取得
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
