@@ -57,7 +57,9 @@ window.initMap = () => {
             shopInfo.innerHTML = `
                 <h3>${shop.name}</h3>
                 <p>${shop.address}</p>
-                <a class="btn btn-warning" href="${url}">セツゾク！</a>
+                <div class="d-grid gap-2">
+                  <a class="btn btn-warning" href="${url}">セツゾク！</a>
+                </div>
                 <h4>チャクドンレコード</h4>
                 <ul>${recordsList}</ul>
               `;
@@ -125,6 +127,11 @@ window.initMap = () => {
           center: currentLocation,
           zoom: 18,
         });
+
+        google.maps.event.addListenerOnce(map, "idle", function () {
+          document.getElementById("loading-spinner").style.display = "none";
+        });
+
         // DBから店舗情報を取得
         fetch(
           `/near_shops.json?lat=${currentLocation.lat}&lng=${currentLocation.lng}`
