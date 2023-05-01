@@ -122,3 +122,49 @@ textarea {
   /* The max width of the info window. */
   width: 200px;
 }
+
+#bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  background-color: white;
+  overflow-y: scroll;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 1000;
+  transition: all 0.3s, transform 0.3s;
+  word-break: break-word;
+}
+
+#close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hidden {
+  transform: translateY(100%);
+}
+
+.shown {
+  transform: translateY(0);
+}
+.drag-handle {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 30px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 5px;
+  cursor: grab;
+  transform: translateX(-50%);
+  z-index: 1001;
+}
