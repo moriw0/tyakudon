@@ -1,4 +1,8 @@
 class RecordsController < ApplicationController
+  def new
+    @record = Record.new
+  end
+
   def create
     @record = Record.new(record_param)
 
