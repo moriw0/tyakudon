@@ -9,11 +9,11 @@ class RamenShopsController < ApplicationController
   end
 
   def show
-    @ramen_shop = RamenShop.find(params[:id])
+    @ramen_shop = RamenShop.includes(:records).find(params[:id])
 
     respond_to do |format|
       format.html
-      format.json { render json: @ramen_shop }
+      format.json { render json: @ramen_shop.as_json(include: :records) }
     end
   end
 

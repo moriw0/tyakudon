@@ -1,5 +1,14 @@
 <% content_for :js do %>
   <%= javascript_import_module_tag "map" %>
 <% end %>
-<div id="map"></div>
+<div id="map" style="height: 100vh;"></div>
+<div id="bottom-sheet" class="hidden">
+  <div class="drag-handle" id="drag-handle"></div>
+  <button id="close-button">×</button>
+  <div id="shop-info"></div>
+</div>
+<!-- Loading Spinner -->
+<div id="loading-spinner" class="loading-spinner">
+  <div class="spinner"></div>
+</div>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" defer></script>
