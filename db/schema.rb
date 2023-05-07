@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_09_075729) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_02_225347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_075729) do
     t.datetime "elapsed_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "queue_number"
+    t.float "wait_time"
+    t.string "status"
     t.index ["ramen_shop_id"], name: "index_records_on_ramen_shop_id"
   end
 

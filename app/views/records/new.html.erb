@@ -1,0 +1,28 @@
+<% content_for :js do %>
+  <%= javascript_import_module_tag "timer" %>
+<% end %>
+<p style="color: green"><%= notice %></p>
+<p><%= @ramen_shop.name %></p>
+<p><%= @ramen_shop.address %></p>
+<%= form_with model: @ramen_shop_record, url: ramen_shop_records_path, class: 'form-horizontal' do |f| %>
+  <%= f.hidden_field :ramen_shop_id %>
+  <%= f.hidden_field :started_at, id: 'started' %>
+  <div id="container">
+    <div id="time">00:00:00.000</div>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'ちゃくどん', id:'ended', class: "btn btn-warning" %>
+  </div>
+<% end %>
+<div>
+  <ul>
+    <%# @ramen_shop.records.each do |record| %>
+      <%# if record.created_at.present? %>
+      <li>created_at: <%#= record.created_at.getutc.strftime("%F") %> 着丼: <%#= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>
+      <%# end %>
+      <%# end %>
+    </ul>
+  </div>
+  <div>
+    <%= link_to "Back to ramen shops", ramen_shops_path %>
+  </div>
