@@ -58,7 +58,7 @@ window.initMap = () => {
                 <h3>${shop.name}</h3>
                 <p>${shop.address}</p>
                 <div class="d-grid gap-2">
-                  <a class="btn btn-warning" href="${url}/records/new">セツゾク！</a>
+                  <a class="btn btn-warning" href="${url}/records/new" data-turbo="false">セツゾク！</a>
                 </div>
                 <h4>チャクドンレコード</h4>
                 <ul>${recordsList}</ul>

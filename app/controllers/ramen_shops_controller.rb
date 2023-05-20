@@ -17,7 +17,7 @@ class RamenShopsController < ApplicationController
     end
   end
 
-  TARGET_RADIUS = 0.5
+  TARGET_RADIUS = 0.1
   def near_shops
     current_lat = params[:lat].to_f
     current_lng = params[:lng].to_f
