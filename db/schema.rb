@@ -27,7 +27,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_075729) do
     t.bigint "ramen_shop_id", null: false
     t.datetime "started_at"
     t.datetime "ended_at"
-    t.datetime "elapsed_time"
+    t.float "wait_time"
+    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ramen_shop_id"], name: "index_records_on_ramen_shop_id"

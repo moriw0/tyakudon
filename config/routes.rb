@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
   resources :ramen_shops, only: [:index, :show] do
-    resources :records, only: :create
+    resources :records, only: [:new, :create]
   end
 end
