@@ -8,31 +8,8 @@
   <div id="time">00:00:00.000</div>
 </div>
 <%= form_with model: @ramen_shop_record, url: ramen_shop_record_path do |f| %>
-  <%= f.hidden_field :ramen_shop_id %>
-  <%= f.hidden_field :started_at, id: 'started' %>
   <div class="form-group">
-    <%= f.fields_for :line_statuses do |g| %>
-      <%= g.label :line_number, "人数" %>
-      <%= g.text_field :line_number %>
-      <%= g.label :inside_the_store %>
-      <%= g.radio_button :line_type, :inside_the_store %>
-      <%= g.label :outside_the_storein %>
-      <%= g.radio_button :line_type, :outside_the_storein %>
-      <%= g.label :other %>
-      <%= g.radio_button :line_type, :other %>
-    <% end %>
-    <%= f.submit 'ちゃくどん', id:'ended', class: "btn btn-warning" %>
+    <%= f.hidden_field :started_at, id: 'started' %>
+    <%= f.submit 'ちゃくどん', class: "btn btn-warning" %>
   </div>
 <% end %>
-<div>
-  <ul>
-    <%# @ramen_shop.records.each do |record| %>
-      <%# if record.created_at.present? %>
-      <li>created_at: <%#= record.created_at.getutc.strftime("%F") %> 着丼: <%#= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>
-      <%# end %>
-      <%# end %>
-    </ul>
-  </div>
-  <div>
-    <%= link_to "Back to ramen shops", ramen_shops_path %>
-  </div>

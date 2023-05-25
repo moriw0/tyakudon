@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :ramen_shops, only: [:index, :show] do
     resources :records, only: [:new, :create, :edit, :update] do
-      get 'measure', to: 'records#measure'
+      get 'measure', on: :member
 
       resources :line_statuses, only: [:index, :new, :create] do
       end
