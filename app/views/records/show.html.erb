@@ -1,0 +1,5 @@
+<p style="color: green"><%= notice %></p>
+<p><%= @ramen_shop.name %></p>
+<p><%= @ramen_shop.address %></p>
+<p>記録： <%= format_wait_time(@ramen_shop_record.wait_time) %></p>
+<p><%= format_datetime(@ramen_shop_record.created_at) %></p>

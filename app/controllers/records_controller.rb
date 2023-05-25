@@ -1,6 +1,9 @@
 class RecordsController < ApplicationController
   before_action :set_ramen_shop
-  before_action :set_ramen_shop_record, only: %i[measure edit update]
+  before_action :set_ramen_shop_record, only: %i[show measure edit update]
+
+  def show
+  end
 
   def new
     @ramen_shop_record = @ramen_shop.records.build
@@ -33,7 +36,7 @@ class RecordsController < ApplicationController
     @ramen_shop_record.calculate_wait_time!
 
     if @ramen_shop_record.save
-      redirect_to ramen_shop_path(@ramen_shop_record.ramen_shop), notice: 'ちゃくどんレコードを登録しました'
+      redirect_to ramen_shop_record_path(@ramen_shop, @ramen_shop_record), notice: 'ちゃくどんレコードを登録しました'
     else
       render :new
     end
