@@ -2,7 +2,8 @@ class LineStatusesController < ApplicationController
   before_action :set_line_status, only: %i[show edit update]
 
   def index
-    @line_statuses = Record.find(params[:record_id]).line_statuses
+    @record = Record.find(params[:record_id])
+    @line_statuses = Kaminari.paginate_array(@record.line_statuses).page(params[:page])
   end
 
   def show
