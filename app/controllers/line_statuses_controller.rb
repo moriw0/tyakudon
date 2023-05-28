@@ -1,4 +1,8 @@
 class LineStatusesController < ApplicationController
+  def index
+    @line_statuses = Record.find(params[:record_id]).line_statuses
+  end
+
   def show
     @line_status = LineStatus.find(params[:id])
   end
