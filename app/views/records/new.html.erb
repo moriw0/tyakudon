@@ -1,28 +1,31 @@
-<% content_for :js do %>
-  <%= javascript_import_module_tag "timer" %>
-<% end %>
-<p style="color: green"><%= notice %></p>
-<p><%= @ramen_shop.name %></p>
-<p><%= @ramen_shop.address %></p>
-<%= form_with model: @ramen_shop_record, url: ramen_shop_records_path, class: 'form-horizontal' do |f| %>
-  <%= f.hidden_field :ramen_shop_id %>
-  <%= f.hidden_field :started_at, id: 'started' %>
-  <div id="container">
-    <div id="time">00:00:00.000</div>
-  </div>
-  <div class="form-group">
-    <%= f.submit 'ちゃくどん', id:'ended', class: "btn btn-warning" %>
-  </div>
-<% end %>
-<div>
-  <ul>
-    <%# @ramen_shop.records.each do |record| %>
-      <%# if record.created_at.present? %>
-      <li>created_at: <%#= record.created_at.getutc.strftime("%F") %> 着丼: <%#= record.elapsed_time.getutc.strftime("%H:%M:%S") %></li>
-      <%# end %>
-      <%# end %>
-    </ul>
-  </div>
-  <div>
-    <%= link_to "Back to ramen shops", ramen_shops_path %>
-  </div>
+<turbo-frame id="shop-info">
+  <h3><%= @ramen_shop.name %></h3>
+  <p><%= @ramen_shop.address %></p>
+  <%= form_with model: @ramen_shop_record, url: ramen_shop_records_path, data: { turbo: false } do |f| %>
+    <%= f.hidden_field :ramen_shop_id %>
+    <%= f.hidden_field :started_at, id: 'started' %>
+    <div class="form-group">
+      <%= f.fields_for :line_statuses do |g| %>
+        <div class="form-group">
+          <%= g.label :line_number, "人数", class:"form-label" %>
+          <%= g.text_field :line_number, class:"form-control" %>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <%= g.label :inside_the_store, class: 'form-check-label' %>
+            <%= g.radio_button :line_type, :inside_the_store, class: 'form-check-input' %>
+          </div>
+          <div class="form-check">
+            <%= g.label :outside_the_store, class: 'form-check-label' %>
+            <%= g.radio_button :line_type, :outside_the_store, class: 'form-check-input' %>
+          </div>
+          <div class="form-check">
+            <%= g.label :other, class: 'form-check-label' %>
+            <%= g.radio_button :line_type, :other, class: 'form-check-input' %>
+          </div>
+        </div>
+      <% end %>
+      <%= f.submit 'セツゾク', class: "btn btn-warning" %>
+    </div>
+  <% end %>
+</turbo-frame>

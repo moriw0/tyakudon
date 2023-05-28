@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_09_075729) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_21_211816) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "line_statuses", force: :cascade do |t|
+    t.bigint "record_id", null: false
+    t.integer "line_number"
+    t.integer "line_type"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_id"], name: "index_line_statuses_on_record_id"
+  end
 
   create_table "ramen_shops", force: :cascade do |t|
     t.string "name"
@@ -34,5 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_075729) do
     t.index ["ramen_shop_id"], name: "index_records_on_ramen_shop_id"
   end
 
+  add_foreign_key "line_statuses", "records"
   add_foreign_key "records", "ramen_shops"
 end

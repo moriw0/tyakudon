@@ -4,7 +4,7 @@ document.addEventListener("turbo:load", () => {
   const startedElement = document.getElementById("started");
   const endedElement = document.getElementById("ended");
 
-  window.history.replaceState(null, null, "/search");
+  // window.history.replaceState(null, null, "/search");
 
   // Format time in HH:MM:SS.mmm
   const formatTime = (time) => {

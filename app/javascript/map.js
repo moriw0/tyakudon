@@ -7,64 +7,23 @@ window.initMap = () => {
   class Popup extends google.maps.OverlayView {
     position;
     containerDiv;
-    constructor(position, content, url) {
+    constructor(position, shopName, url) {
       super();
       this.position = position;
 
       // Create the anchor tag with content and add the popup-bubble class
       const anchor = document.createElement("a");
       anchor.classList.add("popup-bubble");
-      anchor.innerHTML = content;
+      anchor.innerHTML = shopName;
 
       // Add click event listener to the anchor tag
-      anchor.addEventListener("click", function () {
-        fetch(`${url}.json`)
-          .then((response) => response.json())
-          .then((shop) => {
-            const shopInfo = document.getElementById("shop-info");
-            const recordsList = shop.records
-              .map((record) => {
-                const createdAt = new Date(record.created_at);
-                const createdAtString = `登録日：${createdAt.getFullYear()}/${
-                  createdAt.getMonth() + 1
-                }/${createdAt.getDate()} ${createdAt.getHours()}:${createdAt
-                  .getMinutes()
-                  .toString()
-                  .padStart(2, "0")}`;
-
-                const elapsedTimeDate = new Date(record.elapsed_time);
-                const elapsedTimeHours = elapsedTimeDate
-                  .getUTCHours()
-                  .toString()
-                  .padStart(2, "0");
-                const elapsedTimeMinutes = elapsedTimeDate
-                  .getUTCMinutes()
-                  .toString()
-                  .padStart(2, "0");
-                const elapsedTimeSeconds = elapsedTimeDate
-                  .getUTCSeconds()
-                  .toString()
-                  .padStart(2, "0");
-                const elapsedTimeMilliseconds = elapsedTimeDate
-                  .getUTCMilliseconds()
-                  .toString()
-                  .padStart(3, "0");
-                const elapsedTimeString = `${elapsedTimeHours}:${elapsedTimeMinutes}'${elapsedTimeSeconds}"${elapsedTimeMilliseconds}`;
-
-                return `<li>${createdAtString} - ${elapsedTimeString}</li>`;
-              })
-              .join("");
-            shopInfo.innerHTML = `
-                <h3>${shop.name}</h3>
-                <p>${shop.address}</p>
-                <div class="d-grid gap-2">
-                  <a class="btn btn-warning" href="${url}/records/new" data-turbo="false">セツゾク！</a>
-                </div>
-                <h4>チャクドンレコード</h4>
-                <ul>${recordsList}</ul>
-              `;
-            showBottomSheet();
-          });
+      anchor.addEventListener("click", function (event) {
+        event.preventDefault();
+        Turbo.visit(`${url}/records/new`, {
+          action: "replace",
+          frame: "shop-info",
+        });
+        showBottomSheet();
       });
 
       // This zero-height div is positioned at the bottom of the bubble.

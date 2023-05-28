@@ -1,0 +1,15 @@
+<% content_for :js do %>
+  <%= javascript_import_module_tag "timer" %>
+<% end %>
+<p style="color: green"><%= notice %></p>
+<p><%= @ramen_shop.name %></p>
+<p><%= @ramen_shop.address %></p>
+<div id="container">
+  <div id="time">00:00:00.000</div>
+</div>
+<%= form_with model: @ramen_shop_record, url: ramen_shop_record_path do |f| %>
+  <div class="form-group">
+    <%= f.hidden_field :started_at, id: 'started' %>
+    <%= f.submit 'ちゃくどん', class: "btn btn-warning" %>
+  </div>
+<% end %>
