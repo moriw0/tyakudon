@@ -1,0 +1,25 @@
+<%= form_with model: @record_line_status, url: record_line_statuses_path do |f| %>
+  <div class="mb-3">
+    <%= f.label :line_number, "人数", class:"form-label" %>
+    <%= f.text_field :line_number, class:"form-control" %>
+  </div>
+  <div class="mb-3">
+    <div class="form-check">
+      <%= f.label :line_type, "店内", class: 'form-check-label' %>
+      <%= f.radio_button :line_type, :inside_the_store, class: 'form-check-input' %>
+    </div>
+    <div class="form-check">
+      <%= f.label :line_type, "店外", class: 'form-check-label' %>
+      <%= f.radio_button :line_type, :outside_the_store, class: 'form-check-input' %>
+    </div>
+    <div class="form-check">
+      <%= f.label :line_type, "その他", class: 'form-check-label' %>
+      <%= f.radio_button :line_type, :other, class: 'form-check-input' %>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= f.label :comment, 'コメント', class:"form-label" %>
+    <%= f.text_area :comment, class:"form-control" %>
+  </div>
+  <%= f.submit '報告', class: "btn btn-warning" %>
+<% end %>
