@@ -1,0 +1,13 @@
+<h1>待ち状態履歴</h1>
+<ul>
+  <% @line_statuses.each do |status| %>
+    <li>
+      <ul>
+        <li><%= link_to format_datetime(status.created_at), line_status_path(status) %></li>
+        <li><%= status.line_number %></li>
+        <li><%= status.line_type %></li>
+        <li><%= status.comment %></li>
+      </ul>
+    </li>
+  <% end %>
+</ul>

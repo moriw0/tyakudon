@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 <p><%= @ramen_shop.name %></p>
 <p><%= @ramen_shop.address %></p>
-<%= form_with model: @ramen_shop_record, url: ramen_shop_record_path do |f| %>
+<%= form_with model: @record do |f| %>
   <div class="form-group">
     <%= f.label :started_at, class:"form-label" %>
     <%= f.time_field :started_at, class:"form-control" %>

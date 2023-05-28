@@ -1,0 +1,6 @@
+<p style="color: green"><%= notice %></p>
+<p>行列：<%= @line_status.line_number %></p>
+<p>タイプ：<%= @line_status.line_type %></p>
+<p>コメント：<%= @line_status.comment %></p>
+<%= link_to '編集', edit_line_status_path(@line_status), class: "btn btn-warning" %>
+<%= link_to '一覧', record_line_statuses_path(@line_status.record), class: "btn btn-warning" %>
