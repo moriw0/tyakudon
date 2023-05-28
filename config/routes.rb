@@ -5,11 +5,9 @@ Rails.application.routes.draw do
   get '/near_shops', to: 'ramen_shops#near_shops'
 
   resources :ramen_shops, only: [:index, :show] do
-    resources :records, only: [:show, :new, :create, :edit, :update] do
+    resources :records, only: [:show, :new, :create, :edit, :update], shallow: true do
       get 'measure', on: :member
-
-      resources :line_statuses, only: [:index, :new, :create] do
-      end
+      resources :line_statuses, only: [:index, :new, :create]
     end
   end
 end
