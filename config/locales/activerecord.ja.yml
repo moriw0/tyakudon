@@ -1,0 +1,27 @@
+ja:
+  activerecord:
+    models:
+      ramen_shop: ラーメン店
+      record: ちゃくどんレコード
+      line_status: 待ち行列状態
+    attributes:
+      ramen_shop:
+        name: 店名
+        address: 住所
+        latitude: 緯度
+        longitude: 経度
+      record:
+        started_at: 接続時刻
+        ended_at: 着丼時刻
+        wait_time: 待ち時間
+        comment: コメント
+      line_status:
+        line_number: 待ち行列数
+        line_type: タイプ
+        comment: コメント
+  enums:
+    line_status:
+      line_type:
+        inside_the_store: 店内
+        outside_the_store: 店外
+        other: その他
