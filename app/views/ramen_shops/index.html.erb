@@ -1,9 +1,16 @@
-<h1>ラーメン店舗一覧</h1>
-<ul>
-  <% @ramen_shops.each do |shop| %>
-    <li>
-      <%= shop.name %>
-      <%= link_to '時間計測', ramen_shop_path(shop) %>
-    </li>
-  <% end %>
-</ul>
+<div class="card shadow mt-3">
+  <div class="card-header">
+    <%= tag.span("一覧") %>
+  </div>
+  <div class="card-body mx-3">
+    <%= render @ramen_shops %>
+    <div class="d-flex justify-content-end mt-3">
+      <%= paginate @ramen_shops %>
+    </div>
+  </div>
+  <div class="fixed-bottom d-grid gap-2">
+    <%= link_to '現在地からセツゾク！', search_path, class: "btn btn-warning" %>
+  </div>
+  <div class="d-grid gap-2">
+  </div>
+</div>
