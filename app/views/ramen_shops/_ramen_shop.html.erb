@@ -1,11 +1,14 @@
-<div id="<%= dom_id ramen_shop %>">
-  <p>
-    <strong>Name:</strong>
+<div class="row py-2 border-top">
+  <div class="col-4 my-auto">
     <%= ramen_shop.name %>
-  </p>
-
-  <p>
-    <strong>Address:</strong>
+  </div>
+  <div class="col-4 my-auto">
     <%= ramen_shop.address %>
-  </p>
+  </div>
+  <div class="col-4">
+    <div class="d-flex justify-content-end">
+      # todo: ramen_shop.recordsに遷移させる
+      <%= link_to 'みてみる', ramen_shop_path(ramen_shop), class: "btn btn-sm btn-outline-primary me-2" %>
+    </div>
+  </div>
 </div>
