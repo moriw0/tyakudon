@@ -1,12 +1,1 @@
-<h1>ラーメン店舗一覧</h1>
-<ul>
-  <% @ramen_shops.each do |shop| %>
-    <li>
-      <%= shop.name %>
-      <%= link_to 'みてみる', ramen_shop_path(shop) %>
-    </li>
-  <% end %>
-</ul>
-<div class="d-grid gap-2">
-  <%= link_to '現在地からセツゾク！', search_path, class: "btn btn-warning" %>
-</div>
+<%= render template: "ramen_shops/index" %>
