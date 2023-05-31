@@ -1,3 +1,8 @@
+<%= search_form_for @search, url: root_path  do |f| %>
+  <%= f.search_field :name_cont, placeholder: "店名で検索" %>
+  <%= f.submit %>
+  <%= link_to "クリア", root_path %>
+<% end %>
 <div class="card shadow mt-3">
   <div class="card-header">
     <%= tag.span("一覧") %>
