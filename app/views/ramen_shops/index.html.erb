@@ -1,8 +1,21 @@
-<%= search_form_for @search, url: root_path  do |f| %>
-  <%= f.search_field :name_cont, placeholder: "店名で検索" %>
-  <%= f.submit %>
-  <%= link_to "クリア", root_path %>
-<% end %>
+<div class="card shadow mt-3">
+  <div class="card-header">
+    <%= tag.span("検索条件") %>
+  </div>
+  <div class="card-body">
+    <%= search_form_for @search, url: root_path  do |f| %>
+      <div class="row g3 mb-3">
+        <div class="col-12 col-sm-6">
+          <%= f.search_field :name_cont, placeholder: "店名で検索", class: "form-control" %>
+        </div>
+        <div class="col-12 col-sm-6 d-flex align-items-end">
+          <%= button_tag "検索", class: "btn btn-primary me-1" %>
+          <%= link_to "リセット", root_path, class: "btn btn-outline-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 <div class="card shadow mt-3">
   <div class="card-header">
     <%= tag.span("一覧") %>
@@ -13,9 +26,9 @@
       <%= paginate @ramen_shops %>
     </div>
   </div>
-  <div class="fixed-bottom d-grid gap-2">
-    <%= link_to '現在地からセツゾク！', search_path, class: "btn btn-warning" %>
-  </div>
-  <div class="d-grid gap-2">
+</div>
+<div class="p-1 fixed-bottom">
+  <div class="d-grid col-sm-6 mx-auto">
+    <%= link_to '現在地からセツゾク', search_path, class: "btn btn-warning" %>
   </div>
 </div>

@@ -1,0 +1,20 @@
+<div class="d-flex text-body-secondary pt-3">
+  <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#808080"></rect><text x="50%" y="50%" fill="#808080" dy=".3em">32x32</text></svg>
+  <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+    <div class="mb-1 d-flex w-100 justify-content-between">
+      <span class="d-block text-gray-dark">@username</span>
+      <small><%= format_datetime record.created_at %></small>
+    </div>
+    <div class="d-flex justify-content-between align-items-end">
+      <div>
+        <p class="fs-2 mb-1"><%= format_wait_time record.wait_time %></p>
+        <% if record.comment %>
+          <p class="mb-1">ひとこと: <%= record.comment %></p>
+        <% end %>
+      </div>
+      <div class="d-flex justify-content-end">
+        <%= link_to '詳細', record_path(record) %>
+      </div>
+    </div>
+  </div>
+</div>
