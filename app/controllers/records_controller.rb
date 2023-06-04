@@ -22,8 +22,6 @@ class RecordsController < ApplicationController
   end
 
   def measure
-    @line_status = @record.line_statuses.build
-
     if @record.update(started_at: Time.current)
       flash.notice = "セツゾクしました"
     else
@@ -56,6 +54,6 @@ class RecordsController < ApplicationController
   end
 
   def record_param
-    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at, line_statuses_attributes: [:line_number, :line_type])
+    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at, line_statuses_attributes: [:line_number, :line_type, :comment])
   end
 end

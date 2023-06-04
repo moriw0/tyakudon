@@ -200,3 +200,8 @@ textarea {
 .container {
   max-width: 720px;
 }
+
+label.required:after {
+  content:" *";
+  color: red;
+}
