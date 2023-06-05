@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: tyakudon_production
-  username: tyakudon
-  password: <%= ENV["TYAKUDON_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  url: <%= ENV['DATABASE_URL'] %>
