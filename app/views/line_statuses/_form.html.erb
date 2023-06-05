@@ -1,23 +1,8 @@
-<div class="mb-3">
-  <%= f.label :line_number, "人数", class:"form-label" %>
-  <%= f.text_field :line_number, class:"form-control" %>
-</div>
-<div class="mb-3">
-  <div class="form-check">
-    <%= f.label :line_type, "店内", class: 'form-check-label' %>
-    <%= f.radio_button :line_type, :inside_the_store, class: 'form-check-input' %>
-  </div>
-  <div class="form-check">
-    <%= f.label :line_type, "店外", class: 'form-check-label' %>
-    <%= f.radio_button :line_type, :outside_the_store, class: 'form-check-input' %>
-  </div>
-  <div class="form-check">
-    <%= f.label :line_type, "その他", class: 'form-check-label' %>
-    <%= f.radio_button :line_type, :other, class: 'form-check-input' %>
-  </div>
-</div>
-<div class="mb-3">
-  <%= f.label :comment, 'コメント', class:"form-label" %>
-  <%= f.text_area :comment, class:"form-control" %>
-</div>
-<%= f.submit '報告', class: "btn btn-warning", data: { disable_with: '報告中...' } %>
+<%= f.text_field :line_number %>
+<%= f.form_group :line_type, label: { text: "接続先" } do %>
+  <%= f.radio_button :line_type, :inside_the_store, label: "店内", checked: true %>
+  <%= f.radio_button :line_type, :outside_the_store, label: "店外" %>
+  <%= f.radio_button :line_type, :other, label: "その他" %>
+<% end %>
+<%= f.text_area :comment, label: { text: "ひとこと" } %>
+<%= f.submit yield(:button_text), class: "btn btn-sm btn-warning", data: { disable_with: '報告中...' } %>

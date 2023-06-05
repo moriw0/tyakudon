@@ -77,6 +77,9 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
+    bootstrap_form (5.2.2)
+      actionpack (>= 6.0)
+      activemodel (>= 6.0)
     builder (3.2.4)
     capybara (3.39.0)
       addressable
@@ -277,6 +280,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   bootstrap
+  bootstrap_form
   capybara
   dartsass-rails
   debug

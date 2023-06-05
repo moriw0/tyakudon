@@ -1,31 +1,12 @@
 <turbo-frame id="shop-info">
   <h3><%= @ramen_shop.name %></h3>
   <p><%= @ramen_shop.address %></p>
-  <%= form_with model: @ramen_shop_record, url: ramen_shop_records_path, data: { turbo: false } do |f| %>
+  <%= bootstrap_form_with model: @ramen_shop_record, url: ramen_shop_records_path, data: { turbo: false } do |f| %>
     <%= f.hidden_field :ramen_shop_id %>
     <%= f.hidden_field :started_at, id: 'started' %>
-    <div class="form-group">
-      <%= f.fields_for :line_statuses do |g| %>
-        <div class="form-group">
-          <%= g.label :line_number, "人数", class:"form-label" %>
-          <%= g.text_field :line_number, class:"form-control" %>
-        </div>
-        <div class="form-group">
-          <div class="form-check">
-            <%= g.label '店内', class: 'form-check-label' %>
-            <%= g.radio_button :line_type, :inside_the_store, class: 'form-check-input' %>
-          </div>
-          <div class="form-check">
-            <%= g.label '店外', class: 'form-check-label' %>
-            <%= g.radio_button :line_type, :outside_the_store, class: 'form-check-input' %>
-          </div>
-          <div class="form-check">
-            <%= g.label 'その他', class: 'form-check-label' %>
-            <%= g.radio_button :line_type, :other, class: 'form-check-input' %>
-          </div>
-        </div>
-      <% end %>
-      <%= f.submit 'セツゾク', class: "btn btn-warning" %>
-    </div>
+    <%= f.fields_for :line_statuses do |form| %>
+      <%= render "line_statuses/form", f: form %>
+    <% end %>
+    <%= f.submit '接続', class: "btn btn-sm btn-warning", data: { disable_with: '接続中...' } %>
   <% end %>
 </turbo-frame>
