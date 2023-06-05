@@ -5,4 +5,3 @@
   <%= f.radio_button :line_type, :other, label: "その他" %>
 <% end %>
 <%= f.text_area :comment, label: { text: "ひとこと" } %>
-<%= f.submit yield(:button_text), class: "btn btn-sm btn-warning", data: { disable_with: '報告中...' } %>

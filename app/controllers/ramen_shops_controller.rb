@@ -9,7 +9,8 @@ class RamenShopsController < ApplicationController
   end
 
   def show
-    @ramen_shop = RamenShop.includes(:records).find(params[:id])
+    @ramen_shop = RamenShop.find(params[:id])
+    @records = @ramen_shop.records.page(params[:page])
 
     respond_to do |format|
       format.html
