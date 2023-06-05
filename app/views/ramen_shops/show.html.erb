@@ -3,10 +3,10 @@
   <p class="mb-4"><%= @ramen_shop.address %></p>
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <h6 class="border-bottom pb-2 mb-0"><%= tag.span("記録") %></h6>
-    <%= render @ramen_shop.records %>
-    <small class="d-block text-end mt-3">
-      <%# paginate @ramen_shops %>
-    </small>
+    <%= render @records %>
+    <div class="d-flex justify-content-end mt-3">
+      <%= paginate @records%>
+    </div>
   </div>
   <div>
     <%= link_to "戻る", root_path %>
