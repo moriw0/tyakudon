@@ -8,7 +8,7 @@
 </div>
 <%= form_with model: @record do |f| %>
   <div class="form-group">
-    <%= f.hidden_field :started_at, id: 'started' %>
+    <%= f.hidden_field :started_at, value: @record.started_at&.iso8601, id: 'started' %>
     <%= f.submit 'ちゃくどん', id: 'ended', class: "btn btn-warning" %>
   </div>
 <% end %>
