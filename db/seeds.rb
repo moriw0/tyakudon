@@ -9,27 +9,32 @@ CSV.foreach('db/write-sample.csv', headers: true) do |row|
 end
 
 # ダミー着丼時間入稿
-shops = RamenShop.all.limit(10)
+shops = RamenShop.all
 counter = 0
 shops.each do |shop|
-  elapsed_times = []
-  1.upto(10) { |num|
+  wait_times = []
+  1.upto(20) { |num|
     started_at = Time.now - (60 * 60) - (num * 60) - (counter * 10)
     ended_at = Time.now + (num * 60) + (counter * 10)
-    elapsed_time = Time.at(ended_at - started_at)
-    
-    elapsed_times << {
+    wait_time = Time.at(ended_at - started_at)
+
+    wait_times << {
       started_at: started_at,
       ended_at: ended_at,
-      elapsed_time: elapsed_time
+      wait_time: wait_time
     }
   }
 
-  elapsed_times.each do |time|
+  wait_times.each do |time|
     shop.records.create(
       started_at: time[:started_at],
       ended_at: time[:ended_at],
-      elapsed_time: time[:elapsed_time]
+      wait_time: time[:wait_time],
+      line_statuses_attributes: [
+        {"line_number"=>10, "line_type"=>"outside_the_store", "comment"=>"長くなりそうだ", created_at: time[:started_at] },
+        {"line_number"=>2, "line_type"=>"outside_the_store", "comment"=>"もうすぐ店内", created_at: time[:started_at] + 1800 },
+        {"line_number"=>4, "line_type"=>"inside_the_store", "comment"=>"あと少し", created_at: time[:started_at] + 2400 },
+        ]
     )
   end
 
