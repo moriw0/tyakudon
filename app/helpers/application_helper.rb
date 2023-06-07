@@ -13,4 +13,8 @@ module ApplicationHelper
       format("%02d:%02d:%02d", hours, minutes, seconds)
     end
   end
+
+  def turbo_stream_flash
+    turbo_stream.update "flash", partial: "flash"
+  end
 end

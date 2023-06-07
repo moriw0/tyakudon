@@ -3,12 +3,10 @@
 <% end %>
 <p><%= @ramen_shop.name %></p>
 <p><%= @ramen_shop.address %></p>
-<div id="container">
-  <div id="time">00:00:00.000</div>
-</div>
+<div id="time">00:00:00.000</div>
 <%= bootstrap_form_with model: @record do |f| %>
   <%= f.hidden_field :started_at, value: @record.started_at&.iso8601, id: 'started' %>
-  <div class="d-grid col-sm-6 mx-auto">
+  <div class="d-grid">
     <%= f.submit 'ちゃくどん', id: 'ended', class: "btn btn-warning" %>
   </div>
 <% end %>
@@ -17,5 +15,7 @@
     <h6><%= tag.span("行列の様子") %></h6>
     <%= link_to '追加登録', new_record_line_status_path(@record), data: { turbo_frame: "modal" }, class: 'btn btn-sm btn-warning' %>
   </div>
-  <%= render @record.line_statuses %>
+  <div id="line_statuses">
+    <%= render @record.line_statuses %>
+  </div>
 </div>
