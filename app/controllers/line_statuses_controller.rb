@@ -1,15 +1,16 @@
 class LineStatusesController < ApplicationController
+  before_action :set_record, only: %i[new create]
   before_action :set_line_status, only: %i[show edit update]
 
   def show
   end
 
   def new
-    @record_line_status = LineStatus.new
+    @record_line_status = @record.line_statuses.build
   end
 
   def create
-    @line_status = Record.find(params[:record_id]).line_statuses.build(line_status_params)
+    @line_status = @record.line_statuses.build(line_status_params)
 
     if @line_status.save
       redirect_to @line_status, notice: '待ち状況を報告しました'
@@ -30,6 +31,10 @@ class LineStatusesController < ApplicationController
   end
 
   private
+
+  def set_record
+    @record = Record.find(params[:record_id])
+  end
 
   def set_line_status
     @line_status = LineStatus.find(params[:id])

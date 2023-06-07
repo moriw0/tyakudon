@@ -1,5 +1,3 @@
-<h1>待ち状況を登録する</h1>
-<%= bootstrap_form_with model: @record_line_status, url: record_line_statuses_path do |form| %>
-  <%= render "form", f: form %>
-  <%= form.submit '登録', class: "btn btn-sm btn-warning", data: { disable_with: '登録中...' } %>
+<%= render "modal", title: "登録" do %>
+  <%= render "application/form", line_status: @record_line_status %>
 <% end %>
