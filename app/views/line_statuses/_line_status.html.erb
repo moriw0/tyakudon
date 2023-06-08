@@ -14,7 +14,7 @@
         <% end %>
       </div>
       <div>
-        <%= link_to '編集', edit_line_status_path(line_status) %>
+        <%= link_to '編集', edit_line_status_path(line_status), data: { turbo_frame: "modal" } %>
       </div>
     </div>
   </div>
