@@ -41,29 +41,15 @@ textarea {
   height: 100%;
 }
 
-#container {
-  background-color: #ffffff;
-  width: 100%;
-  border-radius: 1rem;
-  padding: 1.5rem;
 
-  #time {
-    color: black;
-    font-size: 3rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    margin: .5rem;
-  }
-
-  #buttons {
-    font-size: 3rem;
-
-    #start, #end, #stop, #reset, #retire {
-      font-size: 1.5rem;
-      border-radius: .3rem;
-    }
-  }
+#time {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: .5rem;
+  padding: 1rem;
+  font-family: sans-serif;
 }
+
 #map {
   height: 100%;
 }

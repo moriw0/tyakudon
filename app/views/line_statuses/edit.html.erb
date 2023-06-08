@@ -1,5 +1,8 @@
-<h1>待ち状況を編集する</h1>
-<%= bootstrap_form_with model: @line_status do |form| %>
-  <%= render "form", f: form %>
-  <%= form.submit '更新', class: "btn btn-sm btn-warning", data: { disable_with: '更新中...' } %>
+<%= render "modal", title: "編集" do %>
+  <%= turbo_frame_tag @line_status do %>
+    <%= bootstrap_form_with model: @line_status, data: { action: "turbo:submit-end->modal#close" } do |f| %>
+      <%= render "form", f: f %>
+      <%= f.submit class: "btn btn-sm btn-warning", data: { disable_with: '更新中...' } %>
+    <% end%>
+  <% end %>
 <% end %>
