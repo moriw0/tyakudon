@@ -1,7 +1,7 @@
 <turbo-frame id="shop-info">
   <h3><%= @ramen_shop.name %></h3>
   <p><%= @ramen_shop.address %></p>
-  <%= bootstrap_form_with model: @ramen_shop_record, url: ramen_shop_records_path, data: { turbo: false } do |f| %>
+  <%= bootstrap_form_with model: @record, url: ramen_shop_records_path, data: { turbo: false } do |f| %>
     <%= f.hidden_field :ramen_shop_id %>
     <%= f.hidden_field :started_at, id: 'started' %>
     <%= f.fields_for :line_statuses do |form| %>

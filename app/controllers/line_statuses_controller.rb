@@ -6,7 +6,7 @@ class LineStatusesController < ApplicationController
   end
 
   def new
-    @record_line_status = @record.line_statuses.build
+    @line_status = @record.line_statuses.build
   end
 
   def create
