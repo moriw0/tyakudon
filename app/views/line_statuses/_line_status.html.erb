@@ -9,7 +9,7 @@
       <div>
         <p class="mb-1">待ち行列: <%= line_status.line_number %></p>
         <p class="mb-1"><%= line_status.line_type_i18n %></p>
-        <% if line_status.comment %>
+        <% if line_status.comment.present? %>
           <p class="mb-1">ひとこと: <%= line_status.comment %></p>
         <% end %>
       </div>
