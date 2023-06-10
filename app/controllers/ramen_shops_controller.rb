@@ -10,7 +10,7 @@ class RamenShopsController < ApplicationController
 
   def show
     @ramen_shop = RamenShop.find(params[:id])
-    @records = @ramen_shop.records.page(params[:page])
+    @records = @ramen_shop.records.order(created_at: 'desc').page(params[:page])
 
     respond_to do |format|
       format.html
