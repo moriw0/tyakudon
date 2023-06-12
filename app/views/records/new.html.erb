@@ -1,12 +1,12 @@
-<turbo-frame id="shop-info">
-  <h3><%= @ramen_shop.name %></h3>
-  <p><%= @ramen_shop.address %></p>
-  <%= bootstrap_form_with model: @record, url: ramen_shop_records_path, data: { turbo: false } do |f| %>
-    <%= f.hidden_field :ramen_shop_id %>
-    <%= f.hidden_field :started_at, id: 'started' %>
-    <%= f.fields_for :line_statuses do |form| %>
-      <%= render "line_statuses/form", f: form %>
-    <% end %>
-    <%= f.submit '接続', class: "btn btn-sm btn-warning", data: { disable_with: '接続中...' } %>
+<%= render "modal", title: "接続" do %>
+  <%= turbo_frame_tag @record do %>
+    <%= bootstrap_form_with model: @record, url: ramen_shop_records_path, data: { turbo: false, action: "turbo:submit-end->modal#close" } do |f| %>
+      <%= f.hidden_field :ramen_shop_id %>
+      <%= f.hidden_field :started_at, id: 'started' %>
+      <%= f.fields_for :line_statuses do |form| %>
+        <%= render "line_statuses/form", f: form %>
+      <% end %>
+      <%= f.submit class: "btn btn-sm btn-warning", data: { disable_with: '接続中...' } %>
+    <% end%>
   <% end %>
-</turbo-frame>
+<% end %>

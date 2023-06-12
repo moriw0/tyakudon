@@ -1,7 +1,4 @@
 let map, popup, Popup;
-let isDragging = false;
-let startY = 0;
-let startHeight = 0;
 
 window.initMap = () => {
   class Popup extends google.maps.OverlayView {
@@ -21,9 +18,8 @@ window.initMap = () => {
         event.preventDefault();
         Turbo.visit(`${url}/records/new`, {
           action: "replace",
-          frame: "shop-info",
+          frame: "modal",
         });
-        showBottomSheet();
       });
 
       // This zero-height div is positioned at the bottom of the bubble.
@@ -112,17 +108,6 @@ window.initMap = () => {
               );
               popup.setMap(map);
             }
-
-            const closeButton = document.getElementById("close-button");
-            closeButton.addEventListener("click", hideBottomSheet);
-
-            const bottomSheet = document.getElementById("bottom-sheet");
-            map.addListener("click", hideBottomSheet);
-
-            const dragHandle = document.getElementById("drag-handle");
-            dragHandle.addEventListener("mousedown", handleDragStart);
-            document.addEventListener("mousemove", handleDragMove);
-            document.addEventListener("mouseup", handleDragEnd);
           })
           .catch(function (e) {
             console.log(e);
@@ -137,53 +122,3 @@ window.initMap = () => {
     alert("お使いのブラウザではサポートされていません");
   }
 };
-
-function showBottomSheet() {
-  const bottomSheet = document.getElementById("bottom-sheet");
-  if (bottomSheet.offsetHeight < 50) {
-    bottomSheet.style.height = "50vh";
-  }
-  bottomSheet.classList.remove("hidden");
-  bottomSheet.classList.add("shown");
-  document.getElementById("map").style.height = "50vh";
-}
-
-function hideBottomSheet() {
-  const bottomSheet = document.getElementById("bottom-sheet");
-  bottomSheet.classList.remove("shown");
-  bottomSheet.classList.add("hidden");
-  document.getElementById("map").style.height = "100vh";
-}
-function handleDragStart(event) {
-  event.preventDefault();
-  isDragging = true;
-  startY = event.clientY;
-  startHeight = document.getElementById("bottom-sheet").offsetHeight;
-}
-
-function handleDragMove(event) {
-  if (!isDragging) return;
-  const deltaY = event.clientY - startY;
-  const newHeight = startHeight - deltaY;
-  const mapHeight = 50;
-  const maxHeight = window.innerHeight - 56;
-  const finalHeight = Math.min(newHeight, maxHeight);
-  document.getElementById("bottom-sheet").style.height = `${finalHeight}px`;
-  document.getElementById("map").style.height = `${mapHeight}vh`;
-}
-
-function handleDragEnd() {
-  isDragging = false;
-  if (document.getElementById("bottom-sheet").offsetHeight < 50) {
-    hideBottomSheet();
-  } else if (
-    document.getElementById("bottom-sheet").offsetHeight >=
-    window.innerHeight - 56
-  ) {
-    document.getElementById("bottom-sheet").style.height = `${
-      window.innerHeight - 56
-    }px`;
-  } else {
-    document.getElementById("bottom-sheet").style.height = "50vh";
-  }
-}
