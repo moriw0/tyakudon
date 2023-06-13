@@ -10,17 +10,10 @@ window.initMap = () => {
 
       // Create the anchor tag with content and add the popup-bubble class
       const anchor = document.createElement("a");
+      anchor.setAttribute("data-turbo-stream", "true");
+      anchor.setAttribute("href", `${url}/records/new`);
       anchor.classList.add("popup-bubble");
       anchor.innerHTML = shopName;
-
-      // Add click event listener to the anchor tag
-      anchor.addEventListener("click", function (event) {
-        event.preventDefault();
-        Turbo.visit(`${url}/records/new`, {
-          action: "replace",
-          frame: "modal",
-        });
-      });
 
       // This zero-height div is positioned at the bottom of the bubble.
       const bubbleAnchor = document.createElement("div");

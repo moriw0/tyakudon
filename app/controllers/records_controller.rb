@@ -15,10 +15,10 @@ class RecordsController < ApplicationController
     @record = Record.new(record_param)
 
     if @record.save
-      redirect_to measure_record_path(@record)
+      redirect_to measure_record_path(@record), status: :see_other
     else
       set_ramen_shop
-      render :new, status: :unprocessable_entity
+      render :new_with_errors, status: :unprocessable_entity
     end
   end
 
