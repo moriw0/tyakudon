@@ -15,7 +15,7 @@ class LineStatusesController < ApplicationController
     if @line_status.save
       flash.now.notice = '行列の様子を登録しました'
     else
-      render :new, status: :unprocessable_entity
+      render :new_with_errors, status: :unprocessable_entity
     end
   end
 
