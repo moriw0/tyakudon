@@ -26,7 +26,7 @@ class LineStatusesController < ApplicationController
     if @line_status.update(line_status_params)
       flash.now.notice = '待ち状況を更新しました'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit_with_errors, status: :unprocessable_entity
     end
   end
 
