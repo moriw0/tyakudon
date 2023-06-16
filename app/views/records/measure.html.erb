@@ -13,7 +13,7 @@
 <div class="my-3 p-3 bg-body rounded shadow-sm">
   <div class="d-flex justify-content-between border-bottom pb-2 mb-0">
     <h6><%= tag.span("行列の様子") %></h6>
-    <%= link_to '追加登録', new_record_line_status_path(@record), data: { turbo_stream: true }, class: 'btn btn-sm btn-warning' %>
+    <%= link_to '追加登録', new_record_line_status_path(@record), data: { turbo_frame: "modal" }, class: 'btn btn-sm btn-warning' %>
   </div>
   <div id="line_statuses">
     <%= render @record.line_statuses %>

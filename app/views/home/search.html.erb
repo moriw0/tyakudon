@@ -2,6 +2,12 @@
   <%= javascript_import_module_tag "map" %>
 <% end %>
 <div id="map" style="height: 100vh;"></div>
+<div id="bottom-sheet" class="hidden">
+  <div class="drag-handle" id="drag-handle"></div>
+  <button id="close-button">×</button>
+  <turbo-frame id="shop-info"></turbo-frame>
+</div>
+<!-- Loading Spinner -->
 <div id="loading-spinner" class="loading-spinner">
   <div class="spinner"></div>
 </div>

@@ -6,7 +6,7 @@ class LineStatusesController < ApplicationController
   end
 
   def new
-    @line_status = @record.line_statuses.build
+    @record_line_status = @record.line_statuses.build
   end
 
   def create
@@ -15,7 +15,7 @@ class LineStatusesController < ApplicationController
     if @line_status.save
       flash.now.notice = '行列の様子を登録しました'
     else
-      render :new_with_errors, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class LineStatusesController < ApplicationController
     if @line_status.update(line_status_params)
       flash.now.notice = '待ち状況を更新しました'
     else
-      render :edit_with_errors, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -7,18 +7,17 @@ class RecordsController < ApplicationController
 
   def new
     @ramen_shop = RamenShop.find(params[:ramen_shop_id])
-    @record = @ramen_shop.records.build
-    @record.line_statuses.build
+    @ramen_shop_record = @ramen_shop.records.build
+    @ramen_shop_record.line_statuses.build
   end
 
   def create
-    @record = Record.new(record_param)
+    record = Record.new(record_param)
 
-    if @record.save
-      redirect_to measure_record_path(@record), status: :see_other
+    if record.save
+      redirect_to measure_record_path(record)
     else
-      set_ramen_shop
-      render :new_with_errors, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
