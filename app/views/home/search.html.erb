@@ -1,7 +1,10 @@
+<% content_for :meta do %>
+  <meta name="turbo-cache-control" content="no-cache">
+<% end %>
 <% content_for :js do %>
   <%= javascript_import_module_tag "map" %>
 <% end %>
-<div id="map" style="height: 100vh;"></div>
+<div id="map"></div>
 <div id="loading-spinner" class="loading-spinner">
   <div class="spinner"></div>
 </div>
