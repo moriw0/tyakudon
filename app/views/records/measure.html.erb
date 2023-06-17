@@ -1,14 +1,13 @@
-<% content_for :js do %>
-  <%= javascript_import_module_tag "timer" %>
-<% end %>
 <p><%= @ramen_shop.name %></p>
 <p><%= @ramen_shop.address %></p>
-<div id="time">00:00:00.000</div>
-<%= bootstrap_form_with model: @record do |f| %>
-  <%= f.hidden_field :started_at, value: @record.started_at&.iso8601, id: 'started' %>
+<div data-controller="timer">
+  <div data-timer-target="time">00:00:00.000</div>
+  <%= bootstrap_form_with model: @record do |f| %>
+  <%= f.hidden_field :started_at, value: @record.started_at&.iso8601, data: { timer_target: "started" } %>
   <div class="d-grid">
-    <%= f.submit 'ちゃくどん', id: 'ended', class: "btn btn-warning" %>
+    <%= f.submit 'ちゃくどん', data: { action: "click->timer#end" } , class: "btn btn-warning" %>
   </div>
+</div>
 <% end %>
 <div class="my-3 p-3 bg-body rounded shadow-sm">
   <div class="d-flex justify-content-between border-bottom pb-2 mb-0">
