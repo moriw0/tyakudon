@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= yield(:meta) %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= yield(:js) %>
@@ -13,12 +14,10 @@
     <%= render 'layouts/header' %>
     <div class="container">
       <div class="row">
-        <div class="mb-4">
-          <div id="flash">
-            <%= render "flash" %>
-          </div>
-          <%= yield %>
+        <div id="flash">
+          <%= render "flash" %>
         </div>
+        <%= yield %>
       </div>
     </div>
     <%= debug(params) if Rails.env.development? %>

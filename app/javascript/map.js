@@ -108,10 +108,12 @@ window.initMap = () => {
           });
       },
       function () {
+        document.getElementById("loading-spinner").style.display = "none";
         alert("現在地が取得できませんでした");
       }
     );
   } else {
+    document.getElementById("loading-spinner").style.display = "none";
     alert("お使いのブラウザではサポートされていません");
   }
 };

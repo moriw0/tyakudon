@@ -25,22 +25,12 @@ textarea {
   margin-bottom: 10px;
 }
 
-#map-container {
-  position: relative;
-  width: 100vw;
-  height: 0;
-  padding-bottom: 75%; /* 地図幅と同じ比率に設定 */
-  margin: 0 calc(50% - 50vw);
-}
-
 #map {
-  position: absolute;
-  top: 0;
-  left: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   width: 100%;
-  height: 100%;
+  height: calc(100svh - 56px);
 }
-
 
 [data-timer-target="time"] {
   text-align: center;
@@ -48,10 +38,6 @@ textarea {
   margin: .5rem;
   padding: 1rem;
   font-family: sans-serif;
-}
-
-#map {
-  height: 100%;
 }
 
 /* The popup bubble styling. */
@@ -109,55 +95,9 @@ textarea {
   width: 200px;
 }
 
-#bottom-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50vh;
-  background-color: white;
-  overflow-y: scroll;
-  padding: 1rem;
-  box-sizing: border-box;
-  z-index: 1000;
-  transition: all 0.3s, transform 0.3s;
-  word-break: break-word;
-}
-
-#close-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.hidden {
-  transform: translateY(100%);
-}
-
-.shown {
-  transform: translateY(0);
-}
-.drag-handle {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  width: 30px;
-  height: 10px;
-  background-color: #ccc;
-  border-radius: 5px;
-  cursor: grab;
-  transform: translateX(-50%);
-  z-index: 1001;
-}
-
 .loading-spinner {
   width: 100%;
-  height: 100vh;
+  height: calc(100svh - 56px - 76px);
   background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
