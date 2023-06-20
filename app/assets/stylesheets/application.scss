@@ -25,9 +25,12 @@ textarea {
   margin-bottom: 10px;
 }
 
-#map {
+.full-screen {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+#map {
   width: 100%;
   height: calc(100svh - 56px);
 }

@@ -2,56 +2,44 @@ import { Controller } from "@hotwired/stimulus";
 import { Popup } from "popup";
 
 export default class extends Controller {
-  static targets = ["map"];
+  static targets = ["map", "spinner"];
 
   connect() {
     console.log("mapController connected");
 
     if (window.google) {
-      this.initializeMap();
+      this.createMap();
     }
   }
 
-  initializeMap() {
-    this.setupMap();
-    this.fetchCurrentLocation();
-    console.log("init");
-  }
-
-  setupMap() {
-    // 地図の初期化を行います。ここでは、仮に一つの中心座標を設定します。
-    const initialLocation = {
-      lat: 35.7000396,
-      lng: 139.7752222,
-    };
-    this.map = new google.maps.Map(this.mapTarget, {
-      center: initialLocation,
-      zoom: 18,
-    });
-  }
-
-  fetchCurrentLocation() {
-    // Put the code related to fetching current location here...
+  createMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          var currentLocation = {
+          const currentLocation = {
             // lat: position.coords.latitude,
             // lng: position.coords.longitude,
             lat: 35.7000396,
             lng: 139.7752222,
           };
 
-          // Fetch shop information
+          this.map = new google.maps.Map(this.mapTarget, {
+            center: currentLocation,
+            zoom: 18,
+          });
+
+          this.spinnerTarget.style.display = "none";
+          this.mapTarget.style.display = "block";
+
           this.fetchNearShops(currentLocation);
         },
         function () {
-          document.getElementById("loading-spinner").style.display = "none";
+          this.spinnerTarget.style.display = "none";
           alert("現在地が取得できませんでした");
         }
       );
     } else {
-      document.getElementById("loading-spinner").style.display = "none";
+      this.spinnerTarget.style.display = "none";
       alert("お使いのブラウザではサポートされていません");
     }
   }
@@ -71,8 +59,8 @@ export default class extends Controller {
   }
 
   createPopups(data) {
-    for (var i = 0; i < data.length; i++) {
-      var shopLocation = {
+    for (let i = 0; i < data.length; i++) {
+      const shopLocation = {
         lat: data[i].latitude,
         lng: data[i].longitude,
       };

@@ -1,6 +1,9 @@
 <% content_for :meta do %>
   <meta name="turbo-cache-control" content="no-cache">
 <% end %>
-<div data-controller="map" data-action="map-loaded@window->map#initializeMap">
-  <div id="map" data-map-target="map"></div>
+<div data-controller="map" data-action="map-loaded@window->map#createMap" class="full-screen">
+  <div class="loading-spinner" data-map-target="spinner">
+    <div class="spinner"></div>
+  </div>
+  <div id="map" data-map-target="map" style="display: none;"></div>
 </div>
