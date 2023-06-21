@@ -5,7 +5,7 @@ class Record < ApplicationRecord
 
   def calculate_wait_time!
     self.ended_at = Time.current
-    self.wait_time = self.ended_at - self.started_at
+    self.wait_time = ended_at - started_at
     self
   end
 end
