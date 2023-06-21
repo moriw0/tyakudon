@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Homes', type: :request do
+RSpec.describe 'Homes' do
   describe 'GET /index' do
     pending "add some examples (or delete) #{__FILE__}"
   end

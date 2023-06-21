@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Records', type: :request do
+RSpec.describe 'Records' do
   describe 'GET /index' do
     pending "add some examples (or delete) #{__FILE__}"
   end

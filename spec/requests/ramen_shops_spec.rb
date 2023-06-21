@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'RamenShops', type: :request do
+RSpec.describe 'RamenShops' do
   describe 'GET /index' do
     it 'returns http success' do
       get '/ramen_shops/index'
