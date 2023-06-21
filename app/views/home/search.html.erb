@@ -1,11 +1,6 @@
-<% content_for :meta do %>
-  <meta name="turbo-cache-control" content="no-cache">
-<% end %>
-<% content_for :js do %>
-  <%= javascript_import_module_tag "map" %>
-<% end %>
-<div id="loading-spinner" class="loading-spinner">
-  <div class="spinner"></div>
+<div data-controller="map" data-action="map-loaded@window->map#createMap" class="full-screen">
+  <div class="loading-spinner" data-map-target="spinner">
+    <div class="spinner"></div>
+  </div>
+  <div id="map" data-map-target="map" style="display: none;"></div>
 </div>
-<div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" defer></script>
