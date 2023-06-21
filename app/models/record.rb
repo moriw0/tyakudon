@@ -1,6 +1,6 @@
 class Record < ApplicationRecord
   belongs_to :ramen_shop
-  has_many :line_statuses
+  has_many :line_statuses, dependent: :destroy
   accepts_nested_attributes_for :line_statuses
 
   def calculate_wait_time!
