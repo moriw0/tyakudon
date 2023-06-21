@@ -11,7 +11,7 @@ module ApplicationHelper
 
     hours, remainder = wait_time.divmod(3600)
     minutes, seconds = remainder.divmod(60)
-    format('%02d:%02d:%02d', hours, minutes, seconds)
+    format('%<hours>02d:%<minutes>02d:%<seconds>02d', hours: hours, minutes: minutes, seconds: seconds)
   end
 
   def turbo_stream_flash
