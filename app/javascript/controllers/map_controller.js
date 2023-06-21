@@ -5,8 +5,6 @@ export default class extends Controller {
   static targets = ["map", "spinner"];
 
   connect() {
-    console.log("mapController connected");
-
     if (window.google) {
       this.createMap();
     }
