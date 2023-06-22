@@ -9,6 +9,9 @@ class LineStatusesController < ApplicationController
     @line_status = @record.line_statuses.build
   end
 
+  def edit
+  end
+
   def create
     @line_status = @record.line_statuses.build(line_status_params)
 
@@ -17,9 +20,6 @@ class LineStatusesController < ApplicationController
     else
       render :new_with_errors, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update

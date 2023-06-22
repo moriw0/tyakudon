@@ -11,6 +11,9 @@ class RecordsController < ApplicationController
     @record.line_statuses.build
   end
 
+  def edit
+  end
+
   def create
     @record = Record.new(record_param)
 
@@ -24,13 +27,10 @@ class RecordsController < ApplicationController
 
   def measure
     if @record.update(started_at: Time.current)
-      flash.notice = "セツゾクしました"
+      flash.notice = 'セツゾクしました'
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update
@@ -55,6 +55,7 @@ class RecordsController < ApplicationController
   end
 
   def record_param
-    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at, line_statuses_attributes: [:line_number, :line_type, :comment])
+    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at,
+                                   line_statuses_attributes: %i[line_number line_type comment])
   end
 end
