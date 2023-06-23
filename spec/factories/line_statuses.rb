@@ -3,6 +3,6 @@ FactoryBot.define do
     line_number { 5 }
     line_type { 1 }
     comment { '並ぶぞ' }
-    association :record
+    record
   end
 end

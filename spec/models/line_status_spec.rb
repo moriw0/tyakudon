@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe LineStatus do
-  let(:record) { FactoryBot.create(:record) }
+  let(:record) { create(:record) }
 
   it 'is valid with record_id, line_number, line_type and comment' do
     line_status = record.line_statuses.build(
@@ -14,7 +14,7 @@ RSpec.describe LineStatus do
   end
 
   it 'is valid with Bot' do
-    line_status = FactoryBot.create(:line_status)
+    line_status = create(:line_status)
     expect(line_status).to be_valid
   end
 end
