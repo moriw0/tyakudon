@@ -60,8 +60,13 @@ RSpec.describe User do
   it 'is invalid with duplicate address' do
     new_user = create(:user)
     duplicate_user = new_user.dup
-    duplicate_user.email = new_user.email.upcase
     duplicate_user.valid?
     expect(duplicate_user.errors[:email]).to include('はすでに存在します')
+  end
+
+  it "saves email addresses as lowercase" do
+    user = build(:user, email: "Foo@ExAMPle.CoM")
+    user.save
+    expect(user.reload.email).to eq "foo@example.com"
   end
 end
