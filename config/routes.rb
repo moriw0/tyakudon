@@ -11,4 +11,6 @@ Rails.application.routes.draw do
       resources :line_statuses
     end
   end
+
+  resources :users
 end
