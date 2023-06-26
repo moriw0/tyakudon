@@ -1,2 +1,12 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<h1>ユーザー登録</h1>
+<div class="col-md-6">
+  <%= bootstrap_form_with model: @user do |f|%>
+    <%= f.text_field :name, label: "ニックネーム" %>
+    <%= f.email_field :email, label: "メールアドレス" %>
+    <%= f.password_field :password, label: "パスワード" , help: '6文字以上入力してね' %>
+    <%= f.password_field :password_confirmation, label: "パスワード(確認)" %>
+    <div class="d-grid">
+      <%= f.submit "登録する" %>
+    </div>
+  <% end %>
+</div>
