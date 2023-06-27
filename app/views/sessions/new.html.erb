@@ -1,0 +1,10 @@
+<h1>ログイン</h1>
+<div class="col-md-6">
+  <%= bootstrap_form_with url: login_path, scope: :session do |f|%>
+    <%= f.email_field :email, label: "メールアドレス" %>
+    <%= f.password_field :password, label: "パスワード" %>
+    <div class="d-grid">
+      <%= f.submit "ログインする" %>
+    </div>
+  <% end %>
+</div>
