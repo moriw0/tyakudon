@@ -1,16 +1,26 @@
-<nav class="navbar navbar-expand-sm fixed-top navbar-light" style="background-color: #FFDA45;">
+<nav class="navbar navbar-expand-sm fixed-top" style="background-color: #FFDA45;">
   <div class="container-fluid">
     <%= link_to "チャクドン！", root_path, class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNav">
       <div class="navbar-nav">
-        <%= link_to "トップ", root_path, class: "nav-link" %>
-        <%# <a class="nav-link active" aria-current="page" href="#">チャクドンとは</a> %>
-        <%= link_to "チャクドンとは", about_path, class: "nav-link" %>
-        <%= link_to "ユーザー登録", signup_path, class: "nav-link" %>
-      </div>
+        <% if logged_in? %>
+          <%= link_to "プロフィール", current_user, class: 'nav-link' %>
+          <%= link_to "お気に入り", '#', class: 'nav-link' %>
+
+            <%= link_to "ログアウト", logout_path,
+                                    data: { "turbo-method": :delete },
+                                    class: 'nav-link'
+                                    %>
+          </li>
+        <% else %>
+          <%= link_to "ログイン", login_path, class: "nav-link" %>
+          <%= link_to "チャクドンとは", about_path, class: "nav-link" %>
+          <%= link_to "ユーザー登録", signup_path, class: "nav-link" %>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>
