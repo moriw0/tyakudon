@@ -15,10 +15,10 @@ export default class extends Controller {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const currentLocation = {
-            // lat: position.coords.latitude,
-            // lng: position.coords.longitude,
-            lat: 35.7000396,
-            lng: 139.7752222,
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            // lat: 35.7000396,
+            // lng: 139.7752222,
           };
 
           this.map = new google.maps.Map(this.mapTarget, {
