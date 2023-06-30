@@ -11,6 +11,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      reset_session
+      log_in @user
       redirect_to @user, notice: '登録が完了しました'
     else
       render 'new', status: :unprocessable_entity
