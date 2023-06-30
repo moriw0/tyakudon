@@ -9,7 +9,7 @@ RSpec.describe 'Users' do
   end
 
   describe 'POST /users #create' do
-    it 'user cannot create account with invalid information' do
+    it 'cannot create account with invalid information' do
       expect {
         post users_path, params: { user: { name: '',
                                            email: 'user@invalid',
@@ -18,6 +18,16 @@ RSpec.describe 'Users' do
       }.to_not change(User, :count)
 
       expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'creats account with valid information' do
+      expect {
+        post users_path, params: { user: { name: 'user',
+                                           email: 'user@examle.com',
+                                           password: 'foobar',
+                                           password_confirmation: 'foobar' } }
+        expect(is_logged_in?).to be_truthy
+      }.to change(User, :count).by(1)
     end
   end
 end
