@@ -78,9 +78,13 @@ RSpec.describe User do
     expect(user.errors[:password]).to include('を入力してください')
   end
 
-  it 'password should have a minimum length' do
+  specify 'password should have a minimum length' do
     user.password = user.password_confirmation = 'a' * 5
     user.valid?
     expect(user.errors[:password]).to include('は6文字以上で入力してください')
+  end
+
+  specify 'authenticated? should return false for a user with nil digest' do
+    expect(user.authenticated?('')).to_not be_truthy
   end
 end

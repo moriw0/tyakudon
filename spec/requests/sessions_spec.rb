@@ -18,6 +18,8 @@ RSpec.describe 'Sessions' do
       delete logout_path
       expect(is_logged_in?).to_not be_truthy
       expect(response).to have_http_status(:see_other)
+      delete logout_path
+      expect(response).to redirect_to root_path
     end
   end
 end
