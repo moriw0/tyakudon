@@ -9,5 +9,10 @@ FactoryBot.define do
       name { 'Other User' }
       email { 'other@example.com' }
     end
+
+    factory :all_user do
+      sequence(:name) { |n| "tester#{n}" }
+      sequence(:email) { |n| "tester#{n}@example.com" }
+    end
   end
 end

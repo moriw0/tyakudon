@@ -49,4 +49,21 @@ RSpec.describe 'Users' do
       expect(page).to have_content 'Passwordの入力が一致しません'
     }.to_not change(User, :count)
   end
+
+  describe 'index' do
+    before do
+      30.times do
+        create(:all_user)
+      end
+    end
+
+    it 'shows users including pagination' do
+      log_in_as(user)
+      visit users_path
+      expect(page).to have_selector('.pagination')
+      User.page(1).each do |user|
+        expect(page).to have_link user.name, href: user_path(user)
+      end
+    end
+  end
 end
