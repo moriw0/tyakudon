@@ -8,6 +8,13 @@ RSpec.describe 'Users' do
     end
   end
 
+  describe 'GET /users' do
+    it 'redirects index when not logged in' do
+      get users_path
+      expect(response).to redirect_to login_url
+    end
+  end
+
   describe 'POST /users #create' do
     it 'cannot create account with invalid information' do
       expect {
