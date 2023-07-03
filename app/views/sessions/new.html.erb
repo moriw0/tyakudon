@@ -3,8 +3,12 @@
   <%= bootstrap_form_with url: login_path, scope: :session do |f|%>
     <%= f.email_field :email, label: "メールアドレス" %>
     <%= f.password_field :password, label: "パスワード" %>
+    <%= f.check_box :remember_me, label: "ログインしたままにする"%>
     <div class="d-grid">
       <%= f.submit "ログインする" %>
     </div>
   <% end %>
+  <div class="mt-1 mb-3">
+    <%= link_to 'アカウントをお持ちでない方はこちら', new_user_path %>
+  </div>
 </div>
