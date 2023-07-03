@@ -58,5 +58,19 @@ RSpec.describe 'Users' do
                                                email: user.email } }
       expect(response).to redirect_to root_url
     end
+
+    it 'successfully edits with friendly forwarding' do
+      get edit_user_path(user)
+      log_in_as(user)
+      expect(response).to redirect_to edit_user_path(user)
+      name  = "Foo Bar"
+      email = "foo@bar.com"
+      patch user_path(user), params: { user: { name: name,
+                                               email: email } }
+      expect(response).to redirect_to user
+      user.reload
+      expect(user.name).to eq name
+      expect(user.email).to eq email
+    end
   end
 end

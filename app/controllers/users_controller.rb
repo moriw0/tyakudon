@@ -43,6 +43,7 @@ class UsersController < ApplicationController
 
   def logged_in_user
     unless logged_in?
+      store_location
       flash.alert = 'ログインしてください'
       redirect_to login_url, status: :see_other
     end
@@ -50,6 +51,9 @@ class UsersController < ApplicationController
 
   def correct_user
     @user = User.find(params[:id])
-    redirect_to root_path, status: :see_other unless current_user?(@user)
+    unless current_user?(@user)
+      flash.alert = '不正なアクセスです'
+      redirect_to root_path, status: :see_other
+    end
   end
 end
