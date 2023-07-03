@@ -21,5 +21,19 @@ RSpec.describe 'Sessions' do
       delete logout_path
       expect(response).to redirect_to root_path
     end
+
+    context 'remember me is ON' do
+      it 'remembers the cookie' do
+        log_in_as(user, remember_me: '1')
+        expect(cookies[:remember_token]).not_to eq nil
+      end
+    end
+
+    context 'remember me is OFF' do
+      it 'does not remember the cookie' do
+        log_in_as(user, remember_me: '0')
+        expect(cookies[:remember_token]).to eq nil
+      end
+    end
   end
 end
