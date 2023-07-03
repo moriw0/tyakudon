@@ -22,17 +22,17 @@ RSpec.describe 'Sessions' do
       expect(response).to redirect_to root_path
     end
 
-    context 'remember me is ON' do
+    context 'when user checks the Remember Me box' do
       it 'remembers the cookie' do
         log_in_as(user, remember_me: '1')
-        expect(cookies[:remember_token]).not_to eq nil
+        expect(cookies[:remember_token]).to_not be_nil
       end
     end
 
-    context 'remember me is OFF' do
+    context 'when user does not checks the Remember Me box' do
       it 'does not remember the cookie' do
         log_in_as(user, remember_me: '0')
-        expect(cookies[:remember_token]).to eq nil
+        expect(cookies[:remember_token]).to be_nil
       end
     end
   end
