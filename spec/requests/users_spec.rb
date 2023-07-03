@@ -30,4 +30,33 @@ RSpec.describe 'Users' do
       }.to change(User, :count).by(1)
     end
   end
+
+  describe 'EDIT /user/:id' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:other_user) }
+
+    it 'redirects to login_path when not logged_in' do
+      get edit_user_path(user)
+      expect(response).to redirect_to login_path
+    end
+
+    it 'redirects to login_path when not logged_in' do
+      patch user_path(user), params: { user: { name: user.name,
+                                               email: user.email } }
+      expect(response).to redirect_to login_path
+    end
+
+    it 'redirects to root_url logged in as wrong user' do
+      log_in_as(user)
+      get edit_user_path(other_user)
+      expect(response).to redirect_to root_url
+    end
+
+    it 'redirects to root_url logged in as wrong user' do
+      log_in_as(user)
+      patch user_path(other_user), params: { user: { name: user.name,
+                                               email: user.email } }
+      expect(response).to redirect_to root_url
+    end
+  end
 end

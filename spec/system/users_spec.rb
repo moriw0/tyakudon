@@ -21,6 +21,7 @@ RSpec.describe 'Users' do
   end
 
   scenario 'user cannot update the account with invalid information' do
+    log_in_as(user)
     visit edit_user_path(user)
     expect {
       fill_in 'ニックネーム', with: 'Foo bar'
@@ -34,6 +35,7 @@ RSpec.describe 'Users' do
   end
 
   scenario 'user update the account with valid information' do
+    log_in_as(user)
     visit edit_user_path(user)
     expect {
       fill_in 'ニックネーム', with: ''
