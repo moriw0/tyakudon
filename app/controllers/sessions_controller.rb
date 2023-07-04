@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def new
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       render 'new', status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def destroy
     log_out if logged_in?

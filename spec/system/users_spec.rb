@@ -55,12 +55,10 @@ RSpec.describe 'Users' do
     let!(:non_admin) { create(:other_user) }
 
     before do
-      30.times do
-        create(:all_user)
-      end
+      create_list(:all_user, 30)
     end
 
-    context 'as admin' do
+    context 'with admin' do
       it 'shows users including pagination and delete link' do
         log_in_as(admin)
         visit users_path
@@ -68,9 +66,7 @@ RSpec.describe 'Users' do
         first_page_of_users = User.page(1)
         first_page_of_users.each do |user|
           expect(page).to have_link user.name, href: user_path(user)
-          unless user == admin
-            expect(page).to have_link '削除', href: user_path(user)
-          end
+          expect(page).to have_link '削除', href: user_path(user) unless user == admin
         end
         expect {
           click_link '削除', href: user_path(non_admin)
@@ -78,7 +74,7 @@ RSpec.describe 'Users' do
       end
     end
 
-    context 'as non-admin' do
+    context 'with non-admin' do
       it 'shows users not including delete link' do
         log_in_as(non_admin)
         visit users_path

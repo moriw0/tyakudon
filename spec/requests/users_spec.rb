@@ -38,18 +38,12 @@ RSpec.describe 'Users' do
     end
   end
 
-  describe 'EDIT /user/:id' do
+  describe 'GET /user/:id/edit' do
     let(:user) { create(:user) }
     let(:other_user) { create(:other_user) }
 
     it 'redirects to login_path when not logged_in' do
       get edit_user_path(user)
-      expect(response).to redirect_to login_path
-    end
-
-    it 'redirects to login_path when not logged_in' do
-      patch user_path(user), params: { user: { name: user.name,
-                                               email: user.email } }
       expect(response).to redirect_to login_path
     end
 
@@ -59,19 +53,12 @@ RSpec.describe 'Users' do
       expect(response).to redirect_to root_url
     end
 
-    it 'redirects to root_url logged in as wrong user' do
-      log_in_as(user)
-      patch user_path(other_user), params: { user: { name: user.name,
-                                               email: user.email } }
-      expect(response).to redirect_to root_url
-    end
-
     it 'successfully edits with friendly forwarding' do
       get edit_user_path(user)
       log_in_as(user)
       expect(response).to redirect_to edit_user_path(user)
-      name  = "Foo Bar"
-      email = "foo@bar.com"
+      name  = 'Foo Bar'
+      email = 'foo@bar.com'
       patch user_path(user), params: { user: { name: name,
                                                email: email } }
       expect(response).to redirect_to user
@@ -85,14 +72,28 @@ RSpec.describe 'Users' do
     let(:user) { create(:user) }
     let(:other_user) { create(:other_user) }
 
-    it "does not allow the admin attribute to be edited via the web" do
+    it 'redirects to login_path when not logged_in' do
+      patch user_path(user), params: { user: { name: user.name,
+                                               email: user.email } }
+      expect(response).to redirect_to login_path
+    end
+
+    it 'redirects to root_url logged in as wrong user' do
+      log_in_as(user)
+      patch user_path(other_user), params: { user: { name: user.name,
+                                                     email: user.email } }
+      expect(response).to redirect_to root_url
+    end
+
+    it 'does not allow the admin attribute to be edited via the web' do
       log_in_as(other_user)
-      expect(other_user.admin?).to be_falsy
+      expect(other_user).to_not be_admin
       patch user_path(other_user), params: {
-                                      user: { password:              "password",
-                                              password_confirmation: "password",
-                                              admin: true } }
-      expect(other_user.reload.admin?).to be_falsy
+        user: { password: 'password',
+                password_confirmation: 'password',
+                admin: true }
+      }
+      expect(other_user.reload).to_not be_admin
     end
   end
 
