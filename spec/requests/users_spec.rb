@@ -80,4 +80,54 @@ RSpec.describe 'Users' do
       expect(user.email).to eq email
     end
   end
+
+  describe 'POST /user/:id' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:other_user) }
+
+    it "does not allow the admin attribute to be edited via the web" do
+      log_in_as(other_user)
+      expect(other_user.admin?).to be_falsy
+      patch user_path(other_user), params: {
+                                      user: { password:              "password",
+                                              password_confirmation: "password",
+                                              admin: true } }
+      expect(other_user.reload.admin?).to be_falsy
+    end
+  end
+
+  describe 'DELETE /user/:id' do
+    let!(:user) { create(:user) }
+    let(:other_user) { create(:other_user) }
+
+    context 'when not logged in' do
+      it 'cannot delete user' do
+        expect {
+          delete user_path(user)
+        }.to_not change(User, :count)
+      end
+
+      it 'redirects to login_path' do
+        delete user_path(user)
+        expect(response).to redirect_to login_path
+      end
+    end
+
+    context 'when logged in as a non-admin' do
+      before do
+        log_in_as other_user
+      end
+
+      it 'cannot delete user' do
+        expect {
+          delete user_path(user)
+        }.to_not change(User, :count)
+      end
+
+      it 'redirects to root_path' do
+        delete user_path(user)
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end

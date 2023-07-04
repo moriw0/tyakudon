@@ -1,4 +1,8 @@
 <li>
   <%= gravatar_for user, size: 32 %>
   <%= link_to user.name, user_path(user) %>
+  <% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to "削除", user, data: { "turbo-method": :delete,
+                                          turbo_confirm: "本当に削除しますか？" } %>
+  <% end %>
 </li>
