@@ -2,20 +2,21 @@ class SessionsController < ApplicationController
   def new
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
+      forwarding_url = session[:forwarding_url]
       reset_session
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       log_in user
-      redirect_to user, notice: 'ログインしました'
+      redirect_to forwarding_url || user, notice: 'ログインしました'
     else
       flash.now.alert = 'ログインに失敗しました'
       render 'new', status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def destroy
     log_out if logged_in?

@@ -114,6 +114,8 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
+    faker (3.2.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     geocoder (1.8.1)
     globalid (1.1.0)
@@ -147,6 +149,8 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
+    launchy (2.5.2)
+      addressable (~> 2.8)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -333,12 +337,14 @@ DEPENDENCIES
   dotenv-rails
   enum_help
   factory_bot_rails
+  faker
   geocoder
   htmlbeautifier
   importmap-rails
   jbuilder
   jquery-rails
   kaminari
+  launchy
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
