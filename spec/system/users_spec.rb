@@ -82,4 +82,17 @@ RSpec.describe 'Users' do
       end
     end
   end
+
+  describe 'show' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:other_user) }
+
+    it 'shows edit_user_path when vist current_user path' do
+      log_in_as(user)
+      visit user_path(other_user)
+      expect(page).to_not have_link 'ユーザー情報を編集する', href: edit_user_path(other_user)
+      visit user_path(user)
+      expect(page).to have_link 'ユーザー情報を編集する', href: edit_user_path(user)
+    end
+  end
 end

@@ -5,5 +5,6 @@
       <%= @user.name %>
     </h1>
   </section>
-  <%= link_to 'すべてのユーザーをみる', users_path %>
+  <p><%= link_to 'ユーザー情報を編集する', edit_user_path(@user) if current_user?(@user) %></p>
+  <p><%= link_to 'すべてのユーザーをみる', users_path %></p>
 </aside>
