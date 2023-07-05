@@ -1,0 +1,5 @@
+<h1>チャクドン</h1>
+<p>こんにちは <%= @user.name %></p>
+<p>チャクドンへようこそ！</p>
+<p>以下のリンクをクリックしてアカウントを有効化してください。</p>
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
