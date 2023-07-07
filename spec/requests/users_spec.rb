@@ -31,7 +31,6 @@ RSpec.describe 'Users' do
         expect(response).to redirect_to root_path
       end
     end
-
   end
 
   describe 'POST /users #create' do
@@ -49,10 +48,16 @@ RSpec.describe 'Users' do
     end
 
     context 'with valid information' do
-      let(:user_params) { { user: { name: 'user',
-                                    email: 'user@examle.com',
-                                    password: 'foobar',
-                                    password_confirmation: 'foobar' } } }
+      let(:user_params) do
+        { user: { name: 'user',
+                  email: 'user@examle.com',
+                  password: 'foobar',
+                  password_confirmation: 'foobar' } }
+      end
+
+      before do
+        ActionMailer::Base.deliveries.clear
+      end
 
       it 'creats an account' do
         expect {
@@ -60,13 +65,9 @@ RSpec.describe 'Users' do
         }.to change(User, :count).by(1)
       end
 
-      it 'is still not logged in ' do
+      it 'is still not logged in' do
         post users_path, params: user_params
         expect(is_logged_in?).to be_falsy
-      end
-
-      before do
-        ActionMailer::Base.deliveries.clear
       end
 
       it 'sends an email' do

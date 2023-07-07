@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token
+
   before_save :downcase_email
   before_create :create_activation_digest
 
@@ -45,12 +46,12 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
-  # rubocop:enable Rails/SkipsModelValidations
 
   def activate
     update_attribute(:activated, true)
     update_attribute(:activated_at, Time.zone.now)
   end
+  # rubocop:enable Rails/SkipsModelValidations
 
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
@@ -59,7 +60,7 @@ class User < ApplicationRecord
   private
 
   def downcase_email
-    self.email.downcase!
+    email.downcase!
   end
 
   def create_activation_digest
