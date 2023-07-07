@@ -14,6 +14,14 @@ FactoryBot.define do
       admin { false }
     end
 
+    factory :non_activated_user do
+      name { 'Non Activated User' }
+      email { 'non_activated@example.com' }
+      admin { false }
+      activated { false }
+      activated_at { nil }
+    end
+
     factory :all_user do
       sequence(:name) { |n| "tester#{n}" }
       sequence(:email) { |n| "tester#{n}@example.com" }

@@ -15,8 +15,7 @@ RSpec.describe 'Users' do
       fill_in 'パスワード', with: 'foobar'
       fill_in 'パスワード(確認)', with: 'foobar'
       click_button '登録する'
-      expect(page).to have_content '登録が完了しました'
-      expect(page).to have_content 'もりを'
+      expect(page).to have_content 'メールを確認してアカウントを有効にしてください'
     }.to change(User, :count).by(1)
   end
 
@@ -55,7 +54,7 @@ RSpec.describe 'Users' do
     let!(:non_admin) { create(:other_user) }
 
     before do
-      create_list(:all_user, 30)
+      create_list(:all_user, 15)
     end
 
     context 'with admin' do
@@ -79,6 +78,15 @@ RSpec.describe 'Users' do
         log_in_as(non_admin)
         visit users_path
         expect(page).to_not have_link '削除'
+      end
+
+      it 'does not show non_activated_user' do
+        non_activated_user = create(:non_activated_user)
+        log_in_as(non_admin)
+        visit users_path
+        expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
+        click_link '次', match: :first
+        expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
       end
     end
   end

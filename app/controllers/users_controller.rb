@@ -4,11 +4,12 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.page(params[:page])
+    @users = User.where(activated: true).page(params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    redirect_to root_path and return unless @user.activated
   end
 
   def new
@@ -22,9 +23,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      reset_session
-      log_in @user
-      redirect_to @user, notice: '登録が完了しました'
+      @user.send_activation_email
+      redirect_to root_path, notice: 'メールを確認してアカウントを有効にしてください'
     else
       render 'new', status: :unprocessable_entity
     end
