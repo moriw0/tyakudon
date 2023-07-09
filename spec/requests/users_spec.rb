@@ -15,26 +15,70 @@ RSpec.describe 'Users' do
     end
   end
 
-  describe 'POST /users #create' do
-    it 'cannot create account with invalid information' do
-      expect {
-        post users_path, params: { user: { name: '',
-                                           email: 'user@invalid',
-                                           password: 'foo',
-                                           password_confirmation: 'bar' } }
-      }.to_not change(User, :count)
-
-      expect(response).to have_http_status(:unprocessable_entity)
+  describe 'GET /users/:id #show' do
+    context 'with activated user' do
+      it 'shows user page' do
+        activated_user = create(:user)
+        get user_path(activated_user)
+        expect(response.body).to include(activated_user.name)
+      end
     end
 
-    it 'creats account with valid information' do
-      expect {
-        post users_path, params: { user: { name: 'user',
-                                           email: 'user@examle.com',
-                                           password: 'foobar',
-                                           password_confirmation: 'foobar' } }
-        expect(is_logged_in?).to be_truthy
-      }.to change(User, :count).by(1)
+    context 'with non activated user' do
+      it 'redirects to root_path' do
+        non_activated_user = create(:non_activated_user)
+        get user_path(non_activated_user)
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
+
+  describe 'POST /users #create' do
+    context 'with invalid information' do
+      it 'does not create an account' do
+        expect {
+          post users_path, params: { user: { name: '',
+                                             email: 'user@invalid',
+                                             password: 'foor',
+                                             password_confirmation: 'bar' } }
+        }.to_not change(User, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'with valid information' do
+      let(:user_params) do
+        { user: { name: 'user',
+                  email: 'user@examle.com',
+                  password: 'foobar',
+                  password_confirmation: 'foobar' } }
+      end
+
+      before do
+        ActionMailer::Base.deliveries.clear
+      end
+
+      it 'creats an account' do
+        expect {
+          post users_path, params: user_params
+        }.to change(User, :count).by(1)
+      end
+
+      it 'is still not logged in' do
+        post users_path, params: user_params
+        expect(is_logged_in?).to be_falsy
+      end
+
+      it 'sends an email' do
+        post users_path, params: user_params
+        expect(ActionMailer::Base.deliveries.size).to eq 1
+      end
+
+      it 'is still not activated' do
+        post users_path, params: user_params
+        expect(User.last).to_not be_activated
+      end
     end
   end
 
