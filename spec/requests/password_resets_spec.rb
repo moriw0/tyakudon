@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'PasswordResets', type: :request do
+RSpec.describe 'PasswordResets' do
   describe 'POST /password_resets/ #post' do
     let(:user) { create(:user) }
     let(:user_params) { { password_reset: { email: user.email } } }
@@ -41,7 +41,7 @@ RSpec.describe 'PasswordResets', type: :request do
       it 'has hidden email field' do
         post password_resets_path, params: { password_reset: { email: create(:user).email } }
         get edit_password_reset_path(user.reset_token, email: user.email)
-        expect(response.body).to include "type=\"hidden\" name=\"email\" id=\"email\" value=\"#{user.email}\"";
+        expect(response.body).to include "type=\"hidden\" name=\"email\" id=\"email\" value=\"#{user.email}\""
       end
     end
 
@@ -50,11 +50,13 @@ RSpec.describe 'PasswordResets', type: :request do
         post password_resets_path, params: { password_reset: { email: create(:user).email } }
       end
 
+      # rubocop:disable Rails/SkipsModelValidations
       it 'redirects to root_path when user does not activated' do
         user.toggle!(:activated)
         get edit_password_reset_path(user.reset_token, email: user.email)
         expect(response).to redirect_to root_path
       end
+      # rubocop:enable Rails/SkipsModelValidations
 
       it 'redirects to root_path with invalid token' do
         get edit_password_reset_path('invalid token', email: user.email)
@@ -90,7 +92,6 @@ RSpec.describe 'PasswordResets', type: :request do
     context 'with valid password' do
       let(:user_params) { { user: { password: 'foobar', password_confirmation: 'foobar' } } }
 
-
       it 'updates password' do
         patch password_reset_path(user.reset_token, email: user.email), params: user_params
         expect(user.password_digest).to_not eq user.reload.password_digest
@@ -114,12 +115,14 @@ RSpec.describe 'PasswordResets', type: :request do
 
     context 'with invalid password' do
       it 'does not update password with blank password' do
-        patch password_reset_path(user.reset_token, email: user.email), params: { user: { password: '', password_confirmation: '' } }
+        patch password_reset_path(user.reset_token, email: user.email),
+              params: { user: { password: '', password_confirmation: '' } }
         expect(response).to have_http_status :unprocessable_entity
       end
 
       it 'does not update password with invalid password' do
-        patch password_reset_path(user.reset_token, email: user.email), params: { user: { password: 'foo', password_confirmation: 'bar' } }
+        patch password_reset_path(user.reset_token, email: user.email),
+              params: { user: { password: 'foo', password_confirmation: 'bar' } }
         expect(response).to have_http_status :unprocessable_entity
       end
     end
