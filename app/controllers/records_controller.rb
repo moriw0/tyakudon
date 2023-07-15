@@ -17,7 +17,7 @@ class RecordsController < ApplicationController
   def create
     @record = Record.new(record_param)
 
-    if @record.save
+    if @record.save!
       redirect_to measure_record_path(@record), status: :see_other
     else
       set_ramen_shop
