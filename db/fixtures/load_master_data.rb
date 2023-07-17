@@ -7,4 +7,6 @@ end
 
 ramen_shops = load_csv IMPORTS_PATH
 
-RamenShop.seed(:id, ramen_shops)
+ramen_shops.each do |shop|
+  RamenShop.find_or_create_by!(shop)
+end
