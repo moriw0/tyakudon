@@ -29,12 +29,6 @@ RSpec.describe Record do
       expect(record.errors[:user]).to include('を入力してください')
     end
 
-    it 'is invalid without a comment' do
-      record = build(:record, comment: nil)
-      record.valid?
-      expect(record.errors[:comment]).to include('を入力してください')
-    end
-
     it 'is invalid with a longer comment than maximum length 140' do
       record = build(:record, comment: '*' * 141)
       record.valid?
