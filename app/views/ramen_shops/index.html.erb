@@ -27,8 +27,10 @@
     </div>
   </div>
 </div>
-<div class="p-1 fixed-bottom">
-  <div class="d-grid col-sm-6 mx-auto">
-    <%= link_to '現在地からセツゾク', search_path, class: "btn btn-warning" %>
+<% if logged_in? %>
+  <div class="p-1 fixed-bottom">
+    <div class="d-grid col-sm-6 mx-auto">
+      <%= link_to '現在地からセツゾク', search_path, class: "btn btn-warning" %>
+    </div>
   </div>
-</div>
+<% end %>

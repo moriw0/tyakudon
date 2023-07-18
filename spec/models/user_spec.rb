@@ -87,4 +87,10 @@ RSpec.describe User do
   specify 'authenticated? should return false for a user with nil digest' do
     expect(user).to_not be_authenticated(:remember, '')
   end
+
+  it 'raises exception when delete user with its record' do
+    user = create(:user)
+    create(:record, user: user)
+    expect { user.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
+  end
 end

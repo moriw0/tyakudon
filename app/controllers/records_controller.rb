@@ -1,4 +1,5 @@
 class RecordsController < ApplicationController
+  before_action :logged_in_user, only: %i[new edit create measure update]
   before_action :set_record, only: %i[show measure edit update]
   before_action :set_ramen_shop, except: %i[new create]
 
@@ -7,7 +8,7 @@ class RecordsController < ApplicationController
 
   def new
     @ramen_shop = RamenShop.find(params[:ramen_shop_id])
-    @record = @ramen_shop.records.build
+    @record = current_user.records.build(ramen_shop: @ramen_shop)
     @record.line_statuses.build
   end
 
@@ -55,7 +56,7 @@ class RecordsController < ApplicationController
   end
 
   def record_param
-    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at,
+    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at, :comment, :user_id,
                                    line_statuses_attributes: %i[line_number line_type comment])
   end
 end

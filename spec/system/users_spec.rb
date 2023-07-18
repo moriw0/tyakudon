@@ -92,6 +92,8 @@ RSpec.describe 'Users' do
   end
 
   describe 'show' do
+    include ApplicationHelper
+
     let(:user) { create(:user) }
     let(:other_user) { create(:other_user) }
 
@@ -101,6 +103,18 @@ RSpec.describe 'Users' do
       expect(page).to_not have_link 'ユーザー情報を編集する', href: edit_user_path(other_user)
       visit user_path(user)
       expect(page).to have_link 'ユーザー情報を編集する', href: edit_user_path(user)
+    end
+
+    it 'shows their records' do
+      create_list(:many_records, 15, user: user)
+      visit user_path(user)
+      expect(find('h1')).to have_content user.name
+      expect(find('h1>img.gravatar')).to be_truthy
+      expect(find('h6>span')).to have_content user.records.count
+      expect(find('ul.pagination')).to be_truthy
+      user.records.page(1).each do |record|
+        expect(page).to have_content format_datetime(record.created_at)
+      end
     end
   end
 end
