@@ -5,7 +5,7 @@ FactoryBot.define do
     wait_time { 600 }
     comment { 'いただきます！' }
     ramen_shop
-    created_at { 1.minutes.ago }
+    created_at { 1.minute.ago }
     user
 
     factory :oldest do
@@ -22,7 +22,7 @@ FactoryBot.define do
 
     factory :many_records do
       sequence(:started_at) { |n| (n + 10).minutes.ago }
-      sequence(:ended_at) { |n| n.minutes.ago  }
+      sequence(:ended_at) { |n| n.minutes.ago }
       sequence(:created_at) { |n| n.minutes.ago }
     end
   end

@@ -16,9 +16,9 @@ RSpec.describe Record do
       expect(record).to be_valid
     end
 
-    it "returns the most recent first" do
+    it 'returns the most recent first' do
       create_list(:many_records, 10, user: user)
-      expect(create(:most_recent, user: user)).to eq Record.first
+      expect(create(:most_recent, user: user)).to eq described_class.first
     end
   end
 

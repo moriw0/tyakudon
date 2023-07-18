@@ -1,5 +1,4 @@
 require 'rails_helper'
-include ApplicationHelper
 
 RSpec.describe 'Users' do
   before do
@@ -93,6 +92,8 @@ RSpec.describe 'Users' do
   end
 
   describe 'show' do
+    include ApplicationHelper
+
     let(:user) { create(:user) }
     let(:other_user) { create(:other_user) }
 

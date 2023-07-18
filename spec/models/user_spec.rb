@@ -91,6 +91,6 @@ RSpec.describe User do
   it 'raises exception when delete user with its record' do
     user = create(:user)
     create(:record, user: user)
-    expect{ user.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
+    expect { user.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
   end
 end

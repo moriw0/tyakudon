@@ -6,7 +6,6 @@ class Record < ApplicationRecord
 
   default_scope -> { order(created_at: :desc) }
 
-  validates :user_id, presence: true
   validates :comment, length: { maximum: 140 }
 
   def calculate_wait_time!
