@@ -27,10 +27,15 @@ class RecordsController < ApplicationController
   end
 
   def measure
-    if @record.update(started_at: Time.current)
-      flash.notice = 'セツゾクしました'
+    if cookies[:record_id]
+      @record = Record.find(cookies.encrypted[:record_id])
+      flash.notice = '再セツゾクしました'
+    elsif @record.ended_at?
+      redirect_to root_path, status: :see_other
     else
-      render :new, status: :unprocessable_entity
+      cookies.encrypted[:record_id] = { value: @record.id, expires: 1.day }
+      @record.update(started_at: Time.current)
+      flash.notice = 'セツゾクしました'
     end
   end
 
@@ -39,9 +44,10 @@ class RecordsController < ApplicationController
     @record.calculate_wait_time!
 
     if @record.save
-      redirect_to record_path(@record), notice: 'ちゃくどんレコードを登録しました'
+      cookies.delete(:record_id)
+      redirect_to record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
     else
-      render :new
+      render :edit
     end
   end
 
