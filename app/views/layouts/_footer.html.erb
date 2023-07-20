@@ -2,8 +2,8 @@
   <% if logged_in? && show_connect_button? %>
     <div class="p-1 fixed-bottom">
       <div class="d-grid col-sm-6 mx-auto">
-        <% if cookies[:record_id] %>
-          <%= link_to '接続中レコード', measure_record_path(cookies.encrypted[:record_id]), class: "btn btn-warning" %>
+        <% if remember_record? %>
+          <%= link_to '接続中レコード', measure_record_path(fetch_record_id), class: "btn btn-warning" %>
         <% else %>
           <%= link_to '現在地からセツゾク', search_path, class: "btn btn-warning" %>
         <%  end %>

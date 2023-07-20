@@ -3,9 +3,11 @@ module RecordsHelper
     record.send(name).name
   end
 
-  def remember_record
+  def remember_record?
+    cookies[:record_id]
   end
 
-  def forget_record
+  def fetch_record_id
+    cookies.encrypted[:record_id]
   end
 end

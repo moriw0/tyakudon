@@ -1,4 +1,6 @@
 class RecordsController < ApplicationController
+  include RecordsHelper
+
   before_action :logged_in_user, only: %i[new edit create measure update]
   before_action :set_record, only: %i[show measure edit update]
   before_action :set_ramen_shop, except: %i[new create]
@@ -28,13 +30,13 @@ class RecordsController < ApplicationController
   end
 
   def measure
-    if cookies[:record_id]
-      @record = Record.find(cookies.encrypted[:record_id])
+    if remember_record?
+      set_record_from_cookies
       flash.notice = '再セツゾクしました'
     elsif @record.ended_at?
       redirect_to root_path, status: :see_other
     else
-      cookies.encrypted[:record_id] = { value: @record.id, expires: 1.day }
+      remember_record
       @record.update(started_at: Time.current)
       flash.notice = 'セツゾクしました'
     end
@@ -45,7 +47,7 @@ class RecordsController < ApplicationController
     @record.calculate_wait_time!
 
     if @record.save
-      cookies.delete(:record_id)
+      forget_record
       redirect_to record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
     else
       render :edit
@@ -65,5 +67,17 @@ class RecordsController < ApplicationController
   def record_param
     params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at, :comment, :user_id,
                                    line_statuses_attributes: %i[line_number line_type comment])
+  end
+
+  def set_record_from_cookies
+    @record = Record.find(fetch_record_id)
+  end
+
+  def remember_record
+    cookies.encrypted[:record_id] = { value: @record.id, expires: 1.day }
+  end
+
+  def forget_record
+    cookies.delete(:record_id)
   end
 end
