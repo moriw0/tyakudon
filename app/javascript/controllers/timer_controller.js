@@ -35,4 +35,8 @@ export default class extends Controller {
   end() {
     clearInterval(this.timer);
   }
+
+  disconnect() {
+    clearInterval(this.timer);
+  }
 }

@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
     flash.alert = 'ログインしてください'
     redirect_to login_url, status: :see_other
   end
+
+  def disable_connect_button
+    @show_connect_button = false
+  end
 end

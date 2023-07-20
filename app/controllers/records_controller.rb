@@ -2,6 +2,7 @@ class RecordsController < ApplicationController
   before_action :logged_in_user, only: %i[new edit create measure update]
   before_action :set_record, only: %i[show measure edit update]
   before_action :set_ramen_shop, except: %i[new create]
+  before_action :disable_connect_button, only: %i[measure]
 
   def show
   end

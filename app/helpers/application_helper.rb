@@ -17,4 +17,8 @@ module ApplicationHelper
   def turbo_stream_flash
     turbo_stream.update 'flash', partial: 'flash'
   end
+
+  def show_connect_button?
+    defined?(@show_connect_button) ? @show_connect_button : true
+  end
 end
