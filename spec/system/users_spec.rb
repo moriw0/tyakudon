@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Users' do
-  before do
-    driven_by(:rack_test)
-  end
-
   let(:user) { create(:user) }
 
   scenario 'user creates an account with valid information' do
