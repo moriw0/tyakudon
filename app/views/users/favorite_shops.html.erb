@@ -1,0 +1,24 @@
+<aside class="col-md-4">
+  <section class="user_info">
+    <h1>
+      <%= gravatar_for @user %>
+      <%= @user.name %>
+    </h1>
+  </section>
+  <section class="stats">
+    <%= render 'shared/stats' %>
+  </section>
+  <p><%= link_to 'ユーザー情報を編集する', edit_user_path(@user) if current_user?(@user) %></p>
+  <p><%= link_to 'すべてのユーザーをみる', users_path %></p>
+</aside>
+<div class="col-md-8">
+  <% if @ramen_shops.any? %>
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0"><%= tag.span("お気に入り店 #{@user.favorite_shops.count}") %></h6>
+    <%= render @ramen_shops %>
+    <div class="d-flex justify-content-end mt-3">
+      <%= paginate @ramen_shops %>
+    </div>
+  </div>
+  <% end %>
+</div>
