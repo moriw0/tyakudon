@@ -1,0 +1,7 @@
+<div id="favorite_form">
+  <% if current_user.favorites?(@ramen_shop) %>
+    <%= render 'remove_favorite' %>
+  <% else %>
+    <%= render 'add_favorite' %>
+  <% end %>
+</div>

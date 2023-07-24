@@ -1,4 +1,5 @@
 <div class="container">
+  <%= render 'favorite_form' if logged_in? %>
   <h2 class="my-4"><%= @ramen_shop.name %></h2>
   <p class="mb-4"><%= @ramen_shop.address %></p>
   <div class="my-3 p-3 bg-body rounded shadow-sm">
