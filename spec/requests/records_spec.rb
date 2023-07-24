@@ -83,11 +83,11 @@ RSpec.describe 'Records' do
         end
       end
 
-      context 'the record.ended_at? is true' do
+      context 'when the record.ended_at? is true' do
         it 'redirects to root_path' do
           log_in_as(user)
           do_request
-          redirect_to root_path
+          expect(response).to redirect_to root_path
         end
       end
     end

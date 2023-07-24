@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Records", type: :system, js: true do
+RSpec.describe 'Records', js: true do
   let(:user) { create(:user) }
   let!(:ramen_shop) { create(:ramen_shop) }
 
@@ -8,14 +8,14 @@ RSpec.describe "Records", type: :system, js: true do
     log_in_as(user)
   end
 
-  scenario "user creates a record of the nearby ramen shop" do
-    click_link "現在地からセツゾク"
+  scenario 'user creates a record of the nearby ramen shop' do
+    click_link '現在地からセツゾク'
 
     # searchページ
     expect(page).to_not have_link '現在地からセツゾク'
-    expect(page).to have_css ".loading-spinner"
-    expect(page).to have_css '#map', visible: true, wait: 15
-    expect(page).to_not have_css ".loading-spinner"
+    expect(page).to have_css '.loading-spinner'
+    expect(page).to have_css '#map', visible: :visible, wait: 15
+    expect(page).to_not have_css '.loading-spinner'
 
     # 接続するラーメン店を選択して最初の待ち行列情報を入力
     click_link ramen_shop.name, href: new_ramen_shop_record_path(ramen_shop)
