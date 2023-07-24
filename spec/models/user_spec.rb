@@ -95,11 +95,11 @@ RSpec.describe User do
     expect { user.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
   end
 
-  it "adds favorite and removes favorite " do
-    expect(user.favorites?(ramen_shop)).to be_falsey
+  it 'adds favorite and removes favorite' do
+    expect(user).to_not be_favorites(ramen_shop)
     user.add_favorite(ramen_shop)
-    expect(user.favorites?(ramen_shop)).to be_truthy
+    expect(user).to be_favorites(ramen_shop)
     user.remove_favorite(ramen_shop)
-    expect(user.favorites?(ramen_shop)).to be_falsey
+    expect(user).to_not be_favorites(ramen_shop)
   end
 end

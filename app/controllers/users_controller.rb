@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   end
 
   def favorite_shops
-    @user  = User.find(params[:id])
+    @user = User.find(params[:id])
     @ramen_shops = @user.favorite_shops.page(params[:page])
   end
 

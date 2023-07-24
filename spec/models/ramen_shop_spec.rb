@@ -20,6 +20,6 @@ RSpec.describe RamenShop do
     user = create(:user)
     ramen_shop = create(:ramen_shop)
     user.add_favorite(ramen_shop)
-    expect(ramen_shop.favorited_by?(user)).to be_truthy
+    expect(ramen_shop).to be_favorited_by(user)
   end
 end

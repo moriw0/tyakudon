@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Favorite, type: :model do
+RSpec.describe Favorite do
   let(:user) { create(:user) }
   let(:ramen_shop) { create(:ramen_shop) }
 
@@ -16,7 +16,7 @@ RSpec.describe Favorite, type: :model do
   end
 
   it 'is invalid without user' do
-    favorite = Favorite.new(ramen_shop: ramen_shop, user: nil)
+    favorite = described_class.new(ramen_shop: ramen_shop, user: nil)
     favorite.valid?
     expect(favorite.errors[:user]).to include 'を入力してください'
   end

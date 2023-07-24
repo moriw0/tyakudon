@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Favorites", type: :system do
+RSpec.describe 'Favorites' do
   let(:user) { create(:user) }
   let(:ramen_shops) { create_list(:ramen_shop, 5) }
 
@@ -11,7 +11,7 @@ RSpec.describe "Favorites", type: :system do
     log_in_as(user)
   end
 
-  scenario "favorite_shops_page" do
+  scenario 'favorite_shops_page' do
     visit favorites_by_user_path(user)
     expect(page).to have_content 'お気に入り店 5'
     user.favorite_shops.each do |shop|

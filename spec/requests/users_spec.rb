@@ -178,6 +178,7 @@ RSpec.describe 'Users' do
 
   describe 'GET /user/:id/favorite_shops' do
     let(:user) { create(:user) }
+
     context 'when not logged in' do
       it 'redirects to login_path' do
         get favorites_by_user_path(user)

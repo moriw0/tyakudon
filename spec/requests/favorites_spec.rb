@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Favorites", type: :request do
+RSpec.describe 'Favorites' do
   let(:user) { create(:user) }
   let(:ramen_shop) { create(:ramen_shop) }
 
@@ -54,7 +54,7 @@ RSpec.describe "Favorites", type: :request do
 
       it 'remove shop from favorite with Hotwire' do
         expect {
-          delete favorite_path(favorite)
+          delete favorite_path(favorite), as: :turbo_stream
         }.to change(Favorite, :count).by(-1)
       end
     end
