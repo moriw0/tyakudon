@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Logins' do
-  before do
-    driven_by(:rack_test)
-  end
-
   let(:user) { create(:user) }
 
   scenario 'login with valid email and invalid password' do

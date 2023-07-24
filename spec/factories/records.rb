@@ -5,7 +5,6 @@ FactoryBot.define do
     wait_time { 600 }
     comment { 'いただきます！' }
     ramen_shop
-    created_at { 1.minute.ago }
     user
 
     factory :oldest do
