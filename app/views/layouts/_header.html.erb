@@ -8,7 +8,7 @@
       <div class="navbar-nav">
         <% if logged_in? %>
           <%= link_to "プロフィール", current_user, class: 'nav-link' %>
-          <%= link_to "お気に入り", '#', class: 'nav-link' %>
+          <%= link_to "お気に入り", favorites_by_user_path(current_user), class: 'nav-link' %>
           <%= link_to "ログアウト", logout_path, data: { "turbo-method": :delete }, class: 'nav-link' %>
         <% else %>
           <%= link_to "ログイン", login_path, class: "nav-link" %>

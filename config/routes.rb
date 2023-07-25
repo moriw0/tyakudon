@@ -14,7 +14,10 @@ Rails.application.routes.draw do
       resources :line_statuses
     end
   end
-  resources :users
+  resources :users do
+      get 'favorite_shops', on: :member, as: :favorites_by
+  end
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :favorites, only: [:create, :destroy]
 end

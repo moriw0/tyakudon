@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[index edit update destroy]
+  before_action :logged_in_user, only: %i[index edit update destroy favorite_shops]
   before_action :correct_user, only: %i[edit update]
   before_action :admin_user, only: :destroy
 
@@ -43,6 +43,11 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     redirect_to users_url, status: :see_other, notice: 'ユーザーを削除しました'
+  end
+
+  def favorite_shops
+    @user = User.find(params[:id])
+    @ramen_shops = @user.favorite_shops.page(params[:page])
   end
 
   private

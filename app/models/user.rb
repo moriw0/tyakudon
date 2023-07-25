@@ -2,6 +2,9 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
   has_many :records, dependent: :restrict_with_exception
+  has_many :favorites, dependent: :restrict_with_exception
+  has_many :favorite_shops, through: :favorites, source: :ramen_shop
+
   before_save :downcase_email
   before_create :create_activation_digest
 
@@ -72,6 +75,18 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def favorites?(shop)
+    favorite_shops.include?(shop)
+  end
+
+  def add_favorite(shop)
+    favorite_shops << shop unless favorites?(shop)
+  end
+
+  def remove_favorite(shop)
+    favorite_shops.delete(shop) if favorites?(shop)
   end
 
   private

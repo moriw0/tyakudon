@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User do
   let(:user) { build(:user) }
+  let(:ramen_shop) { create(:ramen_shop) }
 
   it 'is valid with name and email' do
     new_user = described_class.new(
@@ -92,5 +93,13 @@ RSpec.describe User do
     user = create(:user)
     create(:record, user: user)
     expect { user.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
+  end
+
+  it 'adds favorite and removes favorite' do
+    expect(user).to_not be_favorites(ramen_shop)
+    user.add_favorite(ramen_shop)
+    expect(user).to be_favorites(ramen_shop)
+    user.remove_favorite(ramen_shop)
+    expect(user).to_not be_favorites(ramen_shop)
   end
 end
