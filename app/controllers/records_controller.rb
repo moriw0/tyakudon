@@ -46,7 +46,7 @@ class RecordsController < ApplicationController
     if @record.ended_at?
       redirect_to root_path, status: :see_other
     else
-      @record.calculate_wait_time!
+      @record.update!(calculated_record_params)
       forget_record
       redirect_to result_record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
     end
@@ -75,6 +75,10 @@ class RecordsController < ApplicationController
 
   def create_record_params
     params.require(:record).permit(:ramen_shop_id, :user_id, line_statuses_attributes: %i[line_number line_type comment])
+  end
+
+  def calculated_record_params
+    params.require(:record).permit(:ended_at, :wait_time)
   end
 
   def update_record_params

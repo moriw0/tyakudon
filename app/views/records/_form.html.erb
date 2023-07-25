@@ -2,7 +2,6 @@
   <%= bootstrap_form_with model: @record, url: ramen_shop_records_path, data: { action: "turbo:submit-end->modal#close" } do |f| %>
     <%= f.hidden_field :ramen_shop_id %>
     <%= f.hidden_field :user_id %>
-    <%= f.hidden_field :started_at, id: 'started' %>
     <%= f.fields_for :line_statuses do |form| %>
       <%= render "line_statuses/form", f: form %>
     <% end %>

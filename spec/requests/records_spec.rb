@@ -94,7 +94,13 @@ RSpec.describe 'Records' do
 
 
   describe 'GET /records/:id/calculate #calculate' do
-    let(:do_request) { patch calculate_record_path(record) }
+    let(:do_request) { patch calculate_record_path(record), params: calculated_record_params }
+    let(:calculated_record_params) do
+      started_at = record.started_at
+      ended_at = Time.now
+      wait_time = ended_at - started_at
+      { record: { ended_at: ended_at, wait_time: wait_time } }
+    end
 
     it_behaves_like 'when not logged in'
 
