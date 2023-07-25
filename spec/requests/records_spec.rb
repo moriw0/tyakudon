@@ -47,9 +47,17 @@ RSpec.describe 'Records' do
         log_in_as(user)
       end
 
-      it 'redirects to measure_record_path with valid information' do
-        do_request
-        expect(response).to redirect_to measure_record_path(record)
+      context 'with valid information' do
+        it 'updates started_at when logged in' do
+          log_in_as(user)
+          do_request
+          expect(record.started_at).to_not be_nil
+        end
+
+        it 'redirects to measure_record_path' do
+          do_request
+          expect(response).to redirect_to measure_record_path(record)
+        end
       end
 
       context 'with invalid information' do
@@ -74,15 +82,6 @@ RSpec.describe 'Records' do
     it_behaves_like 'when not logged in'
 
     context 'when logged in' do
-      context 'when a record is not remembered' do
-        it 'updates started_at when logged in' do
-          record.update(started_at: nil, ended_at: nil)
-          log_in_as(user)
-          do_request
-          expect(record.reload.started_at).to_not be_nil
-        end
-      end
-
       context 'when the record.ended_at? is true' do
         it 'redirects to root_path' do
           log_in_as(user)
@@ -93,12 +92,9 @@ RSpec.describe 'Records' do
     end
   end
 
-  describe 'PATCH /records/:id #update' do
-    let(:do_request) { patch record_path(record), params: record_params }
-    let(:instance_record) { controller.instance_variable_get(:@record) }
-    let(:record_params) do
-      { record: { started_at: 1.minute.ago } }
-    end
+
+  describe 'GET /records/:id/calculate #calculate' do
+    let(:do_request) { patch calculate_record_path(record) }
 
     it_behaves_like 'when not logged in'
 
@@ -108,14 +104,62 @@ RSpec.describe 'Records' do
       end
 
       it 'updates wait_time' do
-        record.update(wait_time: nil)
+        record.update(ended_at: nil, wait_time: nil)
         do_request
         expect(record.reload.wait_time).to_not be_nil
       end
 
+      it 'redirects to root_path if ended' do
+        record.update(ended_at: Time.now)
+        do_request
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
+
+  describe 'GET /records/:id/result #result' do
+    let(:do_request) { get result_record_path(record) }
+
+    it_behaves_like 'when not logged in'
+
+    context 'when logged in' do
+      before do
+        log_in_as(user)
+      end
+
+      it 'has the wait_time in response body' do
+        do_request
+        expect(response.body).to include '着丼してひとこと'
+      end
+    end
+  end
+
+  describe 'PATCH /records/:id #update' do
+    let(:do_request) { patch record_path(record), params: record_params }
+    let(:record_params) { { record: { comment: 'ちゃくどん' } } }
+
+    it_behaves_like 'when not logged in'
+
+    context 'when logged in' do
+      before do
+        log_in_as(user)
+      end
+
+      it 'updates comment' do
+        record.update(comment: nil)
+        do_request
+        expect(record.reload.comment).to include 'ちゃくどん'
+      end
+
       it 'redirects to record_path' do
         do_request
-        expect(response).to redirect_to record_path(instance_record)
+        expect(response).to redirect_to record_path(record)
+      end
+
+      it 'shows error message with long comment' do
+        invalid_record_params = { record: { comment: 'a' * 141 } }
+        patch record_path(record), params: invalid_record_params
+        expect(response.body).to include 'は140文字以内で入力してください'
       end
     end
   end

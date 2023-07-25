@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :ramen_shops, only: [:index, :show] do
     resources :records, only: [:show, :new, :create, :edit, :update], shallow: true do
       get 'measure', on: :member
+      patch 'calculate', on: :member
+      get 'result', on: :member
       resources :line_statuses
     end
   end

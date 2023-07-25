@@ -2,7 +2,7 @@
 <p><%= @ramen_shop.address %></p>
 <div data-controller="timer">
   <div data-timer-target="time">00:00:00.000</div>
-  <%= bootstrap_form_with model: @record do |f| %>
+  <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
   <%= f.hidden_field :started_at, value: @record.started_at&.iso8601, data: { timer_target: "started" } %>
   <div class="d-grid">
     <%= f.submit 'ちゃくどん', data: { action: "click->timer#end" } , class: "btn btn-warning" %>

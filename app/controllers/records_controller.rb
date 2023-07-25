@@ -1,10 +1,10 @@
 class RecordsController < ApplicationController
   include RecordsHelper
 
-  before_action :logged_in_user, only: %i[new edit create measure update]
-  before_action :set_record, only: %i[show measure edit update]
+  before_action :logged_in_user, only: %i[new edit create measure calculate result update]
+  before_action :set_record, only: %i[show measure edit calculate result update]
   before_action :set_ramen_shop, except: %i[new create]
-  before_action :disable_connect_button, only: %i[measure]
+  before_action :disable_connect_button, only: %i[measure result]
 
   def show
   end
@@ -19,7 +19,8 @@ class RecordsController < ApplicationController
   end
 
   def create
-    @record = Record.new(record_param)
+    @record = Record.new(create_record_params)
+    @record.assign_attributes(started_at: Time.zone.now)
 
     if @record.save
       redirect_to measure_record_path(@record), status: :see_other
@@ -37,20 +38,28 @@ class RecordsController < ApplicationController
       redirect_to root_path, status: :see_other
     else
       remember_record
-      @record.update(started_at: Time.current)
       flash.notice = 'セツゾクしました'
     end
   end
 
-  def update
-    @record.assign_attributes(record_param)
-    @record.calculate_wait_time!
-
-    if @record.save
-      forget_record
-      redirect_to record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
+  def calculate
+    if @record.ended_at?
+      redirect_to root_path, status: :see_other
     else
-      render :edit
+      @record.calculate_wait_time!
+      forget_record
+      redirect_to result_record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
+    end
+  end
+
+  def result
+  end
+
+  def update
+    if @record.update(update_record_params)
+      redirect_to record_path(@record), notice: '投稿しました', status: :see_other
+    else
+      render :result
     end
   end
 
@@ -64,9 +73,12 @@ class RecordsController < ApplicationController
     @ramen_shop = @record.ramen_shop
   end
 
-  def record_param
-    params.require(:record).permit(:ramen_shop_id, :started_at, :ended_at, :comment, :user_id,
-                                   line_statuses_attributes: %i[line_number line_type comment])
+  def create_record_params
+    params.require(:record).permit(:ramen_shop_id, :user_id, line_statuses_attributes: %i[line_number line_type comment])
+  end
+
+  def update_record_params
+    params.require(:record).permit(:comment)
   end
 
   def set_record_from_cookies
