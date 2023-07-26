@@ -31,7 +31,7 @@ RSpec.describe 'Records' do
       { record: {
         ramen_shop_id: ramen_shop.id,
         user_id: user.id,
-        started_at: nil,
+        started_at: Time.now,
         line_statuses_attributes: [
           line_number: 1,
           line_type: 'inside_the_store',

@@ -20,7 +20,7 @@ class RecordsController < ApplicationController
 
   def create
     @record = Record.new(create_record_params)
-    @record.assign_attributes(started_at: Time.zone.now)
+    # @record.assign_attributes(started_at: Time.zone.now)
 
     if @record.save
       redirect_to measure_record_path(@record), status: :see_other
@@ -74,7 +74,7 @@ class RecordsController < ApplicationController
   end
 
   def create_record_params
-    params.require(:record).permit(:ramen_shop_id, :user_id, line_statuses_attributes: %i[line_number line_type comment])
+    params.require(:record).permit(:ramen_shop_id, :user_id, :started_at, line_statuses_attributes: %i[line_number line_type comment])
   end
 
   def calculated_record_params
