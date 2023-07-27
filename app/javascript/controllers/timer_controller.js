@@ -1,14 +1,12 @@
 import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="timer"
 export default class extends Controller {
-  static targets = ["time", "started"];
+  static targets = ["time", "startedAt", "endedAt", "waitTime"];
 
   connect() {
     const timeElement = this.timeTarget;
-    const startedElement = this.startedTarget;
+    const startedAtValue = this.data.get("startedAt");
 
-    // Format time in HH:MM:SS.mmm
     const formatTime = (time) => {
       const hours = String(Math.floor(time / 3600)).padStart(2, "0");
       const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, "0");
@@ -20,8 +18,7 @@ export default class extends Controller {
       return `${hours}:${minutes}:${seconds}.${milliseconds}`;
     };
 
-    // Start timer
-    const startTime = new Date(startedElement.value).getTime();
+    const startTime = new Date(startedAtValue).getTime();
     const updateTimer = () => {
       const currentTime = new Date().getTime();
       const elapsedTime = (currentTime - startTime) / 1000;
@@ -29,11 +26,17 @@ export default class extends Controller {
       timeElement.innerText = formatTime(elapsedTime);
     };
 
-    this.timer = setInterval(updateTimer, 10);
+    this.timer = setInterval(updateTimer, 1);
   }
 
   end() {
     clearInterval(this.timer);
+    const endedAt = new Date();
+    const startedAt = new Date(this.data.get("startedAt"));
+    const waitTime = (endedAt - startedAt) / 1000;
+
+    this.endedAtTarget.value = endedAt;
+    this.waitTimeTarget.value = waitTime;
   }
 
   disconnect() {

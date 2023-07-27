@@ -1,14 +1,15 @@
 <p><%= @ramen_shop.name %></p>
 <p><%= @ramen_shop.address %></p>
-<div data-controller="timer">
+<div data-controller="timer" data-timer-started-at="<%= @record.started_at&.iso8601 %>">
   <div data-timer-target="time">00:00:00.000</div>
-  <%= bootstrap_form_with model: @record do |f| %>
-  <%= f.hidden_field :started_at, value: @record.started_at&.iso8601, data: { timer_target: "started" } %>
-  <div class="d-grid">
-    <%= f.submit 'ちゃくどん', data: { action: "click->timer#end" } , class: "btn btn-warning" %>
-  </div>
+  <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
+    <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
+    <%= f.hidden_field :wait_time, data: { timer_target: "waitTime" } %>
+    <div class="d-grid">
+      <%= f.submit 'ちゃくどん', data: { action: "click->timer#end" } , class: "btn btn-warning" %>
+    </div>
+  <% end %>
 </div>
-<% end %>
 <div class="my-3 p-3 bg-body rounded shadow-sm">
   <div class="d-flex justify-content-between border-bottom pb-2 mb-0">
     <h6><%= tag.span("行列の様子") %></h6>
