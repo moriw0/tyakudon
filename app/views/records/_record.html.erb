@@ -11,6 +11,9 @@
         <% if record.comment %>
           <p class="mb-1">ひとこと: <%= record.comment %></p>
         <% end %>
+        <% if record.image.attached? %>
+          <%= image_tag record.image.variant(:display) %>
+        <% end %>
       </div>
       <div class="d-flex justify-content-end">
         <%= link_to '詳細', record_path(record) %>

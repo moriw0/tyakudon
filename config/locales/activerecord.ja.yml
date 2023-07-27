@@ -15,6 +15,7 @@ ja:
         ended_at: 着丼時刻
         wait_time: 待ち時間
         comment: コメント
+        image: 写真
       line_status:
         line_number: 待ち行列数
         line_type: タイプ

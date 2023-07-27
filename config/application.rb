@@ -26,5 +26,6 @@ module Tyakudon
         helper_specs: false,
         routing_specs: false
     end
+    config.active_storage.variant_processor = :mini_magick
   end
 end
