@@ -60,6 +60,7 @@ gem 'ransack'
 gem "bootstrap_form"
 gem 'faker'
 gem 'seed-fu'
+gem 'active_storage_validations'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
