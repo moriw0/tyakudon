@@ -161,13 +161,10 @@ aside {
   }
 }
 
-.gravatar {
+.avatar {
   float: left;
+  border-radius: 50%;
   margin-right: 10px;
-}
-
-.gravatar_edit {
-  margin-top: 15px;
 }
 
 /* Users index */
@@ -202,6 +199,7 @@ aside {
 .image {
   .image-prev {
     max-width: 150px;
+    border-radius: 50%;
     margin-bottom: 15px;
   }
 }

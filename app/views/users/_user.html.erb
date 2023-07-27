@@ -1,5 +1,5 @@
 <li>
-  <%= gravatar_for user, size: 32 %>
+  <%= avatar_for user %>
   <%= link_to user.name, user_path(user) %>
   <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "削除", user, data: { "turbo-method": :delete,
