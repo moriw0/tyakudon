@@ -1,8 +1,8 @@
 class RecordsController < ApplicationController
   include RecordsHelper
 
-  before_action :logged_in_user, only: %i[new edit create measure calculate result update]
-  before_action :set_record, only: %i[show measure edit calculate result update]
+  before_action :logged_in_user, except: %i[show]
+  before_action :set_record, except: %i[new create]
   before_action :set_ramen_shop, except: %i[new create]
   before_action :disable_connect_button, only: %i[measure result]
 
@@ -20,7 +20,6 @@ class RecordsController < ApplicationController
 
   def create
     @record = Record.new(create_record_params)
-    # @record.assign_attributes(started_at: Time.zone.now)
 
     if @record.save
       redirect_to measure_record_path(@record), status: :see_other
