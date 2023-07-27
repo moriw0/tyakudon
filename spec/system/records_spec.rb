@@ -52,11 +52,19 @@ RSpec.describe 'Records', js: true do
     expect(page).to have_content '00:00:05', wait: 2
     click_button 'ちゃくどん'
 
-    # 着丼後のRecordページ
+    # 着丼後の投稿ページ
     expect(page).to have_content 'ちゃくどんレコードを登録しました'
     expect(page).to have_content '00:00:05'
+    fill_in '着丼してひとこと', with: '着丼しました'
+    click_button '投稿する'
 
-    # ブラウザバックするとmeasureページでなくroot_pathへリダイレクト
+    # Recordページ
+    expect(page).to have_content '投稿しました'
+    expect(page).to have_content '00:00:05'
+    expect(page).to have_content '着丼しました'
+
+    # measureまでブラウザバックするとroot_pathへリダイレクト
+    go_back
     go_back
     expect(page).to have_current_path(root_path)
     expect(page).to have_link '現在地からセツゾク'
