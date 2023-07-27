@@ -4,7 +4,9 @@
 <p>着丼: <%= format_datetime @record.ended_at %></p>
 <%= bootstrap_form_with model: @record do |f| %>
   <%= f.text_area :comment, label: { text: "着丼してひとこと" } %>
-  <%= f.file_field :image %>
+  <div data-controller="image-uploader">
+    <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#checkImage", image_uploader_target: "image" } %>
+  </div>
   <div class="d-grid">
     <%= f.submit '投稿する', class: "btn btn-warning" %>
   </div>
