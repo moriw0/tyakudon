@@ -41,7 +41,7 @@ RSpec.describe 'Users' do
       expect(page).to have_content '入力してください'
       expect(page).to have_content '不正な値です'
       expect(page).to have_content '6文字以上で入力してください'
-      expect(page).to have_content 'Passwordの入力が一致しません'
+      expect(page).to have_content 'パスワードの入力が一致しません'
     }.to_not change(User, :count)
   end
 
@@ -105,7 +105,7 @@ RSpec.describe 'Users' do
       create_list(:many_records, 15, user: user)
       visit user_path(user)
       expect(find('h1')).to have_content user.name
-      expect(find('h1>img.gravatar')).to be_truthy
+      expect(find('h1>img.avatar')).to be_truthy
       expect(find('h6>span')).to have_content user.records.count
       expect(find('ul.pagination')).to be_truthy
       user.records.page(1).each do |record|
