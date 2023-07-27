@@ -56,12 +56,14 @@ RSpec.describe 'Records', js: true do
     expect(page).to have_content 'ちゃくどんレコードを登録しました'
     expect(page).to have_content '00:00:05'
     fill_in '着丼してひとこと', with: '着丼しました'
+    attach_file '写真', Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png'), make_visible: true
     click_button '投稿する'
 
     # Recordページ
     expect(page).to have_content '投稿しました'
     expect(page).to have_content '00:00:05'
     expect(page).to have_content '着丼しました'
+    expect(page).to have_selector("img[src$='1000x800_4.2MB.png']")
 
     # measureまでブラウザバックするとroot_pathへリダイレクト
     go_back
