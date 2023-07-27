@@ -9,6 +9,7 @@
   <% if @record.comment %>
     <p>着丼してひとこと: <%= @record.comment %></p>
   <% end %>
+  <%= image_tag @record.image if @record.image.attached? %>
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <h6 class="border-bottom pb-2 mb-0"><%= tag.span("行列の様子") %></h6>
     <%= render @record.line_statuses %>

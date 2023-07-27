@@ -82,7 +82,7 @@ class RecordsController < ApplicationController
   end
 
   def update_record_params
-    params.require(:record).permit(:comment)
+    params.require(:record).permit(:comment, :image)
   end
 
   def set_record_from_cookies
