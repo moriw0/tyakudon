@@ -58,7 +58,7 @@ class RecordsController < ApplicationController
     if @record.update(update_record_params)
       redirect_to record_path(@record), notice: '投稿しました', status: :see_other
     else
-      render :result
+      render :result, status: :unprocessable_entity
     end
   end
 

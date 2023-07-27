@@ -20,6 +20,12 @@ RSpec.describe Record do
       create_list(:many_records, 10, user: user)
       expect(create(:most_recent, user: user)).to eq described_class.first
     end
+
+    it 'is valid with a 4.2 MB image' do
+      record = build(:record)
+      record.image = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/files/1000x800_4.2MB.png'))
+      expect(record).to be_valid
+    end
   end
 
   context 'with invalid information' do
@@ -33,6 +39,20 @@ RSpec.describe Record do
       record = build(:record, comment: '*' * 141)
       record.valid?
       expect(record.errors[:comment]).to include('は140文字以内で入力してください')
+    end
+
+    it 'is invalid with a 5.2 MB image' do
+      record = build(:record)
+      record.image = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/files/1000x800_5.3MB.png'))
+      record.valid?
+      expect(record.errors[:image]).to include 'は5MB以下である必要があります'
+    end
+
+    it 'is invalid with a gif image' do
+      record = build(:record)
+      record.image = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/files/ramen.gif'))
+      record.valid?
+      expect(record.errors[:image]).to include 'のフォーマットが不正です'
     end
   end
 end
