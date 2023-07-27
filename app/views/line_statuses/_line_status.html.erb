@@ -1,6 +1,6 @@
 <%= tag.div id: dom_id(line_status) do %>
   <div class="d-flex text-body-secondary pt-3">
-    <%= link_to avatar_for(line_status.record.user), line_status.record.user %>
+    <%= link_to avatar_for(line_status.record.user, :small), line_status.record.user %>
     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
       <div class="mb-1 d-flex w-100 justify-content-between">
         <span class="d-block text-gray-dark"><%= line_status.record.user.name %></span>

@@ -164,6 +164,16 @@ aside {
 .avatar {
   float: left;
   border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+.small-avatar {
+  float: left;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
   margin-right: 10px;
 }
 
