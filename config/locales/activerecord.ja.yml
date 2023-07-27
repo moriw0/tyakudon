@@ -1,10 +1,17 @@
 ja:
   activerecord:
     models:
+      user: ユーザー
       ramen_shop: ラーメン店
       record: ちゃくどんレコード
       line_status: 待ち行列状態
     attributes:
+      user:
+        name: ニックネーム
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード(確認)
+        avatar: アバター
       ramen_shop:
         name: 店名
         address: 住所

@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_many :records, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
   has_many :favorite_shops, through: :favorites, source: :ramen_shop
+  has_one_attached :avatar do |attachable|
+    attachable.variant :display, resize_to_limit: [100, 100]
+  end
 
   before_save :downcase_email
   before_create :create_activation_digest
@@ -15,6 +18,10 @@ class User < ApplicationRecord
                     uniqueness: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :avatar, content_type: { in: %i[png jpg jpeg],
+                                    message: 'のフォーマットが不正です' },
+                    size: { less_than_or_equal_to: 5.megabytes,
+                            message: 'は5MB以下である必要があります' }
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
