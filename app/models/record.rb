@@ -12,7 +12,6 @@ class Record < ApplicationRecord
   validates :comment, length: { maximum: 140 }
   validates :image, content_type: { in: %i[png jpg jpeg],
                                     message: 'のフォーマットが不正です' },
-                    size:         { less_than_or_equal_to: 5.megabytes,
-                                    message: 'は5MB以下である必要があります' }
-
+                    size: { less_than_or_equal_to: 5.megabytes,
+                            message: 'は5MB以下である必要があります' }
 end
