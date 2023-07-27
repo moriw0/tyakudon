@@ -2,7 +2,9 @@ class Record < ApplicationRecord
   belongs_to :user
   belongs_to :ramen_shop
   has_many :line_statuses, dependent: :destroy
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :display, resize_to_limit: [250, 250]
+  end
   accepts_nested_attributes_for :line_statuses
 
   default_scope -> { order(created_at: :desc) }
