@@ -31,7 +31,7 @@ RSpec.describe 'Records' do
       { record: {
         ramen_shop_id: ramen_shop.id,
         user_id: user.id,
-        started_at: Time.now,
+        started_at: Time.zone.now,
         line_statuses_attributes: [
           line_number: 1,
           line_type: 'inside_the_store',
@@ -92,12 +92,11 @@ RSpec.describe 'Records' do
     end
   end
 
-
   describe 'GET /records/:id/calculate #calculate' do
     let(:do_request) { patch calculate_record_path(record), params: calculated_record_params }
     let(:calculated_record_params) do
       started_at = record.started_at
-      ended_at = Time.now
+      ended_at = Time.zone.now
       wait_time = ended_at - started_at
       { record: { ended_at: ended_at, wait_time: wait_time } }
     end
@@ -116,7 +115,7 @@ RSpec.describe 'Records' do
       end
 
       it 'redirects to root_path if ended' do
-        record.update(ended_at: Time.now)
+        record.update(ended_at: Time.zone.now)
         do_request
         expect(response).to redirect_to root_path
       end
