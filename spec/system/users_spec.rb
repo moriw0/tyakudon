@@ -15,7 +15,7 @@ RSpec.describe 'Users' do
     }.to change(User, :count).by(1)
   end
 
-  scenario 'user cannot update the account with invalid information' do
+  scenario 'user update the account with valid information' do
     log_in_as(user)
     visit edit_user_path(user)
     expect {
@@ -23,13 +23,15 @@ RSpec.describe 'Users' do
       fill_in 'メールアドレス', with: 'foo@bar.com'
       fill_in 'パスワード', with: ''
       fill_in 'パスワード(確認)', with: ''
+      attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png'), make_visible: true
       click_button '更新する'
       expect(page).to have_content 'ユーザー情報を更新しました'
       expect(page).to have_content 'Foo bar'
+      expect(page).to have_selector("img[src$='1000x800_4.2MB.png'].avatar")
     }.to_not change(User, :count)
   end
 
-  scenario 'user update the account with valid information' do
+  scenario 'user cannot update the account with invalid information' do
     log_in_as(user)
     visit edit_user_path(user)
     expect {
@@ -37,11 +39,13 @@ RSpec.describe 'Users' do
       fill_in 'メールアドレス', with: 'foo@invalid'
       fill_in 'パスワード', with: 'foo'
       fill_in 'パスワード(確認)', with: 'bar'
+      attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png'), make_visible: true
       click_button '更新する'
       expect(page).to have_content '入力してください'
       expect(page).to have_content '不正な値です'
       expect(page).to have_content '6文字以上で入力してください'
       expect(page).to have_content 'パスワードの入力が一致しません'
+      expect(page).to have_content '5MB以下である必要があります'
     }.to_not change(User, :count)
   end
 
