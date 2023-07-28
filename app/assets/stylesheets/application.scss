@@ -161,13 +161,20 @@ aside {
   }
 }
 
-.gravatar {
+.avatar {
   float: left;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
   margin-right: 10px;
 }
 
-.gravatar_edit {
-  margin-top: 15px;
+.small-avatar {
+  float: left;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  margin-right: 10px;
 }
 
 /* Users index */
@@ -201,7 +208,9 @@ aside {
 
 .image {
   .image-prev {
-    max-width: 150px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
     margin-bottom: 15px;
   }
 }
