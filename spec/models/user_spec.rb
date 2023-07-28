@@ -9,7 +9,8 @@ RSpec.describe User do
       name: 'Example User',
       email: 'user@example.com',
       password: 'foobar',
-      password_confirmation: 'foobar'
+      password_confirmation: 'foobar',
+      avatar: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s)
     )
 
     expect(new_user).to be_valid
@@ -37,6 +38,18 @@ RSpec.describe User do
     user.email = "#{'a' * 244}@example.com"
     user.valid?
     expect(user.errors[:email]).to include('は255文字以内で入力してください')
+  end
+
+  it 'is invalid with a 5.2 MB image' do
+    user.avatar = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s)
+    user.valid?
+    expect(user.errors[:avatar]).to include 'は5MB以下である必要があります'
+  end
+
+  it 'is invalid with a gif image' do
+    user.avatar = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/ramen.gif').to_s)
+    user.valid?
+    expect(user.errors[:avatar]).to include 'のフォーマットが不正です'
   end
 
   it 'is valid with valid addresses' do
