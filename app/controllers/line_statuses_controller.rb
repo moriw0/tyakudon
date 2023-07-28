@@ -41,6 +41,6 @@ class LineStatusesController < ApplicationController
   end
 
   def line_status_params
-    params.require(:line_status).permit(:line_number, :line_type, :comment)
+    params.require(:line_status).permit(:line_number, :line_type, :comment, :image)
   end
 end
