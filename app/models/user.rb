@@ -17,9 +17,9 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :avatar, content_type: { in: %i[png jpg jpeg],
-                                    message: 'のフォーマットが不正です' },
-                    size: { less_than_or_equal_to: 5.megabytes,
-                            message: 'は5MB以下である必要があります' }
+                                     message: 'のフォーマットが不正です' },
+                     size: { less_than_or_equal_to: 5.megabytes,
+                             message: 'は5MB以下である必要があります' }
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
