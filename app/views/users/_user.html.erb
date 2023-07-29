@@ -5,4 +5,5 @@
     | <%= link_to "削除", user, data: { "turbo-method": :delete,
                                           turbo_confirm: "本当に削除しますか？" } %>
   <% end %>
+  <%= render 'test_mode/form', user: user if current_user.admin? %>
 </li>
