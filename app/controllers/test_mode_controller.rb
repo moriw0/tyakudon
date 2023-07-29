@@ -5,10 +5,6 @@ class TestModeController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update!(user_params)
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to users_path, notice: 'saved!' }
-    end
   end
 
   private

@@ -1,0 +1,3 @@
+<%= bootstrap_form_with model: user, url: test_mode_path(user.id), data: { controller: 'test-mode' } do |f| %>
+  <%= f.check_box :is_test_mode, switch: true, data: { action: "change->test-mode#submitForm" } %>
+<% end%>
