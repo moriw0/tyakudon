@@ -1,4 +1,5 @@
 class LineStatusesController < ApplicationController
+  before_action :logged_in_user, except: %i[show]
   before_action :set_record, only: %i[new create]
   before_action :set_line_status, only: %i[show edit update]
 
