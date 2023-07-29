@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'LineStatuses' do
   let(:user) { create(:user) }
-  let(:record) { create(:record, user: user ) }
+  let(:record) { create(:record, user: user) }
   let(:line_status) { create(:line_status, record: record) }
 
   shared_examples 'when not logged in' do
