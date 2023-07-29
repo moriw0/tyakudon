@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       get 'measure', on: :member
       patch 'calculate', on: :member
       get 'result', on: :member
-      resources :line_statuses
+      resources :line_statuses, except: [:index, :destroy]
     end
   end
   resources :users do

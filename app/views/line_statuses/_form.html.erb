@@ -5,3 +5,7 @@
   <%= f.radio_button :line_type, :other, label: "その他" %>
 <% end %>
 <%= f.text_area :comment, label: { text: "ひとこと" } %>
+<div class="image" data-controller="image-uploader">
+  <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
+  <%= image_tag '', data: { image_uploader_target: "imagePrev" }, class: 'image-prev', style: 'display:none' %>
+</div>

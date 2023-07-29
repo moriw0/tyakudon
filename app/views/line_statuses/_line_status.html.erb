@@ -13,6 +13,9 @@
           <% if line_status.comment.present? %>
             <p class="mb-1">ひとこと: <%= line_status.comment %></p>
           <% end %>
+          <% if line_status.image.attached? %>
+            <%= image_tag line_status.image.variant(:display) %>
+          <% end %>
         </div>
         <div>
           <%= link_to '編集', edit_line_status_path(line_status), data: { turbo_stream: true } %>

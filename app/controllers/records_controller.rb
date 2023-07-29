@@ -74,7 +74,7 @@ class RecordsController < ApplicationController
 
   def create_record_params
     params.require(:record).permit(:ramen_shop_id, :user_id, :started_at,
-                                   line_statuses_attributes: %i[line_number line_type comment])
+                                   line_statuses_attributes: %i[line_number line_type comment image])
   end
 
   def calculated_record_params
