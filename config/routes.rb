@@ -17,7 +17,8 @@ Rails.application.routes.draw do
     end
   end
   resources :users do
-      get 'favorite_shops', on: :member, as: :favorites_by
+    get 'favorite_shops', on: :member, as: :favorites_by
+    patch 'update_test_mode', on: :member
   end
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
