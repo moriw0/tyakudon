@@ -63,7 +63,7 @@ class RecordsController < ApplicationController
   end
 
   def retire
-    @record.update!(is_retired: true)
+    @record.calculate_wait_time_for_retire!
     forget_record
     redirect_to root_path, notice: 'リタイアしました', status: :see_other
   end
