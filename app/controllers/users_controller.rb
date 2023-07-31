@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[index edit update destroy favorite_shops]
+  before_action :logged_in_user, only: %i[index edit update destroy favorite_shops update_test_mode]
   before_action :correct_user, only: %i[edit update]
-  before_action :admin_user, only: :destroy
+  before_action :admin_user, only: %i[destroy update_test_mode]
 
   def index
     @users = User.where(activated: true).page(params[:page])
@@ -50,11 +50,21 @@ class UsersController < ApplicationController
     @ramen_shops = @user.favorite_shops.page(params[:page])
   end
 
+  def update_test_mode
+    @user = User.find(params[:id])
+    @user.update!(test_mode_param)
+    flash.now.notice = 'saved!'
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password,
                                  :password_confirmation, :avatar)
+  end
+
+  def test_mode_param
+    params.require(:user).permit(:is_test_mode)
   end
 
   def correct_user

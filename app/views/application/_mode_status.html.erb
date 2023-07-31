@@ -1,0 +1,5 @@
+<% if logged_in? && current_user.is_test_mode? %>
+  <div class="alert alert-warning">
+    テストモード中
+  </div>
+<% end %>

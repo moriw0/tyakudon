@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 import { Popup } from "popup";
 
 export default class extends Controller {
-  static targets = ["map", "spinner"];
+  static targets = ["map", "spinner", "isTestMode"];
 
   connect() {
     if (window.google) {
@@ -14,12 +14,19 @@ export default class extends Controller {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const currentLocation = {
-            // lat: position.coords.latitude,
-            // lng: position.coords.longitude,
-            lat: 35.7000396,
-            lng: 139.7752222,
-          };
+          let currentLocation;
+          let isTestMode = this.isTestModeTarget.dataset.value === "true";
+          if (isTestMode) {
+            currentLocation = {
+              lat: 35.7000396,
+              lng: 139.7752222,
+            };
+          } else {
+            currentLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+          }
 
           this.map = new google.maps.Map(this.mapTarget, {
             center: currentLocation,
