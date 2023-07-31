@@ -186,4 +186,47 @@ RSpec.describe 'Users' do
       end
     end
   end
+
+  describe 'PATCH /users/:id/update_test_mode #update_test_mode' do
+    let(:admin) { create(:user) }
+    let(:other_user) { create(:other_user) }
+    let(:do_request) { patch update_test_mode_user_path(other_user), params: { user: { is_test_mode: true } }, as: :turbo_stream }
+
+    context 'when logged in as admin' do
+
+      it 'updates test mode' do
+        log_in_as admin
+        do_request
+        expect(other_user.reload.is_test_mode).to be_truthy
+      end
+    end
+
+    context 'when not logged in' do
+      it 'does not update test mode' do
+        do_request
+        expect(other_user.reload.is_test_mode).to be_falsy
+      end
+
+      it 'redirects to login path' do
+        do_request
+        expect(response).to redirect_to login_path
+      end
+    end
+
+    context 'when logged in as a non-admin' do
+      before do
+        log_in_as other_user
+      end
+
+      it 'does not update test mode' do
+        do_request
+        expect(other_user.reload.is_test_mode).to be_falsy
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end

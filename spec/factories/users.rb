@@ -7,6 +7,7 @@ FactoryBot.define do
     admin { true }
     activated { true }
     activated_at { Time.zone.now }
+    is_test_mode { false }
 
     factory :other_user do
       name { 'Other User' }
