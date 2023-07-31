@@ -190,10 +190,11 @@ RSpec.describe 'Users' do
   describe 'PATCH /users/:id/update_test_mode #update_test_mode' do
     let(:admin) { create(:user) }
     let(:other_user) { create(:other_user) }
-    let(:do_request) { patch update_test_mode_user_path(other_user), params: { user: { is_test_mode: true } }, as: :turbo_stream }
+    let(:do_request) do
+      patch update_test_mode_user_path(other_user), params: { user: { is_test_mode: true } }, as: :turbo_stream
+    end
 
     context 'when logged in as admin' do
-
       it 'updates test mode' do
         log_in_as admin
         do_request
