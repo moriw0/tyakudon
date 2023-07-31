@@ -89,6 +89,15 @@ RSpec.describe 'Records' do
           expect(response).to redirect_to root_path
         end
       end
+
+      context 'when the record.is_retired? is true' do
+        it 'redirects to root_path' do
+          log_in_as(user)
+          record.update(is_retired: true)
+          do_request
+          expect(response).to redirect_to root_path
+        end
+      end
     end
   end
 
@@ -165,6 +174,28 @@ RSpec.describe 'Records' do
         invalid_record_params = { record: { comment: 'a' * 141 } }
         patch record_path(record), params: invalid_record_params
         expect(response.body).to include 'は140文字以内で入力してください'
+      end
+    end
+  end
+
+  describe 'POST /records/:id/retire #retire' do
+    let(:do_request) { post retire_record_path(record) }
+
+    it_behaves_like 'when not logged in'
+
+    context 'when logged in' do
+      before do
+        log_in_as(user)
+      end
+
+      it 'updates is_retired true' do
+        do_request
+        expect(record.reload.is_retired).to be_truthy
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
       end
     end
   end
