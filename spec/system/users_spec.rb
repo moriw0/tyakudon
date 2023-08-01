@@ -105,15 +105,25 @@ RSpec.describe 'Users' do
       expect(page).to have_link 'ユーザー情報を編集する', href: edit_user_path(user)
     end
 
-    it 'shows their records' do
+    it 'shows their profile and records' do
       create_list(:many_records, 15, user: user)
+      create(:record, user: user, is_retired: true)
+
       visit user_path(user)
       expect(find('h1')).to have_content user.name
       expect(find('h1>img.avatar')).to be_truthy
       expect(find('h6>span')).to have_content user.records.count
       expect(find('ul.pagination')).to be_truthy
+
       user.records.page(1).each do |record|
         expect(page).to have_content format_datetime(record.created_at)
+        expect(page).to have_content format_wait_time(record.wait_time)
+
+        if record.is_retired?
+          expect(page).to have_content 'リタイア'
+        else
+          expect(page).to have_content 'ちゃくどん'
+        end
       end
     end
   end

@@ -14,4 +14,10 @@ class Record < ApplicationRecord
                                     message: 'のフォーマットが不正です' },
                     size: { less_than_or_equal_to: 5.megabytes,
                             message: 'は5MB以下である必要があります' }
+
+  def calculate_wait_time_for_retire!
+    update!(is_retired: true,
+            ended_at: Time.current,
+            wait_time: Time.current - started_at)
+  end
 end

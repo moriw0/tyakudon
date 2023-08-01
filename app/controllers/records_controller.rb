@@ -3,7 +3,7 @@ class RecordsController < ApplicationController
 
   before_action :logged_in_user, except: %i[show]
   before_action :set_record, except: %i[new create]
-  before_action :set_ramen_shop, except: %i[new create]
+  before_action :set_ramen_shop, except: %i[new create retire]
   before_action :disable_connect_button, only: %i[measure result]
 
   def show
@@ -33,7 +33,7 @@ class RecordsController < ApplicationController
     if remember_record?
       set_record_from_cookies
       flash.notice = '再セツゾクしました'
-    elsif @record.ended_at?
+    elsif @record.ended_at? || @record.is_retired?
       redirect_to root_path, status: :see_other
     else
       remember_record
@@ -60,6 +60,12 @@ class RecordsController < ApplicationController
     else
       render :result, status: :unprocessable_entity
     end
+  end
+
+  def retire
+    @record.calculate_wait_time_for_retire!
+    forget_record
+    redirect_to root_path, notice: 'リタイアしました', status: :see_other
   end
 
   private

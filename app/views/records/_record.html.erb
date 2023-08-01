@@ -7,7 +7,14 @@
     </div>
     <div class="d-flex justify-content-between align-items-end">
       <div>
-        <p class="fs-2 mb-1"><%= format_wait_time record.wait_time %></p>
+        <div class="record-value d-flex align-items-center">
+          <span class="fs-2 me-2"><%= format_wait_time record.wait_time %></span>
+          <% if record.is_retired? %>
+            <span class="badge rounded-pill bg-secondary">リタイア</span>
+          <% else %>
+            <span class="badge rounded-pill bg-primary">ちゃくどん</span>
+          <% end %>
+        </div>
         <% if record.comment %>
           <p class="mb-1">ひとこと: <%= record.comment %></p>
         <% end %>
