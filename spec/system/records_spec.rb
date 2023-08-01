@@ -19,8 +19,8 @@ RSpec.describe 'Records', js: true do
 
     # 接続するラーメン店を選択して最初の待ち行列情報を入力
     click_link ramen_shop.name, href: new_ramen_shop_record_path(ramen_shop)
+    find('label[for="record_line_statuses_attributes_0_line_type_outside_the_store"]').click
     fill_in '待ち行列数', with: 5
-    choose '店内'
     fill_in 'ひとこと', with: '並ぶぞ'
     click_button '登録する'
 
@@ -35,21 +35,29 @@ RSpec.describe 'Records', js: true do
     record = Record.last
     click_link '接続中レコード', href: measure_record_path(record)
     expect(page).to have_content '再セツゾクしました'
-    expect(page).to have_content '00:00:03', wait: 3
+    expect(page).to have_content '00:00:02', wait: 2
 
     # 待ち行列状況を追加登録
     click_link '追加登録'
+    find('label[for="line_status_line_type_outside_the_store"]').click
     fill_in '待ち行列数', with: 1
-    choose '店内'
+    ## 着席を選択すると数値がリセットされdisabledとなる
+    find('label[for="line_status_line_type_seated"]').click
+    expect(find_by_id('line_status_line_number').value).to eq ''
+    expect(page).to have_css('input#line_status_line_number[disabled]')
+    ## 着席以外を選択すると再び数値入力ができるようになる
+    find('label[for="line_status_line_type_inside_the_store"]').click
+    fill_in '待ち行列数', with: 1
     fill_in 'ひとこと', with: 'もう少し'
     click_button '登録する'
-    sleep(1) # 暫定対策: responseを待ってからmodalを強制的に閉じる
+    ## 暫定対策: responseを待ってからmodalを強制的に閉じる
+    sleep(1)
     find('button[data-bs-dismiss="modal"]').click
 
     # measureページに追加登録情報が反映されている
     expect(page).to have_content '行列の様子を登録しました'
     expect(page).to have_content 'もう少し'
-    expect(page).to have_content '00:00:05', wait: 2
+    expect(page).to have_content '00:00:05', wait: 3
     click_button 'ちゃくどん'
 
     # 着丼後の投稿ページ
