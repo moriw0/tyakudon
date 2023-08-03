@@ -9,7 +9,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <div>
           <p class="mb-1"><%= line_type_badge(line_status) %></p>
-          <% if line_status.line_number.present? %>
+          <% unless line_status.seated? %>
             <p class="mb-1">待ち行列: <%= line_status.line_number %></p>
           <% end %>
           <% if line_status.comment.present? %>

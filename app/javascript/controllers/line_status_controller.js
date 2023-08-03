@@ -2,17 +2,18 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="line-status"
 export default class extends Controller {
-  static targets = ["lineNumberInput"];
+  static targets = ["lineNumberField", "lineNumberInput"];
 
   updateNumberInput(event) {
     const lineTypeRadio = event.target;
     const lineNumberInput = this.lineNumberInputTarget;
+    const lineNumberField = this.lineNumberFieldTarget;
 
     if (lineTypeRadio.value === "seated") {
-      lineNumberInput.disabled = true;
-      lineNumberInput.value = "";
+      lineNumberField.style.display = "none";
+      lineNumberInput.value = 0;
     } else {
-      lineNumberInput.disabled = false;
+      lineNumberField.style.display = "block";
       lineNumberInput.value = "";
     }
   }
