@@ -19,31 +19,10 @@ RSpec.describe LineStatus do
     expect { line_status.line_type = 'invalid' }.to raise_error(ArgumentError, "'invalid' is not a valid line_type")
   end
 
-  context 'with blank line_number' do
-    let(:line_status) { build(:line_status, line_number: '') }
-
-    context 'when line_type is inside the store' do
-      it 'is invalid' do
-        line_status.line_type = 'inside_the_store'
-        line_status.valid?
-        expect(line_status.errors[:line_number]).to include 'は数値で入力してください'
-      end
-    end
-
-    context 'when line_type is outside the store' do
-      it 'is invalid' do
-        line_status.line_type = 'outside_the_store'
-        line_status.valid?
-        expect(line_status.errors[:line_number]).to include 'は数値で入力してください'
-      end
-    end
-
-    context 'when line_type is seated' do
-      it 'is valid' do
-        line_status.line_type = 'seated'
-        expect(line_status).to be_valid
-      end
-    end
+  it 'is invalid with blank line_number' do
+    line_status.line_number = ''
+    line_status.valid?
+    expect(line_status.errors[:line_number]).to include 'は数値で入力してください'
   end
 
   it 'is invalid with string line_number' do
