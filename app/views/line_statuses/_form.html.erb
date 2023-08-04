@@ -1,9 +1,15 @@
-<%= f.text_field :line_number %>
-<%= f.form_group :line_type, label: { text: "接続先" } do %>
-  <%= f.radio_button :line_type, :inside_the_store, label: "店内", checked: true %>
-  <%= f.radio_button :line_type, :outside_the_store, label: "店外" %>
-  <%= f.radio_button :line_type, :other, label: "その他" %>
-<% end %>
+<div data-controller="line-status">
+  <%= f.form_group :line_type, label: { text: "接続先" }, data: { action: "change->line-status#updateNumberInput" } do %>
+    <div class="d-flex">
+      <%= f.radio_button :line_type, :outside_the_store, label: "店外", class: 'hidden-radio', label_class: "type-badge badge-red", checked: true %>
+      <%= f.radio_button :line_type, :inside_the_store,  label: '店内', class: 'hidden-radio', label_class: "type-badge badge-yellow" %>
+      <%= f.radio_button :line_type, :seated,            label: "着席", class: 'hidden-radio', label_class: "type-badge badge-green" %>
+    </div>
+  <% end %>
+  <div class="line-number-box" data-line-status-target="lineNumberField">
+    <%= f.number_field :line_number, inputmode: "numeric", pattern: '\d*', data: { line_status_target: "lineNumberInput" } %>
+  </div>
+</div>
 <%= f.text_area :comment, label: { text: "ひとこと" } %>
 <div class="image" data-controller="image-uploader">
   <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>

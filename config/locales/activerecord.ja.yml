@@ -27,9 +27,10 @@ ja:
         line_number: 待ち行列数
         line_type: タイプ
         comment: コメント
+        image: 写真
   enums:
     line_status:
       line_type:
         inside_the_store: 店内
         outside_the_store: 店外
-        other: その他
+        seated: 着席

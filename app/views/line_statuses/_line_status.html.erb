@@ -8,8 +8,10 @@
       </div>
       <div class="d-flex justify-content-between align-items-end">
         <div>
-          <p class="mb-1">待ち行列: <%= line_status.line_number %></p>
-          <p class="mb-1"><%= line_status.line_type_i18n %></p>
+          <p class="mb-1"><%= line_type_badge(line_status) %></p>
+          <% unless line_status.seated? %>
+            <p class="mb-1">待ち行列: <%= line_status.line_number %></p>
+          <% end %>
           <% if line_status.comment.present? %>
             <p class="mb-1">ひとこと: <%= line_status.comment %></p>
           <% end %>
