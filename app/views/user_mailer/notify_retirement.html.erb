@@ -1,0 +1,5 @@
+<p>こんにちは <%= @user.name %> さん</p>
+<p>下記の記録は24時間以上ちゃくどんされなかったため、無効になったことをお知らせいたします。</p>
+<p>店舗名　： <%= @record.ramen_shop.name %></p>
+<p>接続時刻： <%= format_datetime(@record.started_at) %></p>
+<p>またのご利用をお待ちしております！</p>
