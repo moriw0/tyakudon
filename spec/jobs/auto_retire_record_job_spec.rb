@@ -16,7 +16,7 @@ RSpec.describe AutoRetireRecordJob do
   end
 
   describe 'executes perform' do
-    let!(:record) { create(:record) }
+    let!(:record) { create(:record, ended_at: nil) }
 
     it 'makes record be auto_retired' do
       perform_enqueued_jobs do
