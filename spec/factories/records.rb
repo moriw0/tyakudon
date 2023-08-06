@@ -5,6 +5,7 @@ FactoryBot.define do
     wait_time { 600 }
     comment { 'いただきます！' }
     is_retired { false }
+    auto_retired { false }
     ramen_shop
     user
 

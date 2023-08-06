@@ -82,18 +82,20 @@ RSpec.describe 'Records' do
     it_behaves_like 'when not logged in'
 
     context 'when logged in' do
+      before do
+        log_in_as(user)
+      end
+
       context 'when the record.ended_at? is true' do
         it 'redirects to root_path' do
-          log_in_as(user)
           do_request
           expect(response).to redirect_to root_path
         end
       end
 
-      context 'when the record.is_retired? is true' do
+      context 'with auto_retired? is true' do
         it 'redirects to root_path' do
-          log_in_as(user)
-          record.update(is_retired: true)
+          record.update(auto_retired: true)
           do_request
           expect(response).to redirect_to root_path
         end
@@ -127,6 +129,20 @@ RSpec.describe 'Records' do
         record.update(ended_at: Time.zone.now)
         do_request
         expect(response).to redirect_to root_path
+      end
+
+      context 'with auto_retired? is true' do
+        it 'redirects to root_path' do
+          record.update(auto_retired: true)
+          do_request
+          expect(response).to redirect_to root_path
+        end
+
+        it 'has a flash notices record has retired' do
+          record.update(auto_retired: true)
+          do_request
+          expect(flash[:notice]).to eq '記録は無効になっています'
+        end
       end
     end
   end
@@ -196,6 +212,22 @@ RSpec.describe 'Records' do
       it 'redirects to root_path' do
         do_request
         expect(response).to redirect_to root_path
+      end
+
+      context 'with auto_retired? is true' do
+        before do
+          record.update(auto_retired: true)
+        end
+
+        it 'does not updates is_retired true' do
+          do_request
+          expect(record.reload.is_retired).to be_falsey
+        end
+
+        it 'redirects to root_path' do
+          do_request
+          expect(response).to redirect_to root_path
+        end
       end
     end
   end

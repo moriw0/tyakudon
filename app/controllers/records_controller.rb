@@ -4,6 +4,7 @@ class RecordsController < ApplicationController
   before_action :logged_in_user, except: %i[show]
   before_action :set_record, except: %i[new create]
   before_action :set_ramen_shop, except: %i[new create retire]
+  before_action :check_auto_retired, only: %i[measure calculate retire]
   before_action :disable_connect_button, only: %i[measure result]
 
   def show
@@ -30,11 +31,11 @@ class RecordsController < ApplicationController
   end
 
   def measure
-    if remember_record?
+    if @record.ended_at?
+      redirect_to root_path, status: :see_other
+    elsif remember_record?
       set_record_from_cookies
       flash.notice = '再セツゾクしました'
-    elsif @record.ended_at? || @record.is_retired?
-      redirect_to root_path, status: :see_other
     else
       remember_record
       flash.notice = 'セツゾクしました'
@@ -101,5 +102,12 @@ class RecordsController < ApplicationController
 
   def forget_record
     cookies.delete(:record_id)
+  end
+
+  def check_auto_retired
+    return unless @record.auto_retired?
+
+    forget_record
+    redirect_to root_path, notice: '記録は無効になっています', status: :see_other
   end
 end
