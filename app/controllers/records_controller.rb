@@ -105,9 +105,9 @@ class RecordsController < ApplicationController
   end
 
   def check_auto_retired
-    if @record.auto_retired?
-      forget_record
-      redirect_to root_path, notice: '記録は無効になっています', status: :see_other
-    end
+    return unless @record.auto_retired?
+
+    forget_record
+    redirect_to root_path, notice: '記録は無効になっています', status: :see_other
   end
 end

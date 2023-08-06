@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AutoRetireRecordJob, type: :job do
+RSpec.describe AutoRetireRecordJob do
   include ActiveJob::TestHelper
 
   before do
@@ -15,7 +15,7 @@ RSpec.describe AutoRetireRecordJob, type: :job do
     }.to change(enqueued_jobs, :size).by(1)
   end
 
-  context 'executes perform' do
+  describe 'executes perform' do
     let!(:record) { create(:record) }
 
     it 'makes record be auto_retired' do
