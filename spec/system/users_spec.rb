@@ -96,6 +96,7 @@ RSpec.describe 'Users' do
 
     let(:user) { create(:user) }
     let(:other_user) { create(:other_user) }
+    let(:ramen_shop) { create(:ramen_shop) }
 
     it 'shows edit_user_path when vist current_user path' do
       log_in_as(user)
@@ -106,8 +107,8 @@ RSpec.describe 'Users' do
     end
 
     it 'shows their profile and records' do
-      create_list(:many_records, 15, user: user)
-      create(:record, user: user, is_retired: true)
+      create_list(:many_records, 15, user: user, ramen_shop: ramen_shop)
+      create(:record, user: user, is_retired: true, ramen_shop: ramen_shop)
 
       visit user_path(user)
       expect(find('h1')).to have_content user.name

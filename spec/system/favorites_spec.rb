@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Favorites' do
   let(:user) { create(:user) }
-  let(:ramen_shops) { create_list(:ramen_shop, 5) }
+  let(:ramen_shops) { create_list(:many_shops, 5) }
 
   before do
     ramen_shops.each do |ramen_shop|
