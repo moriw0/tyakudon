@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :ramen_shops, only: [:index, :show] do
+  resources :ramen_shops, only: [:index, :show, :new, :create, :edit, :update] do
     resources :records, only: [:show, :new, :create, :edit, :update], shallow: true do
       member do
         get 'measure'

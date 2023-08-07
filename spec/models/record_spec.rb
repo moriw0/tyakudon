@@ -17,8 +17,9 @@ RSpec.describe Record do
     end
 
     it 'returns the most recent first' do
-      create_list(:many_records, 10, user: user)
-      expect(create(:most_recent, user: user)).to eq described_class.first
+      create_list(:many_records, 10, user: user, ramen_shop: ramen_shop)
+      most_recent_record = create(:most_recent, user: user, ramen_shop: ramen_shop)
+      expect(most_recent_record).to eq described_class.first
     end
 
     it 'is valid with a 4.2 MB image' do

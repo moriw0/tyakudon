@@ -1,0 +1,7 @@
+<%= bootstrap_form_with model: @ramen_shop do |f|%>
+  <%= f.text_field :name %>
+  <%= f.text_field :address %>
+  <div class="d-grid">
+    <%= f.submit yield(:button_text) %>
+  </div>
+<% end %>

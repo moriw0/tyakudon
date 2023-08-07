@@ -1,4 +1,8 @@
 class RamenShopsController < ApplicationController
+  before_action :set_ramen_shop, only: %i[show edit update]
+  before_action :logged_in_user, only: %i[new edit create update]
+  before_action :admin_user,     only: %i[new edit create update]
+
   def index
     @ramen_shops = RamenShop.all
 
@@ -9,12 +13,36 @@ class RamenShopsController < ApplicationController
   end
 
   def show
-    @ramen_shop = RamenShop.find(params[:id])
     @records = @ramen_shop.records.order(created_at: 'desc').page(params[:page])
 
     respond_to do |format|
       format.html
       format.json { render json: @ramen_shop.as_json(include: :records) }
+    end
+  end
+
+  def new
+    @ramen_shop = RamenShop.new
+  end
+
+  def edit
+  end
+
+  def create
+    ramen_shop = RamenShop.new(ramen_shop_params)
+
+    if ramen_shop.save
+      redirect_to new_ramen_shop_path, notice: 'saved!'
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @ramen_shop.update(ramen_shop_params)
+      redirect_to ramen_shop_path(@ramen_shop), notice: 'saved!'
+    else
+      render :edit
     end
   end
 
@@ -25,5 +53,15 @@ class RamenShopsController < ApplicationController
 
     @ramen_shops = RamenShop.near([current_lat, current_lng], TARGET_RADIUS)
     render json: @ramen_shops
+  end
+
+  private
+
+  def set_ramen_shop
+    @ramen_shop = RamenShop.find(params[:id])
+  end
+
+  def ramen_shop_params
+    params.require(:ramen_shop).permit(:name, :address)
   end
 end
