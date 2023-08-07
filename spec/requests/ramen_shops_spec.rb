@@ -1,10 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "RamenShops", type: :request do
+RSpec.describe 'RamenShops' do
   let(:ramen_shop) { create(:ramen_shop) }
   let(:non_admin) { create(:other_user) }
   let(:admin) { create(:user) }
-
 
   shared_examples 'when not logged in' do
     it 'redirects to login_path' do
@@ -21,7 +20,7 @@ RSpec.describe "RamenShops", type: :request do
     end
   end
 
-  describe "GET /ramen_shops/new #new" do
+  describe 'GET /ramen_shops/new #new' do
     let(:do_request) { get new_ramen_shop_path }
 
     it_behaves_like 'when not logged in'
@@ -34,7 +33,7 @@ RSpec.describe "RamenShops", type: :request do
     end
   end
 
-  describe "GET /ramen_shops/:id/edit #edit" do
+  describe 'GET /ramen_shops/:id/edit #edit' do
     let(:do_request) { get edit_ramen_shop_path(ramen_shop) }
 
     it_behaves_like 'when not logged in'
@@ -47,7 +46,7 @@ RSpec.describe "RamenShops", type: :request do
     end
   end
 
-  describe "POST /ramen_shops #create" do
+  describe 'POST /ramen_shops #create' do
     let(:do_request) { post ramen_shops_path, params: ramen_shop_params }
     let(:ramen_shop_params) { { ramen_shop: attributes_for(:ramen_shop) } }
 
@@ -62,7 +61,7 @@ RSpec.describe "RamenShops", type: :request do
     end
   end
 
-  describe "PATCH /ramen_shops/:id #update" do
+  describe 'PATCH /ramen_shops/:id #update' do
     let(:do_request) { patch ramen_shop_path(ramen_shop), params: ramen_shop_params }
     let(:ramen_shop_params) { { ramen_shop: attributes_for(:ramen_shop, name: 'ラーメン店') } }
 

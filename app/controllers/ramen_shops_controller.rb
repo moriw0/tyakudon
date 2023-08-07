@@ -1,7 +1,7 @@
 class RamenShopsController < ApplicationController
   before_action :set_ramen_shop, only: %i[show edit update]
   before_action :logged_in_user, only: %i[new edit create update]
-  before_action :admin_user    , only: %i[new edit create update]
+  before_action :admin_user,     only: %i[new edit create update]
 
   def index
     @ramen_shops = RamenShop.all
