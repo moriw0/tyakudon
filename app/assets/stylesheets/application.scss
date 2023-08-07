@@ -1,6 +1,10 @@
 @import "bootstrap";
 @import 'fonts';
 /* universal */
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
 .navbar-brand {
   font-family: '851letrogo';
 }
