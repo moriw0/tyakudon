@@ -307,3 +307,26 @@ section {
     font-weight: 600;
   }
 }
+
+.shop-address {
+  font-size: 0.8rem;
+  color: #7a7a7a;
+}
+
+.shops {
+  a {
+    text-decoration: none;
+    .shop-info {
+      h5 {
+        margin-bottom: 0;
+      }
+    }
+    .recent-record {
+      .no-record {
+        small {
+          color:#4e4a4a;
+        }
+      }
+    }
+  }
+}
