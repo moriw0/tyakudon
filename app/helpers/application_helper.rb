@@ -10,9 +10,19 @@ module ApplicationHelper
     return unless wait_time
 
     hours, remainder = wait_time.divmod(3600)
-    minutes, seconds = remainder.divmod(60)
-    format('%<hours>02d:%<minutes>02d:%<seconds>02d', hours: hours, minutes: minutes, seconds: seconds)
+    minutes, remainder_seconds = remainder.divmod(60)
+    seconds, milliseconds = remainder_seconds.divmod(1)
+    milliseconds = (milliseconds * 1000).round
+
+    formatted_time = format('%<hours>02d:%<minutes>02d:%<seconds>02d',
+                            hours: hours,
+                            minutes: minutes,
+                            seconds: seconds)
+    formatted_milliseconds = format('.%<milliseconds>03d', milliseconds: milliseconds)
+
+    tag.div tag.span(formatted_time) + tag.span(formatted_milliseconds, class: 'small-milliseconds')
   end
+
 
   def turbo_stream_flash
     turbo_stream.update 'flash', partial: 'flash'

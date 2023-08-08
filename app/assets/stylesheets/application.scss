@@ -308,10 +308,6 @@ section {
   }
 }
 
-.shop-address {
-  font-size: 0.8rem;
-  color: #7a7a7a;
-}
 
 .shops {
   a {
@@ -319,6 +315,10 @@ section {
     .shop-info {
       h5 {
         margin-bottom: 0;
+      }
+      .shop-address {
+        font-size: 0.8rem;
+        color: #7a7a7a;
       }
     }
     .recent-record {
@@ -329,4 +329,8 @@ section {
       }
     }
   }
+}
+
+.small-milliseconds {
+  font-size: 1rem;
 }
