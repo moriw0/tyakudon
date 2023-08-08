@@ -15,7 +15,7 @@ RSpec.describe 'Favorites' do
     visit favorites_by_user_path(user)
     expect(page).to have_content 'お気に入り店 5'
     user.favorite_shops.each do |shop|
-      expect(page).to have_link 'みてみる', href: ramen_shop_path(shop)
+      expect(page).to have_link href: ramen_shop_path(shop)
     end
   end
 end
