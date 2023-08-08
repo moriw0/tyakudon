@@ -6,6 +6,7 @@ module ApplicationHelper
     datetime.strftime("%Y/%m/%d(#{wdays[datetime.wday]}) %H:%M")
   end
 
+  # rubocop:disable Metrics/MethodLength
   def format_wait_time(wait_time)
     return unless wait_time
 
@@ -22,7 +23,7 @@ module ApplicationHelper
 
     tag.div tag.span(formatted_time) + tag.span(formatted_milliseconds, class: 'small-milliseconds')
   end
-
+  # rubocop:enable Metrics/MethodLength
 
   def turbo_stream_flash
     turbo_stream.update 'flash', partial: 'flash'

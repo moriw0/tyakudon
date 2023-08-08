@@ -12,7 +12,7 @@ module LineStatusesHelper
 
   def line_status_content(line_status)
     if line_status.line_type == 'seated'
-      "#{line_status.line_type_i18n}"
+      line_status.line_type_i18n.to_s
     else
       "#{line_status.line_type_i18n} - #{line_status.line_number}人"
     end
