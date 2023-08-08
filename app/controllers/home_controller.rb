@@ -4,8 +4,8 @@ class HomeController < ApplicationController
 
   def index
     @search = RamenShop.ransack(params[:q])
-    @search.sorts = 'id desc' if @search.sorts.empty?
-    @ramen_shops = @search.result.page(params[:page])
+    @ranking_records = Record.unscoped.where(is_retired: false, auto_retired: false).order('wait_time DESC').limit(5)
+    @new_records = Record.where(is_retired: false, auto_retired: false).take(5)
   end
 
   def search
