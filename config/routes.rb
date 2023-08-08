@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
   get '/about', to: 'statics#about'
+  get '/ranking', to: 'home#record_ranking'
+  get '/new_records', to: 'home#new_records'
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
   get '/signup', to: 'users#new'
