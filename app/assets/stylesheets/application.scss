@@ -1,6 +1,10 @@
 @import "bootstrap";
 @import 'fonts';
 /* universal */
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
 .navbar-brand {
   font-family: '851letrogo';
 }
@@ -295,4 +299,38 @@ div[data-controller="line-status"] {
   border-color: #80bdff;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+section {
+  h2 {
+    font-weight: 600;
+  }
+}
+
+
+.shops {
+  a {
+    text-decoration: none;
+    .shop-info {
+      h5 {
+        margin-bottom: 0;
+      }
+      .shop-address {
+        font-size: 0.8rem;
+        color: #7a7a7a;
+      }
+    }
+    .recent-record {
+      .no-record {
+        small {
+          color:#4e4a4a;
+        }
+      }
+    }
+  }
+}
+
+.small-milliseconds {
+  font-size: 1rem;
 }

@@ -4,7 +4,9 @@ class RamenShopsController < ApplicationController
   before_action :admin_user,     only: %i[new edit create update]
 
   def index
-    @ramen_shops = RamenShop.all
+    @search = RamenShop.ransack(params[:q])
+    @search.sorts = 'id desc' if @search.sorts.empty?
+    @ramen_shops = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html

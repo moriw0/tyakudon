@@ -1,29 +1,10 @@
-<div class="card shadow mt-3">
-  <div class="card-header">
-    <%= tag.span("検索条件") %>
-  </div>
-  <div class="card-body">
-    <%= search_form_for @search, url: root_path  do |f| %>
-      <div class="row g3 mb-3">
-        <div class="col-12 col-sm-6">
-          <%= f.search_field :name_cont, placeholder: "店名で検索", class: "form-control" %>
-        </div>
-        <div class="col-12 col-sm-6 d-flex align-items-end">
-          <%= button_tag "検索", class: "btn btn-primary me-1" %>
-          <%= link_to "リセット", root_path, class: "btn btn-outline-secondary" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-<div class="card shadow mt-3">
-  <div class="card-header">
-    <%= tag.span("一覧") %>
-  </div>
-  <div class="card-body mx-3">
+<%= render 'shared/search_form' %>
+<section class="shops mb-4">
+  <h2 class="d-flex justify-content-center py-2 mt-3">店舗一覧</h2>
+  <div class="records list-group pb-2">
     <%= render @ramen_shops %>
-    <div class="d-flex justify-content-end mt-3">
-      <%= paginate @ramen_shops %>
-    </div>
   </div>
-</div>
+  <div class="d-flex justify-content-end mt-3">
+    <%= paginate @ramen_shops %>
+  </div>
+</section>
