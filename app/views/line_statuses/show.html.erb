@@ -3,7 +3,7 @@
   <p>待ち人数: <%= @line_status.line_number %></p>
   <p><%= @line_status.line_type_i18n %></p>
   <% if @line_status.comment %>
-    <p>ひとこと: <%= @line_status.comment %></p>
+    <p><i class="fa-solid fa-comment"></i> <%= @line_status.comment %></p>
   <% end %>
 </div>
 <%= link_to '編集', edit_line_status_path(@line_status), class: "btn btn-warning" %>

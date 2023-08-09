@@ -7,7 +7,7 @@
   <p>接続: <%= format_datetime @record.started_at %></p>
   <p>着丼: <%= format_datetime @record.ended_at %></p>
   <% if @record.comment %>
-    <p>着丼してひとこと: <%= @record.comment %></p>
+    <p><i class="fa-solid fa-comment"></i> <%= @record.comment %></p>
   <% end %>
   <% if @record.image.attached? %>
     <%= image_tag @record.image.variant(:display) %>
