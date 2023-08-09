@@ -1,4 +1,5 @@
-<%= form_with(model: current_user.favorites.find_by(ramen_shop: @ramen_shop),
-              html: { method: :delete }) do |f| %>
-  <%= f.submit "お気に入り解除", class: "btn btn-link" %>
+<%= form_with(model: current_user.favorites.find_by(ramen_shop: @ramen_shop), html: { method: :delete }) do |f| %>
+  <%= f.button :type => "submit", class: 'btn btn-sm btn-outline-dark' do %>
+    <i class="fa-regular fa-star"></i> 解除する
+  <% end %>
 <% end %>
