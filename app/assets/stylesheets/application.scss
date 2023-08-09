@@ -308,8 +308,15 @@ section {
   }
 }
 
-
 .shops {
+  .list-item {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  }
   a {
     text-decoration: none;
     .shop-info {
