@@ -10,8 +10,8 @@ ja:
           zero: "レコードが見つかりませんでした %{entry_name}"
   views:
     pagination:
-      first: "&laquo; 最初"
-      last: "最後 &raquo;"
-      next: "次 &rsaquo;"
-      previous: "&lsaquo; 前"
-      truncate: "&hellip;"
+      first: <i class="fas fa-angle-double-left"></i>
+      last: <i class="fas fa-angle-double-right"></i>
+      previous: <i class="fas fa-angle-left"></i>
+      next: <i class="fas fa-angle-right"></i>
+      truncate: "..."

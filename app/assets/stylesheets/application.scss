@@ -341,3 +341,25 @@ section {
 .small-milliseconds {
   font-size: 1rem;
 }
+
+.pagination {
+  > li > a {
+    border: none;
+    color: #696969;
+    border-radius: 50%;
+  }
+
+  .page-item {
+    &:first-child, &:last-child {
+      .page-link {
+        border-radius: 50%;
+      }
+    }
+
+    &.active {
+      .page-link {
+        background: #000;
+      }
+    }
+  }
+}
