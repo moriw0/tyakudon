@@ -308,8 +308,15 @@ section {
   }
 }
 
-
 .shops {
+  .list-item {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  }
   a {
     text-decoration: none;
     .shop-info {
@@ -333,4 +340,30 @@ section {
 
 .small-milliseconds {
   font-size: 1rem;
+}
+
+.pagination {
+  > li > a {
+    border: none;
+    color: #696969;
+    border-radius: 50%;
+  }
+
+  .page-item {
+    &:first-child, &:last-child {
+      .page-link {
+        border-radius: 50%;
+      }
+    }
+
+    &.active {
+      .page-link {
+        background: #000;
+      }
+    }
+  }
+}
+
+.fa-comment {
+  color: rgb(142 150 158);
 }

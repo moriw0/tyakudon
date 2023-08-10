@@ -1,6 +1,7 @@
 <h1>すべてのユーザー</h1>
-<%= paginate @users %>
 <ul class="users">
   <%= render @users %>
 </ul>
-<%= paginate @users %>
+<div class="d-flex justify-content-center mt-3">
+  <%= paginate @users %>
+</div>

@@ -16,7 +16,7 @@
           <% end %>
         </div>
         <% if record.comment %>
-          <p class="mb-1">ひとこと: <%= record.comment %></p>
+          <p class="mb-1"><i class="fa-solid fa-comment"></i> <%= record.comment %></p>
         <% end %>
         <% if record.image.attached? %>
           <%= image_tag record.image.variant(:display) %>

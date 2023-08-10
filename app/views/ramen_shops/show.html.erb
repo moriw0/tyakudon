@@ -5,7 +5,7 @@
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <h6 class="border-bottom pb-2 mb-0"><%= tag.span("レコード数 #{@ramen_shop.records.count}") %></h6>
     <%= render @records, name: :user %>
-    <div class="d-flex justify-content-end mt-3">
+    <div class="d-flex justify-content-center mt-3">
       <%= paginate @records%>
     </div>
   </div>

@@ -85,7 +85,7 @@ RSpec.describe 'Users' do
         log_in_as(non_admin)
         visit users_path
         expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
-        click_link '次', match: :first
+        click_link href: '/users?page=2', match: :first
         expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe 'Users' do
 
       user.records.page(1).each do |record|
         expect(page).to have_content format_datetime(record.created_at)
-        expect(page).to have_content format_wait_time_helper(record.wait_time)
+        expect(page).to have_content format_wait_time(record.wait_time)
 
         if record.is_retired?
           expect(page).to have_content 'リタイア'

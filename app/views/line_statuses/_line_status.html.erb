@@ -10,7 +10,7 @@
         <div>
           <p class="mb-1"><%= line_type_badge(line_status) %></p>
           <% if line_status.comment.present? %>
-            <p class="mb-1"><%= line_status.comment %></p>
+            <p class="mb-1"><i class="fa-solid fa-comment"></i> <%= line_status.comment %></p>
           <% end %>
           <% if line_status.image.attached? %>
             <%= image_tag line_status.image.variant(:display) %>
