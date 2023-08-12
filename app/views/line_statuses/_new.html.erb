@@ -1,8 +1,10 @@
-<%= render "modal", title: "登録" do %>
+<%= render "modal", title: "行列の様子を報告" do %>
   <%= turbo_frame_tag @line_status do %>
     <%= bootstrap_form_with model: @line_status, url: record_line_statuses_path, data: { action: "turbo:submit-end->modal#close" } do |f| %>
       <%= render "form", f: f %>
-      <%= f.submit class: "btn btn-sm btn-warning", data: { disable_with: '登録中...' } %>
+      <div class="d-grid">
+        <%= f.submit '報告する', class: "button-primary", data: { disable_with: '報告中...' } %>
+      </div>
     <% end%>
   <% end %>
 <% end %>

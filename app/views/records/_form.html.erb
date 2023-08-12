@@ -6,6 +6,8 @@
     <%= f.fields_for :line_statuses do |form| %>
       <%= render "line_statuses/form", f: form %>
     <% end %>
-    <%= f.submit class: "btn btn-sm btn-warning", data: { action: "click->modal#fetchStartAt", disable_with: '接続中...' } %>
+    <div class="d-grid">
+      <%= f.submit '接続する', class: "button-primary", data: { action: "click->modal#fetchStartAt", disable_with: '接続中...' } %>
+    </div>
   <% end%>
 </div>
