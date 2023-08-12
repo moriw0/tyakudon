@@ -8,7 +8,7 @@
     <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
     <%= image_tag '', data: { image_uploader_target: "imagePrev" }, class: 'image-prev', style: 'display:none' %>
   </div>
-  <div class="d-grid">
-    <%= f.submit '投稿する', class: "btn btn-warning" %>
+  <div class="d-grid mb-3">
+    <%= f.submit '投稿する', class: "button-primary" %>
   </div>
 <% end %>
