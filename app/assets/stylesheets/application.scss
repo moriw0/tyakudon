@@ -406,3 +406,28 @@ section {
 .fa-comment {
   color: rgb(142 150 158);
 }
+
+.record-result {
+  background-image: url('celebration.jpg');
+  background-position: center;
+  background-size: 160%;
+  text-align: center;
+  padding: 2rem 0;
+  margin: 2rem 0;
+  border-radius: 30%;
+  h1 {
+    font-size: 1.25rem;
+  }
+  h2 {
+    font-size: 1rem;
+    color: #7a7a7a;
+  }
+  .record-time {
+    .hh-mm-ss {
+      font-size: 3rem;
+    }
+    .small-milliseconds {
+      font-size: 2rem;
+    }
+  }
+}
