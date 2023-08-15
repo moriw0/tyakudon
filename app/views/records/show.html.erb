@@ -1,25 +1,52 @@
-<div class="container">
-  <div class="d-flex w-100 justify-content-between align-items-center">
-    <h2>記録: <%= @record.id %></h2>
-    <%= link_to '編集', edit_record_path(@record), class: "btn btn-warning btn-sm" %>
+<div class="record-content">
+  <div class="record-summary">
+    <h1>ちゃくどんレコード <span class="record-number">No. <%= @record.id %></span></h1>
+    <div class="shop-name"><%= @record.ramen_shop.name %></div>
+    <div class="record-time">
+      <%= format_wait_time @record.wait_time %>
+    </div>
+    <div class="record-duration">
+      <div class="record-started-at">
+        <small class='badge bg-dark me-2'>接続</small>
+        <span class="date-time">
+          <%= format_datetime_detail @record.started_at %>
+        </span>
+        <%= line_type_badge(@record.line_statuses.first) %>
+      </div>
+      <div class="record-ended-at">
+        <small class='badge bg-dark me-2'>着丼</small>
+        <span class="date-time">
+          <%= format_datetime_detail @record.ended_at %>
+        </span>
+      </div>
+    </div>
   </div>
-  <p class="fs-2 mb-1"><%= format_wait_time @record.wait_time %></p>
-  <p>接続: <%= format_datetime @record.started_at %></p>
-  <p>着丼: <%= format_datetime @record.ended_at %></p>
-  <% if @record.comment %>
-    <p><i class="fa-solid fa-comment"></i> <%= @record.comment %></p>
-  <% end %>
   <% if @record.image.attached? %>
-    <%= image_tag @record.image.variant(:display) %>
+    <div class="record-image">
+      <%= image_tag @record.image.variant(resize_to_limit: [400, 400]) %>
+    </div>
   <% end %>
-  <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0"><%= tag.span("行列の様子") %></h6>
-    <%= render @record.line_statuses %>
-    <small class="d-block text-end mt-3">
-      <%# paginate @ramen_shops %>
-    </small>
-  </div>
-  <div>
-    <%= link_to "レコード一覧へ戻る", ramen_shop_path(@record.ramen_shop) %>
-  </div>
+  <%= link_to user_path(@record.user), class: 'user-info' do %>
+    <div class="user-avatar">
+      <%= avatar_for @record.user, :middle %>
+    </div>
+    <div class="user-name">
+      <%= @record.user.name %>
+    </div>
+    <span class="user-record-count">
+      (<%= @record.user.records.count %>)
+    </span>
+  <% end %>
+  <% if @record.comment %>
+    <div class="record-comment">
+      <div class="comment-content"><%= @record.comment %></div>
+    </div>
+  <% end %>
+</div>
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+  <h2 class="border-bottom pb-2 mb-0"><%= tag.span("行列の様子") %></h2>
+  <%= render @record.line_statuses %>
+</div>
+<div>
+  <%= link_to "レコード一覧へ戻る", ramen_shop_path(@record.ramen_shop) %>
 </div>
