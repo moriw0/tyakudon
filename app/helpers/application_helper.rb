@@ -21,7 +21,7 @@ module ApplicationHelper
                             seconds: seconds)
     formatted_milliseconds = format('.%<milliseconds>03d', milliseconds: milliseconds)
 
-    tag.div tag.span(formatted_time) + tag.span(formatted_milliseconds, class: 'small-milliseconds')
+    tag.span(formatted_time, class: 'hh-mm-ss') + tag.span(formatted_milliseconds, class: 'small-milliseconds')
   end
   # rubocop:enable Metrics/MethodLength
 

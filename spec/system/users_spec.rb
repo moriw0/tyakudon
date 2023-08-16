@@ -118,7 +118,7 @@ RSpec.describe 'Users' do
 
       user.records.page(1).each do |record|
         expect(page).to have_content format_datetime(record.created_at)
-        expect(page).to have_content format_wait_time(record.wait_time)
+        expect(page).to have_content format_wait_time_helper(record.wait_time)
 
         if record.is_retired?
           expect(page).to have_content 'リタイア'

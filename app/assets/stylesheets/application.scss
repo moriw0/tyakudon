@@ -1,12 +1,50 @@
 @import "bootstrap";
 @import 'fonts';
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@900&display=swap');
+
 /* universal */
 body {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
+.button-primary {
+  font-family: 'Kosugi Maru', sans-serif;
+  padding: 0.5rem;
+  background-color: rgb(255, 218, 69);
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  color: #000;
+}
+
+.button-primary:hover {
+  background-color: rgb(238, 212, 106);
+  color: #000;
+}
+
+.button-big {
+  border: 3px solid #000;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.button-sm {
+  font-size: .75rem;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+}
+
 .navbar-brand {
-  font-family: '851letrogo';
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.footer {
+  background-color: rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding-top: 0.5rem;
+  padding-bottom: 4.0rem;
 }
 
 body {
@@ -166,7 +204,6 @@ aside {
 }
 
 .avatar {
-  float: left;
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -174,7 +211,6 @@ aside {
 }
 
 .small-avatar {
-  float: left;
   border-radius: 50%;
   width: 33px;
   height: 33px;
@@ -319,15 +355,6 @@ section {
   }
   a {
     text-decoration: none;
-    .shop-info {
-      h5 {
-        margin-bottom: 0;
-      }
-      .shop-address {
-        font-size: 0.8rem;
-        color: #7a7a7a;
-      }
-    }
     .recent-record {
       .no-record {
         small {
@@ -335,6 +362,17 @@ section {
         }
       }
     }
+  }
+}
+
+.shop-info {
+  h1 {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+  }
+  .shop-address {
+    font-size: 0.8rem;
+    color: #7a7a7a;
   }
 }
 
@@ -366,4 +404,131 @@ section {
 
 .fa-comment {
   color: rgb(142 150 158);
+}
+
+.record-result {
+  background-image: url('celebration.jpg');
+  background-position: center;
+  background-size: 160%;
+  text-align: center;
+  padding: 2rem 0;
+  margin: 2rem 0;
+  border-radius: 30%;
+  h1 {
+    font-size: 1.25rem;
+  }
+  h2 {
+    font-size: 1rem;
+    color: #7a7a7a;
+  }
+  .record-time {
+    .hh-mm-ss {
+      font-size: 3rem;
+    }
+    .small-milliseconds {
+      font-size: 2rem;
+    }
+  }
+}
+
+.record-content {
+  text-align: center;
+  margin: 1rem auto;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    .record-number {
+      margin-left: 1rem;
+      font-size: 1rem;
+    }
+  }
+  .shop-name {
+    color: #5f5b5b;
+  }
+  .record-time {
+    margin: auto 1rem;
+    padding: 1rem 0;
+    .hh-mm-ss {
+      font-size: 3rem;
+    }
+    .small-milliseconds {
+      font-size: 2rem;
+    }
+  }
+  .record-duration {
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    width: 300px;
+    text-align: left;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    .record-started-at {
+      margin-bottom: 0.3rem;
+    }
+    .date-time {
+      color: #5f5b5b;
+      margin-right: 0.5rem;
+    }
+  }
+  .record-image {
+    margin-bottom: 1rem;
+    img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+    }
+  }
+  .record-comment {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 15px;
+    width: auto;
+    padding: .8em 1.2em;
+    border: 1px solid #bababa;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333333;
+    &:before,
+    &:after {
+        position: absolute;
+        top: -15px;
+        width: 30px;
+        height: 15px;
+        clip-path: polygon(50% 0, 0 100%, 100% 100%);
+        content: '';
+    }
+    &:before {
+        background-color: #bababa;
+    }
+    &:after {
+        top: -13px;
+        background-color: #fff;
+    }
+  }
+  .comment-content {
+    text-align: left;
+    width: 100%;
+  }
+  .user-info {
+    text-decoration: none;
+    color: #000;
+    .user-avatar {
+      .avatar {
+        width: 50px;
+        height: 50px;
+        margin-right: 3px;
+      }
+    }
+    .user-name {
+      margin-right: 3px;
+    }
+    .user-record-count {
+      font-size: 0.8rem;
+      color: #5f5b5b;
+    }
+  }
 }

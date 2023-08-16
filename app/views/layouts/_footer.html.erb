@@ -3,14 +3,14 @@
     <div class="p-1 fixed-bottom">
       <div class="d-grid col-sm-6 mx-auto">
         <% if remember_record? %>
-          <%= link_to '接続中レコード', measure_record_path(fetch_record_id), class: "btn btn-warning" %>
+          <%= link_to '接続中レコード', measure_record_path(fetch_record_id), class: "button-primary button-big" %>
         <% else %>
-          <%= link_to '現在地からセツゾク', search_path, class: "btn btn-warning" %>
+          <%= link_to '現在地から接続', search_path, class: "button-primary button-big" %>
         <%  end %>
       </div>
     </div>
   <% end %>
-  <div class="text-center p-1 pb-5" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="footer">
     © 2023 moriw0
   </div>
 </footer>

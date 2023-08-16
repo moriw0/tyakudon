@@ -35,10 +35,10 @@ class RecordsController < ApplicationController
       redirect_to root_path, status: :see_other
     elsif remember_record?
       set_record_from_cookies
-      flash.notice = '再セツゾクしました'
+      flash.notice = '再接続しました'
     else
       remember_record
-      flash.notice = 'セツゾクしました'
+      flash.notice = '接続しました'
     end
   end
 

@@ -27,7 +27,7 @@ RSpec.describe 'LineStatuses' do
     it 'returns new modal when logged in' do
       log_in_as(user)
       do_request
-      expect(response.body).to include '<h5 class="modal-title">登録</h5>'
+      expect(response.body).to include '<h5 class="modal-title">行列の様子を報告</h5>'
     end
   end
 

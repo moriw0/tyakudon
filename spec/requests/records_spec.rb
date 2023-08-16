@@ -20,7 +20,7 @@ RSpec.describe 'Records' do
     it 'returns new modal when logged in' do
       log_in_as(user)
       do_request
-      expect(response.body).to include '<h5 class="modal-title">接続</h5>'
+      expect(response.body).to include "<h5 class=\"modal-title\">#{ramen_shop.name}</h5>"
     end
   end
 
@@ -159,7 +159,7 @@ RSpec.describe 'Records' do
 
       it 'has the wait_time in response body' do
         do_request
-        expect(response.body).to include '着丼してひとこと'
+        expect(response.body).to include 'ひとこと'
       end
     end
   end
