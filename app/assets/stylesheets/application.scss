@@ -461,7 +461,7 @@ section {
   .record-duration {
     margin: 0 auto;
     margin-bottom: 1rem;
-    width: 300px;
+    width: 310px;
     text-align: left;
     font-size: 0.9rem;
     padding: 0.5rem 0;
@@ -485,7 +485,7 @@ section {
     display: flex;
     justify-content: center;
     position: relative;
-    margin-top: 15px;
+    margin: 1rem auto;
     width: auto;
     padding: .8em 1.2em;
     border: 1px solid #bababa;
@@ -529,6 +529,27 @@ section {
     .user-record-count {
       font-size: 0.8rem;
       color: #5f5b5b;
+    }
+  }
+}
+
+.record-line-status {
+  h2 {
+    font-size: 1.25rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+  .line-status-content {
+    .line-status-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .badge {
+        width: 40px;
+      }
+      .line-status-passed-time {
+        margin-right: 0.5rem;
+      }
     }
   }
 }

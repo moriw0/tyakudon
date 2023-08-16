@@ -43,9 +43,9 @@
     </div>
   <% end %>
 </div>
-<div class="my-3 p-3 bg-body rounded shadow-sm">
-  <h2 class="border-bottom pb-2 mb-0"><%= tag.span("行列の様子") %></h2>
-  <%= render @record.line_statuses %>
+<div class="record-line-status">
+  <h2 class="border-bottom">行列の様子</h2>
+  <%= render @record.line_statuses.order(created_at: :asc) %>
 </div>
 <div>
   <%= link_to "レコード一覧へ戻る", ramen_shop_path(@record.ramen_shop) %>

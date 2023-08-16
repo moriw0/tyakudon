@@ -1,2 +1,5 @@
-<%= turbo_stream.prepend 'line_statuses', @line_status %>
 <%= turbo_stream_flash %>
+<%= turbo_stream.append "line_statuses" do %>
+  <%= render partial: "line_statuses/line_status_for_measure",
+             locals: { line_status: @line_status } %>
+<% end %>

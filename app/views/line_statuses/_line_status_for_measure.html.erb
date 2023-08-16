@@ -1,0 +1,11 @@
+<%= tag.div id: dom_id(line_status), class: 'border-bottom py-3' do %>
+  <small class='badge bg-dark me-2'><%= line_status.record.line_statuses.size %></small>
+  <small><%= passed_time_from_first_line_status(line_status) %>後</small>
+  <small class="mb-1"><%= line_type_badge(line_status) %></small>
+  <% if line_status.comment.present? %>
+    <p class="mb-1"><%= line_status.comment %></p>
+  <% end %>
+  <% if line_status.image.attached? %>
+    <%= image_tag line_status.image.variant(:display) %>
+  <% end %>
+<% end %>

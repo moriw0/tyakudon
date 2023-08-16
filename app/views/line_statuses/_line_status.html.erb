@@ -1,25 +1,23 @@
-<%= tag.div id: dom_id(line_status) do %>
-  <div class="d-flex text-body-secondary pt-3">
-    <%= link_to avatar_for(line_status.record.user, :small), line_status.record.user %>
-    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-      <div class="mb-1 d-flex w-100 justify-content-between">
-        <span class="d-block text-gray-dark"><%= line_status.record.user.name %></span>
-        <small><%= format_datetime line_status.created_at %></small>
-      </div>
-      <div class="d-flex justify-content-between align-items-end">
-        <div>
-          <p class="mb-1"><%= line_type_badge(line_status) %></p>
-          <% if line_status.comment.present? %>
-            <p class="mb-1"><i class="fa-solid fa-comment"></i> <%= line_status.comment %></p>
-          <% end %>
-          <% if line_status.image.attached? %>
-            <%= image_tag line_status.image.variant(:display) %>
-          <% end %>
-        </div>
-        <div>
-          <%= link_to '編集', edit_line_status_path(line_status), data: { turbo_stream: true } %>
-        </div>
-      </div>
+<%= tag.div id: dom_id(line_status), class: 'line-status-content border-bottom py-3' do %>
+  <div class="line-status-summary">
+    <div>
+      <% if line_status_counter.zero? %>
+        <span class='badge bg-dark me-2'>接続</span>
+        <span><%= format_datetime_detail line_status.created_at %></span>
+      <% else %>
+        <span class='badge bg-dark me-2'><%= line_status_counter + 1 %></span>
+        <span class="line-status-passed-time"><%= passed_time_from_first_line_status(line_status) %>後</span>
+      <% end %>
+      <%= line_type_badge(line_status) %>
+    </div>
+    <div>
+      <i class="fa-solid fa-chevron-down"></i>
     </div>
   </div>
+  <% if line_status.comment.present? %>
+    <p class="mb-1"><%= line_status.comment %></p>
+  <% end %>
+  <% if line_status.image.attached? %>
+    <%= image_tag line_status.image.variant(:display) %>
+  <% end %>
 <% end %>
