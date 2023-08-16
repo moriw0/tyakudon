@@ -17,4 +17,10 @@ module RecordsHelper
     wdays = %w[日 月 火 水 木 金 土]
     datetime.strftime("%Y.%m.%d(#{wdays[datetime.wday]}) %H:%M:%S")
   end
+
+  def format_only_detatil_time(datetime)
+    return unless datetime
+
+    datetime.strftime("%H:%M:%S")
+  end
 end

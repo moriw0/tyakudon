@@ -539,16 +539,47 @@ section {
     padding-bottom: 0.5rem;
     margin-bottom: 0;
   }
-  .line-status-content {
-    .line-status-summary {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .badge {
-        width: 40px;
+  .accordion {
+    .accordion-button {
+      padding: 1.25rem 0.5rem;
+      font-size: 1rem;
+      &:not(.collapsed) {
+        color: #000;
+        background-color: var(--bs-accordion-active-bg);
+        box-shadow: inset 0 calc(-1*var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
       }
-      .line-status-passed-time {
-        margin-right: 0.5rem;
+      >div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .line-status-summary {
+          display: flex;
+          align-items: center;
+          .badge {
+            width: 40px;
+          }
+          .line-status-passed-time {
+            margin-right: 0.5rem;
+          }
+        }
+        .has-content-icons {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    .accordion-body {
+      padding: 0 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 1rem;
+      .line-status-content {
+        img {
+          max-width: 100%;
+        }
+        .line-status-created-at {
+          font-size: 0.8rem;
+          color: #5f5b5b;
+        }
       }
     }
   }
