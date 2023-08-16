@@ -27,17 +27,17 @@
     </div>
   <% end %>
   <%= link_to user_path(@record.user), class: 'user-info' do %>
-    <div class="user-avatar">
+    <span class="user-avatar">
       <%= avatar_for @record.user, :middle %>
-    </div>
-    <div class="user-name">
+    </span>
+    <span class="user-name">
       <%= @record.user.name %>
-    </div>
+    </span>
     <span class="user-record-count">
       (<%= @record.user.records.count %>)
     </span>
   <% end %>
-  <% if @record.comment %>
+  <% unless @record.comment.blank? %>
     <div class="record-comment">
       <div class="comment-content"><%= @record.comment %></div>
     </div>

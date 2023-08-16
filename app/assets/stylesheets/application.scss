@@ -366,8 +366,9 @@ section {
 }
 
 .shop-info {
-  h5 {
+  h1 {
     margin-bottom: 0;
+    font-size: 1.5rem;
   }
   .shop-address {
     font-size: 0.8rem;
@@ -459,6 +460,7 @@ section {
   }
   .record-duration {
     margin: 0 auto;
+    margin-bottom: 1rem;
     width: 300px;
     text-align: left;
     font-size: 0.9rem;
@@ -472,7 +474,7 @@ section {
     }
   }
   .record-image {
-    margin: 1rem auto;
+    margin-bottom: 1rem;
     img {
       width: 100%;
       max-width: 400px;
@@ -512,10 +514,8 @@ section {
     width: 100%;
   }
   .user-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem auto;
+    text-decoration: none;
+    color: #000;
     .user-avatar {
       .avatar {
         width: 50px;
@@ -528,6 +528,7 @@ section {
     }
     .user-record-count {
       font-size: 0.8rem;
+      color: #5f5b5b;
     }
   }
 }
