@@ -14,6 +14,7 @@ class LineStatusesController < ApplicationController
   end
 
   def create
+    @line_status_counter = @record.line_statuses.size
     @line_status = @record.line_statuses.build(line_status_params)
 
     if @line_status.save

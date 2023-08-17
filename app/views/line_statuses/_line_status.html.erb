@@ -1,8 +1,9 @@
-<div class="accordion accordion-flush" id="accordionFlushExample">
+<%= tag.div id: dom_id(line_status) do %>
+  <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
     <h3 class="accordion-header" id="flush-heading-<%= line_status_counter %>">
       <button class="accordion-button border-bottom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-<%= line_status_counter %>" aria-expanded="false" aria-controls="flush-collapse-<%= line_status_counter %>">
-        <%= tag.div id: dom_id(line_status) do %>
+        <div>
           <div class="line-status-summary">
             <% if line_status_counter.zero? %>
               <span class='badge bg-dark me-2'>接続</span>
@@ -21,7 +22,7 @@
               <i class="fa-regular fa-image ms-1"></i>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </button>
     </h3>
     <div id="flush-collapse-<%= line_status_counter %>" class="accordion-collapse collapse" aria-labelledby="flush-heading-<%= line_status_counter %>" data-bs-parent="#accordionFlushExample">
@@ -40,4 +41,5 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+<% end %>

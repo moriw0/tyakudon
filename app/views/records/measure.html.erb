@@ -2,7 +2,7 @@
   <h1><%= @ramen_shop.name %></h1>
   <small class="mb-1 shop-address"><%= @ramen_shop.address %></small>
 </div>
-<div data-controller="timer" data-timer-started-at="<%= @record.started_at&.iso8601 %>">
+<div data-controller="timer" data-timer-started-at="<%= @record.started_at&.iso8601 %>" class="timer">
   <div data-timer-target="time">00:00:00.000</div>
   <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
@@ -11,13 +11,13 @@
       <%= f.submit 'ちゃくどん！', data: { action: "click->timer#end", disable_with: 'ちゃくどん中...' } , class: "button-primary" %>
     </div>
   <% end %>
+  <div class="retire d-flex justify-content-center">
+    <%= link_to 'リタイアする', retire_record_path(@record), data: { turbo_method: :post, turbo_confirm: "本当にリタイアしますか？" } %>
+  </div>
 </div>
-<div class="retire d-flex justify-content-center">
-  <%= link_to 'リタイアする', retire_record_path(@record), data: { turbo_method: :post, turbo_confirm: "本当にリタイアしますか？" } %>
-</div>
-<div class="my-3 p-3 bg-body rounded shadow-sm">
-  <div class="d-flex justify-content-between border-bottom pb-2 mb-0">
-    <h6><%= tag.span("行列の様子") %></h6>
+<div class="record-line-status">
+  <div class="line-status-header border-bottom">
+    <h2>行列の様子</h2>
     <%= link_to '追加報告', new_record_line_status_path(@record), data: { turbo_stream: true }, class: 'button-primary button-sm' %>
   </div>
   <div id="line_statuses">

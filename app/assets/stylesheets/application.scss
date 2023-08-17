@@ -77,12 +77,15 @@ textarea {
   height: calc(100svh - 56px);
 }
 
-[data-timer-target="time"] {
-  text-align: center;
-  font-size: 2.5rem;
-  margin: .5rem;
-  padding: 1rem;
-  font-family: sans-serif;
+.timer {
+  margin-bottom: 2rem;
+  [data-timer-target="time"] {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: .5rem;
+    padding: 1rem;
+    font-family: sans-serif;
+  }
 }
 
 /* The popup bubble styling. */
@@ -534,8 +537,16 @@ section {
 }
 
 .record-line-status {
+  .line-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      margin-bottom: 0.5rem;
+    }
+  }
   h2 {
-    font-size: 1.25rem;
+    font-size: 1rem;
     padding-bottom: 0.5rem;
     margin-bottom: 0;
   }
