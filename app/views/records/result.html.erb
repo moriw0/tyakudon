@@ -5,7 +5,7 @@
     <%= format_wait_time @record.wait_time %>
   </div>
 </div>
-<%= bootstrap_form_with model: @record do |f| %>
+<%= bootstrap_form_with model: @record, class: 'record-result-form' do |f| %>
   <%= f.text_area :comment, label: { text: "ひとこと" } %>
   <div class="image" data-controller="image-uploader">
     <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
@@ -15,3 +15,7 @@
     <%= f.submit '投稿する', class: "button-primary" %>
   </div>
 <% end %>
+<div class="record-line-status">
+  <h2 class="border-bottom">行列の様子</h2>
+  <%= render @record.line_statuses %>
+</div>
