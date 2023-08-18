@@ -50,11 +50,12 @@ RSpec.describe 'Records', js: true do
     fill_in 'ひとこと', with: 'もう少し'
     click_button '報告する'
     ## 暫定対策: responseを待ってからmodalを強制的に閉じる
-    # sleep(1)
-    # find('button[data-bs-dismiss="modal"]').click
+    sleep(1)
+    find('button[data-bs-dismiss="modal"]').click
 
     # measureページに追加登録情報が反映されている
     expect(page).to have_content '行列の様子を報告しました'
+    find('#flush-heading-1 > button').click
     expect(page).to have_content 'もう少し'
     expect(page).to have_content '00:00:05', wait: 3
     click_button 'ちゃくどん'

@@ -1,7 +1,7 @@
 class LineStatus < ApplicationRecord
   belongs_to :record
   has_one_attached :image do |attachable|
-    attachable.variant :display, resize_to_limit: [250, 250]
+    attachable.variant :display, resize_to_limit: [400, 400]
   end
 
   enum line_type: { inside_the_store: 1, outside_the_store: 2, seated: 3 }

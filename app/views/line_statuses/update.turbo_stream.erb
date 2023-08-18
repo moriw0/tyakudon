@@ -1,2 +1,5 @@
-<%= turbo_stream.replace @line_status %>
 <%= turbo_stream_flash %>
+<%= turbo_stream.replace @line_status do %>
+  <%= render partial: "line_status",
+             locals: { line_status: @line_status, line_status_counter: @line_status_counter } %>
+<% end %>

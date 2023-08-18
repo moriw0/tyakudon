@@ -14,6 +14,7 @@ class LineStatusesController < ApplicationController
   end
 
   def create
+    @line_status_counter = @record.line_statuses.size
     @line_status = @record.line_statuses.build(line_status_params)
 
     if @line_status.save
@@ -24,6 +25,8 @@ class LineStatusesController < ApplicationController
   end
 
   def update
+    @line_status_counter = @line_status.record.line_statuses.size
+
     if @line_status.update(line_status_params)
       flash.now.notice = '待ち状況を更新しました'
     else

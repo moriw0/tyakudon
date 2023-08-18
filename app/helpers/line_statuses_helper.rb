@@ -17,4 +17,9 @@ module LineStatusesHelper
       "#{line_status.line_type_i18n} - #{line_status.line_number}人"
     end
   end
+
+  def passed_time_from_first_line_status(line_status)
+    first_line_status = line_status.record.line_statuses.first
+    distance_of_time_in_words(first_line_status.created_at, line_status.created_at, compact: true)
+  end
 end

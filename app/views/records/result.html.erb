@@ -1,12 +1,15 @@
+<h1 class="record-header">ちゃくどんレコード</h1>
 <div class="record-result">
-  <h1>ちゃくどんレコード</h1>
-  <h2><%= @record.ramen_shop.name %></h2>
+  <div class="shop-info">
+    <div class="shop-name"><%= @record.ramen_shop.name %></div>
+    <small class="shop-address"><%= @record.ramen_shop.address %></small>
+  </div>
   <div class="record-time">
     <%= format_wait_time @record.wait_time %>
   </div>
 </div>
-<%= bootstrap_form_with model: @record do |f| %>
-  <%= f.text_area :comment, label: { text: "ひとこと" } %>
+<%= bootstrap_form_with model: @record, class: 'record-result-form' do |f| %>
+  <%= f.text_area :comment, label: { text: "ひとこと" }, placeholder: 'ちゃくどん後の心境をどうぞ！' %>
   <div class="image" data-controller="image-uploader">
     <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
     <%= image_tag '', data: { image_uploader_target: "imagePrev" }, class: 'image-prev', style: 'display:none' %>
@@ -15,3 +18,7 @@
     <%= f.submit '投稿する', class: "button-primary" %>
   </div>
 <% end %>
+<div class="record-line-status">
+  <h2 class="border-bottom">行列の様子</h2>
+  <%= render @record.line_statuses %>
+</div>
