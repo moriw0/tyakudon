@@ -16,7 +16,7 @@ module ApplicationHelper
   def format_only_detatil_time(datetime)
     return unless datetime
 
-    datetime.strftime("%H:%M:%S")
+    datetime.strftime('%H:%M:%S')
   end
 
   # rubocop:disable Metrics/MethodLength
