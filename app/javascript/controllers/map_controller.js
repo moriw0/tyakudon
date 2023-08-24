@@ -38,8 +38,9 @@ export default class extends Controller {
 
           this.fetchNearShops(currentLocation);
         },
-        function () {
+        (error) => {
           this.spinnerTarget.style.display = "none";
+          console.error("現在地の取得中にエラーが発生しました:", error);
           alert("現在地が取得できませんでした");
         }
       );
