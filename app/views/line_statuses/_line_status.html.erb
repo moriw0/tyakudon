@@ -32,9 +32,9 @@
               <p class="mb-1"><%= line_status.comment %></p>
             <% end %>
             <% if line_status.image.attached? %>
-              <div class="line-status-image skeleton" data-controller="image" data-image-target="skeleton">
-                <%= image_tag line_status.image.variant(:display), loding: 'lazy', data: { image_target: "image" } %>
-              </div>
+              <%= skeleton_background_tag 'line-status-image' do %>
+                <%= lazy_image_tag line_status.image.variant(:display) %>
+              <% end %>
             <% end %>
             <div class="line-status-created-at">
               <%= format_datetime_detail line_status.created_at %>

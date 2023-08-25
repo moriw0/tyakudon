@@ -25,14 +25,14 @@
     </div>
   </div>
   <% if @record.image.attached? %>
-    <div class="record-image skeleton" data-controller="image" data-image-target="skeleton">
-      <%= image_tag @record.image.variant(:display), loding: 'lazy', data: { image_target: "image" } %>
-    </div>
+    <%= skeleton_background_tag 'record-image' do %>
+      <%= lazy_image_tag @record.image.variant(:display) %>
+    <% end %>
   <% end %>
   <%= link_to user_path(@record.user), class: 'user-info' do %>
-    <span class="user-avatar skeleton" data-controller="image" data-image-target="skeleton">
+    <%= skeleton_background_tag 'user-avatar' do %>
       <%= avatar_for @record.user, :middle %>
-    </span>
+    <% end %>
     <span class="user-name">
       <%= @record.user.name %>
     </span>

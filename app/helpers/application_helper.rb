@@ -47,4 +47,14 @@ module ApplicationHelper
     defined?(@show_connect_button) ? @show_connect_button : true
   end
   # rubocop:enable Rails/HelperInstanceVariable
+
+  def skeleton_background_tag(class_name)
+    tag.div class: [class_name, 'skeleton'], data: { controller: 'image', image_target: 'skeleton' } do
+      yield if block_given?
+    end
+  end
+
+  def lazy_image_tag(image)
+    image_tag image, loding: 'lazy', data: { image_target: 'image' }
+  end
 end
