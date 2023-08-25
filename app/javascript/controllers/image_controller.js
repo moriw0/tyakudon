@@ -17,5 +17,6 @@ export default class extends Controller {
   loaded() {
     const skeleton = this.skeletonTarget;
     skeleton.classList.add("loaded");
+    skeleton.style.animation = "none";
   }
 }
