@@ -32,7 +32,9 @@
               <p class="mb-1"><%= line_status.comment %></p>
             <% end %>
             <% if line_status.image.attached? %>
-              <%= image_tag line_status.image.variant(:display) %>
+              <%= skeleton_background_tag 'line-status-image' do %>
+                <%= lazy_image_tag line_status.image.variant(:display) %>
+              <% end %>
             <% end %>
             <div class="line-status-created-at">
               <%= format_datetime_detail line_status.created_at %>
