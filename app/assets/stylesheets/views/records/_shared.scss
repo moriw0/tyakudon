@@ -1,0 +1,17 @@
+.record-header {
+  text-align: center;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.record-time {
+  margin: auto 1rem;
+  padding: 1rem 0;
+  .hh-mm-ss {
+    font-size: 3rem;
+  }
+  .small-milliseconds {
+    font-size: 2rem;
+  }
+}

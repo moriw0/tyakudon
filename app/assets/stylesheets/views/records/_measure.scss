@@ -1,0 +1,10 @@
+.timer {
+  margin-bottom: 2rem;
+  [data-timer-target="time"] {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: .5rem;
+    padding: 1rem;
+    font-family: sans-serif;
+  }
+}

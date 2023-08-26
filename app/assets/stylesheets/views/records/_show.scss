@@ -1,0 +1,98 @@
+.record-content {
+  text-align: center;
+  margin: 1rem auto;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    .record-number {
+      margin-left: 1rem;
+      font-size: 1rem;
+    }
+  }
+  .record-duration {
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    width: 310px;
+    text-align: left;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    .record-started-at {
+      margin-bottom: 0.3rem;
+    }
+    .date-time {
+      color: #5f5b5b;
+      margin-right: 0.5rem;
+    }
+  }
+  .record-image {
+    margin-bottom: 1rem;
+    width: 100%;
+    min-height: 250px;
+    border-radius: 5px;
+    img {
+      border-radius: 5px;
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 250ms ease-in-out;
+    }
+  }
+  .record-comment {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin: 1rem auto;
+    width: auto;
+    padding: .8em 1.2em;
+    border: 1px solid #bababa;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333333;
+    &:before,
+    &:after {
+        position: absolute;
+        top: -15px;
+        width: 30px;
+        height: 15px;
+        clip-path: polygon(50% 0, 0 100%, 100% 100%);
+        content: '';
+    }
+    &:before {
+        background-color: #bababa;
+    }
+    &:after {
+        top: -13px;
+        background-color: #fff;
+    }
+  }
+  .comment-content {
+    text-align: left;
+    width: 100%;
+  }
+  .user-info {
+    text-decoration: none;
+    color: #000;
+    .user-avatar {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      .avatar {
+        width: 50px;
+        height: 50px;
+        margin-right: 3px;
+      }
+    }
+    .user-name {
+      margin-right: 3px;
+    }
+    .user-record-count {
+      font-size: 0.8rem;
+      color: #5f5b5b;
+    }
+  }
+}

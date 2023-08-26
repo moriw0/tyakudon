@@ -1,0 +1,65 @@
+.type-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 85%;
+  font-weight: 450;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 5px;
+  color: var(--bs-gray-800);
+  border: 0.37px solid #ccc3c3;
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-right: 5px;
+    border-radius: 50%;
+    margin-bottom: 1px;
+    opacity: 0.6;
+  }
+}
+
+.badge-red {
+  background-color: rgba(232, 142, 142, 0.22);
+  &:before {
+    background-color: #DF5000;
+  }
+}
+
+.badge-yellow {
+  background-color: rgba(224, 253, 177, 0.31);
+  &:before {
+    background-color: #C8942F;
+  }
+}
+
+.badge-green {
+  background-color: rgba(13, 171, 86, 0.22);
+  &:before {
+    background-color: #1F950C;
+  }
+}
+
+.hidden-radio {
+  display: none;
+}
+
+div[data-controller="line-status"] {
+  .form-check {
+    padding: 0;
+    margin-left: 1.0rem;
+  }
+}
+
+.hidden-radio + label {
+  cursor: pointer;
+}
+
+.hidden-radio:checked + label {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

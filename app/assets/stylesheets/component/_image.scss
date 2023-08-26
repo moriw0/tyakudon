@@ -1,0 +1,24 @@
+.skeleton {
+  img {
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+  }
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+  &.loaded {
+    img {
+      opacity: 1;
+    }
+  }
+  @keyframes skeleton-loading {
+    0% {
+      background-color: hsl(200, 20%, 90%);
+    }
+
+    100% {
+      background-color: hsl(200, 20%, 95%);
+    }
+  }
+}
