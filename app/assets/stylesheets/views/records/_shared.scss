@@ -1,8 +1,21 @@
+@use "../../global" as g;
+
 .record-header {
   text-align: center;
   margin: 0;
   font-size: 1rem;
   font-weight: bold;
+}
+
+.shop-info {
+  .shop-name {
+    margin-bottom: 0;
+    font-size: 1.4rem;
+  }
+  .shop-address {
+    font-size: 0.8rem;
+    color: g.$brand-light-gray-color;
+  }
 }
 
 .record-time {

@@ -8,3 +8,11 @@
     font-family: sans-serif;
   }
 }
+
+.retire a {
+  text-decoration: none;
+  color: #4e4a4a;
+  &:hover{
+    text-decoration: underline solid #4e4a4a;
+  }
+}

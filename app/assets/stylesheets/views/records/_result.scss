@@ -1,3 +1,5 @@
+@use "../../global" as g;
+
 .record-result {
   background-image: url('celebration.jpg');
   background-position: center;
@@ -11,7 +13,7 @@
   }
   h2 {
     font-size: 1rem;
-    color: #7a7a7a;
+    color: g.$brand-light-gray-color;
   }
 }
 

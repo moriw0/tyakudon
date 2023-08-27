@@ -1,3 +1,5 @@
+@use "../../global" as g;
+
 .record-content {
   text-align: center;
   margin: 1rem auto;
@@ -23,7 +25,7 @@
       margin-bottom: 0.3rem;
     }
     .date-time {
-      color: #5f5b5b;
+      color: g.$brand-light-gray-color;
       margin-right: 0.5rem;
     }
   }
@@ -37,8 +39,6 @@
       width: 100%;
       max-height: 350px;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 250ms ease-in-out;
     }
   }
   .record-comment {
@@ -92,7 +92,7 @@
     }
     .user-record-count {
       font-size: 0.8rem;
-      color: #5f5b5b;
+      color: g.$brand-light-gray-color;
     }
   }
 }

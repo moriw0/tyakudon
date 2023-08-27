@@ -1,3 +1,5 @@
+@use "../../global" as g;
+
 .record-line-status {
   .line-status-header {
     display: flex;
@@ -52,7 +54,7 @@
         }
         .line-status-created-at {
           font-size: 0.8rem;
-          color: #5f5b5b;
+          color: g.$brand-light-gray-color;
         }
       }
     }
