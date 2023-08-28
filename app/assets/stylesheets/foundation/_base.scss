@@ -1,0 +1,18 @@
+@use "bootstrap";
+@use "../global" as g;
+
+body {
+  @include g.NotoSansJP;
+  padding-top: 56px;
+  .container {
+    max-width: 720px;
+    section {
+      h2 {
+        font-weight: 600;
+      }
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+}

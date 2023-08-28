@@ -1,0 +1,22 @@
+@use "../../global" as g;
+
+.record-result {
+  background-image: url('celebration.jpg');
+  background-position: center;
+  background-size: 160%;
+  text-align: center;
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 30%;
+  h1 {
+    font-size: 1.25rem;
+  }
+  h2 {
+    font-size: 1rem;
+    color: g.$brand-light-gray-color;
+  }
+}
+
+.record-result-form {
+  margin-bottom: 1rem;
+}
