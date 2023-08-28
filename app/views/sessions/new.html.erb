@@ -1,5 +1,5 @@
-<h1>ログイン</h1>
-<div class="col-md-6">
+<div id="sessions-new">
+  <h1>ログイン</h1>
   <%= bootstrap_form_with url: login_path, scope: :session do |f|%>
     <%= f.email_field :email, label: "メールアドレス" %>
     <%= f.password_field :password, label: "パスワード" %>
@@ -8,8 +8,8 @@
       <%= f.submit "ログインする" %>
     </div>
   <% end %>
-  <div class="mt-1 mb-3">
-    <p><%= link_to 'アカウントをお持ちでない方はこちら', new_user_path %></p>
-    <p><%= link_to 'パスワードをお忘れの方はこちら', new_password_reset_path %></p>
+  <div class="text-center mt-5">
+    <%= link_to 'パスワードをお忘れの方はこちら', new_password_reset_path, class: 'normal-link' %>
+    <%= link_to 'アカウントをお持ちでない方はこちら', new_user_path, class: 'btn btn-outline-secondary' %>
   </div>
 </div>
