@@ -1,6 +1,27 @@
+@use "../global" as g;
+
 .footer {
   background-color: rgba(0, 0, 0, 0.2);
   text-align: center;
   padding-top: 0.5rem;
   padding-bottom: 4.0rem;
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin-top: 0.5rem;
+    li {
+      font-size: 0.9rem;
+      margin-right: 1rem;
+      a {
+        color: g.$brand-light-gray-color;
+        text-decoration: none;
+        &:hover{
+          color: g.$brand-light-gray-color;
+          opacity: 0.8;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }
