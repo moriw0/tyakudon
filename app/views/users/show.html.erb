@@ -1,7 +1,9 @@
 <aside class="col-md-4">
   <section class="user_info">
-    <h1>
-      <%= avatar_for @user, :middle %>
+    <h1 class="d-flex align-items-center">
+      <%= skeleton_background_tag 'avatar' do %>
+        <%= avatar_for(@user, :middle) %>
+      <% end %>
       <%= @user.name %>
     </h1>
   </section>

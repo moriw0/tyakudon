@@ -1,0 +1,35 @@
+.image {
+  .image-prev {
+    max-width: 250px;
+    margin-bottom: 15px;
+  }
+  .avatar-prev{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+}
+
+.skeleton {
+  img {
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+  }
+  &.loaded {
+    img {
+      opacity: 1;
+    }
+  }
+
+  animation: skeleton-loading 1s linear infinite alternate;
+  @keyframes skeleton-loading {
+    0% {
+      background-color: hsl(200, 20%, 90%);
+    }
+
+    100% {
+      background-color: hsl(200, 20%, 95%);
+    }
+  }
+}
