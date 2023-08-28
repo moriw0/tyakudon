@@ -2,7 +2,7 @@
   <section class="introduction">
     <h1>ちゃくどん</h1>
     <p>ラーメン店へ接続してから<span>着丼までの時間を</span><span>記録・共有するサービスです</span></p>
-    <div class="image-block"><%= image_tag 'ramen_color.png', style: "width: 100px; height: 100px" %></div>
+    <div class="image-block"><%= image_tag 'ramen_color.png' %></div>
     <dl>
       <div class="dl-table">
         <dt class="badge bg-dark me-2">接続</dt>
@@ -21,8 +21,10 @@
       <li>適宜行列の様子を報告する</li>
       <li>ラーメンが提供されたら着丼報告！</li>
     </ol>
-    <div class="d-grid">
-      <%= link_to "今すぐ始める", signup_path, class: "button-primary button-big" %>
-    </div>
+    <% unless logged_in? %>
+      <div class="d-grid">
+        <%= link_to "今すぐ始める", login_path, class: "button-primary button-big" %>
+      </div>
+    <% end %>
   </section>
 </div>
