@@ -1,0 +1,10 @@
+@use "../global/" as g;
+
+a.normal-link {
+  color: g.$brand-light-gray-color;
+  text-decoration: none;
+  &:hover {
+    color: g.$brand-light-gray-color;
+    opacity: 0.8;
+  }
+}
