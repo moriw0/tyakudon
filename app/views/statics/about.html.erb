@@ -1,24 +1,28 @@
-<div id=”statics-about”>
+<div id="statics-about">
   <section class="introduction">
-    <h1>ちゃくどんはラーメン店への接続から着丼までの時間を記録・共有するサービスです</h1>
-  </section>
-  <section class="term">
+    <h1>ちゃくどん</h1>
+    <p>ラーメン店へ接続してから<span>着丼までの時間を</span><span>記録・共有するサービスです</span></p>
+    <div class="image-block"><%= image_tag 'ramen_color.png', style: "width: 100px; height: 100px" %></div>
     <dl>
-      <dt>接続</dt>
-      <dd>行列に並ぶことを接続といいます。</dd>
-      <dt>着丼</dt>
-      <dd>ラーメンが出来上がって提供されることをいいます。</dd>
+      <div class="dl-table">
+        <dt class="badge bg-dark me-2">接続</dt>
+        <dd>行列に並ぶこと</dd>
+      </div>
+      <div class="dl-table">
+        <dt class="badge bg-dark me-2">着丼</dt>
+        <dd>ラーメンが提供されること</dd>
+      </div>
     </dl>
-  </section>
-  <section class="new-records">
-    <h2>最新のちゃくどんレコード</h2>
   </section>
   <section class="step">
     <h2>ご利用の流れ</h2>
     <ol>
-      <li>お店に着いたら接続します</li>
-      <li>適宜行列の様子を報告します</li>
-      <li>ラーメンが提供されたら着丼報告します</li>
+      <li>お店に着いたら「現在地から接続」する</li>
+      <li>適宜行列の様子を報告する</li>
+      <li>ラーメンが提供されたら着丼報告！</li>
     </ol>
+    <div class="d-grid">
+      <%= link_to "今すぐ始める", signup_path, class: "button-primary button-big" %>
+    </div>
   </section>
 </div>
