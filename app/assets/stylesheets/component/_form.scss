@@ -1,7 +1,17 @@
+@use "../global/" as g;
+
 label {
   font-size: 0.9rem;
+  position: relative;
   &.required:after {
-    content:" *";
-    color: red;
+    background-color: #ffda45;
+    border-radius: 2px;
+    color: #000;
+    content: "必須";
+    font-size: 0.6rem;
+    padding: 0.2rem 0.3rem;
+    position: absolute;
+    right: -34px;
+    top: 0;
   }
 }
