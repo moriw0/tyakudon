@@ -1,0 +1,97 @@
+#statics-about {
+  section {
+    padding-top: 100px;
+    text-align: center;
+    &:last-child {
+      padding-bottom: 50px;
+    }
+    h1, h2 {
+      display: inline-block;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      padding: 0.25em 0;
+      position: relative;
+      &:after {
+        content: "";
+        display: block;
+        height: 4px;
+        background: -webkit-linear-gradient(to right, rgb(255, 186, 115), #ffb2b2);
+        background: linear-gradient(to right, rgb(255, 186, 115), #ffb2b2);
+      }
+    }
+  }
+  .image-block {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    img {
+      height: 100px;
+      width: auto;
+    }
+  }
+
+  .introduction {
+    p {
+      font-size: 1rem;
+      font-weight: bold;
+      span {
+        display: inline-block;
+      }
+    }
+    dl {
+      margin: 0 auto;
+      width: fit-content;
+      .dl-table {
+        align-items: center;
+        display: flex;
+        margin-bottom: 10px;
+        dt {
+          margin-right: 1rem;
+        }
+        dd {
+          margin-bottom: 0;
+          span {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .step {
+    ol{
+      counter-reset:list;
+      list-style-type:none;
+      margin: 0 auto;
+      margin-bottom: 50px;
+      padding: 0px;
+      text-align: left;
+      width: fit-content;
+      li{
+        position:relative;
+        line-height: 30px;
+        margin: 7px 0 7px 40px;
+        padding-left: 10px;
+        font-weight: bold;
+        &:before {
+          border-radius: 50%;
+          counter-increment: list;
+          content: counter(list);
+          position: absolute;
+          left: -35px;
+          width: 30px;
+          height: 30px;
+          background: #000;
+          text-align: center;
+          color: #fff;
+          top: 50%;
+          -moz-transform: translateY(-50%);
+          -webkit-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}

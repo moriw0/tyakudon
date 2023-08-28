@@ -112,7 +112,7 @@ RSpec.describe 'Users' do
 
       visit user_path(user)
       expect(find('h1')).to have_content user.name
-      expect(find('h1>img.avatar')).to be_truthy
+      expect(find('h1 img.avatar')).to be_truthy
       expect(find('h6>span')).to have_content user.records.count
       expect(find('ul.pagination')).to be_truthy
 
