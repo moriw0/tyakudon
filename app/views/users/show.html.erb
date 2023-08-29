@@ -10,8 +10,12 @@
   <section class="stats">
     <%= render 'shared/stats' %>
   </section>
-  <p><%= link_to 'ユーザー情報を編集する', edit_user_path(@user) if current_user?(@user) %></p>
-  <p><%= link_to 'すべてのユーザーをみる', users_path %></p>
+  <% if current_user? @user %>
+    <p><%= link_to 'ユーザー情報を編集する', edit_user_path(@user) %></p>
+  <% end %>
+  <% if logged_in? && current_user.admin? %>
+    <p><%= link_to 'すべてのユーザーをみる', users_path %></p>
+  <% end%>
 </aside>
 <div class="col-md-8">
   <% if @user.records.any? %>

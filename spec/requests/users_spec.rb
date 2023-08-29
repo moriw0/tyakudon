@@ -9,9 +9,24 @@ RSpec.describe 'Users' do
   end
 
   describe 'GET /users' do
-    it 'redirects index when not logged in' do
+    let(:admin) { create(:user) }
+    let(:non_admin) { create(:other_user) }
+
+    it 'redirects to login_path when not logged in' do
       get users_path
-      expect(response).to redirect_to login_url
+      expect(response).to redirect_to login_path
+    end
+
+    it 'redirects to root_path with non-admin' do
+      log_in_as(non_admin)
+      get users_path
+      expect(response).to redirect_to root_path
+    end
+
+    it 'gets users_path with admin' do
+      log_in_as(admin)
+      get users_path
+      expect(response.body).to include '<h1>すべてのユーザー</h1>'
     end
   end
 

@@ -63,14 +63,6 @@ RSpec.describe 'Users' do
           click_link '削除', href: user_path(non_admin)
         }.to change(User, :count).by(-1)
       end
-    end
-
-    context 'with non-admin' do
-      it 'shows users not including delete link' do
-        log_in_as(non_admin)
-        visit users_path
-        expect(page).to_not have_link '削除'
-      end
 
       it 'does not show non_activated_user' do
         non_activated_user = create(:non_activated_user)
@@ -79,6 +71,14 @@ RSpec.describe 'Users' do
         expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
         click_link href: '/users?page=2', match: :first
         expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
+      end
+    end
+
+    context 'with non-admin' do
+      it 'shows users not including delete link' do
+        log_in_as(non_admin)
+        visit users_path
+        expect(page).to have_content '不正なアクセスです'
       end
     end
   end
