@@ -66,7 +66,7 @@ RSpec.describe 'Users' do
 
       it 'does not show non_activated_user' do
         non_activated_user = create(:non_activated_user)
-        log_in_as(non_admin)
+        log_in_as(admin)
         visit users_path
         expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
         click_link href: '/users?page=2', match: :first
@@ -93,9 +93,9 @@ RSpec.describe 'Users' do
     it 'shows edit_user_path when vist current_user path' do
       log_in_as(user)
       visit user_path(other_user)
-      expect(page).to_not have_link 'ユーザー情報を編集する', href: edit_user_path(other_user)
+      expect(page).to_not have_link 'プロフィールを編集する', href: edit_user_path(other_user)
       visit user_path(user)
-      expect(page).to have_link 'ユーザー情報を編集する', href: edit_user_path(user)
+      expect(page).to have_link 'プロフィールを編集する', href: edit_user_path(user)
     end
 
     it 'shows their profile and records' do
@@ -104,7 +104,7 @@ RSpec.describe 'Users' do
 
       visit user_path(user)
       expect(find('h1')).to have_content user.name
-      expect(find('h1 img.avatar')).to be_truthy
+      expect(find('img.avatar')).to be_truthy
       expect(find('h6>span')).to have_content user.records.count
       expect(find('ul.pagination')).to be_truthy
 
