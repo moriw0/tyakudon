@@ -1,13 +1,21 @@
-<%= bootstrap_form_with model: @user do |f|%>
+<%= bootstrap_form_with model: @user, html: { id: 'user-form' } do |f| %>
   <%= f.text_field :name, label: "ニックネーム" %>
   <%= f.email_field :email, label: "メールアドレス" %>
   <%= f.password_field :password, label: "パスワード", help: '半角英数字6文字以上' %>
-  <%= f.password_field :password_confirmation, label: "パスワード(確認)", label_class: 'required' %>
+  <%= f.password_field :password_confirmation, label: "パスワード（確認）", label_class: 'required' %>
   <div class="image" data-controller="image-uploader">
     <%= f.file_field :avatar, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
     <%= image_tag '', data: { image_uploader_target: "imagePrev" }, class: 'avatar-prev', style: 'display:none' %>
   </div>
-  <div class="d-grid">
-    <%= f.submit yield(:button_text) %>
+  <div data-controller="agreement">
+    <div class="agreement form-check">
+      <%= check_box_tag 'agreement', 'on', false, { id: 'agreement', class: 'form-check-input', required: true, data: { agreement_target: 'checkbox', action: "change->agreement#updateButtonState" } } %>
+      <label for="agreement" class="form-check-label">
+        <%= link_to '利用規約', terms_path %>と<%= link_to 'プライバシーポリシー', privacy_policy_path %>に同意します。
+      </label>
+    </div>
+    <div class="d-grid">
+      <%= f.submit yield(:button_text), data: { agreement_target: 'submitButton' }, disabled: true %>
+    </div>
   </div>
 <% end %>
