@@ -1,0 +1,20 @@
+@use "../../global" as g;
+
+.stats {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  padding-top: 0.5rem;
+  width: fit-content;
+  a {
+    color: g.$brand-light-gray-color;
+    font-size: 0.8rem;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

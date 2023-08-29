@@ -1,9 +1,12 @@
 <% @user ||= current_user %>
-<div class="stats">
+
+<%= link_to user_path(@user) do %>
+  <%= @user.records.count %><br>
+  レコード数
+<% end %>
+<% if current_user? @user %>
   <%= link_to favorites_by_user_path(@user) do %>
+    <%= @user.favorite_shops.count %><br>
     お気に入り店
-    <strong id="favorite_shops" class="stat">
-      <%= @user.favorite_shops.count %>
-    </strong>
   <% end %>
-</div>
+<% end %>
