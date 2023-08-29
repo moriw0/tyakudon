@@ -1,0 +1,19 @@
+#users-show_layout {
+  margin: 50px 0;
+  aside {
+    text-align: center;
+    .user_info {
+      margin: 0 auto;
+      width: fit-content;
+      div.avatar {
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 1.2em;
+        margin-bottom: 2rem;
+        margin-top: 1rem;
+        text-align: center;
+      }
+    }
+  }
+}
