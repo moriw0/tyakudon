@@ -1,9 +1,13 @@
-<h1>パスワード再設定</h1>
-<div class="col-md-6">
+<section id="password_resets-new">
+  <h1>パスワード再設定</h1>
+  <p>メールアドレスへパスワード再設定用のリンクを送付します。</p>
   <%= bootstrap_form_with url: password_resets_path, scope: :password_reset do |f|%>
     <%= f.email_field :email, label: "メールアドレス" %>
     <div class="d-grid">
-      <%= f.submit "パスワードを再設定する" %>
+      <%= f.submit "再設定用リンクを申請する" %>
     </div>
   <% end %>
-</div>
+  <div class="text-center mt-5">
+    <%= link_to 'ログイン', login_path, class: 'normal-link' %>
+  </div>
+</section>
