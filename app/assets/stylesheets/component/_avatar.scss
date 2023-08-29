@@ -1,17 +1,27 @@
+.avatar-prev{
+  border-radius: 50%;
+  height: 150px;
+  margin-bottom: 15px;
+  object-fit: cover;
+  width: 150px;
+}
+
 .avatar {
   border-radius: 50%;
-  width: 80px;
   height: 80px;
+  object-fit: cover;
+  width: 80px;
 }
 
 .avatar-image {
   border-radius: 50%;
-  width: 38px;
   height: 33px;
   margin-right: 10px;
+  width: 38px;
   .small-avatar {
     border-radius: 50%;
-    width: 33px;
     height: 33px;
+    object-fit: cover;
+    width: 33px;
   }
 }
