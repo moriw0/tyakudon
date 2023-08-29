@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe 'Users' do
   let(:user) { create(:user) }
 
-  scenario 'user creates an account with valid information' do
+  scenario 'user creates an account with valid information', js: true do
     visit new_user_path
     expect {
       fill_in 'ニックネーム', with: 'もりを'
       fill_in 'メールアドレス', with: 'test@example.com'
       fill_in 'パスワード', with: 'foobar'
-      fill_in 'パスワード(確認)', with: 'foobar'
+      fill_in 'パスワード（確認）', with: 'foobar'
+      find('input#agreement').click
       click_button '登録する'
       expect(page).to have_content 'メールを確認してアカウントを有効にしてください'
     }.to change(User, :count).by(1)
@@ -20,9 +21,6 @@ RSpec.describe 'Users' do
     visit edit_user_path(user)
     expect {
       fill_in 'ニックネーム', with: 'Foo bar'
-      fill_in 'メールアドレス', with: 'foo@bar.com'
-      fill_in 'パスワード', with: ''
-      fill_in 'パスワード(確認)', with: ''
       attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png'), make_visible: true
       click_button '更新する'
       expect(page).to have_content 'ユーザー情報を更新しました'
@@ -36,15 +34,9 @@ RSpec.describe 'Users' do
     visit edit_user_path(user)
     expect {
       fill_in 'ニックネーム', with: ''
-      fill_in 'メールアドレス', with: 'foo@invalid'
-      fill_in 'パスワード', with: 'foo'
-      fill_in 'パスワード(確認)', with: 'bar'
       attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png'), make_visible: true
       click_button '更新する'
       expect(page).to have_content '入力してください'
-      expect(page).to have_content '不正な値です'
-      expect(page).to have_content '6文字以上で入力してください'
-      expect(page).to have_content 'パスワードの入力が一致しません'
       expect(page).to have_content '5MB以下である必要があります'
     }.to_not change(User, :count)
   end
