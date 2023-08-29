@@ -200,6 +200,16 @@ RSpec.describe 'Users' do
         expect(response).to redirect_to login_path
       end
     end
+
+    context 'with incorrect user' do
+      let(:other_user) { create(:other_user) }
+
+      it 'redirects to root_path' do
+        log_in_as other_user
+        get favorites_by_user_path(user)
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'PATCH /users/:id/update_test_mode #update_test_mode' do
