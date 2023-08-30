@@ -1,3 +1,6 @@
+.row:has(#map) > * {
+  padding: 0;
+}
 
 .loading-spinner {
   width: 100%;
@@ -32,11 +35,6 @@
   height: calc(100svh - 56px);
 }
 
-.full-screen {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
 .popup-bubble {
   position: absolute;
   top: 0;
@@ -52,6 +50,10 @@
   cursor: pointer;
   text-decoration: none;
   color: black;
+  &:hover {
+    color: black;
+    text-decoration: underline;
+  }
 }
 
 .popup-bubble-anchor {
