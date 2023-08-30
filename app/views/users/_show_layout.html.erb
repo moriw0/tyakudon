@@ -15,7 +15,7 @@
     <% if logged_in? && current_user.admin? %>
       <div><%= link_to 'すべてのユーザーをみる', users_path, class: 'normal-link' %></div>
     <% end%>
-  </aside>
+  </section>
   <section class="content">
     <%= yield %>
   </section>
