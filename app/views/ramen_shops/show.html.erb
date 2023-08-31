@@ -1,15 +1,26 @@
-<div class="container">
-  <%= render 'favorite_form' if logged_in? %>
-  <h2 class="my-4"><%= @ramen_shop.name %></h2>
-  <p class="mb-4"><%= @ramen_shop.address %></p>
-  <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0"><%= tag.span("レコード数 #{@ramen_shop.records.count}") %></h6>
-    <%= render @records, name: :user %>
-    <div class="d-flex justify-content-center mt-3">
-      <%= paginate @records%>
+<div id="ramen_shops-show">
+  <section class="ramen_shop">
+    <h1 class="my-4"><%= @ramen_shop.name %></h1>
+    <p class="mb-4"><%= @ramen_shop.address %></p>
+    <div class="stats">
+      <%= link_to ramen_shop_path(@ramen_shop) do %>
+        <%= @ramen_shop.records.count %><br>
+        レコード数
+      <% end %>
     </div>
-  </div>
-  <div>
-    <%= link_to "ホームへ戻る", root_path %>
-  </div>
+    <%= render 'favorite_form' if logged_in? %>
+  </section>
+  <section class="content">
+    <h2 class="border-bottom">ちゃくどんレコード</h2>
+    <% if @records.any? %>
+      <div class="list-group">
+        <%= render @records, name: :user %>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <%= paginate @records%>
+      </div>
+    <% else %>
+      <p class="text-center">まだちゃくどんレコードがありません</p>
+    <% end %>
+  </section>
 </div>
