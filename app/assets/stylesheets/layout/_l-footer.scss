@@ -5,6 +5,16 @@
   text-align: center;
   padding-top: 0.5rem;
   padding-bottom: 4.0rem;
+  .right {
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.3rem;
+    span {
+      font-size: 13px;
+    }
+  }
   ul {
     display: flex;
     justify-content: center;

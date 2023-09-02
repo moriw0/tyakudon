@@ -1,7 +1,8 @@
 @use "../global" as g;
 
 .button-primary {
-  font-family: 'Kosugi Maru', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-weight: 400;
   padding: 0.5rem;
   background-color: g.$brand-yellow-color;
   border-radius: 10px;
