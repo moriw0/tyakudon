@@ -1,0 +1,26 @@
+@use "../../global" as g;
+
+#ramen_shops-show {
+  .ramen_shop {
+    padding-bottom: 40px;
+    text-align: center;
+    h1 {
+      font-size: 1.5rem;
+    }
+    p {
+      color: g.$brand-very-light-gray;
+      font-size: 0.8rem;
+    }
+  }
+  .content {
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      padding-bottom: 0.8rem;
+      text-align: center;
+    }
+    p {
+      color: g.$brand-very-light-gray
+    }
+  }
+}

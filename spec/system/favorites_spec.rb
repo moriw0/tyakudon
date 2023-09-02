@@ -13,7 +13,7 @@ RSpec.describe 'Favorites' do
 
   scenario 'favorite_shops_page' do
     visit favorites_by_user_path(user)
-    expect(page).to have_content 'お気に入り店 5'
+    expect(page).to have_content '5 お気に入り店'
     user.favorite_shops.each do |shop|
       expect(page).to have_link href: ramen_shop_path(shop)
     end

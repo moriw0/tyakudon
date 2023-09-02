@@ -1,11 +1,13 @@
-<% if @ramen_shops.any? %>
-  <div class="shops my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0"><%= tag.span("お気に入り店 #{@user.favorite_shops.count}") %></h6>
+<div class="shops">
+  <h2 class="border-bottom">お気に入り店</h2>
+  <% if @ramen_shops.any? %>
     <div class="list-group">
       <%= render @ramen_shops %>
     </div>
     <div class="d-flex justify-content-center mt-3">
       <%= paginate @ramen_shops %>
     </div>
-  </div>
-<% end %>
+  <% else %>
+    <p class="text-center">まだお気に入りの店舗がありません</p>
+  <% end %>
+</div>
