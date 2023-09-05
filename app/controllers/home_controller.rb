@@ -9,7 +9,8 @@ class HomeController < ApplicationController
   end
 
   def record_ranking
-    @records = Record.unscoped.where(is_retired: false, auto_retired: false).page(params[:page])
+    @records = Record.unscoped.where(is_retired: false, auto_retired: false).order('wait_time DESC').page(params[:page])
+    @offset = (@records.current_page - 1) * @records.limit_value
   end
 
   def new_records
