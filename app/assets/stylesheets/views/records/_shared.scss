@@ -1,11 +1,5 @@
 @use "../../global" as g;
 
-.record-header {
-  text-align: center;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: bold;
-}
 
 .shop-info {
   .shop-name {
@@ -18,13 +12,22 @@
   }
 }
 
-.record-time {
-  margin: auto 1rem;
-  padding: 1rem 0;
-  .hh-mm-ss {
-    font-size: 3rem;
+#records-result, #records-show {
+  .record-header {
+    text-align: center;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
   }
-  .small-milliseconds {
-    font-size: 2rem;
+
+  .record-time {
+    margin: auto 1rem;
+    padding: 1rem 0;
+    .hh-mm-ss {
+      font-size: 3rem;
+    }
+    .small-milliseconds {
+      font-size: 2rem;
+    }
   }
 }

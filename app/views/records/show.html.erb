@@ -1,55 +1,57 @@
-<h1 class="record-header mb-2">ちゃくどんレコード <span class="record-number">No. <%= @record.id %></span></h1>
-<div class="record-content">
-  <div class="record-summary">
-    <div class="shop-info">
-      <div class="shop-name"><%= @record.ramen_shop.name %></div>
-      <small class="shop-address"><%= @record.ramen_shop.address %></small>
-    </div>
-    <div class="record-time">
-      <%= format_wait_time @record.wait_time %>
-    </div>
-    <div class="record-duration">
-      <div class="record-started-at">
-        <small class='badge bg-dark me-2'>接続</small>
-        <span class="date-time">
-          <%= format_datetime_detail @record.started_at %>
-        </span>
-        <%= line_type_badge(@record.line_statuses.first) %>
+<div id="records-show">
+  <h1 class="record-header mb-2">ちゃくどんレコード <span class="record-number">No. <%= @record.id %></span></h1>
+  <div class="record-content">
+    <div class="record-summary">
+      <div class="shop-info">
+        <div class="shop-name"><%= @record.ramen_shop.name %></div>
+        <small class="shop-address"><%= @record.ramen_shop.address %></small>
       </div>
-      <div class="record-ended-at">
-        <small class='badge bg-dark me-2'>着丼</small>
-        <span class="date-time">
-          <%= format_datetime_detail @record.ended_at %>
-        </span>
+      <div class="record-time">
+        <%= format_wait_time @record.wait_time %>
+      </div>
+      <div class="record-duration">
+        <div class="record-started-at">
+          <small class='badge bg-dark me-2'>接続</small>
+          <span class="date-time">
+            <%= format_datetime_detail @record.started_at %>
+          </span>
+          <%= line_type_badge(@record.line_statuses.first) %>
+        </div>
+        <div class="record-ended-at">
+          <small class='badge bg-dark me-2'>着丼</small>
+          <span class="date-time">
+            <%= format_datetime_detail @record.ended_at %>
+          </span>
+        </div>
       </div>
     </div>
+    <% if @record.image.attached? %>
+      <%= skeleton_background_tag 'record-image' do %>
+        <%= lazy_image_tag @record.image.variant(:display) %>
+      <% end %>
+    <% end %>
+    <%= link_to user_path(@record.user), class: 'user-info' do %>
+      <%= skeleton_background_tag 'user-avatar' do %>
+        <%= avatar_for @record.user, :middle %>
+      <% end %>
+      <span class="user-name">
+        <%= @record.user.name %>
+      </span>
+      <span class="user-record-count">
+        (<%= @record.user.records.count %>)
+      </span>
+    <% end %>
+    <% unless @record.comment.blank? %>
+      <div class="record-comment">
+        <div class="comment-content"><%= @record.comment %></div>
+      </div>
+    <% end %>
   </div>
-  <% if @record.image.attached? %>
-    <%= skeleton_background_tag 'record-image' do %>
-      <%= lazy_image_tag @record.image.variant(:display) %>
-    <% end %>
-  <% end %>
-  <%= link_to user_path(@record.user), class: 'user-info' do %>
-    <%= skeleton_background_tag 'user-avatar' do %>
-      <%= avatar_for @record.user, :middle %>
-    <% end %>
-    <span class="user-name">
-      <%= @record.user.name %>
-    </span>
-    <span class="user-record-count">
-      (<%= @record.user.records.count %>)
-    </span>
-  <% end %>
-  <% unless @record.comment.blank? %>
-    <div class="record-comment">
-      <div class="comment-content"><%= @record.comment %></div>
-    </div>
-  <% end %>
-</div>
-<div class="record-line-status mb-3">
-  <h2 class="border-bottom">行列の様子</h2>
-  <%= render @record.line_statuses %>
-</div>
-<div>
-  <%= link_to "レコード一覧へ戻る", ramen_shop_path(@record.ramen_shop) %>
+  <div class="record-line-status mb-3">
+    <h2 class="border-bottom">行列の様子</h2>
+    <%= render @record.line_statuses %>
+  </div>
+  <div>
+    <%= link_to "レコード一覧へ戻る", ramen_shop_path(@record.ramen_shop) %>
+  </div>
 </div>
