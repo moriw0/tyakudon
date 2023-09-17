@@ -1,32 +1,36 @@
-<div class="d-flex text-body-secondary pt-3">
-  <%= skeleton_background_tag 'avatar-image' do %>
-    <%= link_to avatar_for(record.user, :small), record.user %>
+<div class="records-record">
+  <%= link_to record_path(record), class: 'list-group-item-action list-item' do %>
+    <div class="content">
+      <div class="record-overview">
+        <%= skeleton_background_tag 'avatar-image' do %>
+          <%= avatar_for(record.user, :small) %>
+        <% end %>
+        <div class="record-summary">
+          <h3><%= shop_or_user(record, name) %></h3>
+          <div class="record-started-at">
+            <%= format_datetime record.started_at %>
+            <%= line_type_badge(record.line_statuses.first) %>
+          </div>
+          <div class="record-time">
+            <%= format_wait_time record.wait_time %>
+          </div>
+        </div>
+      </div>
+      <div class="record-extended">
+        <% if record.comment.present? %>
+          <div class="record-comment">
+            <div class="comment-content"><%= record.comment %></div>
+          </div>
+        <% end %>
+        <% if record.image.attached? %>
+          <%= skeleton_background_tag 'record-image' do %>
+            <%= lazy_image_tag record.image.variant(:display) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="ps-1">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
   <% end %>
-  <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-    <div class="mb-1 d-flex w-100 justify-content-between">
-      <span class="d-block text-gray-dark"><%= shop_or_user(record, name) %></span>
-      <small><%= format_datetime record.created_at %></small>
-    </div>
-    <div>
-      <div class="record-value d-flex align-items-center">
-        <span class="fs-2 me-2"><%= format_wait_time record.wait_time %></span>
-        <% if record.is_retired? %>
-          <span class="badge rounded-pill bg-secondary">リタイア</span>
-        <% else %>
-          <span class="badge rounded-pill bg-primary">ちゃくどん</span>
-        <% end %>
-      </div>
-      <% if record.comment.present? %>
-        <p class="mb-1"><i class="fa-solid fa-comment"></i> <%= record.comment %></p>
-      <% end %>
-      <% if record.image.attached? %>
-        <%= skeleton_background_tag 'record-image' do %>
-          <%= lazy_image_tag record.image.variant(:display) %>
-        <% end %>
-      <% end %>
-      <div class="text-end">
-        <%= link_to '詳細', record_path(record) %>
-      </div>
-    </div>
-  </div>
 </div>
