@@ -12,6 +12,35 @@
   }
 }
 
+.records-ranking_record, .records-record {
+  .record-overview {
+    display: flex;
+    align-items: center;
+    .record-summary {
+      h3 {
+        font-weight: bold;
+        font-size: 14px;
+        color: #705a5a;
+      }
+      .record-started-at {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: gray;
+      }
+      .record-time {
+        .hh-mm-ss {
+          font-size: 24px;
+        }
+        .small-milliseconds {
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}
+
 #records-result, #records-show {
   .record-header {
     text-align: center;

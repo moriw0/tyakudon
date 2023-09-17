@@ -7,7 +7,10 @@ class Record < ApplicationRecord
   end
   accepts_nested_attributes_for :line_statuses
 
-  default_scope -> { order(created_at: :desc) }
+  scope :active_records, -> { where(is_retired: false, auto_retired: false).where.not(wait_time: nil) }
+  scope :ordered_by_wait_time, -> { order('wait_time DESC') }
+  scope :ordered_by_created_at, -> { order('created_at DESC') }
+  scope :top_five, -> { limit(5) }
 
   validates :comment, length: { maximum: 140 }
   validates :image, content_type: { in: %i[png jpg jpeg],
@@ -15,6 +18,14 @@ class Record < ApplicationRecord
                     size: { less_than_or_equal_to: 5.megabytes,
                             message: 'は5MB以下である必要があります' }
   after_create :schedule_auto_retire
+
+  def self.ranking_records
+    active_records.ordered_by_wait_time
+  end
+
+  def self.new_records
+    active_records.ordered_by_created_at
+  end
 
   def calculate_wait_time_for_retire!
     update!(is_retired: true,

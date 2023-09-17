@@ -1,0 +1,13 @@
+<%= skeleton_background_tag 'avatar-image' do %>
+  <%= avatar_for(record.user, :small) %>
+<% end %>
+<div class="record-summary">
+  <h3><%= shop_or_user(record, name) %></h3>
+  <div class="record-started-at">
+    <%= format_datetime record.started_at %>
+    <%= line_type_badge(record.line_statuses.first) %>
+  </div>
+  <div class="record-time">
+    <%= format_wait_time record.wait_time %>
+  </div>
+</div>
