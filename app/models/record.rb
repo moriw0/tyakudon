@@ -7,9 +7,11 @@ class Record < ApplicationRecord
   end
   accepts_nested_attributes_for :line_statuses
 
-  scope :active_records, -> { where(is_retired: false, auto_retired: false).where.not(wait_time: nil) }
+  scope :not_retired, -> { where(is_retired: false, auto_retired: false).where.not(wait_time: nil) }
+  scope :active, -> { where(auto_retired: false).where.not(wait_time: nil) }
   scope :ordered_by_wait_time, -> { order('wait_time DESC') }
   scope :ordered_by_created_at, -> { order('created_at DESC') }
+  scope :active_ordered, -> { active.ordered_by_created_at }
   scope :top_five, -> { limit(5) }
 
   validates :comment, length: { maximum: 140 }
@@ -20,11 +22,11 @@ class Record < ApplicationRecord
   after_create :schedule_auto_retire
 
   def self.ranking_records
-    active_records.ordered_by_wait_time
+    not_retired.ordered_by_wait_time
   end
 
   def self.new_records
-    active_records.ordered_by_created_at
+    not_retired.ordered_by_created_at
   end
 
   def calculate_wait_time_for_retire!

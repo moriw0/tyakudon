@@ -102,14 +102,18 @@ RSpec.describe 'Users' do
       create_list(:many_records, 15, user: user, ramen_shop: ramen_shop)
       create(:record, user: user, is_retired: true, ramen_shop: ramen_shop)
 
+      Record.all.each do |record|
+        create(:line_status, record: record)
+      end
+
       visit user_path(user)
       expect(find('h1')).to have_content user.name
       expect(find('img.avatar')).to be_truthy
       expect(find('.stats a')).to have_content user.records.count
       expect(find('ul.pagination')).to be_truthy
 
-      user.records.page(1).each do |record|
-        expect(page).to have_content format_datetime(record.created_at)
+      user.records.active_ordered.page(1).each do |record|
+        expect(page).to have_content format_datetime(record.started_at)
         expect(page).to have_content format_wait_time_helper(record.wait_time)
 
         if record.is_retired?

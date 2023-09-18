@@ -9,5 +9,10 @@
   </div>
   <div class="record-time">
     <%= format_wait_time record.wait_time %>
+    <% if record.is_retired? %>
+      <span class="badge rounded-pill bg-secondary">リタイア</span>
+    <% else %>
+      <span class="badge rounded-pill bg-secondary">ちゃくどん</span>
+    <% end %>
   </div>
 </div>
