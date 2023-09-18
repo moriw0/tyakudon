@@ -7,12 +7,14 @@
     <%= format_datetime record.started_at %>
     <%= line_type_badge(record.line_statuses.first) %>
   </div>
-  <div class="record-time">
-    <%= format_wait_time record.wait_time %>
+  <div class="d-flex align-items-center">
+    <div class="record-time">
+      <%= format_wait_time record.wait_time %>
+    </div>
     <% if record.is_retired? %>
-      <span class="badge rounded-pill bg-secondary">リタイア</span>
+      <span class="record-status retired">リタイア</span>
     <% else %>
-      <span class="badge rounded-pill bg-secondary">ちゃくどん</span>
+      <span class="record-status finished">ちゃくどん</span>
     <% end %>
   </div>
 </div>

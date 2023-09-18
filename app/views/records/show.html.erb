@@ -18,7 +18,11 @@
           <%= line_type_badge(@record.line_statuses.first) %>
         </div>
         <div class="record-ended-at">
-          <small class='badge bg-dark me-2'>着丼</small>
+          <% if @record.is_retired? %>
+            <small class='badge me-2 retired'>リタイア</small>
+          <% else %>
+            <small class='badge bg-dark me-2'>着丼</small>
+          <% end %>
           <span class="date-time">
             <%= format_datetime_detail @record.ended_at %>
           </span>
