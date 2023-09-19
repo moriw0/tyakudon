@@ -1,11 +1,11 @@
 .timer {
   margin-bottom: 2rem;
   [data-timer-target="time"] {
-    text-align: center;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
     font-size: 2.5rem;
     margin: .5rem;
     padding: 1rem;
-    font-family: sans-serif;
+    text-align: center;
   }
 }
 
