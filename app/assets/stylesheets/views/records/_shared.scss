@@ -1,11 +1,5 @@
 @use "../../global" as g;
 
-.record-header {
-  text-align: center;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: bold;
-}
 
 .shop-info {
   .shop-name {
@@ -18,13 +12,72 @@
   }
 }
 
-.record-time {
-  margin: auto 1rem;
-  padding: 1rem 0;
-  .hh-mm-ss {
-    font-size: 3rem;
+.records-ranking_record, .records-record {
+  .record-overview {
+    display: flex;
+    align-items: center;
+    .record-summary {
+      h3 {
+        font-weight: bold;
+        font-size: 14px;
+        color: #705a5a;
+      }
+      .record-started-at {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: gray;
+      }
+      div {
+        gap: 10px;
+        .record-time {
+          .hh-mm-ss {
+            font-size: 24px;
+          }
+          .small-milliseconds {
+            font-size: 17px;
+          }
+        }
+        .record-status {
+          font-size: 10px;
+          padding: 3px 10px 2px 10px;
+          font-weight: 400;
+          color: white;
+          border-radius: 10px;
+        }
+        .retired {
+          background-color: #979797;
+        }
+        .finished {
+          background-color: black;
+        }
+      }
+    }
   }
-  .small-milliseconds {
-    font-size: 2rem;
+}
+
+#records-result, #records-show {
+  .record-header {
+    text-align: center;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .record-time {
+    margin: auto 1rem;
+    padding: 1rem 0;
+    .hh-mm-ss {
+      font-size: 3rem;
+    }
+    .small-milliseconds {
+      font-size: 2rem;
+    }
+  }
+  .record-ended-at {
+    .retired {
+      background-color: #979797;
+    }
   }
 }

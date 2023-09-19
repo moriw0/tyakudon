@@ -4,16 +4,17 @@ class HomeController < ApplicationController
   before_action :disable_connect_button, only: %i[search]
 
   def index
-    @ranking_records = Record.unscoped.where(is_retired: false, auto_retired: false).order('wait_time DESC').limit(5)
-    @new_records = Record.where(is_retired: false, auto_retired: false).take(5)
+    @ranking_records = Record.ranking_records.top_five
+    @new_records = Record.new_records.top_five
   end
 
   def record_ranking
-    @records = Record.unscoped.where(is_retired: false, auto_retired: false).page(params[:page])
+    @records = Record.unscoped.ranking_records.page(params[:page])
+    @offset = (@records.current_page - 1) * @records.limit_value
   end
 
   def new_records
-    @records = Record.where(is_retired: false, auto_retired: false).page(params[:page])
+    @records = Record.new_records.page(params[:page])
   end
 
   def search
