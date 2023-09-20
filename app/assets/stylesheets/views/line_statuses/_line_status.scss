@@ -51,6 +51,12 @@
         .line-status-image {
           width: 100%;
           min-height: 240px;
+          border-radius: 5px;
+          img {
+            border-radius: 5px;
+            object-fit: cover;
+            width: 100%;
+          }
         }
         .line-status-created-at {
           font-size: 0.8rem;
