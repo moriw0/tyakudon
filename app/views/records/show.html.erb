@@ -1,5 +1,10 @@
 <div id="records-show">
-  <h1 class="record-header mb-2">ちゃくどんレコード <span class="record-number">No. <%= @record.id %></span></h1>
+  <div class="header">
+    <h1 class="record-header">ちゃくどんレコード <span class="record-number">No. <%= @record.id %></span></h1>
+    <%= link_to @tweet_url, onclick: "window.open(this.href, '_blank'); return false;", class: 'share-button' do%>
+      <i class="fa-brands fa-twitter"></i> シェアする
+    <% end %>
+  </div>
   <div class="record-content">
     <div class="record-summary">
       <div class="shop-info">

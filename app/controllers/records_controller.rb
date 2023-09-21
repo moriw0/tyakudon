@@ -8,6 +8,7 @@ class RecordsController < ApplicationController
   before_action :disable_connect_button, only: %i[measure result]
 
   def show
+    @tweet_url = generate_tweet_url(@record, request.url)
   end
 
   def new
