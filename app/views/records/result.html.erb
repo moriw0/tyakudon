@@ -6,7 +6,7 @@
       <small class="shop-address"><%= @record.ramen_shop.address %></small>
     </div>
     <div class="record-time">
-      <%= format_wait_time @record.wait_time %>
+      <%= wait_time_tag @record.wait_time %>
     </div>
   </div>
   <%= bootstrap_form_with model: @record, class: 'record-result-form' do |f| %>

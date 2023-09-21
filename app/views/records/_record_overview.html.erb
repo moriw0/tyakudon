@@ -9,7 +9,7 @@
   </div>
   <div class="d-flex align-items-center">
     <div class="record-time">
-      <%= format_wait_time record.wait_time %>
+      <%= wait_time_tag record.wait_time %>
     </div>
     <% if record.is_retired? %>
       <span class="record-status retired">リタイア</span>
