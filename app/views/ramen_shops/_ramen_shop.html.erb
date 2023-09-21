@@ -9,7 +9,7 @@
       <% if last_record %>
         <div class="record-line_status d-flex align-items-center">
           <small class='badge bg-dark me-2'>New</small>
-          <span class="fs-2 me-2"><%= format_wait_time last_record.wait_time %></span>
+          <span class="fs-2 me-2"><%= wait_time_tag last_record.wait_time %></span>
           <% first_status = last_record.line_statuses.first %>
           <%= line_type_badge(first_status) %>
         </div>

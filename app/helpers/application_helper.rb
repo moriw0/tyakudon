@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   # rubocop:disable Metrics/MethodLength
-  def format_wait_time(wait_time)
+  def wait_time_tag(wait_time)
     return unless wait_time
 
     hours, remainder = wait_time.divmod(3600)
