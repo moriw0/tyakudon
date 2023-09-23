@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :ramen_shops, only: [:index, :show, :new, :create, :edit, :update] do
+    member do
+      get :prepare_favorite
+    end
     resources :records, only: [:show, :new, :create, :edit, :update], shallow: true do
       member do
         get 'measure'
