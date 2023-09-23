@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :disable_connect_button, only: %i[new]
+
   def new
   end
 
