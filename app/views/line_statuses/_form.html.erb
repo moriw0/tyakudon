@@ -9,7 +9,8 @@
   <div class="line-number-box" data-line-status-target="lineNumberField">
     <div class="line-number-label">
       <%= f.label :line_number, class: 'form-label optional' %>
-      <a tabindex="0" role="button" data-bs-toggle="popover" data-controller="popover" data-bs-trigger="focus" data-bs-content="自分の前に並んでいる人数を入力します。（前に人がいない場合は0）">
+      <a data-controller="popover" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-html="true"
+        data-bs-content="<span>自分の前に並んでいる人数を入力します。</span><span>※前に人がいない場合は0</span>">
         <i class="fa-regular fa-circle-question"></i>
       </a>
     </div>

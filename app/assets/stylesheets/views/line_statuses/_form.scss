@@ -8,5 +8,11 @@
 
 .popover {
   --bs-popover-bg: #f0f0f0;
-  max-width: 280px;
+  max-width: 290px;
+  .popover-body {
+    width: fit-content;
+    span {
+      display: inline-block;
+    }
+  }
 }
