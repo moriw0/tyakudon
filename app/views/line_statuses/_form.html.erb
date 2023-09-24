@@ -7,7 +7,13 @@
     </div>
   <% end %>
   <div class="line-number-box" data-line-status-target="lineNumberField">
-    <%= f.number_field :line_number, inputmode: "numeric", pattern: '\d*', data: { line_status_target: "lineNumberInput" }, label_class: 'optional' %>
+    <div class="line-number-label">
+      <%= f.label :line_number, class: 'form-label optional' %>
+      <a tabindex="0" role="button" data-bs-toggle="popover" data-controller="popover" data-bs-trigger="focus" data-bs-content="自分の前に並んでいる人数を入力します。（前に人がいない場合は0）">
+        <i class="fa-regular fa-circle-question"></i>
+      </a>
+    </div>
+    <%= f.number_field :line_number, inputmode: "numeric", pattern: '\d*', data: { line_status_target: "lineNumberInput" }, hide_label: true %>
   </div>
 </div>
 <%= f.text_area :comment, label: { text: "ひとこと" }, placeholder: '行列の様子や心境をどうぞ！', label_class: 'optional' %>

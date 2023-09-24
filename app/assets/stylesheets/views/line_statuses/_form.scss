@@ -1,0 +1,12 @@
+.line-number-label {
+  display: flex;
+  gap: 50px;
+  a {
+    font-size: 16px;
+  }
+}
+
+.popover {
+  --bs-popover-bg: #f0f0f0;
+  max-width: 280px;
+}
