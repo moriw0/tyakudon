@@ -1,4 +1,6 @@
 class StaticsController < ApplicationController
+  before_action :disable_connect_button
+
   def about
   end
 
