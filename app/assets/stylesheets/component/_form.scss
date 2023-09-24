@@ -14,4 +14,16 @@ label {
     right: -34px;
     top: 0;
   }
+  &.optional:after {
+    background-color: g.$brand-light-gray-color;
+    opacity: .7;
+    border-radius: 8px;
+    color: #fff;
+    content: "任意";
+    font-size: 10px;
+    padding: 0.2rem 0.4rem;
+    position: absolute;
+    right: -40px;
+    top: 0;
+  }
 }
