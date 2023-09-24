@@ -1,7 +1,7 @@
 class RamenShopsController < ApplicationController
-  before_action :set_ramen_shop, only: %i[show edit update]
-  before_action :logged_in_user, only: %i[new edit create update]
+  before_action :logged_in_user, only: %i[new edit create update prepare_favorite]
   before_action :admin_user,     only: %i[new edit create update]
+  before_action :set_ramen_shop, only: %i[show edit update prepare_favorite]
 
   def index
     @search = RamenShop.ransack(params[:q])
@@ -55,6 +55,10 @@ class RamenShopsController < ApplicationController
 
     @ramen_shops = RamenShop.near([current_lat, current_lng], TARGET_RADIUS)
     render json: @ramen_shops
+  end
+
+  def prepare_favorite
+    redirect_to ramen_shop_path(@ramen_shop)
   end
 
   private

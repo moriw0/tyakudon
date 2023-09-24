@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: %i[index edit update destroy favorite_shops update_test_mode]
   before_action :correct_user, only: %i[edit update favorite_shops]
   before_action :admin_user, only: %i[index destroy update_test_mode]
+  before_action :disable_connect_button, only: %i[new edit]
 
   def index
     @users = User.where(activated: true).page(params[:page])

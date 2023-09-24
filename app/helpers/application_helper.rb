@@ -66,7 +66,7 @@ module ApplicationHelper
       reverse: true,
       icon: [
         { href: image_url('favicon.ico') },
-        { href: image_url('favicon.ico'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/jpg' },
+        { href: image_url('favicon.ico'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/jpg' }
       ],
       charset: 'utf-8',
       description: '行列に並ぶ「接続」から、ラーメンが提供される「着丼」までの時間を計測して共有しよう',

@@ -1,7 +1,13 @@
 <div id="favorite_form">
-  <% if current_user.favorites?(@ramen_shop) %>
-    <%= render 'remove_favorite' %>
+  <% if logged_in? %>
+    <% if current_user.favorites?(@ramen_shop) %>
+      <%= render 'remove_favorite' %>
+    <% else %>
+      <%= render 'add_favorite' %>
+    <% end %>
   <% else %>
-    <%= render 'add_favorite' %>
+    <%= link_to prepare_favorite_ramen_shop_path(@ramen_shop), class: 'btn btn-sm btn-outline-dark' do %>
+      <i class="fa-solid fa-star"></i> お気に入り
+    <% end %>
   <% end %>
 </div>
