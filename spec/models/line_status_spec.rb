@@ -19,10 +19,9 @@ RSpec.describe LineStatus do
     expect { line_status.line_type = 'invalid' }.to raise_error(ArgumentError, "'invalid' is not a valid line_type")
   end
 
-  it 'is invalid with blank line_number' do
+  it 'is valid with blank line_number' do
     line_status.line_number = ''
-    line_status.valid?
-    expect(line_status.errors[:line_number]).to include 'は数値で入力してください'
+    expect(line_status).to be_valid
   end
 
   it 'is invalid with string line_number' do

@@ -6,7 +6,7 @@ class LineStatus < ApplicationRecord
 
   enum line_type: { inside_the_store: 1, outside_the_store: 2, seated: 3 }
 
-  validates :line_number, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :line_number, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
   validates :comment, length: { maximum: 140, too_long: '最大%<count>s文字まで使えます' }
   validates :image, content_type: { in: %i[png jpg jpeg],
                                     message: 'のフォーマットが不正です' },
