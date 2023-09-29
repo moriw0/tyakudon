@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Record do
   let(:user) { create(:user) }
+  let(:record) { build(:record) }
   let(:ramen_shop) { create(:ramen_shop) }
 
   context 'with valid information' do
@@ -24,9 +25,8 @@ RSpec.describe Record do
 
     it 'is valid when stated_at is after now' do
       record = build(:record,
-        started_at: 1.second.from_now,
-        ended_at: 1.hour.from_now
-      )
+                     started_at: 1.second.from_now,
+                     ended_at: 1.hour.from_now)
       expect(record).to be_valid
     end
   end
@@ -60,10 +60,47 @@ RSpec.describe Record do
 
     it 'is invalid when stated_at is before now' do
       record = build(:record,
-        started_at: 1.minute.ago
-      )
+                     started_at: 1.minute.ago)
       record.valid?
       expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+    end
+  end
+
+  describe 'Custom Validations' do
+    context 'when create' do
+      it 'validates that started_at is within a few seconds of the current time' do
+        record.started_at = 10.seconds.ago
+        expect(record).to_not be_valid
+        expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+      end
+    end
+
+    context 'when update' do
+      before do
+        record.save!
+      end
+
+      it 'validates that ended_at is within a few seconds of the current time' do
+        record.validations_for_calculate = true
+        record.ended_at = 10.seconds.ago
+        record.valid?
+        expect(record.errors[:ended_at]).to include('は更新時の現在時刻より数秒以内でなければなりません')
+      end
+
+      it 'validates that ended_at is after started_at' do
+        record.started_at = Time.current
+        record.ended_at = 5.minutes.ago
+        record.valid?
+        expect(record.errors[:ended_at]).to include('はstarted_atより後である必要があります。')
+      end
+
+      it 'validates that wait_time is the difference between ended_at and started_at' do
+        record.started_at = 5.minutes.ago
+        record.ended_at = Time.current
+        record.wait_time = 400
+        record.valid?
+        expect(record.errors[:wait_time]).to include('はended_atとstarted_atの差である必要があります。')
+      end
     end
   end
 end

@@ -19,10 +19,13 @@ class Record < ApplicationRecord
                                     message: 'のフォーマットが不正です' },
                     size: { less_than_or_equal_to: 5.megabytes,
                             message: 'は5MB以下である必要があります' }
-  validate :started_at_is_recent, on: :create, unless: :skip_validations
+  validate :started_at_is_recent,         on: :create, unless: :skip_validations
+  validate :ended_at_is_recent,           on: :update, if: :validations_for_calculate
+  validate :ended_at_is_after_started_at, on: :update, unless: :skip_validations
+  validate :wait_time_is_correct,         on: :update, unless: :skip_validations
   after_create :schedule_auto_retire
 
-  attr_accessor :skip_validations
+  attr_accessor :skip_validations, :validations_for_calculate
 
   def self.ranking_records
     not_retired.ordered_by_wait_time
@@ -49,13 +52,15 @@ class Record < ApplicationRecord
   end
 
   def started_at_is_recent
-    if started_at && (started_at - Time.current).abs > 5.seconds
-      errors.add(:started_at, 'は作成時の現在時刻より数秒以内でなければなりません')
-    end
+    return unless started_at && (started_at - Time.current).abs > 5.seconds
+
+    errors.add(:started_at, 'は作成時の現在時刻より数秒以内でなければなりません')
   end
 
   def ended_at_is_recent
-    errors.add(:ended_at, 'は現在時刻より数秒前である必要があります。') unless ended_at && ended_at >= Time.now - 5.seconds
+    return unless ended_at && (ended_at - Time.current).abs > 5.seconds
+
+    errors.add(:ended_at, 'は更新時の現在時刻より数秒以内でなければなりません')
   end
 
   def ended_at_is_after_started_at
@@ -64,6 +69,9 @@ class Record < ApplicationRecord
 
   def wait_time_is_correct
     calculated_wait_time = (ended_at - started_at)
-    errors.add(:wait_time, 'はended_atとstarted_atの差である必要があります。') unless wait_time && (wait_time - calculated_wait_time).abs <= 0.01
+    return if wait_time && (wait_time - calculated_wait_time).abs <= 1
+
+    errors.add(:wait_time,
+               'はended_atとstarted_atの差である必要があります。')
   end
 end
