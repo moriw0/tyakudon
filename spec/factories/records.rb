@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :record do
-    started_at { 11.minutes.ago }
-    ended_at { 1.minute.ago }
+    started_at { 1.second.from_now }
+    ended_at { 11.minutes.from_now }
     wait_time { 600 }
     comment { 'いただきます！' }
     is_retired { false }
@@ -22,9 +22,9 @@ FactoryBot.define do
     end
 
     factory :many_records do
-      sequence(:started_at) { |n| (n + 10).minutes.ago }
-      sequence(:ended_at) { |n| n.minutes.ago }
-      sequence(:created_at) { |n| n.minutes.ago }
+      sequence(:started_at) { |n| n.minute.from_now }
+      sequence(:ended_at) { |n| ( n + 10 ).minutes.from_now }
+      sequence(:created_at) { |n| n.minute.from_now }
     end
   end
 end

@@ -7,8 +7,8 @@ RSpec.describe Record do
   context 'with valid information' do
     it 'is valid with started_at, ended_at, wait_time and comment' do
       record = user.records.build(
-        started_at: 11.minutes.ago,
-        ended_at: 1.minute.ago,
+        started_at: 1.second.from_now,
+        ended_at: 11.minutes.from_now,
         wait_time: 600,
         comment: 'いただきます！',
         ramen_shop_id: ramen_shop.id
@@ -19,6 +19,14 @@ RSpec.describe Record do
     it 'is valid with a 4.2 MB image' do
       record = build(:record)
       record.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s)
+      expect(record).to be_valid
+    end
+
+    it 'is valid when stated_at is after now' do
+      record = build(:record,
+        started_at: 1.second.from_now,
+        ended_at: 1.hour.from_now
+      )
       expect(record).to be_valid
     end
   end
@@ -48,6 +56,14 @@ RSpec.describe Record do
       record.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/ramen.gif').to_s)
       record.valid?
       expect(record.errors[:image]).to include 'のフォーマットが不正です'
+    end
+
+    it 'is invalid when stated_at is before now' do
+      record = build(:record,
+        started_at: 1.minute.ago
+      )
+      record.valid?
+      expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
     end
   end
 end
