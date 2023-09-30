@@ -7,12 +7,7 @@ class Record < ApplicationRecord
   end
   accepts_nested_attributes_for :line_statuses
 
-  scope :not_retired, -> { where(is_retired: false, auto_retired: false).where.not(wait_time: nil) }
-  scope :active, -> { where(auto_retired: false).where.not(wait_time: nil) }
-  scope :ordered_by_wait_time, -> { order('wait_time DESC') }
-  scope :ordered_by_created_at, -> { order('created_at DESC') }
-  scope :active_ordered, -> { active.ordered_by_created_at }
-  scope :top_five, -> { limit(5) }
+  attr_accessor :skip_validations, :validations_for_calculate
 
   validates :comment, length: { maximum: 140 }
   validates :image, content_type: { in: %i[png jpg jpeg],
@@ -23,9 +18,15 @@ class Record < ApplicationRecord
   validate :ended_at_is_recent,           on: :update, if: :validations_for_calculate
   validate :ended_at_is_after_started_at, on: :update, unless: :skip_validations
   validate :wait_time_is_correct,         on: :update, unless: :skip_validations
+
   after_create :schedule_auto_retire
 
-  attr_accessor :skip_validations, :validations_for_calculate
+  scope :not_retired, -> { where(is_retired: false, auto_retired: false).where.not(wait_time: nil) }
+  scope :active, -> { where(auto_retired: false).where.not(wait_time: nil) }
+  scope :ordered_by_wait_time, -> { order('wait_time DESC') }
+  scope :ordered_by_created_at, -> { order('created_at DESC') }
+  scope :active_ordered, -> { active.ordered_by_created_at }
+  scope :top_five, -> { limit(5) }
 
   def self.ranking_records
     not_retired.ordered_by_wait_time
@@ -42,6 +43,7 @@ class Record < ApplicationRecord
   end
 
   def auto_retire!
+    self.skip_validations = true
     update!(auto_retired: true)
   end
 
