@@ -99,7 +99,7 @@ RSpec.describe 'Users' do
     end
 
     it 'shows their profile and records' do
-      create_list(:many_records, 15, user: user, ramen_shop: ramen_shop, skip_validations: true)
+      create_list(:many_records, 15, user: user, ramen_shop: ramen_shop, skip_validation: true)
       create(:record, user: user, is_retired: true, ramen_shop: ramen_shop)
 
       Record.all.each do |record|

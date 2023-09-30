@@ -120,9 +120,7 @@ RSpec.describe 'Records' do
       end
 
       it 'updates wait_time' do
-        record.skip_validations = true
         record.update(started_at: 5.minutes.ago, ended_at: nil, wait_time: nil)
-        record.skip_validations = false
         do_request
         expect(record.reload.wait_time).to_not be_nil
       end

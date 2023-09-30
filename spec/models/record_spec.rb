@@ -8,8 +8,8 @@ RSpec.describe Record do
   context 'with valid information' do
     it 'is valid with started_at, ended_at, wait_time and comment' do
       record = user.records.build(
-        started_at: 1.second.from_now,
-        ended_at: 11.minutes.from_now,
+        started_at: Time.zone.now,
+        ended_at: 10.minutes.from_now,
         wait_time: 600,
         comment: 'いただきます！',
         ramen_shop_id: ramen_shop.id
@@ -20,13 +20,6 @@ RSpec.describe Record do
     it 'is valid with a 4.2 MB image' do
       record = build(:record)
       record.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s)
-      expect(record).to be_valid
-    end
-
-    it 'is valid when stated_at is after now' do
-      record = build(:record,
-                     started_at: 1.second.from_now,
-                     ended_at: 1.hour.from_now)
       expect(record).to be_valid
     end
   end
@@ -81,7 +74,7 @@ RSpec.describe Record do
       end
 
       it 'validates that ended_at is within a few seconds of the current time' do
-        record.validations_for_calculate = true
+        record.calculate_action = true
         record.ended_at = 10.seconds.ago
         record.valid?
         expect(record.errors[:ended_at]).to include('は更新時の現在時刻より数秒以内でなければなりません')

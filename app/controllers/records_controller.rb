@@ -47,7 +47,7 @@ class RecordsController < ApplicationController
     if @record.ended_at?
       redirect_to root_path, status: :see_other
     else
-      @record.validations_for_calculate = true
+      @record.calculate_action = true
       @record.update!(calculated_record_params)
       forget_record
       redirect_to result_record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
@@ -58,7 +58,6 @@ class RecordsController < ApplicationController
   end
 
   def update
-    @record.skip_validations = true
     if @record.update(update_record_params)
       redirect_to record_path(@record), notice: '投稿しました', status: :see_other
     else

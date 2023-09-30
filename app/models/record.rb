@@ -7,17 +7,17 @@ class Record < ApplicationRecord
   end
   accepts_nested_attributes_for :line_statuses
 
-  attr_accessor :skip_validations, :validations_for_calculate
+  attr_accessor :skip_validation, :calculate_action
 
   validates :comment, length: { maximum: 140 }
   validates :image, content_type: { in: %i[png jpg jpeg],
                                     message: 'のフォーマットが不正です' },
                     size: { less_than_or_equal_to: 5.megabytes,
                             message: 'は5MB以下である必要があります' }
-  validate :started_at_is_recent,         on: :create, unless: :skip_validations
-  validate :ended_at_is_recent,           on: :update, if: :validations_for_calculate
-  validate :ended_at_is_after_started_at, on: :update, unless: :skip_validations
-  validate :wait_time_is_correct,         on: :update, unless: :skip_validations
+  validate :started_at_is_recent,         on: :create, unless: :skip_validation
+  validate :ended_at_is_recent,           on: :update, if: :calculate_action
+  validate :ended_at_is_after_started_at, on: :update
+  validate :wait_time_is_correct,         on: :update
 
   after_create :schedule_auto_retire
 
@@ -43,7 +43,6 @@ class Record < ApplicationRecord
   end
 
   def auto_retire!
-    self.skip_validations = true
     update!(auto_retired: true)
   end
 
@@ -70,10 +69,15 @@ class Record < ApplicationRecord
   end
 
   def wait_time_is_correct
-    calculated_wait_time = (ended_at - started_at)
-    return if wait_time && (wait_time - calculated_wait_time).abs <= 1
+    return unless started_at && ended_at && wait_time
 
-    errors.add(:wait_time,
-               'はended_atとstarted_atの差である必要があります。')
+    return if wait_time_correct?
+
+    errors.add(:wait_time, 'はended_atとstarted_atの差である必要があります。')
+  end
+
+  def wait_time_correct?
+    calculated_wait_time = (ended_at - started_at)
+    (wait_time - calculated_wait_time).abs <= 1
   end
 end
