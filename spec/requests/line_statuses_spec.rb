@@ -29,6 +29,24 @@ RSpec.describe 'LineStatuses' do
       do_request
       expect(response.body).to include '<h5 class="modal-title">行列の様子を報告</h5>'
     end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'GET /line_statuses/:id/edit #edit' do
@@ -40,6 +58,24 @@ RSpec.describe 'LineStatuses' do
       log_in_as(user)
       do_request
       expect(response.body).to include '<h5 class="modal-title">編集</h5>'
+    end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
@@ -60,6 +96,24 @@ RSpec.describe 'LineStatuses' do
         }.to change(LineStatus, :count).by(1)
       end
     end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'PATCH /line_statuses/:id #update' do
@@ -73,6 +127,24 @@ RSpec.describe 'LineStatuses' do
       line_status.update(line_number: 5)
       do_request
       expect(line_status.reload.line_number).to eq 4
+    end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
     end
   end
 end
