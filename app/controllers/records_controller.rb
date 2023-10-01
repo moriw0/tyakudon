@@ -47,6 +47,7 @@ class RecordsController < ApplicationController
     if @record.ended_at?
       redirect_to root_path, status: :see_other
     else
+      @record.calculate_action = true
       @record.update!(calculated_record_params)
       forget_record
       redirect_to result_record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other

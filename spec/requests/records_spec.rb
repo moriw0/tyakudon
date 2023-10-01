@@ -120,7 +120,7 @@ RSpec.describe 'Records' do
       end
 
       it 'updates wait_time' do
-        record.update(ended_at: nil, wait_time: nil)
+        record.update(started_at: 5.minutes.ago, ended_at: nil, wait_time: nil)
         do_request
         expect(record.reload.wait_time).to_not be_nil
       end
@@ -216,7 +216,7 @@ RSpec.describe 'Records' do
 
       context 'with auto_retired? is true' do
         before do
-          record.update(auto_retired: true)
+          record.update!(auto_retired: true)
         end
 
         it 'does not updates is_retired true' do
