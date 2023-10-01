@@ -26,5 +26,11 @@ FactoryBot.define do
       sequence(:ended_at) { |n| (n + 10).minutes.from_now }
       sequence(:created_at) { |n| n.minute.from_now }
     end
+
+    factory :record_only_has_started_at do
+      ended_at { nil }
+      wait_time { nil }
+      comment { nil }
+    end
   end
 end

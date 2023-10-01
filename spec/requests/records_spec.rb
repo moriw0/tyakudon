@@ -77,6 +77,7 @@ RSpec.describe 'Records' do
   end
 
   describe 'GET /records/:id/measure #measure' do
+    let(:record) { create(:record_only_has_started_at, ramen_shop: ramen_shop, user: user) }
     let(:do_request) { get measure_record_path(record) }
 
     it_behaves_like 'when not logged in'
@@ -88,6 +89,7 @@ RSpec.describe 'Records' do
 
       context 'when the record.ended_at? is true' do
         it 'redirects to root_path' do
+          record.update!(ended_at: Time.zone.now)
           do_request
           expect(response).to redirect_to root_path
         end
@@ -95,15 +97,34 @@ RSpec.describe 'Records' do
 
       context 'with auto_retired? is true' do
         it 'redirects to root_path' do
-          record.update(auto_retired: true)
+          record.update!(auto_retired: true)
           do_request
           expect(response).to redirect_to root_path
         end
       end
     end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'GET /records/:id/calculate #calculate' do
+    let(:record) { create(:record_only_has_started_at, ramen_shop: ramen_shop, user: user) }
     let(:do_request) { patch calculate_record_path(record), params: calculated_record_params }
     let(:calculated_record_params) do
       started_at = record.started_at
@@ -120,29 +141,47 @@ RSpec.describe 'Records' do
       end
 
       it 'updates wait_time' do
-        record.update(started_at: 5.minutes.ago, ended_at: nil, wait_time: nil)
+        record.update!(started_at: 5.minutes.ago, ended_at: nil, wait_time: nil)
         do_request
         expect(record.reload.wait_time).to_not be_nil
       end
 
       it 'redirects to root_path if ended' do
-        record.update(ended_at: Time.zone.now)
+        record.update!(ended_at: Time.zone.now)
         do_request
         expect(response).to redirect_to root_path
       end
 
       context 'with auto_retired? is true' do
         it 'redirects to root_path' do
-          record.update(auto_retired: true)
+          record.update!(auto_retired: true)
           do_request
           expect(response).to redirect_to root_path
         end
 
         it 'has a flash notices record has retired' do
-          record.update(auto_retired: true)
+          record.update!(auto_retired: true)
           do_request
           expect(flash[:notice]).to eq '記録は無効になっています'
         end
+      end
+    end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -162,6 +201,24 @@ RSpec.describe 'Records' do
         expect(response.body).to include 'ひとこと'
       end
     end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'PATCH /records/:id #update' do
@@ -176,7 +233,7 @@ RSpec.describe 'Records' do
       end
 
       it 'updates comment' do
-        record.update(comment: nil)
+        record.update!(comment: nil)
         do_request
         expect(record.reload.comment).to include 'ちゃくどん'
       end
@@ -190,6 +247,24 @@ RSpec.describe 'Records' do
         invalid_record_params = { record: { comment: 'a' * 141 } }
         patch record_path(record), params: invalid_record_params
         expect(response.body).to include 'は140文字以内で入力してください'
+      end
+    end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -228,6 +303,24 @@ RSpec.describe 'Records' do
           do_request
           expect(response).to redirect_to root_path
         end
+      end
+    end
+
+    context 'when logged in as other_user' do
+      let(:other_user) { create(:other_user) }
+
+      before do
+        log_in_as(other_user)
+      end
+
+      it 'has a flash notices incorrect user' do
+        do_request
+        expect(flash[:alert]).to eq '不正なアクセスです'
+      end
+
+      it 'redirects to root_path' do
+        do_request
+        expect(response).to redirect_to root_path
       end
     end
   end

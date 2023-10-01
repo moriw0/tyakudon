@@ -3,6 +3,7 @@ class RecordsController < ApplicationController
 
   before_action :logged_in_user, except: %i[show]
   before_action :set_record, except: %i[new create]
+  before_action :correct_user, except: %i[show new create]
   before_action :set_ramen_shop, except: %i[new create retire]
   before_action :check_auto_retired, only: %i[measure calculate retire]
   before_action :disable_connect_button, only: %i[measure result]
@@ -75,6 +76,14 @@ class RecordsController < ApplicationController
 
   def set_record
     @record = Record.find(params[:id])
+  end
+
+  def correct_user
+    user = User.find(@record.user.id)
+    return if current_user?(user)
+
+    flash.alert = '不正なアクセスです'
+    redirect_to root_path, status: :see_other
   end
 
   def set_ramen_shop
