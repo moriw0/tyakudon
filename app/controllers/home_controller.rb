@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   def index
     @ranking_records = Record.ranking_records.top_five
     @new_records = Record.new_records.top_five
-    @favorite_shops_records = current_user.records_from_favorite_shops if logged_in?
+    @favorite_records = Record.favorite_records_from(current_user).top_five if logged_in?
   end
 
   def record_ranking

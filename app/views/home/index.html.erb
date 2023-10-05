@@ -1,4 +1,20 @@
 <%= render 'shared/search_form' %>
+<section class="favorite-records mb-4">
+  <h2 class="d-flex justify-content-center py-2 mt-3">お気に入り店のちゃくどん</h2>
+  <% if @favorite_records&.any? %>
+    <div class="records pb-2">
+      <%= render @favorite_records, name: :ramen_shop %>
+    </div>
+    <div class="more d-grid gap-2">
+      <%= link_to 'もっとみる', "", class: 'btn btn-outline-dark' %>
+    </div>
+  <% else %>
+    <div class="no-records">
+      <h3>まだちゃくどんレコードがありません</h3>
+      <p><span>お気に入り店の</span><span>ちゃくどん報告をしよう！</span></p>
+    </div>
+  <% end %>
+</section>
 <section class="ranking mb-4">
   <h2 class="d-flex justify-content-center py-2 mt-3">ちゃくどんランキング</h2>
   <div class="records pb-2">

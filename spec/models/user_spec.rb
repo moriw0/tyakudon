@@ -115,29 +115,4 @@ RSpec.describe User do
     user.remove_favorite(ramen_shop)
     expect(user).to_not be_favorites(ramen_shop)
   end
-
-  describe 'feed' do
-    let(:ramen_shops) { create_list(:many_shops, 3) }
-    let(:user) { create(:user) }
-
-    before do
-      ramen_shops.each do |ramen_shop|
-        create_list(:many_records, 3, ramen_shop: ramen_shop, user: user, skip_validation: true)
-      end
-
-      create(:favorite, user: user, ramen_shop: ramen_shops.first)
-      create(:favorite, user: user, ramen_shop: ramen_shops.second)
-    end
-
-    describe '#favorite_records' do
-      it 'retrieves all records from favorited ramen_shops' do
-        expect(user.feed.count).to eq(6)  # 2 ramen shops * 3 records each = 6 records
-
-        user.feed.each do |record|
-          # Ensure the records belong to the ramen_shops favorited by the user
-          expect(user.favorite_shops).to include(record.ramen_shop)
-        end
-      end
-    end
-  end
 end

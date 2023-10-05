@@ -4,7 +4,6 @@ class User < ApplicationRecord
   has_many :records, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
   has_many :favorite_shops, through: :favorites, source: :ramen_shop
-  has_many :records_from_favorite_shops, through: :favorite_shops, source: :records
   has_one_attached :avatar
 
   before_save :downcase_email
@@ -93,10 +92,6 @@ class User < ApplicationRecord
 
   def remove_favorite(shop)
     favorite_shops.delete(shop) if favorites?(shop)
-  end
-
-  def feed
-    Record.where("ramen_shop_id IN (?)", favorite_shop_ids)
   end
 
   private
