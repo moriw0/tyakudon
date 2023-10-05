@@ -27,21 +27,21 @@ class Record < ApplicationRecord
   scope :ordered_by_created_at, -> { order('created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
   scope :top_five, -> { limit(5) }
-  scope :include_associations, -> { includes(:user, :ramen_shop, :line_statuses, image_attachment: :blob) }
+  scope :with_associations, -> { preload(:user, :ramen_shop, :line_statuses, image_attachment: :blob) }
 
   def self.ranking_records
-    not_retired.ordered_by_wait_time.include_associations
+    not_retired.ordered_by_wait_time.with_associations
   end
 
   def self.new_records
-    not_retired.ordered_by_created_at.include_associations
+    not_retired.ordered_by_created_at.with_associations
   end
 
   def self.favorite_records_from(user)
     favorite_shop_ids = 'SELECT ramen_shop_id FROM favorites WHERE user_id = :user_id'
 
     Record.where("ramen_shop_id IN (#{favorite_shop_ids})", user_id: user.id)
-          .not_retired.ordered_by_created_at.include_associations
+          .not_retired.ordered_by_created_at.with_associations
   end
 
   def calculate_wait_time_for_retire!
