@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_06_231531) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_115218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_231531) do
     t.bigint "user_id", null: false
     t.boolean "is_retired", default: false
     t.boolean "auto_retired", default: false
+    t.boolean "is_test", default: false
     t.index ["ramen_shop_id"], name: "index_records_on_ramen_shop_id"
     t.index ["user_id", "created_at"], name: "index_records_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_records_on_user_id"
