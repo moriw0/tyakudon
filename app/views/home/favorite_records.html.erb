@@ -1,0 +1,10 @@
+<%= render 'shared/search_form' %>
+<section class="ranking mb-4">
+  <h2 class="d-flex justify-content-center py-2 mt-3">お気に入り店のちゃくどん</h2>
+  <div class="records pb-2">
+    <%= render @records, name: :ramen_shop %>
+  </div>
+  <div class="d-flex justify-content-center">
+    <%= paginate @records %>
+  </div>
+</section>

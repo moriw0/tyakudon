@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/privacy_policy', to: 'statics#privacy_policy'
   get '/ranking', to: 'home#record_ranking'
   get '/new_records', to: 'home#new_records'
+  get '/favorite_records', to: 'home#favorite_records'
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
   get '/signup', to: 'users#new'

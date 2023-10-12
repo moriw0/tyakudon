@@ -96,4 +96,26 @@ RSpec.describe Record do
       end
     end
   end
+
+  describe 'favorite_shop_records' do
+    let(:ramen_shops) { create_list(:many_shops, 3) }
+    let(:user) { create(:user) }
+
+    before do
+      ramen_shops.each do |ramen_shop|
+        create_list(:many_records, 3, ramen_shop: ramen_shop, user: user, skip_validation: true)
+      end
+
+      create(:favorite, user: user, ramen_shop: ramen_shops.first)
+      create(:favorite, user: user, ramen_shop: ramen_shops.second)
+    end
+
+    it 'retrieves all records from favorited ramen_shops' do
+      expect(described_class.favorite_records_from(user).count).to eq(6)
+
+      described_class.favorite_records_from(user).each do |record|
+        expect(user.favorite_shops).to include(record.ramen_shop)
+      end
+    end
+  end
 end
