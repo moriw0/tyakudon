@@ -19,10 +19,11 @@ class Record < ApplicationRecord
   validate :ended_at_is_after_started_at, on: :update
   validate :wait_time_is_correct,         on: :update
 
+  before_create :set_is_test_based_on_user unless Rails.env.development?
   after_create :schedule_auto_retire
 
-  scope :not_retired, -> { where(is_retired: false, auto_retired: false).where.not(wait_time: nil) }
-  scope :active, -> { where(auto_retired: false).where.not(wait_time: nil) }
+  scope :not_retired, -> { where(is_retired: false, auto_retired: false, is_test: false).where.not(wait_time: nil) }
+  scope :active, -> { where(auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :ordered_by_wait_time, -> { order('wait_time DESC') }
   scope :ordered_by_created_at, -> { order('created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
@@ -55,6 +56,10 @@ class Record < ApplicationRecord
   end
 
   private
+
+  def set_is_test_based_on_user
+    self.is_test = true if user.is_test_mode?
+  end
 
   def schedule_auto_retire
     AutoRetireRecordJob.set(wait: 1.day).perform_later(self)
