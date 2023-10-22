@@ -26,7 +26,7 @@ module Tyakudon
         helper_specs: false,
         routing_specs: false
     end
-    config.active_storage.variant_processor = :mini_magick
+    config.active_storage.variant_processor = :vips
 
     # config.active_job.queue_adapter = :delayed_job
   end
