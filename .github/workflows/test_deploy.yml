@@ -8,6 +8,20 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,4 +47,10 @@ jobs:
 
       - run: RAILS_ENV=test bundle exec rails assets:precompile
 
-      - run: RAILS_ENV=test bundle exec rspec
+      - name: Database create and migrate
+        run: |
+          cp config/database.yml.ci config/database.yml
+          RAILS_ENV=test bundle exec rails db:create
+          RAILS_ENV=test bundle exec rails db:migrate
+
+      - run: bundle exec rspec
