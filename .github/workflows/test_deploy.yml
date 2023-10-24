@@ -1,0 +1,108 @@
+name: Test and Deploy
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Rspec
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.8
+
+      - name: Cache bundle
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: bundle-v1-${{ hashFiles('Gemfile.lock') }}
+
+      - name: Run bundle install
+        run: |
+          bundle config --local path vendor/bundle
+          bundle config --local without production
+          bundle install
+
+      - name: Run precompile
+        run: RAILS_ENV=test bundle exec rails assets:precompile
+
+      - name: Database create and migrate
+        run: |
+          cp config/database.yml.ci config/database.yml
+          RAILS_ENV=test bundle exec rails db:create
+          RAILS_ENV=test bundle exec rails db:migrate
+
+      - name: Run Rspec
+        run: bundle exec rspec
+        env:
+          GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
+
+  rubocop:
+    name: RuboCop
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run rubocop
+        run: bundle exec rubocop
+
+  deploy:
+    name: Deploy app to AWS
+    needs: [test, rubocop]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install SSH key
+      run: |
+        mkdir -p -m 700 ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tyakudon-webapp
+        chmod 600 ~/.ssh/tyakudon-webapp
+
+    - name: Deploy
+      run: |
+        eval $(ssh-agent)
+        ssh-add ~/.ssh/tyakudon-webapp
+        ssh -o StrictHostKeyChecking=no -A webapp@${{ secrets.TARGET_HOSTNAME }} "cd tyakudon &&
+        git pull origin main &&
+        ~/.rbenv/shims/bundle config --local deployment true &&
+        ~/.rbenv/shims/bundle config --local without development:test &&
+        ~/.rbenv/shims/bundle install &&
+        RAILS_ENV=production ~/.rbenv/shims/bundle exec rails assets:precompile &&
+        RAILS_ENV=production ~/.rbenv/shims/bundle exec rails db:migrate &&
+        ~/.rbenv/shims/bundle exec pumactl restart"
