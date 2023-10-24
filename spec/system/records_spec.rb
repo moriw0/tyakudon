@@ -9,6 +9,8 @@ RSpec.describe 'Records', js: true do
   end
 
   scenario 'user creates a record of the nearby ramen shop' do
+    pending 'headlessで動作できないため、pending中'
+
     click_link '現在地から接続'
 
     # searchページ
