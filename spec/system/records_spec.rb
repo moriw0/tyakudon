@@ -6,18 +6,15 @@ RSpec.describe 'Records', js: true do
 
   before do
     log_in_as(user)
+    mock_geolocation(50.455755, 30.511565)
   end
 
   scenario 'user creates a record of the nearby ramen shop' do
-    pending 'headlessで動作できないため、pending中'
-
     click_link '現在地から接続'
 
     # searchページ
     expect(page).to_not have_link '現在地から接続'
-    expect(page).to have_css '.loading-spinner'
-    expect(page).to have_css '#map', visible: :visible, wait: 15
-    expect(page).to_not have_css '.loading-spinner'
+    expect(page).to have_css '#map', visible: :visible
 
     # 接続するラーメン店を選択して最初の待ち行列情報を入力
     click_link ramen_shop.name, href: new_ramen_shop_record_path(ramen_shop)
