@@ -47,10 +47,9 @@ RSpec.describe 'Records', js: true do
     find('label[for="line_status_line_type_inside_the_store"]').click
     fill_in '待ち行列数', with: 1
     fill_in 'ひとこと', with: 'もう少し'
-    click_button '報告する'
-    ## 暫定対策: responseを待ってからmodalを強制的に閉じる
+    ## 暫定対策: 一呼吸おいてからpost投稿
     sleep(1)
-    find('button[data-bs-dismiss="modal"]').click
+    click_button '報告する'
 
     # measureページに追加登録情報が反映されている
     expect(page).to have_content '行列の様子を報告しました'
