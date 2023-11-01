@@ -5,32 +5,32 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
+/containers/rails/.bundle
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+/containers/rails/log/*
+/containers/rails/tmp/*
+!/containers/rails/log/.keep
+!/containers/rails/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/
-!/tmp/pids/.keep
+/containers/rails/tmp/pids/*
+!/containers/rails/tmp/pids/
+!/containers/rails/tmp/pids/.keep
 
 # Ignore uploaded files in development.
-/storage/*
-!/storage/.keep
-/tmp/storage/*
-!/tmp/storage/
-!/tmp/storage/.keep
+/containers/rails/storage/*
+!/containers/rails/storage/.keep
+/containers/rails/tmp/storage/*
+!/containers/rails/tmp/storage/
+!/containers/rails/tmp/storage/.keep
 
-/public/assets
+/containers/rails/public/assets
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+/containers/rails/config/master.key
 
-/.env
+/containers/rails/.env
 
-/app/assets/builds/*
-!/app/assets/builds/.keep
+/containers/rails/app/assets/builds/*
+!/containers/rails/app/assets/builds/.keep
