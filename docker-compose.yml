@@ -1,0 +1,42 @@
+version: "3"
+services:
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+
+  app:
+    build:
+      context: containers/rails
+    volumes:
+      - ./containers/rails:/tyakudon
+      - public-data:/tyakudon/public
+      - tmp-data:/tyakudon/tmp
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "3000:3000"
+    tty:
+      true
+    stdin_open: true
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/tyakudon/public
+      - tmp-data:/tyakudon/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
+
+volumes:
+  postgresql-data:
+  public-data:
+  tmp-data:
