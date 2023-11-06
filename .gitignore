@@ -12,6 +12,10 @@
 /containers/rails/tmp/*
 !/containers/rails/log/.keep
 !/containers/rails/tmp/.keep
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
 /containers/rails/tmp/pids/*
