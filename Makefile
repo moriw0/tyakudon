@@ -11,7 +11,7 @@ precompile:
 	docker-compose run --rm app bundle exec rails assets:precompile RAILS_ENV=development
 
 test:
-	docker-compose run --rm app bundle exec rails rspec
+	docker-compose run --rm app bundle exec rspec
 
 build:
 	docker-compose build
