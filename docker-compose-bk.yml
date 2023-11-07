@@ -13,6 +13,8 @@ services:
       context: containers/rails
     volumes:
       - ./containers/rails:/tyakudon
+      - public-data:/tyakudon/public
+      - tmp-data:/tyakudon/tmp
     environment:
       TZ: Asia/Tokyo
     ports:
@@ -23,5 +25,18 @@ services:
     depends_on:
       - db
 
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/tyakudon/public
+      - tmp-data:/tyakudon/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
+
 volumes:
   postgresql-data:
+  public-data:
+  tmp-data:
