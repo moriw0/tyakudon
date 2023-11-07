@@ -26,7 +26,7 @@ class Scraping < Thor
     shop_infos = ShopInfoExtractor.extract_shop_info(document)
 
     valid_shop_info = ShopInfoInserter.insert_unique_shops(shop_infos)
-    ShopInfoInserter.append_shop_info_to_csv('db/imports/ramen_shop_master.csv', valid_shop_info)
+    ShopInfoInserter.append_shop_info_to_csv('/tyakudon/db/imports/import_2023-07-15_ramen_shops.csv', valid_shop_info)
   end
 
   private
