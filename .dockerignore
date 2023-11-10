@@ -1,0 +1,9 @@
+dockerignore
+.env
+.ruby-version
+config/master.key
+log
+node_modules
+storage
+tmp/cache
+tmp/storage

@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/tyakudon
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "3000:3000"
+    init: true
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+
+volumes:
+  postgresql-data:
