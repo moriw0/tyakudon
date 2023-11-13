@@ -1,0 +1,52 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "app",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 9292,
+                    "hostPort": 9292,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "command": [
+                "bundle",
+                "exec",
+                "puma",
+                "-C",
+                "config/puma.rb"
+            ],
+            "environment": [],
+            "environmentFiles": [
+                {
+                    "value": "arn:aws:s3:::tyakudon/environments/.env",
+                    "type": "s3"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/tyakudon-task",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "family": "tyakudon-task",
+    "taskRoleArn": "arn:aws:iam::220450336094:role/ecsTaskRole",
+    "executionRoleArn": "arn:aws:iam::220450336094:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}

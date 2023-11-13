@@ -1,0 +1,88 @@
+name: Deploy work flow for Amazon ECS
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+env:
+  AWS_REGION: ap-northeast-1
+  ECR_REPOSITORY: tyakudon-app
+  ECS_CLUSTER: tyakudon_cluster
+  ECS_SERVICE: tyakudon17
+  ECS_TASK_DEFINITION: task-definition.json
+  CONTAINER_NAME: app
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+jobs:
+  deploy:
+    name: Deploy
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::220450336094:role/GitHubActionsDeployRole
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Render Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Success
+        uses: rtCamp/action-slack-notify@v2
+        if: success()
+        env:
+          SLACK_TITLE: Deploy flow / success
+          SLACK_COLOR: good
+          SLACK_MESSAGE: Message for success
+
+      - name: Failure
+        uses: rtCamp/action-slack-notify@v2
+        if: failure()
+        env:
+          SLACK_TITLE: Deploy flow / failure
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: Message for failure
+
+      - name: Cancel
+        uses: rtCamp/action-slack-notify@v2
+        if: cancelled()
+        env:
+          SLACK_TITLE: Deploy flow / cancel
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: Message for cancel
