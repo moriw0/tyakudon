@@ -1,5 +1,7 @@
 require "active_support/core_ext/integer/time"
 
+HOST = 'tyakudon.com'.freeze
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -31,7 +33,7 @@ Rails.application.configure do
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = "http://assets.example.com"
+  config.asset_host = "https://#{HOST}"
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
@@ -68,14 +70,13 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'tyakudon.com'
-  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.default_url_options = { host: HOST }
   ActionMailer::Base.smtp_settings = {
     :port           => 587,
     :address        => 'smtp.mailgun.org',
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => host,
+    :domain         => HOST,
     :authentication => :plain,
   }
 
