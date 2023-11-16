@@ -13,22 +13,6 @@ class ShopInfoInserter
       end
     end
 
-    def append_shop_info_to_csv(csv_path, valid_shop_info, last_id = nil)
-      last_id ||= last_id_from_csv(csv_path)
-      CSV.open(csv_path, 'a') do |csv|
-        valid_shop_info.each_with_index do |info, index|
-          csv << [last_id + index + 1, *info]
-        end
-      end
-    end
-
-    def last_id_from_csv(file_name)
-      last_line = CSV.readlines(file_name).last
-      return 0 unless last_line
-
-      last_line.first.to_i
-    end
-
     private
 
     def shop_already_exists?(shop_name, full_address)

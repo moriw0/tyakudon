@@ -1,14 +1,15 @@
 require 'thor'
 require 'nokogiri'
-require 'open-uri'
-require 'csv'
 
 class Scraping < Thor
-  WAIT_SECONDS = 30
+  FILE_NAME = 'scraped_shops_data'.freeze
+  DEF_SHEET_NAME = 'def'.freeze
+  SHOP_SHEET_NAME = 'shops'.freeze
 
   desc 'scrape_ramen_shops', '各ラーメン店へアクセスして店の情報を取得する'
   option :limit, type: :numeric, default: 10, desc: '取得するラーメン店の最大数'
   option :resume, type: :boolean, default: true, desc: '前回の続きからスクレイピングを再開'
+  option :wait_seconds, type: :numeric, default: 60
 
   def scrape_ramen_shops
     initialize_scraping
@@ -21,19 +22,28 @@ class Scraping < Thor
   end
 
   desc 'execute SHOP_URL', 'スクレイピングしてユニークなShopをインサート・CSV出力'
+
   def execute(shop_url)
     document = DocumentFetcher.fetch_document_from_url(shop_url)
     shop_infos = ShopInfoExtractor.extract_shop_info(document)
-
     valid_shop_info = ShopInfoInserter.insert_unique_shops(shop_infos)
-    ShopInfoInserter.append_shop_info_to_csv('db/imports/ramen_shop_master.csv', valid_shop_info)
+    return unless valid_shop_info.any?
+
+    @sheet ||= fetch_sheet
+    @sheet.append_shop_info(valid_shop_info)
   end
 
   private
 
+  def fetch_sheet(resume_option: options[:resume])
+    session = GcpSessionManager.new_session
+    GoogleSpreadSheet.new(session: session, file_name: FILE_NAME, def_sheet_name: DEF_SHEET_NAME,
+                          shops_sheet_name: SHOP_SHEET_NAME, resume_option: resume_option)
+  end
+
   def initialize_scraping
-    @url_manager = UrlManager.new(options[:resume])
-    @target_url = @url_manager.retrieve_target_url
+    @sheet = fetch_sheet(resume_option: options[:resume])
+    @target_url = @sheet.target_url
     @current_page = DocumentFetcher.fetch_document_from_url(@target_url)
     @shops_count = 0
   end
@@ -49,13 +59,13 @@ class Scraping < Thor
 
   def filter_shop_links
     shop_links = ShopInfoExtractor.extract_shop_links(@current_page)
-    return shop_links unless options[:resume] && File.exist?(UrlManager::LAST_LINK_FILE)
+    return shop_links unless options[:resume] && @sheet.last_page_present?
 
     retrieve_remaining_shop_links(shop_links)
   end
 
   def retrieve_remaining_shop_links(shop_links)
-    last_link = UrlManager.retrieve_last_shop_url
+    last_link = @sheet.last_shop_url
     start_index = shop_links.index(last_link)
 
     if start_index
@@ -76,17 +86,17 @@ class Scraping < Thor
   end
 
   def process_shop_link(link)
-    sleep WAIT_SECONDS
+    sleep options[:wait_seconds]
     shop_url = UrlManager.build_url(link)
     execute(shop_url)
-    UrlManager.save_last_link(link)
+    @sheet.save_last_shop_url(link)
   end
 
   def update_target_url
     next_link = next_page_link
     return unless next_link
 
-    @url_manager.save_last_page(@target_url)
+    @sheet.save_target_url(@target_url)
     @target_url = UrlManager.build_url(next_link)
     @current_page = DocumentFetcher.fetch_document_from_url(@target_url)
   end
