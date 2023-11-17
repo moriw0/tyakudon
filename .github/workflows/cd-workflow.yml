@@ -1,11 +1,10 @@
 name: Deploy work flow for Amazon ECS
 
 on:
-  push:
-  # pull_request:
-  #   branches:
-  #     - main
-  #   types: [closed]
+  pull_request:
+    branches:
+      - main
+    types: [closed]
 
 env:
   AWS_REGION: ap-northeast-1
@@ -45,7 +44,9 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Render Amazon ECS task definition
