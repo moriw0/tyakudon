@@ -30,3 +30,6 @@ logs:
 
 logsf:
 	docker-compose logs -f
+
+scraping:
+	docker-compose run --rm app bundle exec thor scraping:scrape_ramen_shops --limit=3 --resume=true --wait_seconds=3
