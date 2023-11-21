@@ -17,7 +17,7 @@ class ShopInfoExtractor
       prefecture, city, full_address = extract_address_info(node)
       operation_hours = extract_text(node, '//th[text()="営業時間"]/following-sibling::td')
       closing_days = extract_text(node, '//th[text()="定休日"]/following-sibling::td')
-      today = Time.zone.today
+      today = Time.current.strftime('%m/%d/%Y %H:%M:%S')
 
       [shop_name, prefecture, city, full_address, operation_hours, closing_days, today]
     end
