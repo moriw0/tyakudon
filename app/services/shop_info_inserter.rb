@@ -20,9 +20,11 @@ class ShopInfoInserter
     end
 
     def insert_shop(shop_name, full_address, info, unique_shops)
-      RamenShop.create(name: shop_name, address: full_address)
+      RamenShop.create!(name: shop_name, address: full_address)
       unique_shops << info
       puts "'#{shop_name}' was inserted."
+    rescue StandardError => e
+      puts "Failed to insert '#{shop_name}': #{e.message}"
     end
     # rubocop:enable Rails/Output
   end
