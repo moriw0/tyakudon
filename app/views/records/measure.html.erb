@@ -1,10 +1,12 @@
+<%= turbo_stream_from "message" %>
+<div id="message">
+  <%= render @record.cheer_messages.last %>
+</div>
 <div class="shop-info pt-5 text-center">
   <h1 class="shop-name"><%= @ramen_shop.name %></h1>
   <small class="shop-address"><%= @ramen_shop.address %></small>
 </div>
 <div data-controller="timer" data-timer-started-at="<%= @record.started_at&.iso8601 %>" class="timer">
-  <span data-controller="record" data-record-target=recordId>
-  </span>
   <div data-timer-target="time">00:00:00.000</div>
   <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
