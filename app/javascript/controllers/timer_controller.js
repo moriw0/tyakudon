@@ -27,16 +27,54 @@ export default class extends Controller {
     };
 
     this.timer = setInterval(updateTimer, 1);
+
+    const pathArray = window.location.pathname.split("/");
+    const recordId = pathArray[pathArray.length - 2];
+
+    //一定周期でwait_timeをpost
+    //wait_timeをpost
+    setTimeout(() => this.postCurrentWaitTime(recordId), 3000);
+  }
+
+  postCurrentWaitTime(recordId) {
+    const currentWaitTime = this.calculateWaitTime();
+    const token = document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content");
+
+    fetch("/cheer_messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": token,
+      },
+      body: JSON.stringify({
+        id: recordId,
+        current_wait_time: currentWaitTime,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   end() {
     clearInterval(this.timer);
-    const endedAt = new Date();
-    const startedAt = new Date(this.data.get("startedAt"));
-    const waitTime = (endedAt - startedAt) / 1000;
-
+    this.calculateWaitTime();
     this.endedAtTarget.value = endedAt;
     this.waitTimeTarget.value = waitTime;
+  }
+
+  calculateWaitTime() {
+    const endedAt = new Date();
+    const startedAt = new Date(this.data.get("startedAt"));
+    return (endedAt - startedAt) / 1000;
   }
 
   disconnect() {

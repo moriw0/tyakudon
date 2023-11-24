@@ -7,6 +7,12 @@ class CheerMessagesController < ApplicationController
     # random_wait_time = rand(1..3)
     #実行時間を元にjobを生成
     # SpeakMessageJob.set(wait: random_wait_time.seconds).perform_later(@post, data['content'])
+    # 一旦websocketでメッセージを挿入
+    # message = post.messages.create(content: message)
+    # message.broadcast_prepend_to("messages")
+
+    # 純websocketでメッセージを出力
+    RecordChannel.broadcast_to(record, message: '応援しておる')
 
     #jsonで返す
     if record

@@ -11,7 +11,7 @@ export default class extends Controller {
 
     // let recordId = this.recordIdTarget.textContent.trim();
     this.subscribe(recordId);
-    this.repetitionMessage(recordId);
+    // this.repetitionMessage(recordId);
   }
 
   subscribe(recordId) {
