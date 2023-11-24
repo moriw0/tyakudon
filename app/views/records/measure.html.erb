@@ -3,6 +3,9 @@
   <small class="shop-address"><%= @ramen_shop.address %></small>
 </div>
 <div data-controller="timer" data-timer-started-at="<%= @record.started_at&.iso8601 %>" class="timer">
+  <span data-controller="record" data-record-target=recordId>
+    <%= @record.id %>
+  </span>
   <div data-timer-target="time">00:00:00.000</div>
   <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
