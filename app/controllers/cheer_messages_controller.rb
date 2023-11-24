@@ -8,9 +8,8 @@ class CheerMessagesController < ApplicationController
     # SpeakMessageJob.set(wait: random_wait_time.seconds).perform_later(@post, data['content'])
 
     # 一旦websocketでメッセージを挿入
-    message = record.cheer_messages.create(content: 'イケイケ応援している')
-    target = "cheer_message_#{message.id - 1}"
-    message.broadcast_replace_to('message', target: target)
+    message = record.cheer_messages.create(content: '最近応援している')
+    message.broadcast_prepend_to('cheer_messages')
 
     if record
       render json: { id: record.id, waitTime: current_wait_time, message: '成功しました' }, status: :ok

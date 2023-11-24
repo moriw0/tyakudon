@@ -1,6 +1,5 @@
-<%= turbo_stream_from "message" %>
-<div id="message">
-  <%= render @record.cheer_messages.last %>
+<%= turbo_stream_from "cheer_messages" %>
+<div id="cheer_messages">
 </div>
 <div class="shop-info pt-5 text-center">
   <h1 class="shop-name"><%= @ramen_shop.name %></h1>
