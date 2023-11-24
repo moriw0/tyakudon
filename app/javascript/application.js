@@ -1,6 +1,5 @@
 import "@hotwired/turbo-rails";
 import "controllers";
-import "channels";
 import "bootstrap";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
