@@ -25,6 +25,8 @@ class Scraping < Thor
 
   def execute(shop_url)
     document = DocumentFetcher.fetch_document_from_url(shop_url)
+    return unless document
+
     shop_infos = ShopInfoExtractor.extract_shop_info(document)
     valid_shop_info = ShopInfoInserter.insert_unique_shops(shop_infos)
     return unless valid_shop_info.any?
