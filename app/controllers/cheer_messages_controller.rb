@@ -2,7 +2,9 @@ class CheerMessagesController < ApplicationController
   def create
     record = Record.find(params[:id])
     current_wait_time = params[:current_wait_time]
-    message = record.cheer_messages.build(content: '最近応援している')
+    line_status = record.line_statuses.last
+    message_content = OpenAi.generate_cheer_message(current_wait_time, line_status)
+    message = record.cheer_messages.build(content: message_content)
 
     if message.save
       random_wait_time = rand(1..3)
