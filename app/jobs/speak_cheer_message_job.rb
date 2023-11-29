@@ -22,7 +22,7 @@ class SpeakCheerMessageJob < ApplicationJob
     OpenAI::Client.new.chat(
       parameters: {
         model: MODEL_NAME,
-        messages: CheerMessage.for_openai(record.cheer_messages),
+        messages: CheerMessage.for_openai(record.cheer_messages.recent),
         temperature: TEMPERATURE
       }
     )
