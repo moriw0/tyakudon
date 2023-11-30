@@ -10,7 +10,7 @@ db-migrate:
 precompile:
 	docker-compose run --rm app bundle exec rails assets:precompile RAILS_ENV=development
 
-test:
+rspec:
 	docker-compose run --rm app bundle exec rspec
 
 build:
