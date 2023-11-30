@@ -30,24 +30,15 @@ export default class extends Controller {
   }
 
   end() {
-    this.clearAllInterval();
-    this.calculateWaitTime();
+    clearInterval(this.timer);
+    const endedAt = new Date();
+    const startedAt = new Date(this.startedAtTarget.textContent);
+    const waitTime = (endedAt - startedAt) / 1000;
     this.endedAtTarget.value = endedAt;
     this.waitTimeTarget.value = waitTime;
   }
 
-  calculateWaitTime() {
-    const endedAt = new Date();
-    const startedAt = new Date(this.startedAtTarget.textContent);
-    return (endedAt - startedAt) / 1000;
-  }
-
   disconnect() {
-    this.clearAllInterval();
-  }
-
-  clearAllInterval() {
     clearInterval(this.timer);
-    clearInterval(this.currentTimePoster);
   }
 }
