@@ -10,7 +10,7 @@ db-migrate:
 precompile:
 	docker-compose run --rm app bundle exec rails assets:precompile RAILS_ENV=development
 
-test:
+rspec:
 	docker-compose run --rm app bundle exec rspec
 
 build:
@@ -33,3 +33,6 @@ logsf:
 
 scraping:
 	docker-compose run --rm app bundle exec thor scraping:scrape_ramen_shops --limit=3 --resume=true --wait_seconds=3
+
+c:
+	docker-compose run --rm app bundle exec rails c

@@ -66,6 +66,7 @@ gem 'delayed_job_active_record'
 gem 'dotiw'
 gem "meta-tags"
 gem 'google_drive'
+gem "ruby-openai"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -5,7 +5,7 @@ export default class extends Controller {
 
   connect() {
     const timeElement = this.timeTarget;
-    const startedAtValue = this.data.get("startedAt");
+    const startedAtValue = this.startedAtTarget.textContent;
 
     const formatTime = (time) => {
       const hours = String(Math.floor(time / 3600)).padStart(2, "0");
@@ -32,9 +32,8 @@ export default class extends Controller {
   end() {
     clearInterval(this.timer);
     const endedAt = new Date();
-    const startedAt = new Date(this.data.get("startedAt"));
+    const startedAt = new Date(this.startedAtTarget.textContent);
     const waitTime = (endedAt - startedAt) / 1000;
-
     this.endedAtTarget.value = endedAt;
     this.waitTimeTarget.value = waitTime;
   }
