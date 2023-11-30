@@ -68,16 +68,9 @@ export default class extends Controller {
         id: recordId,
         current_wait_time: currentWaitTime,
       }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    }).catch((e) => {
+      console.log(e);
+    });
   }
 
   calculateWaitTime() {
