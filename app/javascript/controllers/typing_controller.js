@@ -2,6 +2,10 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="typing"
 export default class extends Controller {
+  static values = {
+    timeout: { type: Number, default: 10000 },
+  };
+
   connect() {
     this.element.removeAttribute("hidden");
     this.typeMessage();
@@ -16,8 +20,12 @@ export default class extends Controller {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    await new Promise((resolve) => setTimeout(resolve, this.safeTimeoutValue));
 
     this.element.remove();
+  }
+
+  get safeTimeoutValue() {
+    return this.timeoutValue || 10000;
   }
 }
