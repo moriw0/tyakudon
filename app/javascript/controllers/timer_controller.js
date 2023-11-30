@@ -5,7 +5,7 @@ export default class extends Controller {
 
   connect() {
     const timeElement = this.timeTarget;
-    const startedAtValue = this.data.get("startedAt");
+    const startedAtValue = this.startedAtTarget.textContent;
 
     const formatTime = (time) => {
       const hours = String(Math.floor(time / 3600)).padStart(2, "0");
@@ -27,43 +27,6 @@ export default class extends Controller {
     };
 
     this.timer = setInterval(updateTimer, 1);
-
-    const pathArray = window.location.pathname.split("/");
-    const recordId = pathArray[pathArray.length - 2];
-
-    this.postRegularWaitTime(recordId);
-  }
-
-  postRegularWaitTime(recordId) {
-    const postCurrentWaitTime = () => {
-      const currentWaitTime = this.calculateWaitTime();
-      const token = document
-        .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content");
-
-      fetch("/cheer_messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": token,
-        },
-        body: JSON.stringify({
-          id: recordId,
-          current_wait_time: currentWaitTime,
-        }),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-
-    this.currentTimePoster = setInterval(postCurrentWaitTime, 10000);
   }
 
   end() {
@@ -75,7 +38,7 @@ export default class extends Controller {
 
   calculateWaitTime() {
     const endedAt = new Date();
-    const startedAt = new Date(this.data.get("startedAt"));
+    const startedAt = new Date(this.startedAtTarget.textContent);
     return (endedAt - startedAt) / 1000;
   }
 
