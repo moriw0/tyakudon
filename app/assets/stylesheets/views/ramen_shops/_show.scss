@@ -11,6 +11,19 @@
       color: g.$brand-very-light-gray;
       font-size: 0.8rem;
     }
+    div[data-controller="shop-map"] {
+      margin-top: -20px;
+    }
+    #shop-map {
+      margin-top: 30px;
+      width: 100%;
+      height: 300px;
+    }
+    .route-map-link {
+      font-size: 14px;
+      margin-top: 15px;
+      margin-bottom: 30px;
+    }
   }
   .content {
     h2 {

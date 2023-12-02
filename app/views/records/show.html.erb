@@ -7,10 +7,10 @@
   </div>
   <div class="record-content">
     <div class="record-summary">
-      <div class="shop-info">
+      <%= link_to ramen_shop_path(@record.ramen_shop), class: 'shop-info' do %>
         <div class="shop-name"><%= @record.ramen_shop.name %></div>
         <small class="shop-address"><%= @record.ramen_shop.address %></small>
-      </div>
+      <% end %>
       <div class="record-time">
         <%= wait_time_tag @record.wait_time %>
       </div>

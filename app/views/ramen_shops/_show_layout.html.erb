@@ -1,0 +1,36 @@
+<div id="ramen_shops-show">
+  <section class="ramen_shop">
+    <h1 class="my-4"><%= @ramen_shop.name %></h1>
+    <%= turbo_frame_tag 'with_map' do %>
+      <p class="mb-4">
+        <%= @ramen_shop.address %>
+      </p>
+        <% if @show_map %>
+          <%= link_to '[地図を非表示にする]', ramen_shop_path(@ramen_shop) %>
+        <% else %>
+          <%= link_to '[地図を表示する]', show_with_map_ramen_shop_path(@ramen_shop) %>
+        <% end %>
+      <%= yield %>
+    <% end %>
+    <div class="stats">
+      <%= link_to ramen_shop_path(@ramen_shop) do %>
+        <%= @ramen_shop.records.count %><br>
+        レコード数
+      <% end %>
+    </div>
+    <%= render 'favorite_form' %>
+  </section>
+  <section class="content">
+    <h2 class="border-bottom">ちゃくどんレコード</h2>
+    <% if @records.any? %>
+      <div class="records pb-2">
+        <%= render @records, name: :user %>
+      </div>
+      <div class="d-flex justify-content-center">
+        <%= paginate @records %>
+      </div>
+    <% else %>
+      <p class="text-center">まだちゃくどんレコードがありません</p>
+    <% end %>
+  </section>
+</div>

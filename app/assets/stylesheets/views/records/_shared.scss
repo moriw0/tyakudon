@@ -11,6 +11,13 @@
     color: g.$brand-light-gray-color;
   }
 }
+a.shop-info {
+  color: black;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 .records-ranking_record, .records-record {
   .record-overview {

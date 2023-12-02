@@ -1,0 +1,18 @@
+<div data-controller="shop-map" data-action="map-loaded@window->shop-map#createMap"
+    data-shop-map-latitude-value=<%=@ramen_shop.latitude%>
+    data-shop-map-longitude-value=<%=@ramen_shop.longitude%>
+    data-shop-map-name-value="<%=@ramen_shop.name%>">
+  <div id="shop-map" data-shop-map-target="map"></div>
+</div>
+<div class="map-links">
+  <a target="_blank"
+    href="https://www.google.com/maps/search/?api=1&query=<%=@ramen_shop.latitude%>%2C<%=@ramen_shop.longitude%>"
+    rel="noopener">Google Maps
+    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+  </a>
+  <a target="_blank"
+    href="https://www.google.com/maps/dir/?api=1&destination=<%=@ramen_shop.latitude%>%2C<%=@ramen_shop.longitude%>"
+    rel="noopener">経路を調べる
+    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+  </a>
+</div>
