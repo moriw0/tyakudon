@@ -6,7 +6,7 @@
   <small class="shop-address"><%= @ramen_shop.address %></small>
 </div>
 <div data-controller="timer" class="timer">
-  <div data-controller="time-post" data-time-post-interval-value="180000">
+  <div data-controller="time-post" data-time-post-interval-value="120000">
     <div data-time-post-target="startedAt" data-timer-target="startedAt" hidden><%= @record.started_at&.iso8601 %></div>
   </div>
   <div data-timer-target="time">00:00:00.000</div>

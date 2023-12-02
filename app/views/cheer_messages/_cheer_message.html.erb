@@ -1,3 +1,6 @@
-<%= turbo_frame_tag cheer_message, data: { controller: 'typing', typing_timeout_value: 10000 }, hidden: 'hidden' do %>
+<%= turbo_frame_tag cheer_message, data: { controller: 'typing', typing_timeout_value: 10000 }, class: 'cheer-message', hidden: 'hidden' do %>
   <%= cheer_message.content %>
 <% end %>
+<div class="character" data-controller="character">
+  <%= image_tag 'tyakudon.png', data: { character_target: 'character' }, class: 'bounceIn' %>
+</div>
