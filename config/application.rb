@@ -27,7 +27,7 @@ module Tyakudon
         routing_specs: false
     end
     config.active_storage.variant_processor = :vips
-
-    # config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :good_job
+    config.good_job.execution_mode = :async
   end
 end
