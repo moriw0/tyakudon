@@ -1,17 +1,14 @@
 <div id="ramen_shops-show">
   <section class="ramen_shop">
-    <h1 class="my-4"><%= @ramen_shop.name %></h1>
-    <p class="mb-4"><%= @ramen_shop.address %></p>
-    <div class="stats">
-      <%= link_to ramen_shop_path(@ramen_shop) do %>
-        <%= @ramen_shop.records.count %><br>
-        レコード数
-      <% end %>
-    </div>
+    <h1><%= @ramen_shop.name %></h1>
+    <p class="mb-2"><%= @ramen_shop.address %></p>
+    <%= render 'shop_map' %>
     <%= render 'favorite_form' %>
   </section>
   <section class="content">
-    <h2 class="border-bottom">ちゃくどんレコード</h2>
+    <h2 class="border-bottom">ちゃくどんレコード
+      <span><%= @ramen_shop.records.count %>件</span>
+    </h2>
     <% if @records.any? %>
       <div class="records pb-2">
         <%= render @records, name: :user %>

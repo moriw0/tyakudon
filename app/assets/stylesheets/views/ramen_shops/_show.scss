@@ -11,6 +11,31 @@
       color: g.$brand-very-light-gray;
       font-size: 0.8rem;
     }
+    #shop-map {
+      height: 300px;
+      width: 100%;
+    }
+    .map-links {
+      display: flex;
+      font-size: 14px;
+      justify-content: space-around;
+      margin-top: 15px;
+      margin-bottom: 30px;
+      a {
+        background-color: #34a853;
+        border-radius: 5px;
+        color: white;
+        display: block;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        width: 45%;
+        svg {
+          margin-left: 5px;
+        }
+      }
+    }
+
   }
   .content {
     h2 {
@@ -18,6 +43,9 @@
       font-weight: 400;
       padding-bottom: 0.8rem;
       text-align: center;
+      span {
+        font-size: 16px;
+      }
     }
     p {
       color: g.$brand-very-light-gray
