@@ -1,7 +1,7 @@
 class RamenShopsController < ApplicationController
   before_action :logged_in_user, only: %i[new edit create update prepare_favorite]
   before_action :admin_user,     only: %i[new edit create update]
-  before_action :set_ramen_shop, only: %i[show show_with_map edit update prepare_favorite]
+  before_action :set_ramen_shop, only: %i[show edit update prepare_favorite]
 
   def index
     @search = RamenShop.ransack(params[:q])
@@ -16,17 +16,11 @@ class RamenShopsController < ApplicationController
 
   def show
     @records = @ramen_shop.records.active_ordered.page(params[:page])
-    @show_map = false
 
     respond_to do |format|
       format.html
       format.json { render json: @ramen_shop.as_json(include: :records) }
     end
-  end
-
-  def show_with_map
-    @records = @ramen_shop.records.active_ordered.page(params[:page])
-    @show_map = true
   end
 
   def new

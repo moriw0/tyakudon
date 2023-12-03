@@ -1,11 +1,11 @@
 name: Deploy work flow for Amazon ECS
 
 on:
-  push:
-  # pull_request:
-  #   branches:
-  #     - main
-  #   types: [closed]
+  # push:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
 
 env:
   AWS_REGION: ap-northeast-1

@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   resources :ramen_shops, only: [:index, :show, :new, :create, :edit, :update] do
     member do
       get :prepare_favorite
-      get :show_with_map
     end
     resources :records, only: [:show, :new, :create, :edit, :update], shallow: true do
       member do
