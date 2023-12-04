@@ -62,7 +62,6 @@ gem 'faker'
 gem 'seed-fu'
 gem 'active_storage_validations'
 gem "aws-sdk-s3"
-gem 'delayed_job_active_record'
 gem 'dotiw'
 gem "meta-tags"
 gem 'google_drive'
