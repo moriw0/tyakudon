@@ -14,8 +14,15 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
+
   has_secure_password validations: false
+  validate(unless: :uid?) do |record|
+    record.errors.add(:password, :blank) if record.password_digest.blank?
+  end
+  validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, unless: :uid? }
+  validates :password, confirmation: { allow_blank: true, unless: :uid? }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, unless: :uid?
+
   validates :avatar, content_type: { in: %i[png jpg jpeg],
                                      message: 'のフォーマットが不正です' },
                      size: { less_than_or_equal_to: 5.megabytes,
