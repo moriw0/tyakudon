@@ -8,9 +8,10 @@
       <%= f.submit "ログインする" %>
     </div>
   <% end %>
+  <%= render 'shared/google_login' %>
   <div class="text-center mt-5">
-    <%= link_to 'パスワードをお忘れの方はこちら', new_password_reset_path, class: 'normal-link' %>
-    <%= link_to 'アカウントをお持ちでない方はこちら', new_user_path, class: 'btn btn-outline-secondary' %>
+    <%= link_to 'パスワードをお忘れの方はこちら', new_password_reset_path, class: 'normal-link forgot-link' %>
+    <%= link_to 'アカウントをお持ちでない方はこちら', new_user_path, class: 'btn btn-outline-secondary no-account-link' %>
   </div>
   <div class="border-bottom border-separator"></div>
   <%= render 'statics/about' %>

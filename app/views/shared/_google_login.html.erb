@@ -1,0 +1,7 @@
+<div id="google-login">
+  <div class="separator"><span>もしくは</span></div>
+  <%= button_to '/auth/google_oauth2', method: :post, data: { turbo: false }, class: 'google-signin-button' do %>
+    <span class="google-logo"></span>
+    <span class="google-signin-text">Googleアカウントでログインする</span>
+  <% end %>
+</div>
