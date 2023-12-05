@@ -28,6 +28,9 @@ module Tyakudon
     end
     config.active_storage.variant_processor = :vips
     config.active_job.queue_adapter = :good_job
-    config.good_job.execution_mode = :async
+    config.good_job = {
+      execution_mode: :async,
+      max_threads: 4
+    }
   end
 end
