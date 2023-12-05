@@ -62,11 +62,11 @@ gem 'faker'
 gem 'seed-fu'
 gem 'active_storage_validations'
 gem "aws-sdk-s3"
-gem 'delayed_job_active_record'
 gem 'dotiw'
 gem "meta-tags"
 gem 'google_drive'
 gem "ruby-openai"
+gem "good_job"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

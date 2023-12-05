@@ -122,11 +122,6 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     declarative (0.0.20)
-    delayed_job (4.1.11)
-      activesupport (>= 3.0, < 8.0)
-    delayed_job_active_record (4.1.7)
-      activerecord (>= 3.0, < 8.0)
-      delayed_job (>= 3.0, < 5)
     diff-lcs (1.5.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
@@ -138,6 +133,8 @@ GEM
     enum_help (0.0.19)
       activesupport (>= 3.0.0)
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     event_stream_parser (0.3.0)
     execjs (2.8.1)
     factory_bot (6.2.1)
@@ -171,9 +168,19 @@ GEM
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
     ffi (1.15.5)
+    fugit (1.9.0)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     geocoder (1.8.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    good_job (3.21.2)
+      activejob (>= 6.0.0)
+      activerecord (>= 6.0.0)
+      concurrent-ruby (>= 1.0.2)
+      fugit (>= 1.1)
+      railties (>= 6.0.0)
+      thor (>= 0.14.1)
     google-apis-core (0.11.2)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.16.2, < 2.a)
@@ -282,6 +289,7 @@ GEM
     public_suffix (5.0.3)
     puma (5.6.5)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.7.1)
     rack (2.2.8)
     rack-test (2.1.0)
@@ -450,13 +458,13 @@ DEPENDENCIES
   capybara
   dartsass-rails
   debug
-  delayed_job_active_record
   dotenv-rails
   dotiw
   enum_help
   factory_bot_rails
   faker
   geocoder
+  good_job
   google_drive
   htmlbeautifier
   image_processing (~> 1.2)
