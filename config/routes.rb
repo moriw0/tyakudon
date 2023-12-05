@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
+  get 'auth/:provider/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
   resources :ramen_shops, only: [:index, :show, :new, :create, :edit, :update] do

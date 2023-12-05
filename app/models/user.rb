@@ -14,12 +14,24 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  has_secure_password validations: false
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, unless: :uid?
   validates :avatar, content_type: { in: %i[png jpg jpeg],
                                      message: 'のフォーマットが不正です' },
                      size: { less_than_or_equal_to: 5.megabytes,
                              message: 'は5MB以下である必要があります' }
+
+  def self.find_or_create_from_auth!(auth)
+    provider = auth[:provider]
+    uid = auth[:uid]
+    name = auth[:info][:name]
+    email = auth[:info][:email]
+
+    find_or_create_by!(provider: provider, uid: uid) do |user|
+      user.name = name
+      user.email = email
+    end
+  end
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
