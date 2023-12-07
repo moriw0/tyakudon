@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get 'favorite_shops', on: :member, as: :favorites_by
     patch 'update_test_mode', on: :member
   end
+  resources :omniauth_users, only: %i[new create]
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :favorites, only: [:create, :destroy]

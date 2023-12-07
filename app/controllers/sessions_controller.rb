@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  include Authenticatable
   before_action :disable_connect_button, only: %i[new]
 
   def new
@@ -6,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     if request.env['omniauth.auth'].present?
-      oauth_authentication
+      oauth_authentication(request.env['omniauth.auth'])
     else
       standard_authentication
     end
@@ -17,12 +18,20 @@ class SessionsController < ApplicationController
     redirect_to root_path, status: :see_other, notice: 'ログアウトしました'
   end
 
+  def failure
+    redirect_to root_path, alert: 'ログインに失敗しました'
+  end
+
   private
 
-  def oauth_authentication
-    user = User.find_or_create_from_auth!(request.env['omniauth.auth'])
-    user.activate if user.activated == false
-    handle_authentication(user, remember: true)
+  def oauth_authentication(auth)
+    user = User.find_by(provider: auth[:provider], uid: auth[:uid])
+    if user
+      handle_authentication(user, remember: true)
+    else
+      session['auth_data'] = auth.except('extra')
+      redirect_to new_omniauth_user_path
+    end
   end
 
   def standard_authentication
@@ -42,13 +51,5 @@ class SessionsController < ApplicationController
   def handle_failed_authentication
     flash.now.alert = 'ログインに失敗しました'
     render 'new', status: :unprocessable_entity
-  end
-
-  def handle_authentication(user, remember:)
-    forwarding_url = session[:forwarding_url]
-    reset_session
-    remember ? remember(user) : forget(user)
-    log_in user
-    redirect_to forwarding_url || user, notice: 'ログインしました'
   end
 end
