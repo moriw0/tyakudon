@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :records, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
   has_many :favorite_shops, through: :favorites, source: :ramen_shop
+  has_many :likes, dependent: :restrict_with_exception
   has_one_attached :avatar
 
   before_save :downcase_email
