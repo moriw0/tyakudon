@@ -3,17 +3,48 @@ require 'rails_helper'
 RSpec.describe 'Users' do
   let(:user) { create(:user) }
 
-  scenario 'user creates an account with valid information', js: true do
-    visit new_user_path
-    expect {
-      fill_in 'ニックネーム', with: 'もりを'
-      fill_in 'メールアドレス', with: 'test@example.com'
-      fill_in 'パスワード', with: 'foobar'
-      fill_in 'パスワード（確認）', with: 'foobar'
-      find('input#agreement').click
-      click_button '登録する'
-      expect(page).to have_content 'メールを確認してアカウントを有効にしてください'
-    }.to change(User, :count).by(1)
+  describe 'create' do
+    context 'when standard creation' do
+      scenario 'user creates an account with valid information', js: true do
+        visit new_user_path
+        expect {
+          fill_in 'ニックネーム', with: 'もりを'
+          fill_in 'メールアドレス', with: 'test@example.com'
+          fill_in 'パスワード', with: 'foobar'
+          fill_in 'パスワード（確認）', with: 'foobar'
+          find('input#agreement').click
+          click_button '登録する'
+          expect(page).to have_content 'メールを確認してアカウントを有効にしてください'
+        }.to change(User, :count).by(1)
+      end
+    end
+
+    context 'when OAuth creation' do
+      before do
+        Rails.application.env_config['omniauth.auth'] = set_omniauth
+      end
+
+      after do
+        Rails.application.env_config.delete('omniauth.auth')
+      end
+
+      scenario 'user creates an account with OAuth and logins', js: true do
+        visit new_user_path
+        click_button 'Googleアカウントでログインする'
+
+        expect(page).to have_selector("input[value='OAuth user']")
+        expect {
+          fill_in 'ニックネーム', with: 'もりを'
+          find('input#agreement').click
+          click_button '登録する'
+          expect(page).to have_content 'ログインしました'
+        }.to change(User, :count).by(1)
+
+        expect(User.last.email).to eq 'oauth@example.com'
+        click_link 'プロフィール'
+        expect(page).to have_content 'もりを'
+      end
+    end
   end
 
   scenario 'user update the account with valid information' do

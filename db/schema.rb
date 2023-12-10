@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_03_224006) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_04_033904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -189,7 +189,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_03_224006) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.boolean "is_test_mode", default: false
+    t.string "uid"
+    t.string "provider"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
