@@ -1,6 +1,7 @@
-<%= form_with(model: current_user.likes.find_by(record: @record), html: { method: :delete }) do |f| %>
+<% move_icon ||= false %>
+<%= form_with model: current_user.likes.find_by(record: @record), html: { method: :delete } do |f| %>
   <%= f.button :type => "submit", class: 'like-button clicked' do %>
-    <i class="fa-solid fa-thumbs-up like-icon clicked"></i>
-    <span class="like-count clicked"><%= @record.likes.count %></span>
+    <i class="fa-solid fa-thumbs-up like-icon <%= 'like-beat' if move_icon %>"></i>
+    <span class="like-count"><%= @record.likes.count %></span>
   <% end %>
 <% end %>
