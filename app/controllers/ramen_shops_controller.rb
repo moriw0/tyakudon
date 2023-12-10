@@ -4,8 +4,7 @@ class RamenShopsController < ApplicationController
   before_action :set_ramen_shop, only: %i[show edit update prepare_favorite]
 
   def index
-    @search = RamenShop.ransack(params[:q])
-    @search.sorts = 'id desc' if @search.sorts.empty?
+    @search = RamenShop.search_by_keywords(params[:q])
     @ramen_shops = @search.result.page(params[:page])
 
     respond_to do |format|

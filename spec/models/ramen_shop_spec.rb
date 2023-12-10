@@ -82,4 +82,24 @@ RSpec.describe RamenShop do
       end
     end
   end
+
+  describe 'search_by_keywords' do
+    let!(:tokyo_ramen_shop) { create(:ramen_shop, name: 'Tokyo Ramen', address: 'Tokyo') }
+    let!(:osaka_ramen_shop) { create(:ramen_shop, name: 'Osaka Ramen', address: 'Osaka') }
+
+    context 'when query_params is present' do
+      it 'returns shops matching the keywords' do
+        search = described_class.search_by_keywords({ name_or_address_cont: 'Tokyo' })
+        expect(search.result).to include(tokyo_ramen_shop)
+        expect(search.result).to_not include(osaka_ramen_shop)
+      end
+    end
+
+    context 'when query_params is nil' do
+      it 'returns all shops' do
+        search = described_class.search_by_keywords(nil)
+        expect(search.result).to include(tokyo_ramen_shop, osaka_ramen_shop)
+      end
+    end
+  end
 end

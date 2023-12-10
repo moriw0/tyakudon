@@ -12,7 +12,24 @@ class RamenShop < ApplicationRecord
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }, allow_blank: true
 
   def self.ransackable_attributes(_auth_object = nil)
-    ['name']
+    %w[name address]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
+
+  def self.search_by_keywords(query_params)
+    return RamenShop.ransack unless query_params
+
+    keywords = query_params[:name_or_address_cont].split(/[\p{blank}\s]+/)
+    grouping_hash = keywords.reduce({}) do |hash, word|
+      hash.merge(word => { name_or_address_cont: word })
+    end
+
+    search = RamenShop.ransack(combinator: 'and', groupings: grouping_hash)
+    search.sorts = 'id desc' if search.sorts.empty?
+    search
   end
 
   def favorited_by?(user)
