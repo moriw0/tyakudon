@@ -1,0 +1,6 @@
+<%= form_with(model: current_user.likes.find_by(record: @record), html: { method: :delete }) do |f| %>
+  <%= f.button :type => "submit", class: 'like-button clicked' do %>
+    <i class="fa-solid fa-thumbs-up like-icon clicked"></i>
+    <span class="like-count clicked"><%= @record.likes.count %></span>
+  <% end %>
+<% end %>

@@ -1,0 +1,14 @@
+<div id="like_form">
+  <% if logged_in? %>
+    <% if current_user.likes?(@record) %>
+      <%= render 'likes/remove_like' %>
+    <% else %>
+      <%= render 'likes/add_like' %>
+    <% end %>
+  <% else %>
+    <%= link_to prepare_like_path(@record), class: 'like-button' do %>
+      <i class="fa-regular fa-thumbs-up like-icon"></i>
+      <span class="like-count"><%= @record.likes.count %></span>
+    <% end %>
+  <% end %>
+</div>

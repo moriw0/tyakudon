@@ -29,3 +29,34 @@
   padding: 0.3rem 1rem;
   border-radius: 20px;
 }
+
+.like-button {
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  margin: 0 5px;
+  outline: none;
+  padding: 5px 10px;
+  text-decoration: none;
+  &.clicked {
+    background-color: #000;
+  }
+  .like-icon {
+    color: #000;
+    font-size: 14px;
+    &.clicked {
+      color: #ffffff;
+    }
+  }
+  .like-count {
+    color: #000000;
+    font-size: 14px;
+    margin-left: 8px;
+    &.clicked {
+      color: #fff
+    }
+  }
+}

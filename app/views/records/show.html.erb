@@ -1,6 +1,7 @@
 <div id="records-show">
   <div class="header">
     <h1 class="record-header">ちゃくどんレコード <span class="record-number">No. <%= @record.id %></span></h1>
+    <%= render 'likes/like_form' %>
     <%= link_to @tweet_url, onclick: "window.open(this.href, '_blank'); return false;", class: 'share-button' do%>
       <i class="fa-brands fa-twitter"></i> シェアする
     <% end %>
