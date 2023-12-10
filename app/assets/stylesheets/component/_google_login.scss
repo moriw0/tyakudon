@@ -1,0 +1,48 @@
+#google-login {
+  .separator {
+    display: flex;
+    flex-direction: row;
+    padding: 24px 0;
+    span {
+      font-size: 12px;
+      text-align: center;
+      flex: 0.2 0 auto;
+    }
+    &:before, &:after {
+      content: "";
+      border-bottom: 1px solid #c2c8d0;
+      flex: 1 0 auto;
+      height: 9px;
+    }
+  }
+  .google-signin-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    background-color: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 7px 0 rgba(0,0,0,.25);
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    justify-content: center;
+    &:focus, &:hover {
+      outline: none;
+      box-shadow: 0 0 3pt 2pt #4285f4;
+    }
+    .google-logo {
+      background: url('https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg') no-repeat center;
+      background-size: contain;
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin-right: 24px;
+    }
+    .google-signin-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(0,0,0,.54);
+    }
+  }
+}

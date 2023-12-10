@@ -1,0 +1,11 @@
+<div data-controller="agreement">
+  <div class="agreement form-check">
+    <%= check_box_tag 'agreement', 'on', false, { id: 'agreement', class: 'form-check-input', required: true, data: { agreement_target: 'checkbox', action: "change->agreement#updateButtonState" } } %>
+    <label for="agreement" class="form-check-label">
+      <%= link_to '利用規約', terms_path %>と<%= link_to 'プライバシーポリシー', privacy_policy_path %>に同意します。
+    </label>
+  </div>
+  <div class="d-grid">
+    <%= f.submit '登録する', data: { agreement_target: 'submitButton' }, disabled: true %>
+  </div>
+</div>

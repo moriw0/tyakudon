@@ -2,10 +2,7 @@
   <h1>ユーザー情報編集</h1>
   <%= bootstrap_form_with model: @user, html: { id: 'user-form' } do |f| %>
     <%= f.text_field :name, label: "ニックネーム" %>
-    <div class="image" data-controller="image-uploader">
-      <%= f.file_field :avatar, accept: "image/jpeg,image/jpg,image/png", data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
-      <%= image_tag '', data: { image_uploader_target: "imagePrev" }, class: 'avatar-prev', style: 'display:none' %>
-    </div>
+    <%= render 'shared/image_uploader', f: f %>
     <div class="d-grid">
       <%= f.submit '更新する' %>
     </div>

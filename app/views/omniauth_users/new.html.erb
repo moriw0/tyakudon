@@ -1,0 +1,8 @@
+<div id="omniauth-users-new">
+  <h1>ユーザー登録</h1>
+  <%= bootstrap_form_with model: @user, url: omniauth_users_path, html: { id: 'user-form' } do |f| %>
+    <%= f.text_field :name, label: "ニックネーム" %>
+    <%= render 'shared/image_uploader', f: f %>
+    <%= render 'shared/agreement', f: f %>
+  <% end %>
+</div>

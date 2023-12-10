@@ -14,8 +14,13 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  has_secure_password validations: false
+  validate :validate_password_unless_uid, unless: :uid?
+  validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, unless: :uid? }
+  validates :password, confirmation: { allow_blank: true, unless: :uid? }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, unless: :uid?
+
   validates :avatar, content_type: { in: %i[png jpg jpeg],
                                      message: 'のフォーマットが不正です' },
                      size: { less_than_or_equal_to: 5.megabytes,
@@ -32,6 +37,14 @@ class User < ApplicationRecord
 
   def self.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  def build_with_omniauth(auth)
+    assign_attributes(
+      provider: auth['provider'],
+      uid: auth['uid'],
+      email: auth['info']['email']
+    )
   end
 
   # rubocop:disable Rails/SkipsModelValidations
@@ -103,5 +116,9 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def validate_password_unless_uid
+    errors.add(:password, :blank) if password_digest.blank?
   end
 end

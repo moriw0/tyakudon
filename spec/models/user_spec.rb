@@ -86,16 +86,38 @@ RSpec.describe User do
     expect(user.reload.email).to eq 'foo@example.com'
   end
 
-  it 'is invalid with blank password' do
-    user.password = user.password_confirmation = ' ' * 6
-    user.valid?
-    expect(user.errors[:password]).to include('を入力してください')
-  end
+  describe 'password validations' do
+    it 'returns an error when the password is blank' do
+      user.password = user.password_confirmation = ' ' * 6
+      expect(user).to_not be_valid
+      expect(user.errors[:password]).to include('を入力してください')
+    end
 
-  specify 'password should have a minimum length' do
-    user.password = user.password_confirmation = 'a' * 5
-    user.valid?
-    expect(user.errors[:password]).to include('は6文字以上で入力してください')
+    it 'returns an error when the password is less than 6 characters' do
+      user.password = user.password_confirmation = 'a' * 5
+      expect(user).to_not be_valid
+      expect(user.errors[:password]).to include('は6文字以上で入力してください')
+    end
+
+    it 'returns an error when the password is too long' do
+      max_length = ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
+      user.password = user.password_confirmation = 'a' * (max_length + 1)
+      expect(user).to_not be_valid
+      expect(user.errors[:password]).to include("は#{max_length}文字以内で入力してください")
+    end
+
+    it 'returns an error when password and password confirmation do not match' do
+      user.password = 'password'
+      user.password_confirmation = 'different'
+      expect(user).to_not be_valid
+      expect(user.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+    end
+
+    it 'skips password validation when uid exists' do
+      user.uid = '123456'
+      user.password = user.password_confirmation = nil
+      expect(user).to be_valid
+    end
   end
 
   specify 'authenticated? should return false for a user with nil digest' do
