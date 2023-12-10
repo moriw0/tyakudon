@@ -24,8 +24,8 @@ class ShopInfoExtractor
 
     def extract_address_info(node)
       address_node = node.at_xpath('//th[text()="住所"]/following-sibling::td/span')
-      prefecture = address_node.at_xpath('a[1]').text
-      city = address_node.at_xpath('a[2]').text
+      prefecture = address_node.at_xpath('a[1]')&.text
+      city = address_node.at_xpath('a[2]')&.text
       full_address = normalize_full_address(address_node.text)
 
       [prefecture, city, full_address]
