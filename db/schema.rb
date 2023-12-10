@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_04_033904) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_10_064653) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -138,6 +138,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_033904) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_id"], name: "index_likes_on_record_id"
+    t.index ["user_id", "record_id"], name: "index_likes_on_user_id_and_record_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "line_statuses", force: :cascade do |t|
     t.bigint "record_id", null: false
     t.integer "line_number"
@@ -200,6 +210,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_033904) do
   add_foreign_key "cheer_messages", "records"
   add_foreign_key "favorites", "ramen_shops"
   add_foreign_key "favorites", "users"
+  add_foreign_key "likes", "records"
+  add_foreign_key "likes", "users"
   add_foreign_key "line_statuses", "records"
   add_foreign_key "records", "ramen_shops"
   add_foreign_key "records", "users"
