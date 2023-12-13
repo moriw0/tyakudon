@@ -3,3 +3,4 @@ SeedFu.seed(nil, /sample_user/) if ['development', 'test'].include? Rails.env
 SeedFu.seed(nil, /sample_favorite/) if ['development', 'test'].include? Rails.env
 SeedFu.seed(nil, /sample_record/) if ['development', 'test'].include? Rails.env
 SeedFu.seed(nil, /sample_line_status/) if ['development', 'test'].include? Rails.env
+SeedFu.seed(nil, /sample_like/) if ['development', 'test'].include? Rails.env

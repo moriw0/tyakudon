@@ -7,6 +7,9 @@ bundle-update:
 db-migrate:
 	docker-compose run --rm app bundle exec rails db:migrate RAILS_ENV=development
 
+db-seed:
+	docker-compose run --rm app bundle exec rails db:seed RAILS_ENV=development
+
 precompile:
 	docker-compose run --rm app bundle exec rails assets:precompile RAILS_ENV=development
 
