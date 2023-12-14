@@ -1,9 +1,12 @@
+# rubocop:disable Metrics/ClassLength
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
   has_many :records, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
   has_many :favorite_shops, through: :favorites, source: :ramen_shop
+  has_many :likes, dependent: :restrict_with_exception
+  has_many :like_records, through: :likes, source: :record
   has_one_attached :avatar
 
   before_save :downcase_email
@@ -107,6 +110,18 @@ class User < ApplicationRecord
     favorite_shops.delete(shop) if favorites?(shop)
   end
 
+  def likes?(record)
+    like_records.include?(record)
+  end
+
+  def add_like(record)
+    like_records << record unless likes?(record)
+  end
+
+  def remove_like(record)
+    like_records.delete(record) if likes?(record)
+  end
+
   private
 
   def downcase_email
@@ -122,3 +137,4 @@ class User < ApplicationRecord
     errors.add(:password, :blank) if password_digest.blank?
   end
 end
+# rubocop:enable Metrics/ClassLength

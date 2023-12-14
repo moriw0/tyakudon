@@ -15,19 +15,11 @@
         margin-left: 0.5rem;
       }
     }
-    .share-button {
-      display: inline-block;
-      font-size: 12px;
-      text-decoration: none;
-      padding: 0.5rem;
-      background-color: black;
-      color: white;
-      border-radius: 5px;
-      &:hover {
-        background-color: white;
-        color: black;
-        border: 1px solid black;
-      }
+    .header-buttons {
+      align-items: center;
+      display: flex;
+      gap: 5px;
+      justify-content: end;
     }
   }
   .record-content {

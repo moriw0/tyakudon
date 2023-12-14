@@ -29,3 +29,54 @@
   padding: 0.3rem 1rem;
   border-radius: 20px;
 }
+
+%base-button {
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  font-size: 12px;
+  padding: 5px 10px;
+  text-decoration: none;
+  outline: none;
+}
+
+@keyframes like-beat {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.5) rotate(-10deg);
+  }
+}
+
+.like-button {
+  @extend %base-button;
+  background-color: transparent;
+  &.clicked {
+    background-color: g.$brand-yellow-color;
+    border-color: g.$brand-yellow-color;
+  }
+  .like-icon, .like-count {
+    color: black;
+  }
+  .like-count {
+    margin-left: 8px;
+  }
+  .like-beat {
+    animation: like-beat 0.3s ease-in-out;
+  }
+}
+
+.share-button {
+  @extend %base-button;
+  background-color: black;
+  color: white;
+  &:hover {
+    color: white;
+  }
+  .share-text {
+    margin-left: 8px;
+  }
+}

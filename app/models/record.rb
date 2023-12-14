@@ -5,6 +5,7 @@ class Record < ApplicationRecord
   has_one_attached :image do |attachable|
     attachable.variant :display, resize_to_limit: [750, 750]
   end
+  has_many :likes, dependent: :destroy
   has_many :cheer_messages, dependent: :destroy
   accepts_nested_attributes_for :line_statuses
 
