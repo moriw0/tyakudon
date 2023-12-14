@@ -1,0 +1,17 @@
+@use "../../global" as g;
+
+.favorite-records {
+  .no-records {
+    text-align: center;
+    h3 {
+      font-size: 16px;
+    }
+    p {
+      font-size: 14px;
+      color: g.$brand-light-gray-color;
+      span {
+        display: inline-block;
+      }
+    }
+  }
+}
