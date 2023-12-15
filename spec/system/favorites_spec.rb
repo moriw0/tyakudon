@@ -3,13 +3,16 @@ require 'rails_helper'
 RSpec.describe 'Favorites' do
   describe 'favorite_shops page' do
     let!(:user) { create(:user) }
-    let!(:ramen_shops) { create_list(:many_shops, 5) }
 
+    # rubocop:disable Rails/SkipsModelValidations
     before do
-      ramen_shops.each do |ramen_shop|
-        create(:favorite, user: user, ramen_shop: ramen_shop)
-      end
       log_in_as(user)
+
+      ramen_shops = build_stubbed_list(:many_shops, 5)
+      favorites = ramen_shops.map { |shop| build_stubbed(:favorite, user: user, ramen_shop: shop) }
+
+      RamenShop.insert_all ramen_shops.map(&:attributes)
+      Favorite.insert_all favorites.map(&:attributes)
     end
 
     it 'shows user favorite shops' do
@@ -42,13 +45,15 @@ RSpec.describe 'Favorites' do
 
     context ['when logged in', 'with favorite shop'].join(', ') do
       let!(:user) { create(:user) }
-      let!(:ramen_shops) { create_list(:many_shops, 5) }
 
       before do
         log_in_as user
-        ramen_shops.each do |ramen_shop|
-          create(:favorite, user: user, ramen_shop: ramen_shop)
-        end
+
+        ramen_shops = build_stubbed_list(:many_shops, 5)
+        favorites = ramen_shops.map { |shop| build_stubbed(:favorite, user: user, ramen_shop: shop) }
+
+        RamenShop.insert_all ramen_shops.map(&:attributes)
+        Favorite.insert_all favorites.map(&:attributes)
       end
 
       context 'with no records' do
@@ -62,10 +67,13 @@ RSpec.describe 'Favorites' do
         let!(:other_user) { create(:other_user) }
 
         before do
-          user.favorite_shops.each do |shop|
-            create(:record, :with_line_status, ramen_shop: shop, user: other_user)
-          end
+          records = user.favorite_shops.map { |shop| build_stubbed(:record, user: other_user, ramen_shop: shop) }
+          line_statuses = records.map { |record| build_stubbed(:line_status, record: record) }
+
+          Record.insert_all records.map(&:attributes)
+          LineStatus.insert_all line_statuses.map(&:attributes)
         end
+        # rubocop:enable Rails/SkipsModelValidations
 
         it 'shows favorite shop record links' do
           visit favorite_records_path
