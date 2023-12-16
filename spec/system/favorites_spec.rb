@@ -1,21 +1,88 @@
 require 'rails_helper'
 
 RSpec.describe 'Favorites' do
-  let(:user) { create(:user) }
-  let(:ramen_shops) { create_list(:many_shops, 5) }
+  describe 'favorite_shops page' do
+    let!(:user) { create(:user) }
 
-  before do
-    ramen_shops.each do |ramen_shop|
-      create(:favorite, user: user, ramen_shop: ramen_shop)
+    # rubocop:disable Rails/SkipsModelValidations
+    before do
+      log_in_as(user)
+
+      ramen_shops = build_stubbed_list(:many_shops, 5)
+      favorites = ramen_shops.map { |shop| build_stubbed(:favorite, user: user, ramen_shop: shop) }
+
+      RamenShop.insert_all ramen_shops.map(&:attributes)
+      Favorite.insert_all favorites.map(&:attributes)
     end
-    log_in_as(user)
+
+    it 'shows user favorite shops' do
+      visit favorites_by_user_path(user)
+      expect(page).to have_content '5 お気に入り店'
+      user.favorite_shops.each do |shop|
+        expect(page).to have_link href: ramen_shop_path(shop)
+      end
+    end
   end
 
-  scenario 'favorite_shops_page' do
-    visit favorites_by_user_path(user)
-    expect(page).to have_content '5 お気に入り店'
-    user.favorite_shops.each do |shop|
-      expect(page).to have_link href: ramen_shop_path(shop)
+  describe 'favorite_records page' do
+    context 'when not logged in' do
+      it 'shows there is no favorites' do
+        visit favorite_records_path
+        expect(page).to have_content 'まだお気に入り店の登録がありません'
+      end
+    end
+
+    context ['when logged in', 'with no-favorite shop'].join(', ') do
+      let!(:user) { create(:user) }
+
+      before { log_in_as user }
+
+      it 'shows there is no favorites' do
+        visit favorite_records_path
+        expect(page).to have_content 'まだお気に入り店の登録がありません'
+      end
+    end
+
+    context ['when logged in', 'with favorite shop'].join(', ') do
+      let!(:user) { create(:user) }
+
+      before do
+        log_in_as user
+
+        ramen_shops = build_stubbed_list(:many_shops, 5)
+        favorites = ramen_shops.map { |shop| build_stubbed(:favorite, user: user, ramen_shop: shop) }
+
+        RamenShop.insert_all ramen_shops.map(&:attributes)
+        Favorite.insert_all favorites.map(&:attributes)
+      end
+
+      context 'with no records' do
+        it 'shows there is no records' do
+          visit favorite_records_path
+          expect(page).to have_content 'まだお気に入り店のちゃくどんがありません'
+        end
+      end
+
+      context 'with favorite shop records' do
+        let!(:other_user) { create(:other_user) }
+
+        before do
+          records = user.favorite_shops.map { |shop| build_stubbed(:record, user: other_user, ramen_shop: shop) }
+          line_statuses = records.map { |record| build_stubbed(:line_status, record: record) }
+
+          Record.insert_all records.map(&:attributes)
+          LineStatus.insert_all line_statuses.map(&:attributes)
+        end
+        # rubocop:enable Rails/SkipsModelValidations
+
+        it 'shows favorite shop record links' do
+          visit favorite_records_path
+
+          Record.favorite_records_from(user) do |record|
+            expect(page).to have_link href: record_path(record)
+          end
+        end
+      end
     end
   end
 end

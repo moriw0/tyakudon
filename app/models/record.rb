@@ -27,10 +27,10 @@ class Record < ApplicationRecord
   scope :not_retired, -> { where(is_retired: false, auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :active, -> { where(auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :ordered_by_wait_time, -> { order('wait_time DESC') }
-  scope :ordered_by_created_at, -> { order('created_at DESC') }
+  scope :ordered_by_created_at, -> { order('records.created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
   scope :top_five, -> { limit(5) }
-  scope :with_associations, -> { preload(:user, :ramen_shop, :line_statuses, image_attachment: :blob) }
+  scope :with_associations, -> { eager_load(:user, :ramen_shop).preload(:line_statuses, image_attachment: :blob) }
 
   def self.ranking_records
     not_retired.ordered_by_wait_time.with_associations
