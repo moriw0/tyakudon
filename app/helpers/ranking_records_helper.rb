@@ -1,0 +1,2 @@
+module RankingRecordsHelper
+end
