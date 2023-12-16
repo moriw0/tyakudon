@@ -30,7 +30,15 @@ class Record < ApplicationRecord
   scope :ordered_by_created_at, -> { order('records.created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
   scope :top_five, -> { limit(5) }
-  scope :with_associations, -> { eager_load(:user, :ramen_shop).preload(:line_statuses, image_attachment: :blob) }
+  scope :with_associations, lambda {
+    eager_load(:user, :ramen_shop).preload(:line_statuses, :likes, image_attachment: :blob)
+  }
+  scope :with_most_likes, lambda {
+    likes_subquery = Like.group(:record_id).select('record_id, COUNT(id) AS likes_count')
+    joins("LEFT JOIN (#{likes_subquery.to_sql}) likes_subquery ON likes_subquery.record_id = records.id")
+      .select('records.*, likes_subquery.likes_count')
+      .order('likes_subquery.likes_count DESC NULLS LAST')
+  }
 
   def self.ranking_records
     not_retired.ordered_by_wait_time.with_associations

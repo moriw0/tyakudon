@@ -5,7 +5,7 @@ FactoryBot.define do
     latitude { 35.7000396 }
     longitude { 139.7752222 }
 
-    factory :many_shops do
+    trait :many_shops do
       sequence(:name) { |n| "#{n}号ラーメン店" }
     end
   end

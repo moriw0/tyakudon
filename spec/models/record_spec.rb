@@ -1,121 +1,192 @@
 require 'rails_helper'
 
 RSpec.describe Record do
-  let(:user) { create(:user) }
-  let(:record) { build(:record) }
-  let(:ramen_shop) { create(:ramen_shop) }
+  describe 'Validations' do
+    context 'with valid information' do
+      context ['with started_at', 'ended_at', 'wait_time', 'comment'].join(', ') do
+        let!(:user) { create(:user) }
+        let!(:ramen_shop) { create(:ramen_shop) }
+        let!(:record) do
+          user.records.build(
+            started_at: Time.zone.now,
+            ended_at: 10.minutes.from_now,
+            wait_time: 600,
+            comment: 'いただきます！',
+            ramen_shop_id: ramen_shop.id
+          )
+        end
 
-  context 'with valid information' do
-    it 'is valid with started_at, ended_at, wait_time and comment' do
-      record = user.records.build(
-        started_at: Time.zone.now,
-        ended_at: 10.minutes.from_now,
-        wait_time: 600,
-        comment: 'いただきます！',
-        ramen_shop_id: ramen_shop.id
-      )
-      expect(record).to be_valid
+        it 'is valid' do
+          expect(record).to be_valid
+        end
+      end
+
+      context 'with a 4.2 MB image' do
+        let!(:record) do
+          build(:record,
+                image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s))
+        end
+
+        it 'is valid' do
+          expect(record).to be_valid
+        end
+      end
     end
 
-    it 'is valid with a 4.2 MB image' do
-      record = build(:record)
-      record.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s)
-      expect(record).to be_valid
-    end
-  end
+    context 'with invalid information' do
+      context 'without a user' do
+        let!(:record) { build(:record, user_id: nil) }
 
-  context 'with invalid information' do
-    it 'is invalid without a user' do
-      record = build(:record, user_id: nil)
-      record.valid?
-      expect(record.errors[:user]).to include('を入力してください')
-    end
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:user]).to include('を入力してください')
+        end
+      end
 
-    it 'is invalid with a longer comment than maximum length 140' do
-      record = build(:record, comment: '*' * 141)
-      record.valid?
-      expect(record.errors[:comment]).to include('は140文字以内で入力してください')
-    end
+      context 'with a longer comment than maximum length 140' do
+        let!(:record) { build(:record, comment: '*' * 141) }
 
-    it 'is invalid with a 5.2 MB image' do
-      record = build(:record)
-      record.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s)
-      record.valid?
-      expect(record.errors[:image]).to include 'は5MB以下である必要があります'
-    end
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:comment]).to include('は140文字以内で入力してください')
+        end
+      end
 
-    it 'is invalid with a gif image' do
-      record = build(:record)
-      record.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/ramen.gif').to_s)
-      record.valid?
-      expect(record.errors[:image]).to include 'のフォーマットが不正です'
-    end
+      context 'with a 5.2 MB image' do
+        let!(:record) do
+          build(:record,
+                image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s))
+        end
 
-    it 'is invalid when stated_at is before now' do
-      record = build(:record,
-                     started_at: 1.minute.ago)
-      record.valid?
-      expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:image]).to include 'は5MB以下である必要があります'
+        end
+      end
+
+      context 'with a gif image' do
+        let!(:record) do
+          build(:record, image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/ramen.gif').to_s))
+        end
+
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:image]).to include 'のフォーマットが不正です'
+        end
+      end
+
+      context 'when stated_at is before now' do
+        let!(:record) { build(:record, started_at: 1.minute.ago) }
+
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+        end
+      end
     end
   end
 
   describe 'Custom Validations' do
     context 'when create' do
-      it 'validates that started_at is within a few seconds of the current time' do
-        record.started_at = 10.seconds.ago
-        expect(record).to_not be_valid
-        expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+      context 'when started_at is not within a few seconds of the current time' do
+        let!(:record) { build(:record, started_at: 10.seconds.ago) }
+
+        it 'includes error message' do
+          expect(record).to_not be_valid
+          expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+        end
       end
     end
 
     context 'when update' do
-      before do
-        record.save!
+      let!(:record) { create(:record) }
+
+      context 'when ended_at is not within a few seconds of the current time' do
+        before do
+          record.assign_attributes(started_at: 10.seconds.ago, ended_at: 10.seconds.ago, calculate_action: true)
+        end
+
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:ended_at]).to include('は更新時の現在時刻より数秒以内でなければなりません')
+        end
       end
 
-      it 'validates that ended_at is within a few seconds of the current time' do
-        record.calculate_action = true
-        record.ended_at = 10.seconds.ago
-        record.valid?
-        expect(record.errors[:ended_at]).to include('は更新時の現在時刻より数秒以内でなければなりません')
+      context 'when ended_at is not after started_at' do
+        before { record.assign_attributes(started_at: Time.current, ended_at: 5.minutes.ago) }
+
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:ended_at]).to include('はstarted_atより後である必要があります。')
+        end
       end
 
-      it 'validates that ended_at is after started_at' do
-        record.started_at = Time.current
-        record.ended_at = 5.minutes.ago
-        record.valid?
-        expect(record.errors[:ended_at]).to include('はstarted_atより後である必要があります。')
-      end
+      context 'when wait_time is not the difference between ended_at and started_at' do
+        before { record.assign_attributes(started_at: 5.minutes.ago, ended_at: Time.current, wait_time: 400) }
 
-      it 'validates that wait_time is the difference between ended_at and started_at' do
-        record.started_at = 5.minutes.ago
-        record.ended_at = Time.current
-        record.wait_time = 400
-        record.valid?
-        expect(record.errors[:wait_time]).to include('はended_atとstarted_atの差である必要があります。')
+        it 'includes error message' do
+          record.valid?
+          expect(record.errors[:wait_time]).to include('はended_atとstarted_atの差である必要があります。')
+        end
       end
     end
   end
 
-  describe 'favorite_shop_records' do
-    let(:ramen_shops) { create_list(:many_shops, 3) }
-    let(:user) { create(:user) }
+  describe 'Model methods' do
+    # rubocop:disable Rails/SkipsModelValidations
+    describe '#favorite_records_from' do
+      let!(:ramen_shops) { build_stubbed_list(:ramen_shop, 3, :many_shops) }
+      let!(:user) { create(:user) }
+      let!(:records) do
+        ramen_shops.map { |shop|
+          build_stubbed_list(:record, 3, :many_records, ramen_shop: shop, user: user, skip_validation: true)
+        }.flatten
+      end
+      let!(:favorites) { ramen_shops.first(2).map { |shop| build_stubbed(:favorite, ramen_shop: shop, user: user) } }
 
-    before do
-      ramen_shops.each do |ramen_shop|
-        create_list(:many_records, 3, ramen_shop: ramen_shop, user: user, skip_validation: true)
+      before do
+        RamenShop.insert_all ramen_shops.map(&:attributes)
+        described_class.insert_all records.map(&:attributes)
+        Favorite.insert_all favorites.map(&:attributes)
       end
 
-      create(:favorite, user: user, ramen_shop: ramen_shops.first)
-      create(:favorite, user: user, ramen_shop: ramen_shops.second)
-    end
+      it 'retrieves all records from favorited ramen_shops' do
+        expect(described_class.favorite_records_from(user).count).to eq(6)
 
-    it 'retrieves all records from favorited ramen_shops' do
-      expect(described_class.favorite_records_from(user).count).to eq(6)
-
-      described_class.favorite_records_from(user).each do |record|
-        expect(user.favorite_shops).to include(record.ramen_shop)
+        described_class.favorite_records_from(user).each do |record|
+          expect(user.favorite_shops).to include(record.ramen_shop)
+        end
       end
     end
+
+    describe '#with_most_likes' do
+      let!(:ramen_shop) { create(:ramen_shop) }
+      let!(:user) { create(:user) }
+      let!(:users) { build_stubbed_list(:user, 5, :many_user) }
+      let!(:records) { build_stubbed_list(:record, 5, :many_records, ramen_shop: ramen_shop, user: user) }
+      let!(:likes) do
+        records.each_with_index.map { |record, i|
+          users.first(i).map do |user|
+            build_stubbed(:like, record: record, user: user)
+          end
+        }.flatten
+      end
+
+      before do
+        User.insert_all users.map(&:attributes)
+        described_class.insert_all records.map(&:attributes)
+        Like.insert_all likes.map(&:attributes)
+      end
+
+      it 'sorts records by the number of likes in descending order' do
+        sorted_records = described_class.with_associations.with_most_likes
+        expect(sorted_records[0].likes.size).to eq 4
+        expect(sorted_records[1].likes.size).to eq 3
+        expect(sorted_records[2].likes.size).to eq 2
+        expect(sorted_records[3].likes.size).to eq 1
+        expect(sorted_records[4].likes.size).to eq 0
+      end
+    end
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end

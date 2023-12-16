@@ -8,7 +8,7 @@ RSpec.describe 'Favorites' do
     before do
       log_in_as(user)
 
-      ramen_shops = build_stubbed_list(:many_shops, 5)
+      ramen_shops = build_stubbed_list(:ramen_shop, 5, :many_shops)
       favorites = ramen_shops.map { |shop| build_stubbed(:favorite, user: user, ramen_shop: shop) }
 
       RamenShop.insert_all ramen_shops.map(&:attributes)
@@ -49,7 +49,7 @@ RSpec.describe 'Favorites' do
       before do
         log_in_as user
 
-        ramen_shops = build_stubbed_list(:many_shops, 5)
+        ramen_shops = build_stubbed_list(:ramen_shop, 5, :many_shops)
         favorites = ramen_shops.map { |shop| build_stubbed(:favorite, user: user, ramen_shop: shop) }
 
         RamenShop.insert_all ramen_shops.map(&:attributes)
