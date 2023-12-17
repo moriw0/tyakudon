@@ -1,0 +1,7 @@
+<div class="sort-type-buttons" data-controller="sort-type">
+  <ul>
+    <li><%= link_to '待ち長い', ranking_path,                      data: { sort_type_target: "type", type: 'longest' } %></li>
+    <li><%= link_to '待ち短い', ranking_path(sort: 'shortest'),    data: { sort_type_target: "type", type: 'shortest' } %></li>
+    <li><%= link_to 'いいね多い', ranking_path(sort: 'most_likes'), data: { sort_type_target: "type", type: 'most_likes' } %></li>
+  </ul>
+</div>
