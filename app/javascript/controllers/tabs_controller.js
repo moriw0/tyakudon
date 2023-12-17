@@ -9,11 +9,16 @@ export default class extends Controller {
   }
 
   highlightCurrentTab() {
-    const currentPath = window.location.pathname;
+    const currentPath = new URL(window.location.href).pathname;
 
-    this.tabTargets.forEach((tab) => {
-      const tabPath = tab.dataset.path;
-      tab.classList.toggle("selected-tab", tabPath === currentPath);
-    });
+    if (currentPath === "/") {
+      const firstTab = this.tabTargets[0];
+      firstTab.classList.toggle("selected-tab");
+    } else {
+      this.tabTargets.forEach((tab) => {
+        const tabPath = tab.dataset.path;
+        tab.classList.toggle("selected-tab", tabPath === currentPath);
+      });
+    }
   }
 }
