@@ -1,6 +1,6 @@
-<%= form_with model: current_user.likes.build do |f| %>
+<%= form_with model: current_user.likes.build, data: { controller: "like", action: "click->like#submit" } do |f| %>
   <div><%= hidden_field_tag :record_id, @record.id %></div>
-  <%= f.button :type => "submit", class: 'like-button', data: { action: "click->icon#beat" } do %>
+  <%= f.button :type => "button", class: 'like-button' do %>
     <i class="fa-regular fa-thumbs-up like-icon"></i>
     <span class="like-count"><%= @record.likes.count %></span>
   <% end %>

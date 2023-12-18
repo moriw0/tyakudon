@@ -16,5 +16,7 @@
     <% else %>
       <span class="record-status finished">ちゃくどん</span>
     <% end %>
+    <% @record = record %>
+    <%= render 'likes/like_form' %>
   </div>
 </div>
