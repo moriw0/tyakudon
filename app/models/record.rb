@@ -41,7 +41,7 @@ class Record < ApplicationRecord
       .order('likes_subquery.likes_count DESC NULLS LAST')
   }
 
-  def self.ranking_by(sort_type, page)
+  def self.ranking_by(sort_type:, page:)
     case sort_type
     when 'shortest'
       not_retired.with_associations.with_shortest_wait.page(page)
