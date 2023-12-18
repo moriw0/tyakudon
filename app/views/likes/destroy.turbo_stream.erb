@@ -1,3 +1,3 @@
 <%= turbo_stream.update @record do %>
-  <%= render partial: "add_like" %>
+  <%= render 'add_like', record: @record %>
 <% end %>
