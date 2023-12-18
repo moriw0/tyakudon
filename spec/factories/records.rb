@@ -21,7 +21,7 @@ FactoryBot.define do
       created_at { Time.zone.now }
     end
 
-    factory :many_records do
+    trait :many_records do
       sequence(:started_at) { |n| n.minute.from_now }
       sequence(:ended_at) { |n| (n + 10).minutes.from_now }
       sequence(:created_at) { |n| n.minute.from_now }
