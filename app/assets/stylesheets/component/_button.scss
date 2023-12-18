@@ -87,29 +87,40 @@
     display: flex;
     gap: 10px;
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
     li {
       flex: 1;
       min-width: 70px;
       a {
         background-color: #f8e8c1;
         border-radius: 20px;
-        display: block;
-        padding: 8px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         color: #333;
+        display: block;
         font-size: 13px;
+        padding: 8px 0;
         text-align: center;
         text-decoration: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s, color 0.3s;
-
         &:hover, &.selected-type {
-          color: black;
           background-color: g.$brand-yellow-color;
+          color: black;
         }
         &.selected-type {
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .my-icon {
+          height: 13px;
+          width: 17px;
+          &.rabbit {
+            background: url('running_rabbit.svg') no-repeat center;
+            margin-bottom: 2px;
+          }
+          &.turtle {
+            background: url('turtle.svg') no-repeat center;
+            margin-bottom: 1px;
+          }
         }
       }
     }
