@@ -90,3 +90,6 @@ RSpec/MultipleMemoizedHelpers:
 # 未i18nのチェック（バリデーションエラーメッセージをi18nに登録するのはやや冗長？なためfalse）
 Rails/I18nLocaleTexts:
   Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal

@@ -23,7 +23,7 @@ FactoryBot.define do
       activated_at { nil }
     end
 
-    factory :all_user do
+    trait :many_user do
       sequence(:name) { |n| "tester#{n}" }
       sequence(:email) { |n| "tester#{n}@example.com" }
       admin { false }

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  root 'home#record_ranking'
+  root 'ranking_records#index'
   get '/about', to: 'statics#about'
   get '/terms', to: 'statics#terms'
   get '/privacy_policy', to: 'statics#privacy_policy'
-  get '/ranking', to: 'home#record_ranking'
+  get '/ranking', to: 'ranking_records#index'
   get '/new_records', to: 'home#new_records'
   get '/favorite_records', to: 'home#favorite_records'
   get '/search', to: 'home#search'
