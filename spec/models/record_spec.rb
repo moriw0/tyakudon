@@ -159,7 +159,7 @@ RSpec.describe Record do
       end
     end
 
-    describe '#with_most_likes' do
+    describe '#order_by_most_likes' do
       let!(:ramen_shop) { create(:ramen_shop) }
       let!(:user) { create(:user) }
       let!(:users) { build_stubbed_list(:user, 5, :many_user) }
@@ -179,7 +179,7 @@ RSpec.describe Record do
       end
 
       it 'sorts records by the number of likes in descending order' do
-        sorted_records = described_class.with_associations.with_most_likes
+        sorted_records = described_class.with_associations.order_by_most_likes
         expect(sorted_records[0].likes.size).to eq 4
         expect(sorted_records[1].likes.size).to eq 3
         expect(sorted_records[2].likes.size).to eq 2

@@ -1,6 +1,6 @@
 <nav class="tab-menu" data-controller="tabs">
   <ul class="tabs">
-    <li><%= link_to 'ランキング', root_path,             data: { tabs_target: "tab", path: root_path } %></li>
+    <li><%= link_to 'ランキング', ranking_path,          data: { tabs_target: "tab", path: ranking_path } %></li>
     <li><%= link_to 'お気に入り', favorite_records_path, data: { tabs_target: "tab", path: favorite_records_path } %></li>
     <li><%= link_to '新着', new_records_path,           data: { tabs_target: "tab", path: new_records_path } %></li>
     <li><%= link_to '店舗検索', ramen_shops_path,        data: { tabs_target: "tab", path: ramen_shops_path } %></li>

@@ -1,5 +1,6 @@
-<%= render 'tabmenu' %>
+<%= render 'home/tabmenu' %>
 <section class="ranking mb-4">
+  <%= render 'sort_type_buttons' %>
   <div class="records pb-2">
     <% @records.each_with_index do |record, index| %>
       <%= render partial: 'records/ranking_record', locals: { record: record, rank: @offset + index + 1 } %>

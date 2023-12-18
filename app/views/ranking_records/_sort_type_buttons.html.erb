@@ -1,0 +1,22 @@
+<div class="sort-type-buttons" data-controller="sort-type">
+  <ul>
+    <li>
+      <%= link_to ranking_path, data: { sort_type_target: "type", type: 'longest' } do %>
+        <svg class="my-icon turtle" aria-hidden="true"></svg>
+        おそい
+      <% end %>
+    </li>
+    <li>
+      <%= link_to ranking_path(sort: 'shortest'), data: { sort_type_target: "type", type: 'shortest' } do %>
+        <svg class="my-icon rabbit" aria-hidden="true"></svg>
+        はやい
+      <% end %>
+    </li>
+    <li>
+      <%= link_to ranking_path(sort: 'most_likes'), data: { sort_type_target: "type", type: 'most_likes' } do %>
+        <i class="fa-regular fa-thumbs-up" aria-hidden="true"></i>
+        いいね
+      <% end %>
+    </li>
+  </ul>
+</div>
