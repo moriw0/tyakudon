@@ -6,9 +6,12 @@
       <%= render 'likes/add_like', record: record %>
     <% end %>
   <% else %>
-    <%= link_to prepare_like_path(record), class: 'like-button' do %>
-      <i class="fa-regular fa-thumbs-up like-icon"></i>
-      <span class="like-count"><%= record.likes.count %></span>
-    <% end %>
+    <div data-controller='like'
+      data-like-url-value=<%= prepare_like_path(record) %>
+      data-action='click->like#redirect'
+      class='like-button'>
+      <i class='fa-regular fa-thumbs-up like-icon'></i>
+      <span class='like-count'><%= record.likes.count %></span>
+    </div>
   <% end %>
 <% end %>
