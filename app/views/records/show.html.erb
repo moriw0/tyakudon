@@ -2,7 +2,7 @@
   <div class="header">
     <h1 class="record-header">ちゃくどん<span class="record-number">No. <%= @record.id %></span></h1>
     <div class="header-buttons">
-      <%= render 'likes/like_form' %>
+      <%= render 'likes/like_form', record: @record %>
       <%= link_to @tweet_url, onclick: "window.open(this.href, '_blank'); return false;", class: 'share-button' do%>
         <i class="fa-brands fa-twitter"></i>
         <span class="share-text">シェア</span>

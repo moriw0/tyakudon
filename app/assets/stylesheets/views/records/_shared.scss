@@ -36,7 +36,7 @@ a.shop-info {
         color: gray;
       }
       div {
-        gap: 10px;
+        gap: 8px;
         .record-time {
           .hh-mm-ss {
             font-size: 24px;
@@ -57,6 +57,14 @@ a.shop-info {
         }
         .finished {
           background-color: black;
+        }
+        .like-button {
+          padding: 0;
+          background-color: transparent;
+          border: none;
+          .like-count {
+            margin-left: 3px;
+          }
         }
       }
     }
