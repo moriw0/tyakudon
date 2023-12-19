@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'favorite_records/index'
   root 'ranking_records#index'
   get '/about', to: 'statics#about'
   get '/terms', to: 'statics#terms'
