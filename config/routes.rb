@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-  get 'favorite_records/index'
   root 'ranking_records#index'
   get '/about', to: 'statics#about'
   get '/terms', to: 'statics#terms'
   get '/privacy_policy', to: 'statics#privacy_policy'
   get '/ranking', to: 'ranking_records#index'
   get '/new_records', to: 'home#new_records'
-  get '/favorite_records', to: 'home#favorite_records'
+  get '/favorite_records', to: 'favorite_records#index'
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
   get '/signup', to: 'users#new'
