@@ -1,0 +1,9 @@
+<% if @checked_ids.size == current_user.favorite_shops.size %>
+  <%= link_to filter_favorite_records_path(shop_ids: @checked_ids), data: { turbo_stream: true }, class: 'filter-button' do %>
+    <span><%= @checked_ids.size %></span>店舗から絞り込む
+  <% end %>
+<% else %>
+  <%= link_to filter_favorite_records_path(shop_ids: @checked_ids), data: { turbo_stream: true }, class: 'filter-button selected-shop' do %>
+    <span><%= @checked_ids.size %></span>店舗選択中
+  <% end %>
+<% end %>

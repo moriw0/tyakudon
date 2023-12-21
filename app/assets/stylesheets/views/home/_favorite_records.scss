@@ -1,6 +1,14 @@
 @use "../../global" as g;
 
 .favorite-records {
+  .shop-selector {
+    margin-bottom: 20px;
+    span {
+      font-size: 15px;
+      font-weight: bold;
+      margin-right: 2px;
+    }
+  }
   .no-records {
     text-align: center;
     h3 {

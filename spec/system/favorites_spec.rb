@@ -82,6 +82,35 @@ RSpec.describe 'Favorites' do
             expect(page).to have_link href: record_path(record)
           end
         end
+
+        it 'retrieves records that user selected', js: true do
+          visit favorite_records_path
+
+          favorite_shops = user.favorite_shops
+          click_link "#{favorite_shops.size}店舗から絞り込む"
+          favorite_shops.each do |shop|
+            expect(page).to have_checked_field(shop.name)
+          end
+
+          uncheck '全て'
+          favorite_shops.each do |shop|
+            expect(page).to_not have_checked_field(shop.name)
+          end
+
+          check favorite_shops.last.name
+          click_button '適用する'
+          expect(page).to have_link '1店舗選択中'
+
+          checked_last_shop_id = favorite_shops.last.id
+          Record.filter_by_shop_ids(checked_last_shop_id) do |record|
+            expect(page).to have_link href: record_path(record)
+          end
+
+          unchecked_shop_ids = favorite_shops.ids.reject { |id| id == checked_last_shop_id }
+          Record.filter_by_shop_ids(unchecked_shop_ids) do |record|
+            expect(page).to_not have_link href: record_path(record)
+          end
+        end
       end
     end
   end

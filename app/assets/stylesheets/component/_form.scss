@@ -27,3 +27,12 @@ label {
     top: 0;
   }
 }
+
+.filter_form {
+  position: relative;
+  .toggle-all-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
