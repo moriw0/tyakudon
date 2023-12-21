@@ -187,6 +187,31 @@ RSpec.describe Record do
         expect(sorted_records[4].likes.size).to eq 0
       end
     end
+
+    describe '#filter_by_shop_ids' do
+      let!(:ramen_shops) { build_stubbed_list(:ramen_shop, 3, :many_shops) }
+      let!(:user) { create(:user) }
+      let!(:records) do
+        ramen_shops.map { |shop|
+          build_stubbed_list(:record, 2, :many_records, ramen_shop: shop, user: user)
+        }.flatten
+      end
+      let!(:first_two_shop_ids) { ramen_shops.first(2).map(&:id) }
+
+      before do
+        RamenShop.insert_all ramen_shops.map(&:attributes)
+        described_class.insert_all records.map(&:attributes)
+      end
+
+      it 'retrieves 4 records by first two shop ids in descending order' do
+        filterd_records = described_class.filter_by_shop_ids(first_two_shop_ids)
+        expect(filterd_records.size).to eq 4
+        expect(filterd_records[0].ramen_shop_id).to eq first_two_shop_ids[1]
+        expect(filterd_records[1].ramen_shop_id).to eq first_two_shop_ids[1]
+        expect(filterd_records[2].ramen_shop_id).to eq first_two_shop_ids[0]
+        expect(filterd_records[3].ramen_shop_id).to eq first_two_shop_ids[0]
+      end
+    end
     # rubocop:enable Rails/SkipsModelValidations
   end
 end

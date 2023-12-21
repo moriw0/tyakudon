@@ -63,6 +63,10 @@ class Record < ApplicationRecord
           .not_retired.ordered_by_created_at.with_associations
   end
 
+  def self.filter_by_shop_ids(ids)
+    Record.where(ramen_shop_id: ids).not_retired.ordered_by_created_at.with_associations
+  end
+
   def calculate_wait_time_for_retire!
     update!(is_retired: true,
             ended_at: Time.current,
