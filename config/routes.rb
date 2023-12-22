@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get '/privacy_policy', to: 'statics#privacy_policy'
   get '/ranking', to: 'ranking_records#index'
   get '/new_records', to: 'home#new_records'
-  get '/favorite_records', to: 'home#favorite_records'
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
   get '/signup', to: 'users#new'
@@ -36,6 +35,9 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :favorites, only: [:create, :destroy]
+  resources :favorite_records, only: [:index] do
+    get 'filter', on: :collection
+  end
   resources :likes, only: [:create, :destroy] do
     member do
       get :prepare
