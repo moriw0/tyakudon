@@ -1,7 +1,7 @@
 <%= render 'modal', title: '絞り込む' do %>
   <div class='filter_form' data-controller='checkboxes'>
     <div class='toggle-all-box'>
-      <%= check_box_tag 'toggle_all', '1', true, data: { action: 'change->checkboxes#toggle', checkboxes_target: 'toggleAllCheckbox' }, class: 'form-check-input' %>
+      <%= check_box_tag 'toggle_all', true, @checked_ids.present?, data: { action: 'change->checkboxes#toggle', checkboxes_target: 'toggleAllCheckbox' }, class: 'form-check-input' %>
       <%= label_tag 'toggle_all', '全て', class: 'form-check-label' %>
     </div>
     <%= bootstrap_form_with url: favorite_records_path, method: :get do |f| %>

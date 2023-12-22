@@ -1,29 +1,28 @@
 class FavoriteRecordsController < ApplicationController
   before_action :logged_in_user, only: %i[filter]
-  before_action :set_checked_ids, only: %i[index filter]
 
   def index
-    @records = fetch_records.page(params[:page]) if logged_in?
+    return unless logged_in?
+
+    @checked_ids = set_checked_ids
+    @records = fetch_records.page(params[:page])
   end
 
   def filter
+    @checked_ids = params[:shop_ids]&.compact_blank&.map(&:to_i)
   end
 
   private
 
   def set_checked_ids
-    @checked_ids = if params[:shop_ids].present?
-                     params[:shop_ids].compact_blank.map(&:to_i)
-                   elsif logged_in?
-                     current_user.favorite_shop_ids
-                   end
+    return params[:shop_ids].compact_blank.map(&:to_i) if params[:shop_ids]
+
+    current_user.favorite_shop_ids
   end
 
   def fetch_records
-    if params[:shop_ids].present?
-      Record.filter_by_shop_ids(@checked_ids)
-    else
-      Record.favorite_records_from(current_user)
-    end
+    return Record.filter_by_shop_ids(@checked_ids) if params[:shop_ids]
+
+    Record.favorite_records_from(current_user)
   end
 end
