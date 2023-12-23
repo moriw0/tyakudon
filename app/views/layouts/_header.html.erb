@@ -8,47 +8,7 @@
         <label for='menu' class='open'></label>
         <div class='side-menu'>
           <label for='menu' class='close'><span></span></label>
-          <ul class='nav-links'>
-            <li>
-              <%= link_to current_user, class: 'nav-link' do %>
-                <i class='fa-solid fa-user'></i>
-                プロフィール
-              <% end %>
-            </li>
-            <li>
-              <%= link_to ranking_path, class: 'nav-link' do %>
-                <i class='fa-solid fa-trophy'></i>
-                ランキング
-              <% end %>
-            </li>
-            <li>
-              <%= link_to favorite_records_path, class: 'nav-link' do %>
-                <i class='fa-solid fa-star'></i>
-                お気に入り
-              <% end %>
-            </li>
-            <li>
-              <%= link_to new_records_path, class: 'nav-link' do %>
-                <svg class='new-icon' aria-hidden='true'></svg>
-                新着
-              <% end %>
-            </li>
-            <li>
-              <%= link_to ramen_shops_path, class: 'nav-link' do %>
-                <i class='fa-solid fa-magnifying-glass'></i>
-                店舗検索
-              <% end %>
-            </li>
-            <li>
-              <%= link_to logout_path, data: { 'turbo-method': :delete }, class: 'nav-link' do %>
-                <i class='fa-solid fa-arrow-right-from-bracket'></i>
-                ログアウト
-              <% end %>
-            </li>
-            <% if current_user.admin? %>
-              <li><%= link_to 'Users', users_path, class: 'nav-link' %></li>
-            <% end %>
-          </ul>
+          <%= render 'layouts/side_menu_links' %>
         </div>
       <% else %>
         <ul class='all-user-links'>
