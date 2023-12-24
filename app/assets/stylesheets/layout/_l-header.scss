@@ -1,4 +1,132 @@
-.navbar-brand {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-weight: 500;
+@use "../global" as g;
+
+.nav-menu-bar {
+  background-color: g.$brand-yellow-color;
+  height: 56px;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1100;
+  nav {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 500px;
+    .navbar-brand {
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .right-side-section {
+      input[type="checkbox"] {
+        position: absolute;
+        right: -50vw;
+      }
+      input[type="checkbox"]:checked ~ .back {
+        background: rgba(0, 0, 0, 0.5);
+        height: 100vh;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100vw;
+      }
+      input[type="checkbox"]:checked ~ .side-menu {
+        top: 0;
+        right: 0;
+      }
+      .open {
+        background-image: url('steam.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        height: 50px;
+        vertical-align: middle;
+        width: 50px;
+      }
+      .close {
+          cursor: pointer;
+          height: 50px;
+          margin: 10px;
+          position: relative;
+          width: 50px;
+          span {
+            background: black;
+            border-radius: 3px;
+            height: 3px;
+            left: 8px;
+            position: absolute;
+            top: 18px;
+            transform: translateY(6px) rotate(-45deg);
+            width: 70%;
+            &:after {
+              background: inherit;
+              border-radius: inherit;
+              content: '';
+              height: 100%;
+              left: 0;
+              position: absolute;
+              top: 0;
+              transform: rotate(90deg);
+              width: 100%;
+            }
+          }
+      }
+      .side-menu {
+        align-items: flex-end;
+        background-color: g.$brand-yellow-color;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        position: absolute;
+        right: -200px;
+        top: 0;
+        transition: all 0.2s;
+        width: 200px;
+        .nav-links {
+          align-items: center;
+          flex-direction: column;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          li {
+            border-bottom: 1px solid #333;
+            margin: 5px;
+            padding: 10px;
+            &:first-child {
+              border-top: 1px solid #333;
+            }
+            a {
+              svg {
+                margin-right: 10px;
+                width: 18px;
+              }
+              .new-icon {
+                background: url('sparkles.svg') no-repeat center;
+                height: 18px;
+                margin-top: -5px;
+              }
+            }
+          }
+        }
+      }
+      .all-user-links {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        .login-link {
+          border: 2px solid #212529;
+          border-radius: 5px;
+          margin-left: 15px;
+          padding: 4px 10px;
+        }
+      }
+    }
+  }
 }

@@ -41,6 +41,7 @@ RSpec.describe 'Users' do
         }.to change(User, :count).by(1)
 
         expect(User.last.email).to eq 'oauth@example.com'
+        find('label.open').click
         click_link 'プロフィール'
         expect(page).to have_content 'もりを'
       end

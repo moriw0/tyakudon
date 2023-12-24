@@ -1,22 +1,21 @@
-<nav class="navbar navbar-expand-sm fixed-top" style="background-color: #FFDA45;">
-  <div class="container-fluid">
-    <%= link_to "ちゃくどん", root_path, class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav">
-        <% if logged_in? %>
-          <%= link_to "プロフィール", current_user, class: 'nav-link' %>
-          <%= link_to "お気に入り", favorites_by_user_path(current_user), class: 'nav-link' %>
-          <%= link_to "ログアウト", logout_path, data: { "turbo-method": :delete }, class: 'nav-link' %>
-          <%= link_to "Users", users_path, class: 'nav-link' if current_user.admin? %>
-        <% else %>
-          <%= link_to "ログイン", login_path, class: "nav-link" %>
-          <%= link_to "ちゃくどんとは", about_path, class: "nav-link" %>
-          <%= link_to "ユーザー登録", signup_path, class: "nav-link" %>
-        <% end %>
-      </ul>
+<div class='nav-menu-bar'>
+  <nav>
+    <%= link_to 'ちゃくどん', root_path, class: 'navbar-brand' %>
+    <div class='right-side-section'>
+      <% if logged_in? %>
+        <input id='menu' type='checkbox'/>
+        <label for='menu' class='back'></label>
+        <label for='menu' class='open'></label>
+        <div class='side-menu'>
+          <label for='menu' class='close'><span></span></label>
+          <%= render 'layouts/side_menu_links' %>
+        </div>
+      <% else %>
+        <ul class='all-user-links'>
+          <li><%= link_to '新規登録', signup_path, class: 'nav-link' %></li>
+          <li><%= link_to 'ログイン', login_path, class: 'nav-link login-link' %></li>
+        </ul>
+      <% end %>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
