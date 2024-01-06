@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'application#route_based_on_authentication'
+  root 'ranking_records#index'
   get '/lp', to: 'landing_page#index'
   get '/about', to: 'statics#about'
   get '/terms', to: 'statics#terms'
