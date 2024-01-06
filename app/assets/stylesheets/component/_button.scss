@@ -53,7 +53,7 @@
 
 .like-button {
   @extend %base-button;
-  background-color: transparent;
+  background-color: white;
   &.clicked {
     background-color: g.$brand-yellow-color;
     border-color: g.$brand-yellow-color;

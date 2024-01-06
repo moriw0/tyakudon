@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name='turbo-cache-control' content='no-cache'>
+    <%= display_meta_tags(default_meta_tags) %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= javascript_importmap_tags %>
+    <script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap' defer data-turbo-evals='false'></script>
+    <%= render 'shared/google_tag_manager' if Rails.env.production? %>
+  </head>
+  <body>
+    <%= render 'layouts/header' %>
+    <main class='landing-page'>
+      <%= yield %>
+    </main>
+    <%= render 'layouts/footer' %>
+  </body>
+</html>

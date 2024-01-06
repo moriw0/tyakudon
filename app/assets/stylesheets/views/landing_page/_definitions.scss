@@ -1,0 +1,54 @@
+.landing-page {
+  .definitions {
+    .container {
+      max-width: fit-content;
+      dl {
+        align-items: stretch;
+        display: grid;
+        gap: 50px 50px;
+        grid-template-columns: 100px 1fr;
+        grid-template-rows: 100px 100px;
+        dd {
+          font-size: 1em;
+          grid-column: 2;
+          margin: auto 0;
+          text-align: left;
+        }
+        dt {
+          align-items: center;
+          background-color: black;
+          border-radius: 50%;
+          color: white;
+          display: flex;
+          font-size: 1.2em;
+          grid-column: 1;
+          justify-content: center;
+        }
+        @media screen and (max-width: 768px) {
+          dt, dd {
+            grid-column: 1 / -1;
+          }
+          gap: 15px;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto;
+          dd {
+            margin: 0 auto;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 90%;
+            &:first-of-type {
+              margin-bottom: 20px;
+            }
+          }
+          dt {
+            border-radius: 50%;
+            font-size: 1.2em;
+            height: 70px;
+            margin: 0 auto;
+            width: 70px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,2 +1,44 @@
-<h1>LandingPage#index</h1>
-<p>Find me in app/views/landing_page/index.html.erb</p>
+<header>
+  <div class='header-content'>
+    <h1><span>ラーメン待ちの時間も、</span><span>楽しみの一部に。</span></h1>
+    <p>
+      <span>接続から着丼までのラーメン待ち時間である</span>
+      <span>「ちゃくどんレコード」を共有することで、</span>
+      <span>より快適なラーメンライフを提供します。</span>
+    </p>
+    <%= link_to '今すぐ始める', login_path, class: 'button-primary button-big' %>
+    <%= link_to 'トップページをのぞいてみる', ranking_path, class: 'root-path-link' %>
+  </div>
+</header>
+<section class='youtube'>
+  <div class='container'>
+    <span>時間のある方向け</span>
+    <h2>ちゃくどんの世界に<span>10分で飛び込もう</span></h2>
+    <p>本ページで紹介の情報に加え、<span>開発の裏話から使い方まで、</span><span>詳細にご紹介します。</span></p>
+    <div class='video-container'>
+      <iframe src='<%= ENV['YOUTUBE_VIDEO_URL'] %>' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+<section class='definitions'>
+  <div class='container'>
+    <h2>「接続」と「着丼」って何？</h2>
+    <dl>
+      <dt>接続</dt>
+      <dd>ラーメン店に到着して行列に加わる瞬間。<span>ここから待ち時間計測がスタートします。</span></dd>
+      <dt>着丼</dt>
+      <dd>注文したラーメンが提供される瞬間。<span>待ち時間の計測が終了し、</span><span>ちゃくどんレコードを登録します。</span></dd>
+    </dl>
+  </div>
+</section>
+<%= render 'features' %>
+<%= render 'top_records' %>
+<%= render 'usage_steps' %>
+<section class='promotion'>
+  <div class='container'>
+    <h2>新しいラーメン体験、<span>今ここから始めよう！</span></h2>
+    <p>完全無料！ちゃくどんでラーメンライフを<span>もっと豊かにしましょう。</span></p>
+    <%= link_to '今すぐ始める', login_path, class: 'begin-button' %>
+    <%= link_to 'トップページをのぞいてみる', ranking_path, class: 'root-path-link' %>
+  </div>
+</section>

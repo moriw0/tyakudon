@@ -1,0 +1,49 @@
+.youtube {
+  .container {
+    >span {
+      display: inline-block;
+      font-size: 18px;
+      padding: 1rem 1.5rem;
+      position: relative;
+      text-align: center;
+      &::after {
+        border-right: solid 1px;
+        content: '';
+        height: 2rem;
+        position: absolute;
+        right: 0;
+        top: 0.8rem;
+        transform: rotate(30deg);
+      }
+      &::before {
+        border-left: solid 1px;
+        content: '';
+        height: 2rem;
+        left: 0;
+        position: absolute;
+        top: 0.8rem;
+        transform: rotate(-30deg);
+      }
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    .video-container {
+      margin: 0 auto;
+      position: relative;
+      width: 450px;
+      padding-top: calc(9 / 16 * 450px);
+      iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      @media (max-width: 480px) {
+        width: 100%;
+        padding-top: calc(9 / 16 * 100%);
+      }
+    }
+  }
+}

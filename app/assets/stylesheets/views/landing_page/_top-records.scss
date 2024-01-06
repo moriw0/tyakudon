@@ -1,0 +1,82 @@
+.landing-page {
+  .top-records {
+    .container {
+      max-width: 1200px;
+      a {
+        color: #e26b5d;
+        display: inline-block;
+        font-size: 16px;
+        text-decoration: none;
+      }
+      .raking_link {
+        margin-top: 30px;
+      }
+      .record-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .card {
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          padding: 20px;
+          text-align: left;
+          width: 30%;
+          h3 {
+            text-align: center;
+          }
+          .image-frame {
+            position: relative;
+            .like-button {
+              bottom: 10px;
+              position: absolute;
+              right: 10px;
+            }
+            .record-image {
+              img {
+                height: 100%;
+                left: 0;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                width: 100%;
+              }
+              padding-top: calc(3 / 4 * 100%);
+              position: relative;
+            }
+          }
+          .record-time {
+            .hh-mm-ss {
+              font-size: 32px;
+            }
+            .small-milliseconds {
+              font-size: 20px;
+            }
+          }
+          .shop-name {
+            color: #705a5a;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            margin-bottom: -5px;
+            margin-top: 10px;
+            overflow: hidden;
+          }
+        }
+        @media screen and (max-width:768px) {
+          flex-wrap: nowrap;
+          gap: 20px;
+          justify-content: start;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          .card {
+            flex: 0 0 auto;
+            scroll-snap-align: center;
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
+}
