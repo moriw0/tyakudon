@@ -1,0 +1,59 @@
+@use "../../global/" as g;
+
+.landing-page {
+  .features {
+    .container {
+      max-width: 1200px;
+      ul {
+        display: flex;
+        justify-content: space-around;
+        list-style: none;
+        padding: 0;
+        .feature {
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 1px 1px 12px 2px rgba(0,0,0,.1);
+          padding: 30px;
+          text-align: center;
+          width: 30%;
+          .feature-number {
+            color: black;
+            display: flex;
+            font-size: 2rem;
+            font-weight: bold;
+            justify-content: center;
+          }
+          .image-container {
+            align-items: center;
+            background-color: g.$brand-yellow-color;
+            border-radius: 50%;
+            display: flex;
+            height: 120px;
+            justify-content: center;
+            margin: 0 auto;
+            width: 120px;
+            .feature-image {
+              width: 72px;
+            }
+          }
+          h3 {
+            margin-top: 15px;
+          }
+          p {
+            margin-top: 20px;
+          }
+        }
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+          gap: 15px;
+          padding: 0;
+          .feature {
+            margin: 0;
+            padding: 20px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'ranking_records#index'
+  get '/lp', to: 'landing_page#index'
   get '/about', to: 'statics#about'
   get '/terms', to: 'statics#terms'
   get '/privacy_policy', to: 'statics#privacy_policy'

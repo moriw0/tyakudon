@@ -1,0 +1,36 @@
+@use "../../global/" as g;
+
+.landing-page {
+  .promotion {
+    background-color: g.$brand-yellow-color;
+    .container {
+      h2 {
+        margin-bottom: 20px;
+      }
+      p {
+        margin-bottom: 40px;
+      }
+      .begin-button {
+        background-color: black;
+        border-radius: 5px;
+        color: white;
+        display: block;
+        font-size: 1.2em;
+        margin: 0 auto;
+        padding: 10px 30px;
+        text-decoration: none;
+        width: 400px;
+        @media screen and (max-width: 768px) {
+          width: 80%;
+        }
+      }
+      .root-path-link {
+        color: #444;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 25px;
+        text-decoration: none;
+      }
+    }
+  }
+}

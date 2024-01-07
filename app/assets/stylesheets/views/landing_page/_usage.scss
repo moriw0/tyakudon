@@ -1,0 +1,86 @@
+.usage {
+  .container {
+    .steps {
+      border-bottom: solid 1px #E1E8ED;
+      padding-left: 0;
+      > li {
+        border-top: solid 1px #E1E8ED;
+        display: flex;
+        list-style-type: none;
+        padding: 20px 0;
+        .step-icon {
+          color: #E26B5D;
+          font-size: 2em;
+          font-weight: bold;
+          line-height: 1;
+          margin-top: 0;
+          position: relative;
+          text-align: center;
+          width: 70px;
+          &::after {
+            background-color: #858585;
+            content: "";
+            display: block;
+            height: calc(100% - 55px);
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 60px;
+            width: 1px;
+          }
+          &::before {
+            content: 'STEP';
+            display: block;
+            font-size: 0.3em;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+          }
+        }
+        dl {
+          margin-top: 0.8em;
+          text-align: left;
+          width: calc(100% - 70px);
+          dd {
+            align-items: flex-start;
+            display: flex;
+            justify-content: flex-start;
+            .step-description {
+              margin-right: 30px;
+              width: 400px;
+            }
+            .step-image {
+              img {
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                height: auto;
+                width: 200px;
+              }
+              span {
+                color: #555;
+                display: block;
+                font-size: 0.9em;
+                margin-top: 10px;
+                text-align: center;
+              }
+            }
+            @media screen and (max-width: 768px) {
+              flex-direction: column;
+              .step-description {
+                margin-bottom: 30px;
+                margin-right: 0;
+                width: 100%;
+              }
+            }
+          }
+          dt {
+            font-size: 1.2em;
+            font-weight: bold;
+            line-height: 2;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

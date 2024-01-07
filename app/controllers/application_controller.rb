@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
+  def route_based_on_authentication
+    if logged_in?
+      redirect_to ranking_path
+    else
+      redirect_to lp_path
+    end
+  end
+
   private
 
   def logged_in_user
