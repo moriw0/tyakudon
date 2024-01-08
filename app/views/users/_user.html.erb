@@ -5,8 +5,11 @@
     <% end %>
     <%= link_to user.name, user_path(user) %>
     <% if current_user.admin? && !current_user?(user) %>
-      | <%= link_to "削除", user, data: { "turbo-method": :delete,
-                                            turbo_confirm: "本当に削除しますか？" } %>
+      <span class="separator">|</span>
+      <%= link_to "削除", user, data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" } %>
+      <% unless user.activated %>
+        <span class="not_activated">未有効化</span>
+      <% end %>
     <% end %>
   </div>
   <%= render 'test_mode_form', user: user if current_user.admin? %>

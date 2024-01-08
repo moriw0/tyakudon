@@ -96,13 +96,14 @@ RSpec.describe 'Users' do
         }.to change(User, :count).by(-1)
       end
 
-      it 'does not show non_activated_user' do
-        non_activated_user = create(:non_activated_user)
+      it 'shows not activated user with tag' do
+        not_activated_user = create(:user, :not_activated)
         log_in_as(admin)
         visit users_path
-        expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
+        expect(page).to_not have_link not_activated_user.name, href: user_path(not_activated_user)
         click_link href: '/users?page=2', match: :first
-        expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
+        expect(page).to have_link not_activated_user.name, href: user_path(not_activated_user)
+        expect(page).to have_content '未有効化'
       end
     end
 
