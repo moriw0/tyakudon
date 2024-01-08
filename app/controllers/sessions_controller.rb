@@ -26,8 +26,19 @@ class SessionsController < ApplicationController
 
   def oauth_authentication(auth)
     user = User.find_by(provider: auth[:provider], uid: auth[:uid])
+
     if user
       handle_authentication(user, remember: true)
+    else
+      handle_new_oauth_user(auth)
+    end
+  end
+
+  def handle_new_oauth_user(auth)
+    existing_user = User.find_by(email: auth[:info][:email])
+
+    if existing_user
+      redirect_to login_path, notice: '既に登録されているメールアドレスです。ログインしてください。'
     else
       session['auth_data'] = auth.except('extra')
       redirect_to new_omniauth_user_path

@@ -54,7 +54,7 @@ RSpec.describe 'Sessions' do
         end
       end
 
-      context 'with existing user' do
+      context 'with existing OAuth user' do
         before do
           create(:user, provider: 'google_oauth2', uid: '123456')
         end
@@ -67,6 +67,20 @@ RSpec.describe 'Sessions' do
         it 'has a notice flash' do
           get '/auth/google_oauth2/callback'
           expect(flash[:notice]).to eq 'ログインしました'
+        end
+      end
+
+      context 'with exsting standard user' do
+        before { create(:user, email: 'oauth@example.com') }
+
+        it 'redirects to login page' do
+          get '/auth/google_oauth2/callback'
+          expect(response).to redirect_to(login_path)
+        end
+
+        it 'has a notice flash' do
+          get '/auth/google_oauth2/callback'
+          expect(flash[:notice]).to eq '既に登録されているメールアドレスです。ログインしてください。'
         end
       end
     end
