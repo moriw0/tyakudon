@@ -32,18 +32,20 @@ RSpec.describe 'Users' do
 
   describe 'GET /users/:id #show' do
     context 'with activated user' do
-      it 'shows user page' do
-        activated_user = create(:user)
+      let!(:activated_user) { create(:user) }
+
+      it 'does not include a tag that indicates not activated' do
         get user_path(activated_user)
-        expect(response.body).to include(activated_user.name)
+        expect(response.body).to_not include 'アカウントが有効化されていません'
       end
     end
 
-    context 'with non activated user' do
-      it 'redirects to root_path' do
-        non_activated_user = create(:non_activated_user)
-        get user_path(non_activated_user)
-        expect(response).to redirect_to root_path
+    context 'with not activated user' do
+      let!(:not_activated_user) { create(:user, :not_activated) }
+
+      it 'includes a tag that indicates not activated' do
+        get user_path(not_activated_user)
+        expect(response.body).to include 'アカウントが有効化されていません'
       end
     end
   end
