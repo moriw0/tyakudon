@@ -12,11 +12,21 @@ class ApplicationController < ActionController::Base
   private
 
   def logged_in_user
-    return if logged_in?
+    unless logged_in?
+      store_location
+      flash.alert = 'ログインしてください'
+      redirect_to login_path, status: :see_other
+      return
+    end
 
-    store_location
-    flash.alert = 'ログインしてください'
-    redirect_to login_url, status: :see_other
+    check_user_activation
+  end
+
+  def check_user_activation
+    return if current_user.activated?
+
+    flash.alert = 'アカウントを有効化する必要があります。メールを確認してください。'
+    redirect_to root_path, status: :see_other
   end
 
   def admin_user

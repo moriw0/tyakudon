@@ -12,7 +12,7 @@ RSpec.describe 'Favorites' do
       end
     end
 
-    context 'when logged in' do
+    context 'when logged in with activated user' do
       before do
         log_in_as user
       end
@@ -29,6 +29,28 @@ RSpec.describe 'Favorites' do
         }.to change(Favorite, :count).by(1)
       end
     end
+
+    context 'when logged in with not activated user' do
+      let!(:not_activated_user) { create(:user, :not_activated) }
+
+      before { log_in_as(not_activated_user) }
+
+      it 'does not add shop to favorite with Hotwire' do
+        expect {
+          post favorites_path, params: { ramen_shop_id: ramen_shop.id }, as: :turbo_stream
+        }.to_not change(Favorite, :count)
+      end
+
+      it 'redirects to root_path' do
+        post favorites_path, params: { ramen_shop_id: ramen_shop.id }
+        expect(response).to redirect_to root_path
+      end
+
+      it 'has a flash message' do
+        post favorites_path, params: { ramen_shop_id: ramen_shop.id }
+        expect(flash[:alert]).to eq 'アカウントを有効化する必要があります。メールを確認してください。'
+      end
+    end
   end
 
   describe 'DELETE /favorites/:id #destory' do
@@ -41,7 +63,7 @@ RSpec.describe 'Favorites' do
       end
     end
 
-    context 'when logged in' do
+    context 'when logged in with activated user' do
       before do
         log_in_as user
       end
@@ -56,6 +78,28 @@ RSpec.describe 'Favorites' do
         expect {
           delete favorite_path(favorite), as: :turbo_stream
         }.to change(Favorite, :count).by(-1)
+      end
+    end
+
+    context 'when logged in with not activated user' do
+      let!(:not_activated_user) { create(:user, :not_activated) }
+
+      before { log_in_as(not_activated_user) }
+
+      it 'does not add shop to favorite with Hotwire' do
+        expect {
+          delete favorite_path(favorite)
+        }.to_not change(Favorite, :count)
+      end
+
+      it 'redirects to root_path' do
+        post favorites_path, params: { ramen_shop_id: ramen_shop.id }
+        expect(response).to redirect_to root_path
+      end
+
+      it 'has a flash message' do
+        post favorites_path, params: { ramen_shop_id: ramen_shop.id }
+        expect(flash[:alert]).to eq 'アカウントを有効化する必要があります。メールを確認してください。'
       end
     end
   end
