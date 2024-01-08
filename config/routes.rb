@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root 'application#route_based_on_authentication'
   get '/lp', to: 'landing_page#index'
-  get '/about', to: 'statics#about'
   get '/terms', to: 'statics#terms'
   get '/privacy_policy', to: 'statics#privacy_policy'
   get '/ranking', to: 'ranking_records#index'
