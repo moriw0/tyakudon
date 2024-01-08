@@ -21,6 +21,9 @@
       font-weight: 500;
     }
     .right-side-section {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       input[type="checkbox"] {
         position: absolute;
         right: -50vw;
@@ -75,29 +78,37 @@
           }
       }
       .side-menu {
+        $side-menu-width: 220px;
         align-items: flex-end;
         background-color: g.$brand-yellow-color;
         display: flex;
         flex-direction: column;
         height: 100vh;
         position: absolute;
-        right: -200px;
+        right: -$side-menu-width;
         top: 0;
         transition: all 0.2s;
-        width: 200px;
+        width: $side-menu-width;
         .nav-links {
-          align-items: center;
+          display: flex;
           flex-direction: column;
           list-style: none;
           margin: 0;
           padding: 0;
           width: 100%;
+          position: relative;
+          $side-margin-width: 5px;
           li {
             border-bottom: 1px solid #333;
-            margin: 5px;
+            margin: 0 $side-margin-width;
             padding: 10px;
-            &:first-child {
-              border-top: 1px solid #333;
+            &:before {
+              content: "";
+              border-bottom: 1px solid #333;
+              left: $side-margin-width;
+              position: absolute;
+              top: 0;
+              width: calc($side-menu-width - $side-margin-width * 2);
             }
             a {
               svg {
@@ -112,20 +123,31 @@
             }
           }
         }
-      }
-      .all-user-links {
-        align-items: center;
-        display: flex;
-        height: 100%;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        .login-link {
-          border: 2px solid #212529;
-          border-radius: 5px;
-          margin-left: 15px;
-          padding: 4px 10px;
+        .order-for-logged-in-users {
+          li:nth-child(2) { order: 1; } // プロフィール
+          li:nth-child(1) { order: 2; } // お気に入り
+          li:nth-child(5) { order: 3; } // ランキング
+          li:nth-child(6) { order: 4; } // 新着
+          li:nth-child(7) { order: 5; } // 店舗検索
+          li:nth-child(3) { order: 6; } // ログアウト
+          li:nth-child(8) { order: 7; } // チャクドンについて
+          li:nth-child(4) { order: 8; } // Users
         }
+        .order-for-all-users {
+          li:nth-child(6) { order: 1; } // ちゃくどんについて
+          li:nth-child(1) { order: 2; } // ユーザー登録
+          li:nth-child(2) { order: 3; } // ログイン
+          li:nth-child(3) { order: 4; } // ランキング
+          li:nth-child(4) { order: 5; } // 新着
+          li:nth-child(5) { order: 6; } // 店舗検索
+        }
+      }
+      .login-link {
+        font-size: 12px;
+        border: 2px solid #212529;
+        border-radius: 5px;
+        margin-right: 5px;
+        padding: 4px 10px;
       }
     }
   }
