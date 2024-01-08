@@ -1,4 +1,4 @@
-<li>
+<%= tag.li id: dom_id(user) do %>
   <div class="d-flex align-items-center">
     <%= skeleton_background_tag 'avatar-image' do %>
       <%= avatar_for(user, :small) %>
@@ -13,4 +13,4 @@
     <% end %>
   </div>
   <%= render 'test_mode_form', user: user if current_user.admin? %>
-</li>
+<% end %>
