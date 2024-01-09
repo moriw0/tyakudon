@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Logins' do
   let(:user) { create(:user) }
 
+  before { create(:record, :with_line_status, user: user) }
+
   scenario 'login with valid email and invalid password' do
     visit login_path
     fill_in 'メールアドレス', with: user.email

@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Users' do
   describe '#create' do
     context 'when standard creation' do
+      before { create(:record, user: user) }
+
       scenario 'user creates an account with valid information', js: true do
         visit new_user_path
         expect {

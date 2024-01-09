@@ -25,7 +25,7 @@ RSpec.describe 'Likes', js: true do
 
   context 'with all user' do
     scenario 'user can see a record-feed order by most likes with hihlights' do
-      visit root_path
+      visit ranking_path
 
       # タブとソートタイプがハイライトされていることを確認
       expect(page).to have_selector 'a.selected-tab', text: 'ランキング'

@@ -1,38 +1,50 @@
 .landing-page {
-  padding: 0;
-  header, section {
-    padding: 50px 0;
-    text-align: center;
-  }
-  section {
-    &:nth-child(even):not(:last-of-type) {
-      background-color: #faf7f0;
+  header {
+    nav {
+      max-width: 1000px;
     }
-    .container {
-      font-size: 18px;
+  }
+  main {
+    padding: 0;
+    header, section {
+      padding: 50px 0;
+      text-align: center;
+    }
+    #flash {
+      max-width: 500px;
       margin: 0 auto;
-      max-width: 800px;
-      h2 {
-        font-size: 1.5em;
-        font-weight: 500;
-        line-height: 1.6;
-        margin-bottom: 30px;
+      padding: 0 15px;
+    }
+    section {
+      &:nth-child(odd):not(:last-of-type) {
+        background-color: #f1f1ec;
       }
-      h3 {
-        font-size: 1.1em;
-        line-height: 1.5;
-        margin-bottom: 15px;
-      }
-      p, dd {
-        color: #333;
-        font-size: 1.0em;
-        line-height: 1.7;
-      }
-      @media screen and (max-width: 768px) {
-        font-size: 16px;
-        h2, h3, p, dd {
-          span {
-            display: inline-block;
+      .container {
+        font-size: 18px;
+        margin: 0 auto;
+        max-width: 800px;
+        h2 {
+          font-size: 1.5em;
+          font-weight: 500;
+          line-height: 1.6;
+          margin-bottom: 30px;
+        }
+        h3 {
+          font-size: 1.1em;
+          line-height: 1.5;
+          margin-bottom: 15px;
+        }
+        p, dd {
+          color: #333;
+          font-size: 1.0em;
+          line-height: 1.7;
+        }
+        @media screen and (max-width: 768px) {
+          font-size: 16px;
+          h2, h3, p, dd {
+            span {
+              display: inline-block;
+            }
           }
         }
       }

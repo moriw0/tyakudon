@@ -9,6 +9,12 @@ FactoryBot.define do
     ramen_shop
     user
 
+    trait :with_line_status do
+      after(:create) do |record|
+        create(:line_status, record: record)
+      end
+    end
+
     factory :oldest do
       started_at { 1.year.ago - 10.minutes }
       ended_at { 1.year.ago }
