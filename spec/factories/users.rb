@@ -15,9 +15,9 @@ FactoryBot.define do
       admin { false }
     end
 
-    factory :non_activated_user do
+    trait :not_activated do
       name { 'Non Activated User' }
-      email { 'non_activated@example.com' }
+      email { 'not_activated@example.com' }
       admin { false }
       activated { false }
       activated_at { nil }

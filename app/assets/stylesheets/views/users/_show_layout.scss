@@ -15,6 +15,15 @@
         margin-bottom: 2rem;
         margin-top: 1rem;
         text-align: center;
+        .not_activated_tag {
+          background-color: var(--bs-code-color);
+          border-radius: 20px;
+          color: white;
+          display: block;
+          font-size: 12px;
+          margin-top: 10px;
+          padding: 8px 20px;
+        }
       }
     }
     .profile-edit {

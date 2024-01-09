@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Users' do
-  let(:user) { create(:user) }
-
-  describe 'create' do
+  describe '#create' do
     context 'when standard creation' do
-      before { create(:record, user: user) }
+      before { create(:record) }
 
       scenario 'user creates an account with valid information', js: true do
         visit new_user_path
@@ -50,110 +48,155 @@ RSpec.describe 'Users' do
     end
   end
 
-  scenario 'user update the account with valid information' do
-    log_in_as(user)
-    visit edit_user_path(user)
-    expect {
-      fill_in 'ニックネーム', with: 'Foo bar'
-      attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png'), make_visible: true
-      click_button '更新する'
-      expect(page).to have_content 'ユーザー情報を更新しました'
-      expect(page).to have_content 'Foo bar'
-      expect(page).to have_selector("img[src$='1000x800_4.2MB.png'].avatar")
-    }.to_not change(User, :count)
-  end
+  describe '#update' do
+    let!(:user) { create(:user) }
 
-  scenario 'user cannot update the account with invalid information' do
-    log_in_as(user)
-    visit edit_user_path(user)
-    expect {
-      fill_in 'ニックネーム', with: ''
-      attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png'), make_visible: true
-      click_button '更新する'
-      expect(page).to have_content '入力してください'
-      expect(page).to have_content '5MB以下である必要があります'
-    }.to_not change(User, :count)
-  end
-
-  describe 'index' do
-    let!(:admin) { create(:user) }
-    let!(:non_admin) { create(:other_user) }
-
-    before do
-      create_list(:user, 15, :many_user)
-    end
-
-    context 'with admin' do
-      it 'shows users including pagination and delete link' do
-        log_in_as(admin)
-        visit users_path
-        expect(page).to have_selector('.pagination')
-        first_page_of_users = User.page(1)
-        first_page_of_users.each do |user|
-          expect(page).to have_link user.name, href: user_path(user)
-          expect(page).to have_link '削除', href: user_path(user) unless user == admin
-        end
-        expect {
-          click_link '削除', href: user_path(non_admin)
-        }.to change(User, :count).by(-1)
-      end
-
-      it 'does not show non_activated_user' do
-        non_activated_user = create(:non_activated_user)
-        log_in_as(admin)
-        visit users_path
-        expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
-        click_link href: '/users?page=2', match: :first
-        expect(page).to_not have_link non_activated_user.name, href: user_path(non_activated_user)
-      end
-    end
-
-    context 'with non-admin' do
-      it 'shows users not including delete link' do
-        log_in_as(non_admin)
-        visit users_path
-        expect(page).to have_content '不正なアクセスです'
-      end
-    end
-  end
-
-  describe 'show' do
-    include ApplicationHelper
-
-    let(:user) { create(:user) }
-    let(:other_user) { create(:other_user) }
-    let(:ramen_shop) { create(:ramen_shop) }
-
-    it 'shows edit_user_path when vist current_user path' do
+    scenario 'user update the account with valid information' do
       log_in_as(user)
-      visit user_path(other_user)
-      expect(page).to_not have_link 'プロフィールを編集する', href: edit_user_path(other_user)
-      visit user_path(user)
-      expect(page).to have_link 'プロフィールを編集する', href: edit_user_path(user)
+      visit edit_user_path(user)
+      expect {
+        fill_in 'ニックネーム', with: 'Foo bar'
+        attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png'), make_visible: true
+        click_button '更新する'
+        expect(page).to have_content 'ユーザー情報を更新しました'
+        expect(page).to have_content 'Foo bar'
+        expect(page).to have_selector("img[src$='1000x800_4.2MB.png'].avatar")
+      }.to_not change(User, :count)
     end
 
-    it 'shows their profile and records' do
-      create_list(:record, 15, :many_records, user: user, ramen_shop: ramen_shop, skip_validation: true)
-      create(:record, user: user, is_retired: true, ramen_shop: ramen_shop)
+    scenario 'user cannot update the account with invalid information' do
+      log_in_as(user)
+      visit edit_user_path(user)
+      expect {
+        fill_in 'ニックネーム', with: ''
+        attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png'), make_visible: true
+        click_button '更新する'
+        expect(page).to have_content '入力してください'
+        expect(page).to have_content '5MB以下である必要があります'
+      }.to_not change(User, :count)
+    end
+  end
 
-      Record.all.each do |record|
-        create(:line_status, record: record)
+  describe '#index' do
+    context 'with 15 users' do
+      let!(:admin) { create(:user, admin: true) }
+
+      before { create_list(:user, 15, :many_user) }
+
+      context 'when logged in as admin' do
+        before { log_in_as(admin) }
+
+        it 'shows users including pagination' do
+          visit users_path
+          expect(page).to have_selector('.pagination')
+        end
       end
 
-      visit user_path(user)
-      expect(find('h1')).to have_content user.name
-      expect(find('img.avatar')).to be_truthy
-      expect(find('.stats a')).to have_content user.records.count
-      expect(find('ul.pagination')).to be_truthy
+      context 'when logged in as non admin' do
+        let!(:non_admin) { create(:other_user, admin: false) }
 
-      user.records.active_ordered.page(1).each do |record|
-        expect(page).to have_content format_datetime(record.started_at)
-        expect(page).to have_content format_wait_time_helper(record.wait_time)
+        before { log_in_as(non_admin) }
 
-        if record.is_retired?
-          expect(page).to have_content 'リタイア'
-        else
-          expect(page).to have_content 'ちゃくどん'
+        it 'blocks access to users page and shows unauthorized access message' do
+          visit users_path
+          expect(page).to have_content '不正なアクセスです'
+        end
+      end
+    end
+
+    context ['when logged in as admin', 'with some users'].join(', ') do
+      let!(:admin) { create(:user, admin: true) }
+
+      before do
+        create_list(:user, 3, :many_user)
+        log_in_as(admin)
+      end
+
+      context 'with non admin user' do
+        let!(:non_admin) { create(:other_user, admin: false) }
+        let!(:users) { User.all }
+
+        scenario ['admin can see users', 'delete non admin user'].join(', ') do
+          visit users_path
+
+          users.each do |user|
+            within "#user_#{user.id}" do
+              expect(page).to have_link user.name, href: user_path(user)
+              expect(page).to have_link '削除', href: user_path(user) unless user == admin
+            end
+          end
+          expect {
+            click_link '削除', href: user_path(non_admin)
+          }.to change(User, :count).by(-1)
+        end
+      end
+
+      context 'with not activated user' do
+        let!(:not_activated_user) { create(:user, :not_activated) }
+        let!(:users) { User.all }
+
+        scenario 'admin can see not an activated user with tag' do
+          visit users_path
+
+          users.each do |user|
+            within "#user_#{user.id}" do
+              if user.activated
+                expect(page).to_not have_content '未有効化'
+                expect(page).to have_content user.name
+              else
+                expect(page).to have_content '未有効化'
+                expect(page).to have_content not_activated_user.name
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe '#show' do
+    include ApplicationHelper
+    let!(:user) { create(:user) }
+
+    context 'when vist current user path' do
+      let!(:other_user) { create(:other_user) }
+
+      before { log_in_as(user) }
+
+      it 'shows edit_user_path' do
+        visit user_path(other_user)
+        expect(page).to_not have_link 'プロフィールを編集する', href: edit_user_path(other_user)
+        visit user_path(user)
+        expect(page).to have_link 'プロフィールを編集する', href: edit_user_path(user)
+      end
+    end
+
+    context 'when visit standerd user path' do
+      let!(:ramen_shop) { create(:ramen_shop) }
+
+      it 'shows their profile and records' do
+        create_list(:record, 15, :many_records, user: user, ramen_shop: ramen_shop, skip_validation: true)
+        create(:record, user: user, is_retired: true, ramen_shop: ramen_shop)
+
+        Record.all.each do |record|
+          create(:line_status, record: record)
+        end
+
+        visit user_path(user)
+        expect(find('h1')).to have_content user.name
+        expect(find('img.avatar')).to be_truthy
+        expect(find('.stats a')).to have_content user.records.count
+        expect(find('ul.pagination')).to be_truthy
+
+        user.records.active_ordered.page(1).each do |record|
+          expect(page).to have_content format_datetime(record.started_at)
+          expect(page).to have_content format_wait_time_helper(record.wait_time)
+
+          if record.is_retired?
+            expect(page).to have_content 'リタイア'
+          else
+            expect(page).to have_content 'ちゃくどん'
+          end
         end
       end
     end
