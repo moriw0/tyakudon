@@ -3,7 +3,7 @@
     <% if record.image.persisted? %>
       <%= lazy_image_tag record.image %>
     <% else %>
-      <%= lazy_image_tag 'landing_page/no-image' %>
+      <%= lazy_image_tag 'landing_page/no-image.png' %>
     <% end %>
   <% end %>
   <%= render 'likes/like_form', record: record %>
