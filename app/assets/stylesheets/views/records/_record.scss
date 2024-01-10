@@ -46,8 +46,13 @@
             }
             .comment-content {
               font-size: 12px;
+              display: -webkit-box;
+              overflow: hidden;
               text-align: left;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
               width: 100%;
+              white-space: pre-wrap;
             }
           }
           .record-image {
