@@ -1,4 +1,13 @@
 .shops {
+  .search-result-num {
+    text-align: right;
+    font-size: 14px;
+    span {
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 3px;
+    }
+  }
   .list-item {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -15,6 +24,14 @@
           color:#4e4a4a;
         }
       }
+    }
+  }
+  .no-shops {
+    text-align: center;
+    span {
+      color: #5f5b5b;
+      display: inline-block;
+      font-size: 14px;
     }
   }
 }
