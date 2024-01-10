@@ -48,6 +48,9 @@
       padding-top: 0.5rem;
       padding-bottom: 1rem;
       .line-status-content {
+        p {
+          white-space: pre-wrap;
+        }
         .line-status-image {
           width: 100%;
           min-height: 240px;
