@@ -1,10 +1,18 @@
 <%= render 'home/tabmenu' %>
 <%= render 'shared/search_form' %>
 <section class="shops mb-4">
-  <div class="records list-group pb-2">
-    <%= render @ramen_shops %>
-  </div>
-  <div class="d-flex justify-content-center mt-3">
-    <%= paginate @ramen_shops %>
-  </div>
+  <p class='search-result-num'><span><%= @ramen_shops.count%></span>件見つかりました</p>
+  <% if @ramen_shops.any? %>
+    <div class="records list-group pb-2">
+      <%= render @ramen_shops %>
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+      <%= paginate @ramen_shops %>
+    </div>
+  <% else %>
+    <p class='no-shops'>
+      店舗が見つかりませんでした
+      <span>管理者まで店舗登録依頼を出してください！</span>
+    </p>
+  <% end %>
 </section>
