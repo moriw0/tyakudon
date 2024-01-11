@@ -31,7 +31,7 @@ RSpec.describe 'Likes', js: true do
       expect(page).to have_selector 'a.selected-tab', text: 'ランキング'
       expect(page).to have_selector 'a.selected-type', text: 'おそい'
       click_link 'いいね'
-      expect(page).to have_selector 'a.selected-type', text: 'おそい'
+      expect(page).to_not have_selector 'a.selected-type', text: 'おそい'
       expect(page).to have_selector 'a.selected-type', text: 'いいね'
 
       # いいね数順にソートされていることを確認

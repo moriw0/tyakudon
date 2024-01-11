@@ -16,6 +16,9 @@ precompile:
 rspec:
 	docker-compose exec app bundle exec rspec
 
+bash:
+	docker-compose exec app bash
+
 build:
 	docker-compose build
 
