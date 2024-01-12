@@ -62,7 +62,7 @@ module ApplicationHelper
   def default_meta_tags
     {
       site: 'ちゃくどん',
-      title: 'ラーメン提供時間共有サービス',
+      title: 'ラーメン待ち時間計測・共有Webアプリ',
       reverse: true,
       icon: [
         { href: image_url('favicon.ico') },
@@ -70,7 +70,7 @@ module ApplicationHelper
       ],
       charset: 'utf-8',
       description: '行列に並ぶ「接続」から、ラーメンが提供される「着丼」までの時間を計測して共有しよう',
-      keywords: 'ラーメン, 着丼',
+      keywords: 'ラーメン, 着丼, 行列',
       canonical: request.original_url,
       separator: '|',
       og: {
