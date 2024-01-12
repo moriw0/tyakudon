@@ -1,7 +1,7 @@
 <%= render 'home/tabmenu' %>
 <%= render 'shared/search_form' %>
 <section class="shops mb-4">
-  <p class='search-result-num'><span><%= @ramen_shops.count%></span>件見つかりました</p>
+  <p class='search-result-num'><span><%= @result_count %></span>件見つかりました</p>
   <% if @ramen_shops.any? %>
     <div class="records list-group pb-2">
       <%= render @ramen_shops %>
