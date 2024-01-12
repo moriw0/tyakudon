@@ -11,9 +11,30 @@ export default class extends Controller {
 
   connect() {
     this.startRepeatingTask();
+    this.boundHandleVisibilityChange = this.handleVisibilityChange.bind(this);
+    document.addEventListener(
+      "visibilitychange",
+      this.boundHandleVisibilityChange
+    );
   }
 
   disconnect() {
+    this.handlePageHidden();
+    document.removeEventListener(
+      "visibilitychange",
+      this.boundHandleVisibilityChange
+    );
+  }
+
+  handleVisibilityChange() {
+    if (document.visibilityState === "hidden") {
+      this.handlePageHidden();
+    } else if (document.visibilityState === "visible") {
+      this.startRepeatingTask();
+    }
+  }
+
+  handlePageHidden() {
     this.stopRepeatingTask();
     this.clearTimeout();
     this.saveRemainingTime();
