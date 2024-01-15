@@ -11,7 +11,7 @@ export default class extends Controller {
 
     if (lineTypeRadio.value === "seated") {
       lineNumberField.style.display = "none";
-      lineNumberInput.value = 0;
+      lineNumberInput.value = "";
     } else {
       lineNumberField.style.display = "block";
       lineNumberInput.value = "";
