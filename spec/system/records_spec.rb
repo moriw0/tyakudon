@@ -40,9 +40,9 @@ RSpec.describe 'Records', js: true do
     click_link '追加報告'
     find('label[for="line_status_line_type_outside_the_store"]').click
     fill_in '待ち行列数', with: 1
-    ## 着席を選択すると行列数が0でhiddenされる
+    ## 着席を選択すると行列数がブランクでhiddenされる
     find('label[for="line_status_line_type_seated"]').click
-    expect(find_by_id('line_status_line_number', visible: :hidden).value).to eq '0'
+    expect(find_by_id('line_status_line_number', visible: :hidden).value).to eq ''
     ## 着席以外を選択すると再び数値入力ができるようになる
     find('label[for="line_status_line_type_inside_the_store"]').click
     fill_in '待ち行列数', with: 1
