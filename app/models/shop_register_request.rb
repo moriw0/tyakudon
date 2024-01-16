@@ -1,0 +1,2 @@
+class ShopRegisterRequest < ApplicationRecord
+end
