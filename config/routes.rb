@@ -44,4 +44,5 @@ Rails.application.routes.draw do
     end
   end
   resources :cheer_messages, only: %i[create]
+  resources :shop_register_requests, only: [:new, :create]
 end

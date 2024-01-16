@@ -1,0 +1,2 @@
+module ShopRegisterRequestsHelper
+end
