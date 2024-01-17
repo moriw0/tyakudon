@@ -4,6 +4,8 @@ class CreateShopRegisterRequests < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.string :address, null: false
       t.text :remarks
+      t.references :user, null: false, foreign_key: true
+      t.integer :status, null: false
 
       t.timestamps
     end

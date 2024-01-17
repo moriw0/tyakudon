@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :favorite_shops, through: :favorites, source: :ramen_shop
   has_many :likes, dependent: :restrict_with_exception
   has_many :like_records, through: :likes, source: :record
+  has_many :shop_register_requests, dependent: :destroy
   has_one_attached :avatar
 
   before_save :downcase_email
@@ -92,6 +93,10 @@ class User < ApplicationRecord
 
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  def send_shop_register_request_email(request)
+    UserMailer.shop_register_request(self, request).deliver_now
   end
 
   def password_reset_expired?
