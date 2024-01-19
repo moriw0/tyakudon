@@ -32,7 +32,7 @@ class ShopRegisterRequestsController < ApplicationController
   def handle_existing_shop
     flash.now[:alert] = '店舗が既に存在します。'
     @ramen_shop = RamenShop.find_by(name: @request.name, address: @request.address)
-    render :new
+    render :new, status: :unprocessable_entity
   end
 
   def save_request
