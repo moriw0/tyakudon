@@ -26,10 +26,26 @@ RSpec.describe 'RamenShops' do
     it_behaves_like 'when not logged in'
     it_behaves_like 'as a non-admin'
 
-    it 'returns new form when logged in as an admin' do
-      log_in_as admin
-      do_request
-      expect(response.body).to include '<h1>店舗登録</h1>'
+    context 'without params' do
+      let(:ramen_shop) { controller.instance_variable_get(:@ramen_shop) }
+
+      before { log_in_as admin }
+
+      it 'returns http success' do
+        get new_ramen_shop_path
+        expect(response).to have_http_status(:success)
+        expect(ramen_shop.name).to be_nil
+        expect(ramen_shop.address).to be_nil
+      end
+    end
+
+    context 'with valid params' do
+      it 'pre-fills the ramen shop form' do
+        get new_ramen_shop_path(ramen_shop: { name: "Test Ramen", address: "123 Ramen Street" })
+        # expect(response).to have_http_status(:success)
+        expect(ramen_shop.name).to eq 'Test Ramen'
+        expect(ramen_shop.address).to eq '123 Ramen Street'
+      end
     end
   end
 

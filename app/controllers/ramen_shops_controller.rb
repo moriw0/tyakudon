@@ -24,7 +24,7 @@ class RamenShopsController < ApplicationController
   end
 
   def new
-    @ramen_shop = RamenShop.new
+    @ramen_shop = RamenShop.new(ramen_shop_params_from_request)
   end
 
   def edit
@@ -62,6 +62,14 @@ class RamenShopsController < ApplicationController
   end
 
   private
+
+  def ramen_shop_params_from_request
+    if params[:ramen_shop].present?
+      params.require(:ramen_shop).permit(:name, :address)
+    else
+      {}
+    end
+  end
 
   def set_ramen_shop
     @ramen_shop = RamenShop.find(params[:id])
