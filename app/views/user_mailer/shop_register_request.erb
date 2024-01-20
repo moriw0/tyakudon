@@ -1,0 +1,5 @@
+<h1><%= link_to @user.name, user_url(@user) %> さんより</h1>
+<p>店舗： <%= @request.name %></p>
+<p>住所： <%= @request.address %></p>
+<p>備考： <%= @request.remarks %></p>
+<p><%= link_to '承認する', edit_shop_register_request_url(@request) %></p>
