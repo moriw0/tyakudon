@@ -1,8 +1,20 @@
 class ShopRegisterRequestsController < ApplicationController
   before_action :logged_in_user
+  before_action :admin_user, only: %i[edit]
 
   def new
     @request = ShopRegisterRequest.new
+  end
+
+  def edit
+    request = ShopRegisterRequest.find(params[:id])
+
+    if request&.open?
+      request.approved!
+      redirect_to new_ramen_shop_path(ramen_shop: { name: request.name, address: request.address, id: request.id })
+    else
+      redirect_to root_path, alert: '無効なリンクです'
+    end
   end
 
   def create
