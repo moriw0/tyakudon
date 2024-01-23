@@ -1,4 +1,5 @@
-こんにちは <%= @user.name %>
-チャクドンへようこそ！
+こんにちは、<%= @user.name %> さん
+ちゃくどんへようこそ！
 以下のリンクをクリックしてアカウントを有効化してください。
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
+なお、このメールの内容に覚えのない方は、お手数でございますが、破棄していただきますようお願い申し上げます。
