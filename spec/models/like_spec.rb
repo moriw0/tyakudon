@@ -4,7 +4,7 @@ RSpec.describe Like do
   describe 'Validations' do
     context 'with user and record' do
       let!(:user) { create(:user) }
-      let!(:other_user) { create(:other_user) }
+      let!(:other_user) { create(:user, :other_user) }
       let!(:record) { create(:record, user: other_user) }
       let!(:like) { user.likes.build(record: record) }
 
@@ -36,7 +36,7 @@ RSpec.describe Like do
 
   describe 'Model Methods' do
     let!(:user) { create(:user) }
-    let!(:other_user) { create(:other_user) }
+    let!(:other_user) { create(:user, :other_user) }
     let!(:record) { create(:record, user: other_user) }
 
     describe '#likes?' do

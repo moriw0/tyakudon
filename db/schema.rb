@@ -193,7 +193,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_20_205817) do
     t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "address"], name: "index_shop_register_requests_on_name_and_address", unique: true
+    t.index ["address", "name"], name: "index_shop_register_requests_on_address_and_name", unique: true
     t.index ["user_id"], name: "index_shop_register_requests_on_user_id"
   end
 

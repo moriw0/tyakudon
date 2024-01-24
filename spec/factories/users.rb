@@ -1,24 +1,28 @@
 FactoryBot.define do
   factory :user do
-    name { 'Example User' }
-    email { 'user@example.com' }
+    sequence(:name) { |n| "user#{n}" }
+    sequence(:email) { |n| "user#{n}@example.com" }
     password { 'foobar' }
     password_confirmation { 'foobar' }
-    admin { true }
+    admin { false }
     activated { true }
     activated_at { Time.zone.now }
     is_test_mode { false }
 
-    factory :other_user do
+    trait :other_user do
       name { 'Other User' }
       email { 'other@example.com' }
-      admin { false }
+    end
+
+    trait :admin do
+      name { 'Admin User' }
+      email { 'admin@example.com' }
+      admin { true }
     end
 
     trait :not_activated do
       name { 'Non Activated User' }
       email { 'not_activated@example.com' }
-      admin { false }
       activated { false }
       activated_at { nil }
     end
@@ -26,7 +30,6 @@ FactoryBot.define do
     trait :many_user do
       sequence(:name) { |n| "tester#{n}" }
       sequence(:email) { |n| "tester#{n}@example.com" }
-      admin { false }
     end
   end
 end

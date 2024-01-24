@@ -10,6 +10,6 @@ class CreateShopRegisterRequests < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :shop_register_requests, [:name, :address], unique: true
+    add_index :shop_register_requests, [:address, :name], unique: true
   end
 end

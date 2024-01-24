@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UserMailer do
   describe 'account_activation' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, email: 'user@example.com') }
     let(:mail) { described_class.account_activation(user) }
 
     before do
@@ -23,7 +23,7 @@ RSpec.describe UserMailer do
   end
 
   describe 'password_reset' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, email: 'user@example.com') }
     let(:mail) { described_class.password_reset(user) }
 
     before do
