@@ -32,7 +32,7 @@ class ShopRegisterRequestsController < ApplicationController
     ramen_shop = RamenShop.find_by(id: params[:ramen_shop_id])
 
     if request&.approved? && ramen_shop
-      ShopRegisterMailer.registration_complete_email(request.user, ramen_shop).deliver_later
+      ShopRegisterMailer.registration_complete_email(user: request.user, ramen_shop: ramen_shop).deliver_later
       request.completed!
       redirect_to root_path, notice: '登録完了メールを送信しました'
     else

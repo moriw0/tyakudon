@@ -11,6 +11,6 @@ class ShopRegisterMailerPreview < ActionMailer::Preview
   def registration_complete_email
     user = User.first
     ramen_shop = RamenShop.first
-    ShopRegisterMailer.registration_complete_email(user, ramen_shop)
+    ShopRegisterMailer.registration_complete_email(user: user, ramen_shop: ramen_shop)
   end
 end
