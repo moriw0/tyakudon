@@ -28,9 +28,10 @@
   }
   .no-shops {
     text-align: center;
-    span {
+    a {
+      margin-top: 20px;
       color: #5f5b5b;
-      display: inline-block;
+      display: block;
       font-size: 14px;
     }
   }
