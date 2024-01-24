@@ -48,7 +48,7 @@ RSpec.describe 'RamenShops' do
 
         it 'includes request id in hidden field' do
           get new_ramen_shop_path(request: { id: 1, name: 'リクエスト店', address: '東京都新宿区' })
-          expect(response.body).to include('<input value="1" autocomplete="off" type="hidden" name="ramen_shop[request_id]" id="ramen_shop_request_id" />')
+          expect(response.body).to include '<input type="hidden" name="request_id" id="request_id" value="1" autocomplete="off" />'
         end
       end
     end
@@ -77,15 +77,15 @@ RSpec.describe 'RamenShops' do
     context 'with admin' do
       before { log_in_as admin }
 
-      context 'with request' do
+      context ['with valid ramen_shop params', 'shop request'].join(', ') do
         let(:do_request) { post ramen_shops_path, params: params_with_request }
         let(:params_with_request) do
           { ramen_shop: {
             name: 'リクエスト店',
-            address: '東京都新宿区',
-            request_id: 1
-          } }
+            address: '東京都新宿区'
+          }, request_id: 1 }
         end
+        let(:request_id) { controller.instance_variable_get(:@request_id) }
 
         it 'creates ramen_shop' do
           expect {
@@ -97,9 +97,36 @@ RSpec.describe 'RamenShops' do
           do_request
           expect(response).to redirect_to complete_shop_register_request_path(1, ramen_shop_id: RamenShop.last.id)
         end
+
+        it 'has a request_id' do
+          do_request
+          expect(request_id).to eq '1'
+        end
       end
 
-      context 'with no request id' do
+      context ['with invalid ramen_shop params', 'shop request'].join(', ') do
+        let(:do_request) { post ramen_shops_path, params: params_with_request }
+        let(:params_with_request) do
+          { ramen_shop: {
+            name: '',
+            address: ''
+          }, request_id: 1 }
+        end
+        let(:request_id) { controller.instance_variable_get(:@request_id) }
+
+        it 'does not create ramen_shop' do
+          expect {
+            do_request
+          }.to_not change(RamenShop, :count)
+        end
+
+        it 'has a request_id' do
+          do_request
+          expect(request_id).to eq '1'
+        end
+      end
+
+      context 'with valid params and no shop request' do
         it 'creates ramen_shop' do
           expect {
             do_request
