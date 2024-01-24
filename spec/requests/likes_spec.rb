@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Likes' do
   describe 'POST /likes #create' do
-    let!(:other_user) { create(:other_user) }
+    let!(:other_user) { create(:user, :other_user) }
     let!(:record) { create(:record, user: other_user) }
 
     context 'when not logged in' do
@@ -30,7 +30,7 @@ RSpec.describe 'Likes' do
   describe 'DELETE /likes/:id #destory' do
     let!(:user) { create(:user) }
     let!(:record) { create(:record, user: other_user) }
-    let!(:other_user) { create(:other_user) }
+    let!(:other_user) { create(:user, :other_user) }
     let!(:like) { create(:like, user: user, record: record) }
 
     context 'when not logged in' do

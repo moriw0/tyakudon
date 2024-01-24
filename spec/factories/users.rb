@@ -9,7 +9,7 @@ FactoryBot.define do
     activated_at { Time.zone.now }
     is_test_mode { false }
 
-    factory :other_user do
+    trait :other_user do
       name { 'Other User' }
       email { 'other@example.com' }
       admin { false }

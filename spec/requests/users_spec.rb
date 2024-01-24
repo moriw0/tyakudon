@@ -10,7 +10,7 @@ RSpec.describe 'Users' do
 
   describe 'GET /users' do
     let(:admin) { create(:user) }
-    let(:non_admin) { create(:other_user) }
+    let(:non_admin) { create(:user, :other_user) }
 
     it 'redirects to login_path when not logged in' do
       get users_path
@@ -101,7 +101,7 @@ RSpec.describe 'Users' do
 
   describe 'GET /user/:id/edit' do
     let(:user) { create(:user) }
-    let(:other_user) { create(:other_user) }
+    let(:other_user) { create(:user, :other_user) }
 
     it 'redirects to login_path when not logged_in' do
       get edit_user_path(user)
@@ -131,7 +131,7 @@ RSpec.describe 'Users' do
 
   describe 'POST /user/:id' do
     let(:user) { create(:user) }
-    let(:other_user) { create(:other_user) }
+    let(:other_user) { create(:user, :other_user) }
 
     it 'redirects to login_path when not logged_in' do
       patch user_path(user), params: { user: { name: user.name,
@@ -160,7 +160,7 @@ RSpec.describe 'Users' do
 
   describe 'DELETE /user/:id' do
     let!(:user) { create(:user) }
-    let(:other_user) { create(:other_user) }
+    let(:other_user) { create(:user, :other_user) }
 
     context 'when not logged in' do
       it 'cannot delete user' do
@@ -204,7 +204,7 @@ RSpec.describe 'Users' do
     end
 
     context 'with incorrect user' do
-      let(:other_user) { create(:other_user) }
+      let(:other_user) { create(:user, :other_user) }
 
       it 'redirects to root_path' do
         log_in_as other_user
@@ -216,7 +216,7 @@ RSpec.describe 'Users' do
 
   describe 'PATCH /users/:id/update_test_mode #update_test_mode' do
     let(:admin) { create(:user) }
-    let(:other_user) { create(:other_user) }
+    let(:other_user) { create(:user, :other_user) }
     let(:do_request) do
       patch update_test_mode_user_path(other_user), params: { user: { is_test_mode: true } }, as: :turbo_stream
     end

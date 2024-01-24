@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'RamenShops' do
   let(:ramen_shop) { create(:ramen_shop) }
-  let(:non_admin) { create(:other_user) }
+  let(:non_admin) { create(:user, :other_user) }
   let(:admin) { create(:user) }
 
   shared_examples 'when not logged in' do
