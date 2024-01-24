@@ -95,10 +95,6 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver_now
   end
 
-  def send_shop_register_request_email(request)
-    UserMailer.shop_register_request(self, request).deliver_now
-  end
-
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end

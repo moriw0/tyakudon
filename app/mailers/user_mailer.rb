@@ -16,10 +16,4 @@ class UserMailer < ApplicationMailer
     @record = record
     mail(to: @user.email, subject: 'ちゃくどん記録が無効になりました')
   end
-
-  def shop_register_request(user, request)
-    @user = user
-    @request = request
-    mail(to: ENV.fetch('ADMIN_EMAIL'), subject: '店舗登録リクエスト')
-  end
 end

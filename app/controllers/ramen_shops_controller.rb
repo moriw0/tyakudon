@@ -72,14 +72,6 @@ class RamenShopsController < ApplicationController
 
   private
 
-  def ramen_shop_params_from_request
-    if params[:request].present?
-      params.require(:request).permit(:name, :address)
-    else
-      {}
-    end
-  end
-
   def set_ramen_shop
     @ramen_shop = RamenShop.find(params[:id])
   end
