@@ -1,6 +1,6 @@
 class ShopRegisterRequestsController < ApplicationController
   before_action :logged_in_user
-  before_action :admin_user, only: %i[edit]
+  before_action :admin_user, only: %i[edit complete]
 
   def new
     @request = ShopRegisterRequest.new
@@ -11,7 +11,7 @@ class ShopRegisterRequestsController < ApplicationController
 
     if request&.open?
       request.approved!
-      redirect_to new_ramen_shop_path(ramen_shop: { name: request.name, address: request.address, id: request.id })
+      redirect_to new_ramen_shop_path(request: { id: request.id, name: request.name, address: request.address })
     else
       redirect_to root_path, alert: '無効なリンクです'
     end
@@ -24,6 +24,19 @@ class ShopRegisterRequestsController < ApplicationController
       handle_existing_shop
     else
       save_request
+    end
+  end
+
+  def complete
+    request = ShopRegisterRequest.find_by(id: params[:id])
+    ramen_shop = RamenShop.find_by(id: params[:ramen_shop_id])
+
+    if request&.approved? && ramen_shop
+      ShopRegisterMailer.registration_complete_email(request.user, ramen_shop).deliver_later
+      request.completed!
+      redirect_to root_path, notice: '登録完了メールを送信しました'
+    else
+      redirect_to root_path, alert: '不正なアクセスです'
     end
   end
 
