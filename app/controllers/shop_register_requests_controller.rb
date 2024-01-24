@@ -62,7 +62,7 @@ class ShopRegisterRequestsController < ApplicationController
 
   def save_request
     if @request.save
-      @request.user.send_shop_register_request_email(@request)
+      ShopRegisterMailer.shop_register_request(@request)
       redirect_to root_path, notice: 'リクエストを送信しました'
     else
       render :new, status: :unprocessable_entity

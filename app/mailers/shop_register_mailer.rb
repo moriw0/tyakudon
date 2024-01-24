@@ -1,6 +1,5 @@
 class ShopRegisterMailer < ApplicationMailer
-  def shop_register_request(user, request)
-    @user = user
+  def shop_register_request(request)
     @request = request
     mail(to: ENV.fetch('ADMIN_EMAIL'), subject: '店舗登録リクエスト')
   end

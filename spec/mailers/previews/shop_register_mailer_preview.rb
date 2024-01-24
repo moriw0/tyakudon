@@ -4,7 +4,7 @@ class ShopRegisterMailerPreview < ActionMailer::Preview
   def shop_register_request
     user = User.first
     request = user.shop_register_requests.first
-    ShopRegisterMailer.shop_register_request(user, request)
+    ShopRegisterMailer.shop_register_request(request)
   end
 
   # Preview this email at http://localhost:3000/rails/mailers/shop_register_mailer/registration_complete_email
