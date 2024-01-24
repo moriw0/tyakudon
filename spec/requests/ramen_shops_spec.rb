@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'RamenShops' do
   let(:ramen_shop) { create(:ramen_shop) }
   let(:non_admin) { create(:user, :other_user) }
-  let(:admin) { create(:user) }
+  let(:admin) { create(:user, :admin) }
 
   shared_examples 'when not logged in' do
     it 'redirects to login_path' do

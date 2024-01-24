@@ -9,24 +9,29 @@ RSpec.describe 'Users' do
   end
 
   describe 'GET /users' do
-    let(:admin) { create(:user) }
-    let(:non_admin) { create(:user, :other_user) }
-
     it 'redirects to login_path when not logged in' do
       get users_path
       expect(response).to redirect_to login_path
     end
 
-    it 'redirects to root_path with non-admin' do
-      log_in_as(non_admin)
-      get users_path
-      expect(response).to redirect_to root_path
+    context 'with non-admin' do
+      let!(:non_admin) { create(:user, :other_user) }
+
+      it 'redirects to root_path' do
+        log_in_as(non_admin)
+        get users_path
+        expect(response).to redirect_to root_path
+      end
     end
 
-    it 'gets users_path with admin' do
-      log_in_as(admin)
-      get users_path
-      expect(response.body).to include '<h1>すべてのユーザー</h1>'
+    context 'with admin' do
+      let!(:admin) { create(:user, :admin) }
+
+      it 'gets users_path with admin' do
+        log_in_as(admin)
+        get users_path
+        expect(response.body).to include '<h1>すべてのユーザー</h1>'
+      end
     end
   end
 
@@ -215,13 +220,14 @@ RSpec.describe 'Users' do
   end
 
   describe 'PATCH /users/:id/update_test_mode #update_test_mode' do
-    let(:admin) { create(:user) }
-    let(:other_user) { create(:user, :other_user) }
+    let!(:other_user) { create(:user, :other_user) }
     let(:do_request) do
       patch update_test_mode_user_path(other_user), params: { user: { is_test_mode: true } }, as: :turbo_stream
     end
 
     context 'when logged in as admin' do
+      let!(:admin) { create(:user, :admin) }
+
       it 'updates test mode' do
         log_in_as admin
         do_request
@@ -242,9 +248,7 @@ RSpec.describe 'Users' do
     end
 
     context 'when logged in as a non-admin' do
-      before do
-        log_in_as other_user
-      end
+      before { log_in_as other_user }
 
       it 'does not update test mode' do
         do_request
