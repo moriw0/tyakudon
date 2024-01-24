@@ -64,7 +64,7 @@ RSpec.describe 'Favorites' do
       end
 
       context 'with favorite shop records' do
-        let!(:other_user) { create(:other_user) }
+        let!(:other_user) { create(:user, :other_user) }
 
         before do
           records = user.favorite_shops.map { |shop| build_stubbed(:record, user: other_user, ramen_shop: shop) }

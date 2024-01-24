@@ -93,7 +93,7 @@ RSpec.describe 'Users' do
       end
 
       context 'when logged in as non admin' do
-        let!(:non_admin) { create(:other_user, admin: false) }
+        let!(:non_admin) { create(:user, :other_user, admin: false) }
 
         before { log_in_as(non_admin) }
 
@@ -113,7 +113,7 @@ RSpec.describe 'Users' do
       end
 
       context 'with non admin user' do
-        let!(:non_admin) { create(:other_user, admin: false) }
+        let!(:non_admin) { create(:user, :other_user, admin: false) }
         let!(:users) { User.all }
 
         scenario ['admin can see users', 'delete non admin user'].join(', ') do
@@ -159,7 +159,7 @@ RSpec.describe 'Users' do
     let!(:user) { create(:user) }
 
     context 'when vist current user path' do
-      let!(:other_user) { create(:other_user) }
+      let!(:other_user) { create(:user, :other_user) }
 
       before { log_in_as(user) }
 

@@ -31,7 +31,7 @@ RSpec.describe 'LineStatuses' do
     end
 
     context 'when logged in as other_user' do
-      let(:other_user) { create(:other_user) }
+      let(:other_user) { create(:user, :other_user) }
 
       before do
         log_in_as(other_user)
@@ -61,7 +61,7 @@ RSpec.describe 'LineStatuses' do
     end
 
     context 'when logged in as other_user' do
-      let(:other_user) { create(:other_user) }
+      let(:other_user) { create(:user, :other_user) }
 
       before do
         log_in_as(other_user)
@@ -98,7 +98,7 @@ RSpec.describe 'LineStatuses' do
     end
 
     context 'when logged in as other_user' do
-      let(:other_user) { create(:other_user) }
+      let(:other_user) { create(:user, :other_user) }
 
       before do
         log_in_as(other_user)
@@ -130,7 +130,7 @@ RSpec.describe 'LineStatuses' do
     end
 
     context 'when logged in as other_user' do
-      let(:other_user) { create(:other_user) }
+      let(:other_user) { create(:user, :other_user) }
 
       before do
         log_in_as(other_user)
