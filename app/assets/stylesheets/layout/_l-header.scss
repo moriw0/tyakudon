@@ -126,12 +126,13 @@
         .order-for-logged-in-users {
           li:nth-child(2) { order: 1; } // プロフィール
           li:nth-child(1) { order: 2; } // お気に入り
-          li:nth-child(5) { order: 3; } // ランキング
-          li:nth-child(6) { order: 4; } // 新着
-          li:nth-child(7) { order: 5; } // 店舗検索
+          li:nth-child(4) { order: 3; } // ランキング
+          li:nth-child(5) { order: 4; } // 新着
+          li:nth-child(6) { order: 5; } // 店舗検索
           li:nth-child(3) { order: 6; } // ログアウト
-          li:nth-child(8) { order: 7; } // チャクドンについて
-          li:nth-child(4) { order: 8; } // Users
+          li:nth-child(7) { order: 7; } // チャクドンについて
+          li:nth-child(8) { order: 8; } // Users
+          li:nth-child(9) { order: 9; } // 店舗登録
         }
         .order-for-all-users {
           li:nth-child(6) { order: 1; } // ちゃくどんについて
