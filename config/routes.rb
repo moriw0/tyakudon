@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'shop_register_requests/new'
   root 'application#route_based_on_authentication'
   get '/lp', to: 'landing_page#index'
   get '/terms', to: 'statics#terms'
@@ -44,4 +45,7 @@ Rails.application.routes.draw do
     end
   end
   resources :cheer_messages, only: %i[create]
+  resources :shop_register_requests, only: [:new, :create, :edit] do
+    get 'complete', on: :member
+  end
 end
