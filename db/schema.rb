@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_20_205817) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_26_111700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -190,7 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_20_205817) do
     t.string "address", null: false
     t.text "remarks"
     t.bigint "user_id", null: false
-    t.integer "status", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["address", "name"], name: "index_shop_register_requests_on_address_and_name", unique: true
