@@ -10,12 +10,4 @@ class ShopRegisterRequest < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :address }, length: { maximum: 100 }
   validates :address, presence: true, length: { maximum: 255 }
-
-  after_initialize :set_default_status, if: :new_record?
-
-  private
-
-  def set_default_status
-    self.status ||= :open
-  end
 end

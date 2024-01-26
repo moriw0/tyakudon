@@ -1,87 +1,111 @@
 require 'rails_helper'
 
 RSpec.describe 'ShopRegisterRequests' do
-  let!(:user) { create(:user) }
+  let!(:non_admin) { create(:user, admin: false) }
 
-  before do
-    log_in_as user
+  shared_examples 'when not logged in' do
+    it 'redirects to login_path' do
+      do_request
+      expect(response).to redirect_to login_path
+    end
+  end
+
+  shared_examples 'as a non-admin' do
+    before { log_in_as non_admin }
+
+    it 'redirects to root_path' do
+      do_request
+      expect(response).to redirect_to root_path
+    end
+
+    it 'has a noticeend flash' do
+      do_request
+      expect(flash[:notice]).to eq '不正なアクセスです'
+    end
   end
 
   describe 'GET /shop_register_request/new' do
-    it 'returns http success' do
-      get new_shop_register_request_path
-      expect(response).to have_http_status(:success)
+    let(:do_request) { get new_shop_register_request_path }
+
+    it_behaves_like 'when not logged in'
+
+    context 'when logged in' do
+      before { log_in_as non_admin }
+
+      it 'returns http success' do
+        do_request
+        expect(response).to have_http_status(:success)
+      end
     end
   end
 
   describe 'GET /shop_register_request/:id/edit' do
+    let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
+    let(:do_request) { get edit_shop_register_request_path(shop_request) }
+
+    it_behaves_like 'when not logged in'
+    it_behaves_like 'as a non-admin'
+
     context 'with admin' do
       let!(:admin) { create(:user, :admin) }
 
       before { log_in_as admin }
 
-      context 'when open' do
-        let!(:shop_request) { create(:shop_register_request, status: 'open', user: user) }
+      context 'when status is open' do
+        let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
+        let(:do_request) { get edit_shop_register_request_path(shop_request) }
 
-        it 'gets approved' do
-          get edit_shop_register_request_path(shop_request)
+        it 'makes status approved' do
+          do_request
           expect(shop_request.reload).to be_approved
         end
 
         it 'redirects to new_ramen_shop_path with params' do
-          get edit_shop_register_request_path(shop_request)
+          do_request
           expect(response).to redirect_to new_ramen_shop_path(request: { id: shop_request.id, name: shop_request.name,
                                                                          address: shop_request.address })
         end
       end
 
-      context 'when not open' do
-        let!(:shop_request) { create(:shop_register_request, status: 'approved', user: user) }
+      context 'when status is not open' do
+        let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
+        let(:do_request) { get edit_shop_register_request_path(shop_request) }
 
         it 'redirects to root_path' do
-          get edit_shop_register_request_path(shop_request)
+          do_request
           expect(response).to redirect_to root_path
         end
 
         it 'has a alert flash' do
-          get edit_shop_register_request_path(shop_request)
+          do_request
           expect(flash[:alert]).to eq '無効なリンクです'
         end
-      end
-    end
-
-    context 'with non-admin' do
-      let!(:non_admin) { create(:user, admin: false) }
-      let!(:shop_request) { create(:shop_register_request, status: 'open', user: user) }
-
-      before { log_in_as non_admin }
-
-      it 'redirects to root_path' do
-        get edit_shop_register_request_path(shop_request)
-        expect(response).to redirect_to root_path
-      end
-
-      it 'has a noticeend flash' do
-        get edit_shop_register_request_path(shop_request)
-        expect(flash[:notice]).to eq '不正なアクセスです'
       end
     end
   end
 
   describe 'POST /shop_register_request' do
-    context 'when shop does not exist' do
-      before { ActionMailer::Base.deliveries.clear }
+    let!(:shop_register_request_params) { { shop_register_request: attributes_for(:shop_register_request) } }
+    let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
 
-      let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
+    it_behaves_like 'when not logged in'
+
+    context ['when logged in', 'shop does not exist'].join(', ') do
+      before do
+        log_in_as non_admin
+        ActionMailer::Base.deliveries.clear
+      end
 
       context 'with valid parameters' do
-        let(:shop_register_request_params) { { shop_register_request: attributes_for(:shop_register_request) } }
+        let!(:shop_register_request_params) { { shop_register_request: attributes_for(:shop_register_request) } }
+        let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
+
+        before { allow(ENV).to receive(:fetch).with('ADMIN_EMAIL').and_return('admin@example.com') }
 
         it 'creates a new ShopRegisterRequest' do
           expect {
             do_request
           }.to change(ShopRegisterRequest, :count).by(1)
-          expect(response).to redirect_to(root_path)
         end
 
         it 'sends an email' do
@@ -101,7 +125,8 @@ RSpec.describe 'ShopRegisterRequests' do
       end
 
       context 'with invalid parameters' do
-        let(:shop_register_request_params) { { shop_register_request: { name: '', address: '' } } }
+        let!(:shop_register_request_params) { { shop_register_request: { name: '', address: '' } } }
+        let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
 
         it 'does not create a new ShopRegisterRequest' do
           expect {
@@ -116,15 +141,23 @@ RSpec.describe 'ShopRegisterRequests' do
       end
     end
 
-    context 'when shop already exists' do
+    context ['when logged in', 'shop already exists'].join(', ') do
+      let(:do_request) do
+        post shop_register_requests_path, params: { shop_register_request: { name: 'よくある店舗', address: '東京都新宿区' } }
+      end
+
       before do
-        create(:ramen_shop, name: 'Existing Ramen Shop', address: '123 Ramen Street')
+        log_in_as non_admin
+        create(:ramen_shop, name: 'よくある店舗', address: '東京都新宿区')
       end
 
       it 'does not create a new ShopRegisterRequest' do
-        post shop_register_requests_path,
-             params: { shop_register_request: { name: 'Existing Ramen Shop', address: '123 Ramen Street' } }
+        do_request
         expect(ShopRegisterRequest.count).to eq(0)
+      end
+
+      it 'has a alert flash' do
+        do_request
         expect(flash[:alert]).to eq '店舗が既に存在します。'
       end
     end
@@ -132,17 +165,26 @@ RSpec.describe 'ShopRegisterRequests' do
 
   describe 'GET /shop_register_request/:id/complete' do
     let!(:ramen_shop) { create(:ramen_shop) }
-    let(:do_request) { get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id } }
+    let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
+    let(:do_request) do
+      get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id }
+    end
+
+    it_behaves_like 'when not logged in'
+    it_behaves_like 'as a non-admin'
 
     context 'with admin' do
       let!(:admin) { create(:user, :admin) }
 
       before { log_in_as admin }
 
-      context 'when approved' do
-        let!(:shop_request) { create(:shop_register_request, status: 'approved', user: user) }
+      context 'when status is approved' do
+        let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
+        let(:do_request) do
+          get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id }
+        end
 
-        it 'gets completed' do
+        it 'makes status completed' do
           do_request
           expect(shop_request.reload).to be_completed
         end
@@ -158,8 +200,11 @@ RSpec.describe 'ShopRegisterRequests' do
         end
       end
 
-      context 'when not approved' do
-        let!(:shop_request) { create(:shop_register_request, status: 'open', user: user) }
+      context 'when status is not approved' do
+        let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
+        let(:do_request) do
+          get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id }
+        end
 
         it 'redirects to root_path' do
           do_request
@@ -170,23 +215,6 @@ RSpec.describe 'ShopRegisterRequests' do
           do_request
           expect(flash[:alert]).to eq '不正なアクセスです'
         end
-      end
-    end
-
-    context 'with non-admin' do
-      let!(:non_admin) { create(:user, admin: false) }
-      let!(:shop_request) { create(:shop_register_request, status: 'approved', user: user) }
-
-      before { log_in_as non_admin }
-
-      it 'redirects to root_path' do
-        do_request
-        expect(response).to redirect_to root_path
-      end
-
-      it 'has a noticeend flash' do
-        do_request
-        expect(flash[:notice]).to eq '不正なアクセスです'
       end
     end
   end

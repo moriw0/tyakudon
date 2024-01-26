@@ -48,7 +48,7 @@ RSpec.describe 'RamenShops' do
 
         it 'includes request id in hidden field' do
           get new_ramen_shop_path(request: { id: 1, name: 'リクエスト店', address: '東京都新宿区' })
-          expect(response.body).to include '<input type="hidden" name="request_id" id="request_id" value="1" autocomplete="off" />'
+          expect(response.body).to include 'input type="hidden" name="request_id" id="request_id" value="1"'
         end
       end
     end

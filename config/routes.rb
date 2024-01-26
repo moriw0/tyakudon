@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'shop_register_requests/new'
   root 'application#route_based_on_authentication'
   get '/lp', to: 'landing_page#index'
   get '/terms', to: 'statics#terms'

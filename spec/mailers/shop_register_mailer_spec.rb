@@ -6,9 +6,11 @@ RSpec.describe ShopRegisterMailer do
     let!(:shop_request) { create(:shop_register_request, status: 'open', user: user) }
     let(:mail) { described_class.shop_register_request(shop_request) }
 
+    before { allow(ENV).to receive(:fetch).with('ADMIN_EMAIL').and_return('admin@example.com') }
+
     it 'renders the headers' do
       expect(mail.subject).to eq '店舗登録リクエスト'
-      expect(mail.to).to eq [ENV.fetch('ADMIN_EMAIL')]
+      expect(mail.to).to eq ['admin@example.com']
       expect(mail.from).to eq ['noreply@mail.tyakudon.com']
     end
 

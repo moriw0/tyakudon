@@ -20,7 +20,7 @@ class ShopRegisterRequestsController < ApplicationController
   def create
     @request = current_user.shop_register_requests.build(request_params)
 
-    if shop_exists?
+    if RamenShop.exists?(name: @request.name, address: @request.address)
       handle_existing_shop
     else
       save_request
@@ -32,9 +32,7 @@ class ShopRegisterRequestsController < ApplicationController
     ramen_shop = RamenShop.find_by(id: params[:ramen_shop_id])
 
     if request&.approved? && ramen_shop
-      ShopRegisterMailer.registration_complete_email(user: request.user, ramen_shop: ramen_shop).deliver_now
-      request.completed!
-      redirect_to root_path, notice: '登録完了メールを送信しました'
+      complete_registration(request, ramen_shop)
     else
       redirect_to root_path, alert: '不正なアクセスです'
     end
@@ -44,14 +42,6 @@ class ShopRegisterRequestsController < ApplicationController
 
   def request_params
     params.require(:shop_register_request).permit(:name, :address, :remarks)
-  end
-
-  def update_request_params
-    params.require(:shop_register_request).permit(:name, :address, :remarks, :status)
-  end
-
-  def shop_exists?
-    RamenShop.exists?(name: @request.name, address: @request.address)
   end
 
   def handle_existing_shop
@@ -67,5 +57,11 @@ class ShopRegisterRequestsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def complete_registration(request, ramen_shop)
+    ShopRegisterMailer.registration_complete_email(user: request.user, ramen_shop: ramen_shop).deliver_now
+    request.completed!
+    redirect_to root_path, notice: '登録完了メールを送信しました'
   end
 end
