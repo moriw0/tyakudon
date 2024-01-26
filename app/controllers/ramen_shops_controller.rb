@@ -24,17 +24,23 @@ class RamenShopsController < ApplicationController
   end
 
   def new
-    @ramen_shop = RamenShop.new
+    if params[:request].present?
+      @ramen_shop = RamenShop.new(name: params[:request][:name], address: params[:request][:address])
+      @request_id = params[:request][:id]
+    else
+      @ramen_shop = RamenShop.new
+    end
   end
 
   def edit
   end
 
   def create
-    ramen_shop = RamenShop.new(ramen_shop_params)
+    @ramen_shop = RamenShop.new(ramen_shop_params)
+    @request_id = params[:request_id]
 
-    if ramen_shop.save
-      redirect_to new_ramen_shop_path, notice: 'saved!'
+    if @ramen_shop.save
+      process_after_save
     else
       render :new
     end
@@ -69,5 +75,13 @@ class RamenShopsController < ApplicationController
 
   def ramen_shop_params
     params.require(:ramen_shop).permit(:name, :address)
+  end
+
+  def process_after_save
+    if @request_id
+      redirect_to complete_shop_register_request_path(params[:request_id], ramen_shop_id: @ramen_shop.id)
+    else
+      redirect_to new_ramen_shop_path, notice: 'saved!'
+    end
   end
 end

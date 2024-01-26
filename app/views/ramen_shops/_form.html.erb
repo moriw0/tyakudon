@@ -1,6 +1,7 @@
 <%= bootstrap_form_with model: @ramen_shop do |f|%>
   <%= f.text_field :name %>
   <%= f.text_field :address %>
+  <%= hidden_field_tag :request_id, @request_id %>
   <div class="d-grid">
     <%= f.submit yield(:button_text) %>
   </div>
