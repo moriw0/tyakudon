@@ -30,7 +30,8 @@ RSpec.describe 'ShopRegisterRequests' do
 
         it 'redirects to new_ramen_shop_path with params' do
           get edit_shop_register_request_path(shop_request)
-          expect(response).to redirect_to new_ramen_shop_path(request: { id: shop_request.id, name: shop_request.name, address: shop_request.address })
+          expect(response).to redirect_to new_ramen_shop_path(request: { id: shop_request.id, name: shop_request.name,
+                                                                         address: shop_request.address })
         end
       end
 
