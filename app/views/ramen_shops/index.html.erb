@@ -12,7 +12,7 @@
   <% else %>
     <p class='no-shops'>
       店舗が見つかりませんでした
-      <span>管理者まで店舗登録依頼を出してください！</span>
+      <%= link_to '店舗登録リクエストする', new_shop_register_request_path %>
     </p>
   <% end %>
 </section>

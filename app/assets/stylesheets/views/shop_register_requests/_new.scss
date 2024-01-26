@@ -1,0 +1,11 @@
+.existing-shop {
+  border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-between;
+  }
+}
