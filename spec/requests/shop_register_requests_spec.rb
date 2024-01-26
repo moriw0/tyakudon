@@ -68,23 +68,50 @@ RSpec.describe 'ShopRegisterRequests' do
   end
 
   describe 'POST /shop_register_request' do
-    context 'with valid parameters' do
-      it 'creates a new ShopRegisterRequest' do
-        expect {
-          post shop_register_requests_path,
-               params: { shop_register_request: { name: 'New Ramen Shop', address: '123 Ramen Street',
-                                                  remarks: 'Great place!' } }
-        }.to change(ShopRegisterRequest, :count).by(1)
-        expect(response).to redirect_to(root_path)
-      end
-    end
+    context 'when shop does not exist' do
+      before { ActionMailer::Base.deliveries.clear }
 
-    context 'with invalid parameters' do
-      it 'does not create a new ShopRegisterRequest' do
-        expect {
-          post shop_register_requests_path, params: { shop_register_request: { name: '', address: '' } }
-        }.to_not change(ShopRegisterRequest, :count)
-        expect(response).to have_http_status(:unprocessable_entity)
+      let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
+
+      context 'with valid parameters' do
+        let(:shop_register_request_params) { { shop_register_request: attributes_for(:shop_register_request) } }
+
+        it 'creates a new ShopRegisterRequest' do
+          expect {
+            do_request
+          }.to change(ShopRegisterRequest, :count).by(1)
+          expect(response).to redirect_to(root_path)
+        end
+
+        it 'sends an email' do
+          do_request
+          expect(ActionMailer::Base.deliveries.size).to eq 1
+        end
+
+        it 'redirects to root_path' do
+          do_request
+          expect(response).to redirect_to root_path
+        end
+
+        it 'has a notice flash' do
+          do_request
+          expect(flash[:notice]).to eq 'リクエストを送信しました'
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:shop_register_request_params) { { shop_register_request: { name: '', address: '' } } }
+
+        it 'does not create a new ShopRegisterRequest' do
+          expect {
+            do_request
+          }.to_not change(ShopRegisterRequest, :count)
+        end
+
+        it 'does not send an email' do
+          do_request
+          expect(ActionMailer::Base.deliveries.size).to eq 0
+        end
       end
     end
 

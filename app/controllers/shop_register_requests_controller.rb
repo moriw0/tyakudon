@@ -32,7 +32,7 @@ class ShopRegisterRequestsController < ApplicationController
     ramen_shop = RamenShop.find_by(id: params[:ramen_shop_id])
 
     if request&.approved? && ramen_shop
-      ShopRegisterMailer.registration_complete_email(user: request.user, ramen_shop: ramen_shop).deliver_later
+      ShopRegisterMailer.registration_complete_email(user: request.user, ramen_shop: ramen_shop).deliver_now
       request.completed!
       redirect_to root_path, notice: '登録完了メールを送信しました'
     else
@@ -62,7 +62,7 @@ class ShopRegisterRequestsController < ApplicationController
 
   def save_request
     if @request.save
-      ShopRegisterMailer.shop_register_request(@request)
+      ShopRegisterMailer.shop_register_request(@request).deliver_now
       redirect_to root_path, notice: 'リクエストを送信しました'
     else
       render :new, status: :unprocessable_entity
