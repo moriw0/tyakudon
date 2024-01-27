@@ -72,7 +72,7 @@ RSpec.describe 'Users' do
         attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png'), make_visible: true
         click_button '更新する'
         expect(page).to have_content '入力してください'
-        expect(page).to have_content '5MB以下である必要があります'
+        expect(page).to have_content 'アバターのファイルサイズは5MB以下にしてください。'
       }.to_not change(User, :count)
     end
   end

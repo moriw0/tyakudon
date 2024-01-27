@@ -39,7 +39,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:user]).to include('を入力してください')
+          expect(record.errors[:user]).to include('Userを入力してください。')
         end
       end
 
@@ -48,7 +48,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:comment]).to include('は140文字以内で入力してください')
+          expect(record.errors[:comment]).to include('コメントは140文字以内で入力してください。')
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:image]).to include 'は5MB以下である必要があります'
+          expect(record.errors[:image]).to include '写真のファイルサイズは5MB以下にしてください。'
         end
       end
 
@@ -71,7 +71,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:image]).to include 'のフォーマットが不正です'
+          expect(record.errors[:image]).to include 'アップロードできないファイル形式です。'
         end
       end
 
@@ -80,7 +80,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+          expect(record.errors[:started_at]).to include('接続時刻は作成時の現在時刻より数秒以内でなければなりません。')
         end
       end
     end
@@ -93,7 +93,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           expect(record).to_not be_valid
-          expect(record.errors[:started_at]).to include('は作成時の現在時刻より数秒以内でなければなりません')
+          expect(record.errors[:started_at]).to include('接続時刻は作成時の現在時刻より数秒以内でなければなりません。')
         end
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:ended_at]).to include('は更新時の現在時刻より数秒以内でなければなりません')
+          expect(record.errors[:ended_at]).to include('着丼時刻は更新時の現在時刻より数秒以内でなければなりません。')
         end
       end
 
@@ -117,7 +117,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:ended_at]).to include('はstarted_atより後である必要があります。')
+          expect(record.errors[:ended_at]).to include('着丼時刻は接続時刻より後である必要があります。')
         end
       end
 
@@ -126,7 +126,7 @@ RSpec.describe Record do
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:wait_time]).to include('はended_atとstarted_atの差である必要があります。')
+          expect(record.errors[:wait_time]).to include('待ち時間は着丼時刻と接続時刻の差である必要があります。')
         end
       end
     end

@@ -64,7 +64,7 @@ RSpec.describe 'Records' do
         it 'shows validation errors' do
           record_params_without_record[:record][:line_statuses_attributes][0][:line_number] = -1
           post ramen_shop_records_path(ramen_shop), params: record_params_without_record, as: :turbo_stream
-          expect(response.body).to include 'は0以上の値にしてください'
+          expect(response.body).to include '待ち行列数は0以上の値を入力してください。'
         end
       end
     end

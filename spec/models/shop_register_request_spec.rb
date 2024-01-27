@@ -17,7 +17,7 @@ RSpec.describe ShopRegisterRequest do
 
       it 'includes error message' do
         request.valid?
-        expect(request.errors[:name]).to include 'を入力してください'
+        expect(request.errors[:name]).to include '店名を入力してください。'
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe ShopRegisterRequest do
 
       it 'includes error message' do
         request.valid?
-        expect(request.errors[:address]).to include 'を入力してください'
+        expect(request.errors[:address]).to include '住所を入力してください。'
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe ShopRegisterRequest do
 
       it 'includes error message' do
         request.valid?
-        expect(request.errors[:name]).to include 'はすでに存在します'
+        expect(request.errors[:name]).to include '店名がすでに使用されています。'
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe ShopRegisterRequest do
 
       it 'includes error message' do
         request.valid?
-        expect(request.errors[:name]).to include 'は100文字以内で入力してください'
+        expect(request.errors[:name]).to include '店名は100文字以内で入力してください。'
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe ShopRegisterRequest do
 
       it 'includes error message' do
         request.valid?
-        expect(request.errors[:address]).to include 'は255文字以内で入力してください'
+        expect(request.errors[:address]).to include '住所は255文字以内で入力してください。'
       end
     end
   end

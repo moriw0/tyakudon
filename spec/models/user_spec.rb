@@ -19,37 +19,37 @@ RSpec.describe User do
   it 'is invalid without a name' do
     user.name =  '    '
     user.valid?
-    expect(user.errors[:name]).to include('を入力してください')
+    expect(user.errors[:name]).to include('ニックネームを入力してください。')
   end
 
   it 'is invalid without an email' do
     user.email = '    '
     user.valid?
-    expect(user.errors[:email]).to include('を入力してください')
+    expect(user.errors[:email]).to include('メールアドレスを入力してください。')
   end
 
   it 'is invalid without a too long name' do
     user.name = 'a' * 51
     user.valid?
-    expect(user.errors[:name]).to include('は50文字以内で入力してください')
+    expect(user.errors[:name]).to include('ニックネームは50文字以内で入力してください。')
   end
 
   it 'is invalid without a too long email' do
     user.email = "#{'a' * 244}@example.com"
     user.valid?
-    expect(user.errors[:email]).to include('は255文字以内で入力してください')
+    expect(user.errors[:email]).to include('メールアドレスは255文字以内で入力してください。')
   end
 
   it 'is invalid with a 5.2 MB image' do
     user.avatar = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s)
     user.valid?
-    expect(user.errors[:avatar]).to include 'は5MB以下である必要があります'
+    expect(user.errors[:avatar]).to include 'アバターのファイルサイズは5MB以下にしてください。'
   end
 
   it 'is invalid with a gif image' do
     user.avatar = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/ramen.gif').to_s)
     user.valid?
-    expect(user.errors[:avatar]).to include 'のフォーマットが不正です'
+    expect(user.errors[:avatar]).to include 'アップロードできないファイル形式です。'
   end
 
   it 'is valid with valid addresses' do
@@ -77,7 +77,7 @@ RSpec.describe User do
     new_user = create(:user)
     duplicate_user = new_user.dup
     duplicate_user.valid?
-    expect(duplicate_user.errors[:email]).to include('はすでに存在します')
+    expect(duplicate_user.errors[:email]).to include('メールアドレスがすでに使用されています。')
   end
 
   it 'saves email addresses as lowercase' do
@@ -90,27 +90,26 @@ RSpec.describe User do
     it 'returns an error when the password is blank' do
       user.password = user.password_confirmation = ' ' * 6
       expect(user).to_not be_valid
-      expect(user.errors[:password]).to include('を入力してください')
+      expect(user.errors[:password]).to include('パスワードを入力してください。')
     end
 
     it 'returns an error when the password is less than 6 characters' do
       user.password = user.password_confirmation = 'a' * 5
       expect(user).to_not be_valid
-      expect(user.errors[:password]).to include('は6文字以上で入力してください')
+      expect(user.errors[:password]).to include('パスワードは6文字以上で入力してください。')
     end
 
     it 'returns an error when the password is too long' do
-      max_length = ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
-      user.password = user.password_confirmation = 'a' * (max_length + 1)
+      user.password = user.password_confirmation = 'a' * 73
       expect(user).to_not be_valid
-      expect(user.errors[:password]).to include("は#{max_length}文字以内で入力してください")
+      expect(user.errors[:password]).to include('パスワードは72文字以内で入力してください。')
     end
 
     it 'returns an error when password and password confirmation do not match' do
       user.password = 'password'
       user.password_confirmation = 'different'
       expect(user).to_not be_valid
-      expect(user.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+      expect(user.errors[:password_confirmation]).to include('パスワードが一致しません。')
     end
 
     it 'skips password validation when uid exists' do
