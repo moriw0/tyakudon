@@ -13,9 +13,9 @@ class Record < ApplicationRecord
 
   validates :comment, length: { maximum: 140 }
   validates :image, content_type: { in: %i[png jpg jpeg],
-                                    message: 'のフォーマットが不正です' },
+                                    message: :file_type_invalid },
                     size: { less_than_or_equal_to: 5.megabytes,
-                            message: 'は5MB以下である必要があります' }
+                            message: :file_size_exceed }
   validate :started_at_is_recent,         on: :create, unless: :skip_validation
   validate :ended_at_is_recent,           on: :update, if: :calculate_action
   validate :ended_at_is_after_started_at, on: :update
@@ -90,17 +90,17 @@ class Record < ApplicationRecord
   def started_at_is_recent
     return unless started_at && (started_at - Time.current).abs > 5.seconds
 
-    errors.add(:started_at, 'は作成時の現在時刻より数秒以内でなければなりません')
+    errors.add(:started_at, :started_at_not_recent)
   end
 
   def ended_at_is_recent
     return unless ended_at && (ended_at - Time.current).abs > 5.seconds
 
-    errors.add(:ended_at, 'は更新時の現在時刻より数秒以内でなければなりません')
+    errors.add(:ended_at, :ended_at_not_recent)
   end
 
   def ended_at_is_after_started_at
-    errors.add(:ended_at, 'はstarted_atより後である必要があります。') if ended_at && started_at && ended_at <= started_at
+    errors.add(:ended_at, :ended_at_before_started_at) if ended_at && started_at && ended_at <= started_at
   end
 
   def wait_time_is_correct
@@ -108,7 +108,7 @@ class Record < ApplicationRecord
 
     return if wait_time_correct?
 
-    errors.add(:wait_time, 'はended_atとstarted_atの差である必要があります。')
+    errors.add(:wait_time, :incorrect_wait_time)
   end
 
   def wait_time_correct?

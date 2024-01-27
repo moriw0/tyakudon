@@ -19,7 +19,7 @@ RSpec.describe Like do
 
       it 'includes error message' do
         like.valid?
-        expect(like.errors[:record]).to include 'を入力してください'
+        expect(like.errors[:record]).to include 'Recordを入力してください。'
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Like do
 
       it 'includes error message' do
         like.valid?
-        expect(like.errors[:user]).to include 'を入力してください'
+        expect(like.errors[:user]).to include 'Userを入力してください。'
       end
     end
   end

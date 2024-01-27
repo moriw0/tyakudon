@@ -17,13 +17,13 @@ RSpec.describe RamenShop do
     it 'validates presence of name' do
       ramen_shop.name = nil
       ramen_shop.valid?
-      expect(ramen_shop.errors[:name]).to include('を入力してください')
+      expect(ramen_shop.errors[:name]).to include('店名を入力してください。')
     end
 
     it 'validates presence of address' do
       ramen_shop.address = nil
       ramen_shop.valid?
-      expect(ramen_shop.errors[:address]).to include('を入力してください')
+      expect(ramen_shop.errors[:address]).to include('住所を入力してください。')
     end
 
     it 'validates uniqueness of name scoped to address' do
@@ -31,19 +31,19 @@ RSpec.describe RamenShop do
       ramen_shop.name = existing_shop.name
       ramen_shop.address = existing_shop.address
       ramen_shop.valid?
-      expect(ramen_shop.errors[:name]).to include('はすでに存在します')
+      expect(ramen_shop.errors[:name]).to include('店名がすでに使用されています。')
     end
 
     it 'validates numericality of latitude' do
       ramen_shop.latitude = 91
       ramen_shop.valid?
-      expect(ramen_shop.errors[:latitude]).to include('は90以下の値にしてください')
+      expect(ramen_shop.errors[:latitude]).to include('緯度は90以下の値にしてください')
     end
 
     it 'validates numericality of longitude' do
       ramen_shop.longitude = 181
       ramen_shop.valid?
-      expect(ramen_shop.errors[:longitude]).to include('は180以下の値にしてください')
+      expect(ramen_shop.errors[:longitude]).to include('経度は180以下の値にしてください')
     end
   end
 
