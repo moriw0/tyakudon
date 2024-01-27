@@ -14,7 +14,7 @@ class Record < ApplicationRecord
   validates :comment, length: { maximum: 140 }
   validates :image, content_type: { in: %i[png jpg jpeg],
                                     message: :file_type_invalid },
-                    size: { less_than_or_equal_to: 5.megabytes,
+                    size: { less_than_or_equal_to: 9.megabytes,
                             message: :file_size_exceed }
   validate :started_at_is_recent,         on: :create, unless: :skip_validation
   validate :ended_at_is_recent,           on: :update, if: :calculate_action

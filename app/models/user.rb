@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   validates :avatar, content_type: { in: %i[png jpg jpeg],
                                      message: :file_type_invalid },
-                     size: { less_than_or_equal_to: 5.megabytes,
+                     size: { less_than_or_equal_to: 9.megabytes,
                              message: :file_size_exceed }
 
   def self.digest(string)
