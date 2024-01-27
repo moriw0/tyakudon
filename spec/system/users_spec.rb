@@ -56,11 +56,11 @@ RSpec.describe 'Users' do
       visit edit_user_path(user)
       expect {
         fill_in 'ニックネーム', with: 'Foo bar'
-        attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png'), make_visible: true
+        attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_8.4MB.png'), make_visible: true
         click_button '更新する'
         expect(page).to have_content 'ユーザー情報を更新しました'
         expect(page).to have_content 'Foo bar'
-        expect(page).to have_selector("img[src$='1000x800_4.2MB.png'].avatar")
+        expect(page).to have_selector("img[src$='1000x800_8.4MB.png'].avatar")
       }.to_not change(User, :count)
     end
 
@@ -69,10 +69,10 @@ RSpec.describe 'Users' do
       visit edit_user_path(user)
       expect {
         fill_in 'ニックネーム', with: ''
-        attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png'), make_visible: true
+        attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png'), make_visible: true
         click_button '更新する'
         expect(page).to have_content '入力してください'
-        expect(page).to have_content 'アバターのファイルサイズは5MB以下にしてください。'
+        expect(page).to have_content 'アバターのファイルサイズは9MB以下にしてください。'
       }.to_not change(User, :count)
     end
   end
