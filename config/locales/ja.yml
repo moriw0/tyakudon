@@ -107,32 +107,46 @@ ja:
       month: 月
       year: 年
   errors:
-    format: "%{attribute}%{message}"
-    messages:
-      accepted: を受諾してください
-      blank: を入力してください
-      confirmation: と%{attribute}の入力が一致しません
-      empty: を入力してください
-      equal_to: は%{count}にしてください
-      even: は偶数にしてください
-      exclusion: は予約されています
-      greater_than: は%{count}より大きい値にしてください
-      greater_than_or_equal_to: は%{count}以上の値にしてください
-      inclusion: は一覧にありません
-      invalid: は不正な値です
-      less_than: は%{count}より小さい値にしてください
-      less_than_or_equal_to: は%{count}以下の値にしてください
-      model_invalid: 'バリデーションに失敗しました: %{errors}'
-      not_a_number: は数値で入力してください
-      not_an_integer: は整数で入力してください
-      odd: は奇数にしてください
-      other_than: は%{count}以外の値にしてください
-      present: は入力しないでください
-      required: を入力してください
-      taken: はすでに存在します
-      too_long: は%{count}文字以内で入力してください
-      too_short: は%{count}文字以上で入力してください
-      wrong_length: は%{count}文字で入力してください
+    format: "%{message}"
+    messages: &errors_messages
+      inclusion: "%{attribute}が正しくありません。"
+      exclusion: "%{attribute}は正しくありません。"
+      invalid: "%{attribute}が正しくありません。"
+      confirmation: "%{attribute}が一致しません。"
+      accepted: "%{attribute}をチェックしてください。"
+      empty: "%{attribute}を入力してください。"
+      blank: "%{attribute}を入力してください。"
+      required: "%{attribute}を入力してください。"
+      too_long: "%{attribute}は%{count}文字以内で入力してください。"
+      too_short: "%{attribute}は%{count}文字以上で入力してください。"
+      wrong_length: "%{attribute}は%{count}文字で入力してください。"
+      not_a_number: "%{attribute}は数値で入力してください。"
+      not_an_integer: "%{attribute}は整数で入力してください。"
+      greater_than: "%{attribute}は%{count}より大きい値を入力してください。"
+      greater_than_or_equal_to: "%{attribute}は%{count}以上の値を入力してください。"
+      equal_to: "%{attribute}は%{count}にしてください"
+      less_than: "%{attribute}は%{count}より小さい値にしてください"
+      less_than_or_equal_to: "%{attribute}は%{count}以下の値にしてください"
+      odd: "%{attribute}は奇数を入力してください。"
+      even: "%{attribute}は偶数を入力してください。"
+      taken: "%{attribute}がすでに使用されています。"
+      before: "%{attribute}は%{threshold}よりも前の%{type}を入力してください。"
+      before_or_equal_to: "%{attribute}は%{threshold}以前の%{type}を入力してください。"
+      after: "%{attribute}は%{threshold}よりも後の%{type}を入力してください。"
+      after_or_equal_to: "%{attribute}は%{threshold}以降の%{type}を入力してください。"
+      out_of_contract: "%{attribute}が契約期間外です。"
+      file_size_exceed: "%{attribute}のファイルサイズは%{max_size}以下にしてください。"
+      file_type_invalid: "アップロードできないファイル形式です。"
+      file_name_too_long: "ファイル名が長すぎます、%{count}文字以内の名称のファイルを指定してください。"
+      access_forbidden: "指定された情報にアクセスする権限がありません。"
+      pixel_size_too_large: "画像ファイルの大きさは %{width} × %{height} ピクセル以内にしてください。"
+      invalid_chars: "%{attribute}に使用できない文字が含まれています（%{chars}）。"
+      in_between: "の容量は%{min}以上%{max}以下にしてください。"
+      spoofed_media_type: "%{attribute}の拡張子と内容が一致していません。"
+      started_at_not_recent: "%{attribute}は作成時の現在時刻より数秒以内でなければなりません。"
+      ended_at_not_recent: "%{attribute}は更新時の現在時刻より数秒以内でなければなりません。"
+      ended_at_before_started_at: "%{attribute}は接続時刻より後である必要があります。"
+      incorrect_wait_time: "%{attribute}は着丼時刻と接続時刻の差である必要があります。"
     template:
       body: 次の項目を確認してください
       header:

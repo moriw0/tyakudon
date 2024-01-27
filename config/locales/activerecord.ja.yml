@@ -5,6 +5,7 @@ ja:
       ramen_shop: ラーメン店
       record: ちゃくどんレコード
       line_status: 待ち行列状態
+      shop_register_requests: 店舗登録リクエスト
     attributes:
       user:
         name: ニックネーム
@@ -28,9 +29,19 @@ ja:
         line_type: タイプ
         comment: コメント
         image: 写真
+      shop_register_request:
+        name: 店名
+        address: 住所
+        remarks: 備考
   enums:
     line_status:
       line_type:
         inside_the_store: 店内
         outside_the_store: 店外
         seated: 着席
+    shop_register_request:
+      status:
+        open: 受付
+        approve: 承認
+        reject: 却下
+        complete: 完了
