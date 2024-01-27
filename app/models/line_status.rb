@@ -10,7 +10,7 @@ class LineStatus < ApplicationRecord
   validates :comment, length: { maximum: 140, too_long: '最大%<count>s文字まで使えます' }
   validates :image, content_type: { in: %i[png jpg jpeg],
                                     message: :file_type_invalid },
-                    size: { less_than_or_equal_to: 5.megabytes,
+                    size: { less_than_or_equal_to: 9.megabytes,
                             message: :file_size_exceed }
   default_scope { order(:id) }
 end
