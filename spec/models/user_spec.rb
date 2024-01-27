@@ -10,7 +10,7 @@ RSpec.describe User do
       email: 'user@example.com',
       password: 'foobar',
       password_confirmation: 'foobar',
-      avatar: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s)
+      avatar: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_8.4MB.png').to_s)
     )
 
     expect(new_user).to be_valid
@@ -40,10 +40,10 @@ RSpec.describe User do
     expect(user.errors[:email]).to include('メールアドレスは255文字以内で入力してください。')
   end
 
-  it 'is invalid with a 5.2 MB image' do
-    user.avatar = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s)
+  it 'is invalid with a 9.5 MB image' do
+    user.avatar = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png').to_s)
     user.valid?
-    expect(user.errors[:avatar]).to include 'アバターのファイルサイズは5MB以下にしてください。'
+    expect(user.errors[:avatar]).to include 'アバターのファイルサイズは9MB以下にしてください。'
   end
 
   it 'is invalid with a gif image' do

@@ -21,10 +21,10 @@ RSpec.describe Record do
         end
       end
 
-      context 'with a 4.2 MB image' do
+      context 'with a 8.4 MB image' do
         let!(:record) do
           build(:record,
-                image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s))
+                image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_8.4MB.png').to_s))
         end
 
         it 'is valid' do
@@ -52,15 +52,15 @@ RSpec.describe Record do
         end
       end
 
-      context 'with a 5.2 MB image' do
+      context 'with a 9.5 MB image' do
         let!(:record) do
           build(:record,
-                image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s))
+                image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png').to_s))
         end
 
         it 'includes error message' do
           record.valid?
-          expect(record.errors[:image]).to include '写真のファイルサイズは5MB以下にしてください。'
+          expect(record.errors[:image]).to include '写真のファイルサイズは9MB以下にしてください。'
         end
       end
 

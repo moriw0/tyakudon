@@ -4,12 +4,12 @@ RSpec.describe LineStatus do
   let(:record) { create(:record) }
   let(:line_status) { build(:line_status) }
 
-  it 'is valid with record_id, line_number, line_type comment, and 4.2MB image' do
+  it 'is valid with record_id, line_number, line_type comment, and 8.4MB image' do
     line_status = record.line_statuses.build(
       line_number: 5,
       line_type: 'inside_the_store',
       comment: '並ぶぞ',
-      image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_4.2MB.png').to_s)
+      image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_8.4MB.png').to_s)
     )
 
     expect(line_status).to be_valid
@@ -42,10 +42,10 @@ RSpec.describe LineStatus do
     expect(line_status.errors[:comment]).to include '最大140文字まで使えます'
   end
 
-  it 'is invalid with a 5.2 MB image' do
-    line_status.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_5.3MB.png').to_s)
+  it 'is invalid with a 9.5 MB image' do
+    line_status.image = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png').to_s)
     line_status.valid?
-    expect(line_status.errors[:image]).to include '写真のファイルサイズは5MB以下にしてください。'
+    expect(line_status.errors[:image]).to include '写真のファイルサイズは9MB以下にしてください。'
   end
 
   it 'is invalid with a gif image' do
