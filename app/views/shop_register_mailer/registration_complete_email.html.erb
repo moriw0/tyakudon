@@ -1,0 +1,9 @@
+<p><%= @user.name %> さん</p>
+<p>リクエストいただきました店舗の登録が完了いたしました。</p>
+
+<p>店舗： <%= @ramen_shop.name %></p>
+<p>住所： <%= @ramen_shop.address %></p>
+<p><%= link_to '店舗ページ', ramen_shop_url(@ramen_shop) %></p>
+
+<p>リクエストいただきまして、ありがとうございました。</p>
+<p>ちゃくどん</p>

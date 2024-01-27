@@ -1,0 +1,14 @@
+<% if @ramen_shop %>
+  <div class="existing-shop">
+    <%= render @ramen_shop %>
+  </div>
+<% end %>
+
+<h1>店舗登録リクエスト</h1>
+<p>リクエスト送信後、24時間以内に結果を登録されたメールアドレスに通知させていただきます。</p>
+<%= bootstrap_form_with model: @request do |f| %>
+  <%= f.text_field :name, label: '店名' %>
+  <%= f.text_field :address, label: '住所' %>
+  <%= f.text_area :remarks, label: '備考' %>
+  <%= f.submit "リクエストを送信する" %>
+<% end %>
