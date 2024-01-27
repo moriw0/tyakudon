@@ -4,72 +4,55 @@
   <title>ご指定になったページは存在しません | ちゃくどん</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
+  .error-page {
     color: #2E2F30;
     text-align: center;
     font-family: arial, sans-serif;
     margin: 0;
   }
 
-  .rails-default-error-page div.dialog {
+  .error-page div.dialog {
     width: 95%;
     max-width: 33em;
     margin: 4em auto 0;
   }
 
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  .error-page div.dialog > div {
+    padding: 10px;
   }
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
+  .error-page h1 {
+    font-size: 1em;
     line-height: 1.5em;
   }
 
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  h1, p > span {
+    display: inline-block;
   }
-  .normal-link {
-    color: #5f5b5b;
+
+  .top-page-link {
+    background-color: rgb(255, 218, 69);
+    border: 3px solid black;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 3rem;
     text-decoration: none;
-  }
-  .normal-link:hover {
-    color: #5f5b5b;
-    opacity: 0.8;
+    text-align: center;
   }
   </style>
 </head>
 
-<body class="rails-default-error-page">
+<body class="error-page">
   <!-- This file lives in public/404.html -->
   <div class="dialog">
     <div>
-      <h1>ご指定になったページは存在しません</h1>
-      <p>ご指定のページは変更か削除された可能性があります。</p>
+      <h1>ご指定になったページは<span>存在しません</span></h1>
+      <img src="/overflowing_ramen.png" alt="overflowing_ramen" width="300" height="300">
+      <p>ご指定のページは変更か<span>削除された可能性があります。</span></p>
     </div>
-    <p><a class="normal-link" href="/">トップページへ戻る</a></p>
+    <a class="top-page-link" href="/">トップページへ戻る</a>
   </div>
 </body>
 </html>
