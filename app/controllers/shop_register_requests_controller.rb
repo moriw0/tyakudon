@@ -7,35 +7,29 @@ class ShopRegisterRequestsController < ApplicationController
   end
 
   def edit
-    request = ShopRegisterRequest.find(params[:id])
+    request = ShopRegisterRequest.find_by(id: params[:id])
 
-    if request&.open?
-      request.approved!
-      redirect_to new_ramen_shop_path(request: { id: request.id, name: request.name, address: request.address })
-    else
-      redirect_to root_path, alert: '無効なリンクです'
-    end
+    return redirect_to root_path, alert: '無効なリンクです' unless request&.open?
+
+    request.approved!
+    redirect_to new_ramen_shop_path(request: { id: request.id, name: request.name, address: request.address })
   end
 
   def create
     @request = current_user.shop_register_requests.build(request_params)
 
-    if RamenShop.exists?(name: @request.name, address: @request.address)
-      handle_existing_shop
-    else
-      save_request
-    end
+    return handle_existing_shop if RamenShop.exists?(name: @request.name, address: @request.address)
+
+    save_request
   end
 
   def complete
     request = ShopRegisterRequest.find_by(id: params[:id])
     ramen_shop = RamenShop.find_by(id: params[:ramen_shop_id])
 
-    if request&.approved? && ramen_shop
-      complete_registration(request, ramen_shop)
-    else
-      redirect_to root_path, alert: '不正なアクセスです'
-    end
+    return complete_registration(request, ramen_shop) if request&.approved? && ramen_shop
+
+    redirect_to root_path, alert: '不正なアクセスです'
   end
 
   private
@@ -51,12 +45,10 @@ class ShopRegisterRequestsController < ApplicationController
   end
 
   def save_request
-    if @request.save
-      ShopRegisterMailer.shop_register_request(@request).deliver_now
-      redirect_to root_path, notice: 'リクエストを送信しました'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return render :new, status: :unprocessable_entity unless @request.save
+
+    ShopRegisterMailer.shop_register_request(@request).deliver_now
+    redirect_to root_path, notice: 'リクエストを送信しました'
   end
 
   def complete_registration(request, ramen_shop)

@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ShopRegisterMailer do
   describe 'shop_register_request' do
+    subject(:mail) { described_class.shop_register_request(shop_request) }
+
     let!(:user) { create(:user, email: 'user@example.com') }
     let!(:shop_request) { create(:shop_register_request, status: 'open', user: user) }
-    let(:mail) { described_class.shop_register_request(shop_request) }
 
     before { allow(ENV).to receive(:fetch).with('ADMIN_EMAIL').and_return('admin@example.com') }
 
@@ -23,9 +24,10 @@ RSpec.describe ShopRegisterMailer do
   end
 
   describe 'registration_complete_email' do
+    subject(:mail) { described_class.registration_complete_email(user: user, ramen_shop: ramen_shop) }
+
     let!(:user) { create(:user, email: 'user@example.com') }
     let!(:ramen_shop) { create(:ramen_shop) }
-    let(:mail) { described_class.registration_complete_email(user: user, ramen_shop: ramen_shop) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('店舗登録が完了しました | ちゃくどん')

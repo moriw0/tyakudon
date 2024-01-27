@@ -24,12 +24,10 @@ class RamenShopsController < ApplicationController
   end
 
   def new
-    if params[:request].present?
-      @ramen_shop = RamenShop.new(name: params[:request][:name], address: params[:request][:address])
-      @request_id = params[:request][:id]
-    else
-      @ramen_shop = RamenShop.new
-    end
+    return @ramen_shop = RamenShop.new if params[:request].blank?
+
+    @ramen_shop = RamenShop.new(name: params[:request][:name], address: params[:request][:address])
+    @request_id = params[:request][:id]
   end
 
   def edit

@@ -25,7 +25,7 @@ RSpec.describe 'ShopRegisterRequests' do
   end
 
   describe 'GET /shop_register_request/new' do
-    let(:do_request) { get new_shop_register_request_path }
+    subject(:do_request) { get new_shop_register_request_path }
 
     it_behaves_like 'when not logged in'
 
@@ -40,8 +40,9 @@ RSpec.describe 'ShopRegisterRequests' do
   end
 
   describe 'GET /shop_register_request/:id/edit' do
+    subject(:do_request) { get edit_shop_register_request_path(shop_request) }
+
     let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
-    let(:do_request) { get edit_shop_register_request_path(shop_request) }
 
     it_behaves_like 'when not logged in'
     it_behaves_like 'as a non-admin'
@@ -52,8 +53,9 @@ RSpec.describe 'ShopRegisterRequests' do
       before { log_in_as admin }
 
       context 'when status is open' do
+        subject(:do_request) { get edit_shop_register_request_path(shop_request) }
+
         let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
-        let(:do_request) { get edit_shop_register_request_path(shop_request) }
 
         it 'makes status approved' do
           do_request
@@ -68,8 +70,9 @@ RSpec.describe 'ShopRegisterRequests' do
       end
 
       context 'when status is not open' do
+        subject(:do_request) { get edit_shop_register_request_path(shop_request) }
+
         let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
-        let(:do_request) { get edit_shop_register_request_path(shop_request) }
 
         it 'redirects to root_path' do
           do_request
@@ -85,8 +88,9 @@ RSpec.describe 'ShopRegisterRequests' do
   end
 
   describe 'POST /shop_register_request' do
+    subject(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
+
     let!(:shop_register_request_params) { { shop_register_request: attributes_for(:shop_register_request) } }
-    let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
 
     it_behaves_like 'when not logged in'
 
@@ -97,8 +101,9 @@ RSpec.describe 'ShopRegisterRequests' do
       end
 
       context 'with valid parameters' do
+        subject(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
+
         let!(:shop_register_request_params) { { shop_register_request: attributes_for(:shop_register_request) } }
-        let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
 
         before { allow(ENV).to receive(:fetch).with('ADMIN_EMAIL').and_return('admin@example.com') }
 
@@ -125,8 +130,9 @@ RSpec.describe 'ShopRegisterRequests' do
       end
 
       context 'with invalid parameters' do
+        subject(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
+
         let!(:shop_register_request_params) { { shop_register_request: { name: '', address: '' } } }
-        let(:do_request) { post shop_register_requests_path, params: shop_register_request_params }
 
         it 'does not create a new ShopRegisterRequest' do
           expect {
@@ -142,7 +148,7 @@ RSpec.describe 'ShopRegisterRequests' do
     end
 
     context ['when logged in', 'shop already exists'].join(', ') do
-      let(:do_request) do
+      subject(:do_request) do
         post shop_register_requests_path, params: { shop_register_request: { name: 'よくある店舗', address: '東京都新宿区' } }
       end
 
@@ -164,11 +170,12 @@ RSpec.describe 'ShopRegisterRequests' do
   end
 
   describe 'GET /shop_register_request/:id/complete' do
-    let!(:ramen_shop) { create(:ramen_shop) }
-    let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
-    let(:do_request) do
+    subject(:do_request) do
       get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id }
     end
+
+    let!(:ramen_shop) { create(:ramen_shop) }
+    let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
 
     it_behaves_like 'when not logged in'
     it_behaves_like 'as a non-admin'
@@ -179,10 +186,11 @@ RSpec.describe 'ShopRegisterRequests' do
       before { log_in_as admin }
 
       context 'when status is approved' do
-        let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
-        let(:do_request) do
+        subject(:do_request) do
           get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id }
         end
+
+        let!(:shop_request) { create(:shop_register_request, status: 'approved', user: non_admin) }
 
         it 'makes status completed' do
           do_request
@@ -201,10 +209,11 @@ RSpec.describe 'ShopRegisterRequests' do
       end
 
       context 'when status is not approved' do
-        let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
-        let(:do_request) do
+        subject(:do_request) do
           get complete_shop_register_request_path(shop_request), params: { ramen_shop_id: ramen_shop.id }
         end
+
+        let!(:shop_request) { create(:shop_register_request, status: 'open', user: non_admin) }
 
         it 'redirects to root_path' do
           do_request

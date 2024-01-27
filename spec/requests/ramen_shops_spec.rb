@@ -21,19 +21,18 @@ RSpec.describe 'RamenShops' do
   end
 
   describe 'GET /ramen_shops/new #new' do
-    let(:do_request) { get new_ramen_shop_path }
+    subject(:do_request) { get new_ramen_shop_path }
 
     it_behaves_like 'when not logged in'
     it_behaves_like 'as a non-admin'
 
     context 'with admin' do
-      let(:ramen_shop) { controller.instance_variable_get(:@ramen_shop) }
-
       before { log_in_as admin }
 
       context 'without params' do
         it 'initializes a new RamenShop with empty attributes' do
           get new_ramen_shop_path
+          ramen_shop = controller.instance_variable_get(:@ramen_shop)
           expect(ramen_shop.name).to be_nil
           expect(ramen_shop.address).to be_nil
         end
@@ -42,6 +41,7 @@ RSpec.describe 'RamenShops' do
       context 'with valid params' do
         it 'initializes a new RamenShop with pre-filled attributes' do
           get new_ramen_shop_path(request: { id: 1, name: 'リクエスト店', address: '東京都新宿区' })
+          ramen_shop = controller.instance_variable_get(:@ramen_shop)
           expect(ramen_shop.name).to eq 'リクエスト店'
           expect(ramen_shop.address).to eq '東京都新宿区'
         end
@@ -55,7 +55,7 @@ RSpec.describe 'RamenShops' do
   end
 
   describe 'GET /ramen_shops/:id/edit #edit' do
-    let(:do_request) { get edit_ramen_shop_path(ramen_shop) }
+    subject(:do_request) { get edit_ramen_shop_path(ramen_shop) }
 
     it_behaves_like 'when not logged in'
     it_behaves_like 'as a non-admin'
@@ -68,7 +68,8 @@ RSpec.describe 'RamenShops' do
   end
 
   describe 'POST /ramen_shops #create' do
-    let(:do_request) { post ramen_shops_path, params: ramen_shop_params }
+    subject(:do_request) { post ramen_shops_path, params: ramen_shop_params }
+
     let(:ramen_shop_params) { { ramen_shop: attributes_for(:ramen_shop) } }
 
     it_behaves_like 'when not logged in'
@@ -78,7 +79,8 @@ RSpec.describe 'RamenShops' do
       before { log_in_as admin }
 
       context ['with valid ramen_shop params', 'shop request'].join(', ') do
-        let(:do_request) { post ramen_shops_path, params: params_with_request }
+        subject(:do_request) { post ramen_shops_path, params: params_with_request }
+
         let(:params_with_request) do
           { ramen_shop: {
             name: 'リクエスト店',
@@ -105,7 +107,8 @@ RSpec.describe 'RamenShops' do
       end
 
       context ['with invalid ramen_shop params', 'shop request'].join(', ') do
-        let(:do_request) { post ramen_shops_path, params: params_with_request }
+        subject(:do_request) { post ramen_shops_path, params: params_with_request }
+
         let(:params_with_request) do
           { ramen_shop: {
             name: '',
@@ -142,7 +145,8 @@ RSpec.describe 'RamenShops' do
   end
 
   describe 'PATCH /ramen_shops/:id #update' do
-    let(:do_request) { patch ramen_shop_path(ramen_shop), params: ramen_shop_params }
+    subject(:do_request) { patch ramen_shop_path(ramen_shop), params: ramen_shop_params }
+
     let(:ramen_shop_params) { { ramen_shop: attributes_for(:ramen_shop, name: 'ラーメン店') } }
 
     it_behaves_like 'when not logged in'
