@@ -75,6 +75,13 @@ RSpec.describe 'Users' do
         expect(page).to have_content 'アバターのファイルサイズは9MB以下にしてください。'
       }.to_not change(User, :count)
     end
+
+    scenario 'user receives an alert when trying to upload a file larger than 9MB', js: true do
+      log_in_as(user)
+      visit edit_user_path(user)
+      attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png')
+      expect(page.driver.browser.switch_to.alert.text).to eq '最大9MBまでアップロード可能です'
+    end
   end
 
   describe '#index' do
