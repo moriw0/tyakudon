@@ -1,0 +1,116 @@
+@startuml yonde
+hide circle
+
+skinparam linetype ortho
+
+entity "users" as users {
+  id
+  --
+  name
+  email
+  uid
+  provider
+  admin
+  password_digest
+  activation_digest
+  activated
+  activated_at
+  remember_digest
+  reset_digest
+  reset_sent_at
+  is_test_mode
+  created_at
+  updated_at
+}
+
+entity "cheer_messages" as cheer_messages {
+  id
+  --
+  record_id<<FK>>
+  content
+  role
+  created_at
+  updated_at
+}
+
+entity "favorites" as favorites {
+  id
+  --
+  user_id<<FK>>
+  ramen_shop_id<<FK>>
+  created_at
+  updated_at
+}
+
+entity "likes" as likes {
+  id
+  --
+  user_id<<FK>>
+  record_id<<FK>>
+  created_at
+  updated_at
+}
+
+entity "line_statuses" as line_statuses {
+  id
+  --
+  record_id<<FK>>
+  line_number
+  line_type
+  comment
+  created_at
+  updated_at
+}
+
+
+entity "ramen_shops" as ramen_shops {
+  id
+  --
+  name
+  address
+  latitude
+  longitude
+  created_at
+  updated_at
+}
+
+entity "records" as records {
+  id
+  --
+  user_id<<FK>>
+  ramen_shop_id<<FK>>
+  started_at
+  ended_at
+  wait_time
+  comment
+  is_retired
+  auto_retired
+  is_test
+  created_at
+  updated_at
+}
+
+entity "shop_register_requests" as shop_register_requests {
+  id
+  --
+  user_id<<FK>>
+  name
+  address
+  remarks
+  status
+  created_at
+  updated_at
+}
+
+users ||--|{ favorites
+users ||--|{ likes
+users ||--o{ records
+users ||--o{ shop_register_requests
+records ||--o{ cheer_messages
+records ||--o{ likes
+records ||--|{ line_statuses
+ramen_shops ||--o{ favorites
+ramen_shops ||--o{ records
+
+
+@enduml
