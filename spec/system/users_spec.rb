@@ -32,7 +32,7 @@ RSpec.describe 'Users' do
         visit new_user_path
         click_button 'Googleアカウントでログインする'
 
-        expect(page).to have_selector("input[value='OAuth user']")
+        expect(page).to have_selector("input[value='oauth']")
         expect {
           fill_in 'ニックネーム', with: 'もりを'
           find('input#agreement').click

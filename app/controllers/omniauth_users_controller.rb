@@ -3,9 +3,10 @@ class OmniauthUsersController < ApplicationController
 
   def new
     auth = session['auth_data']
+    nickname = auth['info']['email'].split('@').first
 
     if auth
-      @user = User.new(name: auth['info']['name'])
+      @user = User.new(name: nickname)
     else
       redirect_to root_path, alert: '不正なアクセスです'
     end
