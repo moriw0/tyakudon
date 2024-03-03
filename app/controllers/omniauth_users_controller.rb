@@ -2,14 +2,12 @@ class OmniauthUsersController < ApplicationController
   include Authenticatable
 
   def new
-    auth = session['auth_data']
-    nickname = auth['info']['email'].split('@').first
-
-    if auth
-      @user = User.new(name: nickname)
-    else
-      redirect_to root_path, alert: '不正なアクセスです'
+    unless (auth = session['auth_data'])
+      return redirect_to root_path, alert: '不正なアクセスです'
     end
+
+    email = auth['info']['email']
+    @user = User.new(email: email)
   end
 
   def create
