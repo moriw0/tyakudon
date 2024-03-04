@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   before_action :disable_connect_button, only: %i[new edit]
 
   def index
-    @users = User.page(params[:page])
+    @users_count = User.all.count
+    @users = User.order(created_at: :desc).page(params[:page])
   end
 
   def show

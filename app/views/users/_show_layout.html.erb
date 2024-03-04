@@ -6,6 +6,9 @@
       <% end %>
       <h1>
         <%= @user.name %>
+        <% if logged_in? && current_user.admin? %>
+          <span class='email'><%= @user.email if current_user.admin%></span>
+        <% end%>
         <% unless @user.activated? %>
           <span class='not_activated_tag'>アカウントが有効化されていません</span>
         <% end %>
