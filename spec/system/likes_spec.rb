@@ -46,7 +46,7 @@ RSpec.describe 'Likes', js: true do
     scenario 'user redirects to login_path when click like button' do
       visit ranking_path(sort: 'most_likes')
       all('.like-button').first.click
-      expect(page).to have_content 'ログインしてください'
+      expect(page).to have_content 'ログインが必要です'
     end
   end
 
