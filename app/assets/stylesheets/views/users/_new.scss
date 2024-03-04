@@ -1,6 +1,10 @@
 @use "../../global/" as g;
 
 #users-new, #omniauth-users-new {
+  h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
   .agreement {
     margin-bottom: 1rem;
     label {
