@@ -28,24 +28,42 @@ RSpec.describe 'Users' do
         Rails.application.env_config.delete('omniauth.auth')
       end
 
-      scenario 'user creates an account with OAuth and logins', js: true do
-        visit new_user_path
-        click_button 'Googleアカウントでログインする'
+      context 'with valid information' do
+        scenario 'user creates an account and logins', js: true do
+          visit new_user_path
+          click_button 'Googleアカウントでログインする'
 
-        expect(page).to have_selector("input[type='email'][disabled][value='oauth@example.com']")
-        expect(page).to have_field('ニックネーム', with: '')
+          expect(page).to have_selector("input[type='email'][disabled][value='oauth@example.com']")
+          expect(page).to have_field('ニックネーム', with: '')
 
-        expect {
-          fill_in 'ニックネーム', with: 'もりを'
-          find('input#agreement').click
-          click_button '登録する'
-          expect(page).to have_content 'ログインしました'
-        }.to change(User, :count).by(1)
+          expect {
+            fill_in 'ニックネーム', with: 'もりを'
+            find('input#agreement').click
+            click_button '登録する'
+            expect(page).to have_content 'ログインしました'
+          }.to change(User, :count).by(1)
 
-        expect(User.last.email).to eq 'oauth@example.com'
-        find('label.open').click
-        click_link 'プロフィール'
-        expect(page).to have_content 'もりを'
+          expect(User.last.email).to eq 'oauth@example.com'
+          find('label.open').click
+          click_link 'プロフィール'
+          expect(page).to have_content 'もりを'
+        end
+      end
+
+      context 'with invalid information' do
+        scenario 'user does not create an account', js: true do
+          visit new_user_path
+          click_button 'Googleアカウントでログインする'
+
+          expect {
+            fill_in 'ニックネーム', with: ' '
+            find('input#agreement').click
+            click_button '登録する'
+          }.to_not change(User, :count)
+
+          expect(page).to have_content 'ニックネームを入力してください。'
+          expect(page).to have_selector("input[type='email'][disabled][value='oauth@example.com']")
+        end
       end
     end
   end

@@ -11,12 +11,12 @@ class OmniauthUsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
-    user.build_with_omniauth(session['auth_data'])
+    @user = User.new(user_params)
+    @user.build_with_omniauth(session['auth_data'])
 
-    if user.save
-      user.activate
-      handle_authentication(user, remember: true)
+    if @user.save
+      @user.activate
+      handle_authentication(@user, remember: true)
     else
       render 'new', status: :unprocessable_entity
     end
