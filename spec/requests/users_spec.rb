@@ -26,11 +26,12 @@ RSpec.describe 'Users' do
 
     context 'with admin' do
       let!(:admin) { create(:user, :admin) }
+      let(:users_count) { User.all.count }
 
       it 'gets users_path with admin' do
         log_in_as(admin)
         get users_path
-        expect(response.body).to include '<h1>すべてのユーザー</h1>'
+        expect(response.body).to include "<h1>すべてのユーザー (#{users_count})</h1>"
       end
     end
   end
