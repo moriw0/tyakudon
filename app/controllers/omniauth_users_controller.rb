@@ -1,4 +1,6 @@
 class OmniauthUsersController < ApplicationController
+  before_action :disable_connect_button, only: %i[new]
+
   include Authenticatable
 
   def new
