@@ -1,13 +1,20 @@
 <section>
   <div class='header-content'>
-    <h1><span>ラーメン待ちの時間も、</span><span>楽しみの一部に。</span></h1>
+    <h1><span>ラーメン待ちの時間、</span><span>気になりませんか？</span></h1>
     <p>
       <span>接続から着丼までのラーメン待ち時間である</span>
       <span>「ちゃくどんレコード」を共有することで、</span>
       <span>より快適なラーメンライフを提供します。</span>
     </p>
-    <%= link_to '今すぐ始める', login_path, class: 'button-primary button-big' %>
-    <%= link_to 'トップページをのぞいてみる', ranking_path, class: 'root-path-link' %>
+    <div class="todays-count">
+      <%= @today %> 現在
+      <div class="total-counts">
+        <div><span><%= @users_count %></span>ユーザー</div>
+        <div><span><%= @records_count %></span>レコード</div>
+      </div>
+    </div>
+    <%= link_to '今すぐ始める', ranking_path, class: 'button-primary button-big' %>
+    <%= link_to 'ユーザー登録する', new_user_path, class: 'new-user-path-link' %>
   </div>
 </section>
 <section class='youtube'>
@@ -36,9 +43,9 @@
 <%= render 'usage_steps' %>
 <section class='promotion'>
   <div class='container'>
-    <h2>新しいラーメン体験、<span>今ここから始めよう！</span></h2>
-    <p>完全無料！ちゃくどんでラーメンライフを<span>もっと豊かにしましょう。</span></p>
-    <%= link_to '今すぐ始める', login_path, class: 'begin-button' %>
-    <%= link_to 'トップページをのぞいてみる', ranking_path, class: 'root-path-link' %>
+    <h2>ちゃくどんレコードを<span>確認してみよう！</span></h2>
+    <p>完全無料！お気軽にどうぞ！</p>
+    <%= link_to '今すぐ始める', ranking_path, class: 'begin-button' %>
+    <%= link_to 'ユーザー登録する', new_user_path, class: 'new-user-path-link' %>
   </div>
 </section>

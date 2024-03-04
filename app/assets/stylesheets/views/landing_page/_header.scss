@@ -7,7 +7,7 @@
   .logo {
     width: 500px;
   }
-  .root-path-link {
+  .new-user-path-link {
     color: #e26b5d;
     display: inline-block;
     font-size: 16px;
@@ -33,6 +33,26 @@
     }
     width: 80%;
   }
+  .todays-count {
+    color: #666;
+    font-size: 0.8em;
+    margin-bottom: 2rem;
+    .total-counts {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 5px;
+      span {
+        background-color: #e26b5d;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.5em;
+        margin: 0 5px;
+        padding: 3px 9px;
+      }
+    }
+  }
+
   @media screen and (max-width: 768px) {
     .button-big {
       width: 80%;
