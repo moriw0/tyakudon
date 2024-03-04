@@ -15,6 +15,11 @@
         margin-bottom: 2rem;
         margin-top: 1rem;
         text-align: center;
+        .email {
+          display: block;
+          font-size: 12px;
+          margin-top: 10px;
+        }
         .not_activated_tag {
           background-color: var(--bs-code-color);
           border-radius: 20px;
