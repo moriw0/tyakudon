@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :redirect_subdomain
+
   include SessionsHelper
 
   def route_based_on_authentication
@@ -10,6 +12,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def redirect_subdomain
+    return unless request.host == 'tyakudon.fly.dev'
+
+    redirect_to "https://tyakudon.com#{request.fullpath}", status: :moved_permanently, allow_other_host: true
+  end
 
   def logged_in_user
     unless logged_in?
