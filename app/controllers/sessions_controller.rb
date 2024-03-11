@@ -6,6 +6,8 @@ class SessionsController < ApplicationController
   end
 
   def create
+    Sentry.capture_message('Session created') if Rails.env.production?
+
     if request.env['omniauth.auth'].present?
       oauth_authentication(request.env['omniauth.auth'])
     else
