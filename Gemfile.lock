@@ -431,6 +431,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sentry-rails (5.16.1)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.16.1)
+    sentry-ruby (5.16.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     signet (0.18.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -521,6 +526,8 @@ DEPENDENCIES
   ruby-openai
   seed-fu
   selenium-webdriver (>= 4.15.0)
+  sentry-rails
+  sentry-ruby
   sprockets-rails
   stimulus-rails
   turbo-rails
