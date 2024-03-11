@@ -1,4 +1,4 @@
-name: Deploy work flow for Amazon ECS
+name: Deploy work flow for Fly
 
 on:
   pull_request:
@@ -7,63 +7,24 @@ on:
     types: [closed]
 
 env:
-  AWS_REGION: ap-northeast-1
-  ECR_REPOSITORY: tyakudon-app
-  ECS_CLUSTER: tyakudon_cluster
-  ECS_SERVICE: tyakudon17
-  ECS_TASK_DEFINITION: task-definition.json
-  CONTAINER_NAME: app
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
 jobs:
   deploy:
-    name: Deploy
-    timeout-minutes: 30
+    name: Deploy app
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-
+    concurrency: deploy-group # optional: ensure only one action runs at a time
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::220450336094:role/GitHubActionsDeployRole
-          aws-region: ${{ env.AWS_REGION }}
+      - name: Setup
+        uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Build, tag, and push docker image to Amazon ECR
-        id: build-image
+      - name: Deploy to Fly
+        run: flyctl deploy --remote-only
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-      - name: Render Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-
-      - name: Deploy to Amazon ECS service
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Success
         uses: rtCamp/action-slack-notify@v2
