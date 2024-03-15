@@ -123,6 +123,8 @@ GEM
       reline (>= 0.3.1)
     declarative (0.0.20)
     diff-lcs (1.5.0)
+    dockerfile-rails (1.6.6)
+      rails (>= 3.0.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -429,6 +431,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sentry-rails (5.16.1)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.16.1)
+    sentry-ruby (5.16.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     signet (0.18.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -488,6 +495,7 @@ DEPENDENCIES
   capybara
   dartsass-rails
   debug
+  dockerfile-rails (>= 1.6)
   dotenv-rails
   dotiw
   enum_help
@@ -518,6 +526,8 @@ DEPENDENCIES
   ruby-openai
   seed-fu
   selenium-webdriver (>= 4.15.0)
+  sentry-rails
+  sentry-ruby
   sprockets-rails
   stimulus-rails
   turbo-rails

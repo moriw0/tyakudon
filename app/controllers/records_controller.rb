@@ -22,6 +22,8 @@ class RecordsController < ApplicationController
   end
 
   def create
+    Sentry.capture_message('Record created') if Rails.env.production?
+
     @record = Record.new(create_record_params)
 
     if @record.save
@@ -45,6 +47,8 @@ class RecordsController < ApplicationController
   end
 
   def calculate
+    Sentry.capture_message('Record calculated')
+
     if @record.ended_at?
       redirect_to root_path, status: :see_other
     else

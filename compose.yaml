@@ -13,10 +13,12 @@ services:
       context: .
     volumes:
       - .:/tyakudon
+      - bundle:/usr/local/bundle
     environment:
       TZ: Asia/Tokyo
     ports:
       - "3000:3000"
+    command: bin/dev
     init: true
     tty: true
     stdin_open: true
@@ -25,3 +27,4 @@ services:
 
 volumes:
   postgresql-data:
+  bundle:
