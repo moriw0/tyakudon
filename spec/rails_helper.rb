@@ -61,4 +61,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
+
+  config.after(:suite) do
+    Pathname(ActiveStorage::Blob.service.root).each_child do |path|
+      path.rmtree if path.directory?
+    end
+  end
 end
