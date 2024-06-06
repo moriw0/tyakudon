@@ -5,6 +5,7 @@ class AccountActivationsController < ApplicationController
       user.activate
       log_in user
       redirect_to user, notice: 'アカウントが有効化されました'
+      capture_message_with_user_info('Standard User Created')
     else
       redirect_to root_path, alert: '無効な有効化リンクです'
     end
