@@ -6,8 +6,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-    Sentry.capture_message('Session created') if Rails.env.production?
-
     if request.env['omniauth.auth'].present?
       oauth_authentication(request.env['omniauth.auth'])
     else
@@ -31,6 +29,7 @@ class SessionsController < ApplicationController
 
     if user
       handle_authentication(user, remember: true)
+      capture_message_with_user_info('OAuth Session Created')
     else
       handle_new_oauth_user(auth)
     end
@@ -59,6 +58,7 @@ class SessionsController < ApplicationController
   def handle_successful_authentication(user)
     remember_me = params[:session][:remember_me] == '1'
     handle_authentication(user, remember: remember_me)
+    capture_message_with_user_info('Standard Session Created')
   end
 
   def handle_failed_authentication
