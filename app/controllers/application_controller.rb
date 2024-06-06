@@ -44,4 +44,23 @@ class ApplicationController < ActionController::Base
   def disable_connect_button
     @show_connect_button = false
   end
+
+  def capture_message_with_user_info(message)
+    set_user_info
+    Sentry.capture_message(message, level: :info)
+  end
+
+  def set_user_info
+    Sentry.set_user(
+      id: current_user.id,
+      name: current_user.name
+    )
+
+    Sentry.configure_scope do |scope|
+      scope.set_context(
+        'user_details',
+        { user_url: user_url(current_user) }
+      )
+    end
+  end
 end
