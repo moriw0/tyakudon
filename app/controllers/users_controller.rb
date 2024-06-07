@@ -22,8 +22,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    Sentry.capture_message('User created') if Rails.env.production?
-
     @user = User.new(user_params)
 
     if @user.save

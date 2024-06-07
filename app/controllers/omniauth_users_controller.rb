@@ -13,14 +13,13 @@ class OmniauthUsersController < ApplicationController
   end
 
   def create
-    Sentry.capture_message('Omniauth User created') if Rails.env.production?
-
     @user = User.new(user_params)
     @user.build_with_omniauth(session['auth_data'])
 
     if @user.save
       @user.activate
       handle_authentication(@user, remember: true)
+      capture_message_with_user_info('Omniauth User created')
     else
       render 'new', status: :unprocessable_entity
     end

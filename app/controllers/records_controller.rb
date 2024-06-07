@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class RecordsController < ApplicationController
   include RecordsHelper
 
@@ -22,12 +23,11 @@ class RecordsController < ApplicationController
   end
 
   def create
-    Sentry.capture_message('Record created') if Rails.env.production?
-
     @record = Record.new(create_record_params)
 
     if @record.save
       redirect_to measure_record_path(@record), status: :see_other
+      capture_message_with_user_info('Record created')
     else
       set_ramen_shop
       render :new_with_errors, status: :unprocessable_entity
@@ -47,8 +47,6 @@ class RecordsController < ApplicationController
   end
 
   def calculate
-    Sentry.capture_message('Record calculated')
-
     if @record.ended_at?
       redirect_to root_path, status: :see_other
     else
@@ -56,6 +54,7 @@ class RecordsController < ApplicationController
       @record.update!(calculated_record_params)
       forget_record
       redirect_to result_record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
+      capture_message_with_user_info('Record Calculated')
     end
   end
 
@@ -74,6 +73,7 @@ class RecordsController < ApplicationController
     @record.calculate_wait_time_for_retire!
     forget_record
     redirect_to root_path, notice: 'リタイアしました', status: :see_other
+    capture_message_with_user_info('Record Retired')
   end
 
   private
@@ -126,3 +126,4 @@ class RecordsController < ApplicationController
     redirect_to root_path, notice: '記録は無効になっています', status: :see_other
   end
 end
+# rubocop:enable Metrics/ClassLength
