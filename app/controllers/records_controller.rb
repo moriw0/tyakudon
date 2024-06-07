@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class RecordsController < ApplicationController
   include RecordsHelper
 
@@ -125,3 +126,4 @@ class RecordsController < ApplicationController
     redirect_to root_path, notice: '記録は無効になっています', status: :see_other
   end
 end
+# rubocop:enable Metrics/ClassLength
