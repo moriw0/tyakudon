@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_08_132453) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_08_133412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_08_132453) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["record_id"], name: "index_cheer_messages_on_record_id"
+  end
+
+  create_table "faqs", force: :cascade do |t|
+    t.string "question", null: false
+    t.string "answer", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "favorites", force: :cascade do |t|
