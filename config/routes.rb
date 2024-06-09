@@ -47,4 +47,5 @@ Rails.application.routes.draw do
   resources :shop_register_requests, only: [:new, :create, :edit] do
     get 'complete', on: :member
   end
+  resources :faqs
 end
