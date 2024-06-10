@@ -1,0 +1,6 @@
+<%= bootstrap_form_with model: faq do |form| %>
+  <%= form.text_field :question %>
+  <%= form.text_field :answer %>
+  <%= form.rich_text_area :detail %>
+  <%= form.submit %>
+<% end %>

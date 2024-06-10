@@ -1,0 +1,11 @@
+<section class='faq'>
+  <div class='container'>
+    <h2>よくある質問</h2>
+    <div class="accordion" id="accordionFaq">
+      <% @faqs.each do |faq| %>
+        <%= render faq %>
+      <% end %>
+    </div>
+    <%= link_to '全てのよくある質問を見る', faqs_path, class: 'faqs-link' %>
+  </div>
+</section>

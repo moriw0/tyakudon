@@ -1,0 +1,11 @@
+<section class="faq-section">
+  <h1>よくある質問</h1>
+  <div class="accordion" id="accordionFaq">
+    <% @faqs.each do |faq| %>
+      <%= render faq %>
+    <% end %>
+  </div>
+  <% if logged_in? && current_user.admin? %>
+    <%= link_to "New faq", new_faq_path %>
+  <% end %>
+</section>
