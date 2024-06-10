@@ -18,7 +18,13 @@
 </li>
 <li>
   <%= link_to lp_path, class: 'nav-link' do %>
-    <i class="fa-solid fa-question"></i>
+    <svg class='new-icon' aria-hidden='true'></svg>
     ちゃくどんについて
+  <% end %>
+</li>
+<li>
+  <%= link_to faqs_path, class: 'nav-link' do %>
+    <i class="fa-solid fa-question"></i>
+    よくある質問
   <% end %>
 </li>
