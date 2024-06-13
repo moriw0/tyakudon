@@ -1,0 +1,28 @@
+.faq-show {
+  a {
+    color: #e26b5d;
+    text-decoration: none;
+    &:hover {
+      color: #d8948d;
+      text-decoration: underline;
+    }
+  }
+  .detail {
+    padding: 10px;
+    .trix-content {
+      line-height: 1.6;
+      h1 {
+        background-color: rgb(241, 241, 236);
+        margin-bottom: 0.5em;
+        padding: 10px;
+      }
+      div, ol, ul {
+        padding: 10px;
+      }
+    }
+  }
+  .back-to-link {
+    margin-bottom: 15px;
+    margin-left: 15px;
+  }
+}

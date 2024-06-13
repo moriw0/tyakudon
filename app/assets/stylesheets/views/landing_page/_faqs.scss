@@ -1,0 +1,17 @@
+.landing-page {
+  .faq {
+    .container {
+        font-size: 1em;
+        .faqs-link {
+          color: #e26b5d;
+          display: block;
+          margin-top: 30px;
+          text-decoration: none;
+          &:hover {
+            color: #d8948d;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+}

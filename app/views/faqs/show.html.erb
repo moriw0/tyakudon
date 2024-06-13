@@ -1,0 +1,26 @@
+<div class="faq-show">
+  <div class="faq-container question">
+    <span class="faq-icon question">Q</span>
+    <div class="content">
+      <%= @faq.question %>
+    </div>
+  </div>
+  <div class="faq-container answer">
+    <span class="faq-icon answer">A</span>
+    <div class="content">
+      <%= @faq.answer %>
+    </div>
+  </div>
+  <div class="detail">
+    <%= @faq.detail %>
+  </div>
+  <div class="back-to-link">
+    <%= link_to "よくある質問に戻る", faqs_path %>
+  </div>
+  <% if logged_in? && current_user.admin? %>
+    <div>
+      <%= link_to "Edit this faq", edit_faq_path(@faq) %> |
+      <%= link_to "削除", @faq, data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" } %>
+    </div>
+  <% end %>
+</div>

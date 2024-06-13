@@ -1,0 +1,26 @@
+<div id="<%= dom_id faq %>">
+  <dl class="accordion-item">
+    <dt class="accordion-header" id="heading<%= dom_id faq %>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= dom_id faq %>" aria-expanded="false" aria-controls="collapse<%= dom_id faq %>">
+        <div class="faq-container">
+          <span class="faq-icon question">Q</span>
+          <div class="content">
+            <%= faq.question %>
+          </div>
+        </div>
+      </button>
+    </dt>
+    <dd id="collapse<%= dom_id faq %>" class="accordion-collapse collapse" aria-labelledby="heading<%= dom_id faq %>" data-bs-parent="#accordionFaq">
+      <%= link_to faq, class: 'normal-link' do %>
+        <div class="accordion-body">
+          <div class="faq-container">
+            <span class="faq-icon answer">A</span>
+            <div class="content">
+              <%= faq.answer %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </dd>
+  </dl>
+</div>

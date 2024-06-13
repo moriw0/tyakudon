@@ -7,6 +7,12 @@ bundle-update:
 db-migrate:
 	docker-compose run --rm app bundle exec rails db:migrate RAILS_ENV=development
 
+db-rollback:
+	docker-compose run --rm app bundle exec rails db:rollback RAILS_ENV=development
+
+db-status:
+	docker-compose run --rm app bundle exec rails db:migrate:status RAILS_ENV=development
+
 db-seed:
 	docker-compose run --rm app bundle exec rails db:seed RAILS_ENV=development
 
@@ -30,6 +36,12 @@ up:
 
 down:
 	docker-compose down
+
+restart:
+	docker-compose restart
+
+attach:
+	docker attach tyakudon-app-1
 
 logs:
 	docker-compose logs

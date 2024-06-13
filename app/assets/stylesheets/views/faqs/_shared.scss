@@ -1,0 +1,37 @@
+#accordionFaq{
+  dl {
+    margin-bottom: 0;
+    dd {
+      margin-bottom: 0;
+    }
+  }
+}
+.faq-container {
+  align-items: center;
+  display: flex;
+  &.question, &.answer {
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  .faq-icon {
+    align-self: flex-start;
+    border-radius: 25%;
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 10px;
+    padding: 5px 10px;
+    &.question {
+      background-color: black;
+      border: solid black;
+      color: white;
+    }
+    &.answer {
+      background-color: white;
+      border: solid;
+      color: black;
+    }
+  }
+  .content {
+    text-align: left;
+  }
+}

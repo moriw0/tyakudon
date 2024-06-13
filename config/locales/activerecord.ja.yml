@@ -6,6 +6,7 @@ ja:
       record: ちゃくどんレコード
       line_status: 待ち行列状態
       shop_register_requests: 店舗登録リクエスト
+      faq: よくある質問
     attributes:
       user:
         name: ニックネーム
@@ -33,6 +34,10 @@ ja:
         name: 店名
         address: 住所
         remarks: 備考
+      faq:
+        question: 質問
+        answer: 回答
+        detail: 詳細
   enums:
     line_status:
       line_type:
