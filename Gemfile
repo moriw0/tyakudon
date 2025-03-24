@@ -87,6 +87,7 @@ group :development do
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
   gem "dockerfile-rails", ">= 1.6"
+  gem 'bullet'
 end
 
 group :test do
