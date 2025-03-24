@@ -15,7 +15,7 @@ class RamenShopsController < ApplicationController
   end
 
   def show
-    @records = @ramen_shop.records.active_ordered.page(params[:page])
+    @records = @ramen_shop.records.with_associations.active_ordered.page(params[:page])
 
     respond_to do |format|
       format.html
