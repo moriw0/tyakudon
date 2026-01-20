@@ -1,0 +1,10 @@
+{
+  "name": "Tyakudon Dev Container",
+  "dockerComposeFile": "../compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/tyakudon",
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+  },
+  "postCreateCommand": "bin/setup",
+}
