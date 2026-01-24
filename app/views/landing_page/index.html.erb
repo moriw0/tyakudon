@@ -6,13 +6,6 @@
       <span>「ちゃくどんレコード」を共有することで、</span>
       <span>より快適なラーメンライフを提供します。</span>
     </p>
-    <div class="todays-count">
-      <%= @today %> 現在
-      <div class="total-counts">
-        <div><span><%= @users_count %></span>ユーザー</div>
-        <div><span><%= @records_count %></span>レコード</div>
-      </div>
-    </div>
     <%= link_to '今すぐ始める', ranking_path, class: 'button-primary button-big' %>
     <%= link_to 'ユーザー登録する', new_user_path, class: 'new-user-path-link' %>
   </div>
