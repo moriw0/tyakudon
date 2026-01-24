@@ -26,12 +26,12 @@ make db-seed         # Seed database
 
 # Testing (run inside container)
 make rspec                                    # Run all tests
-docker-compose exec app bundle exec rspec spec/models/user_spec.rb      # Run single file
-docker-compose exec app bundle exec rspec spec/models/user_spec.rb:7    # Run specific line
+docker compose exec app bundle exec rspec spec/models/user_spec.rb      # Run single file
+docker compose exec app bundle exec rspec spec/models/user_spec.rb:7    # Run specific line
 
 # Linting
-docker-compose exec app bundle exec rubocop
-docker-compose exec app bundle exec rubocop -a   # Auto-correct
+docker compose exec app bundle exec rubocop
+docker compose exec app bundle exec rubocop -a   # Auto-correct
 
 # Rails console
 make c
