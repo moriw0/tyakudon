@@ -1,90 +1,59 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Overview
-
-Tyakudon (ちゃくどん) is a Ruby on Rails web application for measuring and sharing ramen restaurant wait times. Users can track wait times from joining a line ("接続") until being served ("着丼").
-
-**Tech Stack:** Ruby 3.2.2, Rails 7.0.4.3, PostgreSQL 14.6, Bootstrap, Hotwire (Turbo + Stimulus)
+Claude Code 向けの開発ガイドです。環境構築手順は [README.md](./README.md) を参照してください。
 
 ## Development Commands
 
-All development uses Docker Compose. The app runs on port 3000.
+開発は Docker Compose で行います。アプリは port 3000 で起動します。
 
 ```bash
-# Start/stop containers
-make up              # Start in foreground
-make upd             # Start in detached mode
-make down            # Stop containers
-make build           # Rebuild Docker image
+# テスト
+docker compose exec app bundle exec rspec                              # 全テスト
+docker compose exec app bundle exec rspec spec/models/user_spec.rb     # ファイル指定
+docker compose exec app bundle exec rspec spec/models/user_spec.rb:7   # 行指定
 
-# Database
-make db-migrate      # Run migrations
-make db-rollback     # Rollback last migration
-make db-seed         # Seed database
-
-# Testing (run inside container)
-make rspec                                    # Run all tests
-docker compose exec app bundle exec rspec spec/models/user_spec.rb      # Run single file
-docker compose exec app bundle exec rspec spec/models/user_spec.rb:7    # Run specific line
-
-# Linting
+# Lint
 docker compose exec app bundle exec rubocop
-docker compose exec app bundle exec rubocop -a   # Auto-correct
-
-# Rails console
-make c
-
-# Shell access
-make bash
+docker compose exec app bundle exec rubocop -a   # 自動修正
 ```
+
+※ `Makefile` にショートカットあり（`make rspec`, `make db-migrate` など）
 
 ## Architecture
 
 ### Key Models
-- `User` - Authentication via password or Google OAuth2
-- `Record` - Wait time records linking users to ramen shops
-- `RamenShop` - Restaurant information with geocoding
-- `LineStatus` - Queue status updates during active waits
-- `Favorite` / `Like` - Social features
+- `User` - パスワード認証 or Google OAuth2
+- `Record` - 待ち時間記録（User と RamenShop を紐付け）
+- `RamenShop` - 店舗情報（Geocoder で座標管理）
+- `LineStatus` - 待ち中の行列状況
+- `Favorite` / `Like` - お気に入り・いいね機能
 
 ### Services (`app/services/`)
-Business logic is extracted into service classes:
-- `DocumentFetcher` - Web scraping
-- `ShopInfoExtractor` / `ShopInfoInserter` - Parse and store shop data
-- `GoogleSpreadSheet` - Google Sheets integration for scraping workflow
+- `DocumentFetcher` - Webスクレイピング
+- `ShopInfoExtractor` / `ShopInfoInserter` - 店舗データの抽出・登録
+- `GoogleSpreadSheet` - スクレイピングワークフロー用
 
-### Background Jobs
-Uses GoodJob for async processing:
-- `AutoRetireRecordJob` - Auto-expires records after 1 day
-- `SpeakCheerMessageJob` - Generates OpenAI encouragement messages
+### Background Jobs (GoodJob)
+- `AutoRetireRecordJob` - 1日経過した記録を自動終了
+- `SpeakCheerMessageJob` - OpenAI で応援メッセージ生成
 
 ### External Integrations
-- Google OAuth2 for authentication
-- OpenAI API for generating encouragement messages during waits
-- Geocoder for location services
-- Active Storage with S3 (production) for file uploads
+- Google OAuth2 - 認証
+- OpenAI API - 応援メッセージ生成
+- Geocoder - 位置情報
+- Active Storage + S3 (本番) - ファイルアップロード
 
 ## Code Style
 
-RuboCop configuration (`.rubocop.yml`):
-- Use Ruby 1.9+ hash syntax
-- Lambda literals (`->`) preferred over `lambda`
-- RSpec: `to_not` style for negations
-- RSpec context prefixes: when, with, without, if, unless, for, before, after, during
-- Block style: `braces_for_chaining`
-
-## CI/CD
-
-PRs trigger GitHub Actions:
-1. RSpec tests with PostgreSQL service
-2. RuboCop linting
-
-Merges to main deploy to Fly.io with Sentry release tracking.
+RuboCop 設定 (`.rubocop.yml`):
+- Ruby 1.9+ ハッシュ記法
+- Lambda は `->` を使用
+- RSpec: `to_not` スタイル
+- RSpec context: when, with, without, if, unless, for, before, after, during
+- ブロック: `braces_for_chaining`
 
 ## Credentials
 
-Rails credentials store API keys (`rails credentials:edit`):
+Rails credentials (`rails credentials:edit`):
 - `gcp.client_id` / `gcp.client_secret` - Google OAuth
 - `openai.secret_key` - OpenAI API

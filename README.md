@@ -16,51 +16,53 @@
 |---|---|
 |<img src="docs/images/measure.gif" alt="attach:cat" title="attach:cat" width="300">|<img src="docs/images/line_status.gif" alt="attach:cat" title="attach:cat" width="300">|
 
-## 📖 アプリ作成の経緯
-Twitterでの接続・着丼情報のシェアは一般的ですが、時間計測と情報の集約をより簡単に行い、ラーメン待ちの際に参考になるアプリが必要だと感じ、このアプリを作成しました。
+## 技術スタック
 
-## 💡 こだわりポイント
-1. ちゃくどんレコードの登録は簡単で楽しく、閲覧する情報は詳細にすることで、UI・UXの向上を目指しています。
-2. 定期的なスクレイピングを行い、全国の人気ラーメン店情報を登録しています。
-3. concerns や services を活用し、クリーンアーキテクチャを意識した実装をしています。
-4. CI/CDパイプラインを構築し、コード品質を維持しながら迅速なデプロイが可能な環境を整えました。
-5. インフラは負荷分散を行い、障害発生時に即時通知を受けられる体制を構築しています。
+Ruby 3.2.2 / Rails 7.0 / PostgreSQL 14 / Bootstrap / Hotwire (Turbo + Stimulus)
 
-## ⭐️ 機能の詳細
-- ちゃくどんレコードの計測・記録
-- 待ちユーザーへの定期的な応援メッセージ出力（OpenAI使用）
-- ラーメン店舗情報をスクレイピング
-- 店舗登録リクエスト機能
-- 店舗お気に入り機能
-- ログイン機能（通常ログイン・Googleログイン）
-- ちゃくどんレコードへのいいね機能
+## 本番環境
 
-## 🖥 ER図
-![ちゃくどんER図](docs/images/tyakudon_erd.png)
+- ホスティング: [Fly.io](https://fly.io)
+- CI: PR作成時に RSpec テストと RuboCop が実行される
+- デプロイ: `main` ブランチへのマージで GitHub Actions により自動デプロイ
 
-## ⚙️ インフラ構成＆連携サービス
-![ちゃくどんインフラ構成図](docs/images/tyakudon_icd.png)
+## 環境構築について
+### セットアップ手順
+```bash
+# 1. リポジトリをクローン
+git clone https://github.com/moriw0/tyakudon.git
+cd tyakudon
 
-## 📌 開発環境
-### フロントエンド
-* HTML/CSS
-* Bootstrap
-* Hotwire(Turbo, Stimulus)
+# 2. Docker イメージをビルド
+docker compose build
 
-### バックエンド
-* ruby 3.2.2
-* Ruby on Rails 7.0.4.3
-* PostgreSQL 14.6
+# 3. コンテナを起動
+docker compose up -d
 
-### インフラ・ツール
-* AWS(EC2, ECS, ELB, CloudFront, SNS, CloudWatch, ChatBot, IAM, S3)
-* RuboCop
-* RSpec
+# 4. データベースのセットアップ（作成・マイグレーション・シード）
+docker compose exec app bundle exec rails db:prepare
+```
 
-### 使用したGem（抜粋）
+完了後 http://localhost:3000 でアクセスできます。
 
-|Gem|用途|
-|----|----|
-|geocoder          |ジオコーディング機能 |
-|ruby-openai       |応援メッセージ生成機能 |
-|google_drive      |スクレイピング情報の蓄積 |
+### よく使うコマンド
+
+```bash
+docker compose up -d           # コンテナ起動（バックグラウンド）
+docker compose down            # コンテナ停止
+docker compose exec app bundle exec rspec           # テスト実行
+docker compose exec app bundle exec rails c         # Rails コンソール
+docker compose exec app bash                        # コンテナ内シェル
+docker compose exec app bundle exec rails db:migrate  # マイグレーション実行
+```
+
+※ `Makefile` にショートカットが定義されています（`make up`, `make rspec` など）
+
+### Dev Containers (準備中)
+VS Code や JetBrains IDE で Dev Containers を利用できます。
+コンテナ内では Claude Code がインストール済みのため、`claude` コマンドが利用可能です。
+
+1. リポジトリをクローンして IDE で開く
+2. 「Dev Containers で再度開く」を選択
+3. 初回起動時に `bin/setup` が自動実行され、DBセットアップが完了
+4. `bin/dev` でサーバーを起動 → http://localhost:3000
