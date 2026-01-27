@@ -1,59 +1,121 @@
-# CLAUDE.md
+# プロジェクトメモリ
 
-Claude Code 向けの開発ガイドです。環境構築手順は [README.md](./README.md) を参照してください。
+## スペック駆動開発の基本原則
 
-## Development Commands
+### 基本フロー
 
-開発は Docker Compose で行います。アプリは port 3000 で起動します。
+1. **ドキュメント作成**: 永続ドキュメント(`docs/`)で「何を作るか」を定義
+2. **作業計画**: ステアリングファイル(`.steering/`)で「今回何をするか」を計画
+3. **実装**: tasklist.mdに従って実装し、進捗を随時更新
+4. **検証**: テストと動作確認
+5. **更新**: 必要に応じてドキュメント更新
 
-```bash
-# テスト
-docker compose exec app bundle exec rspec                              # 全テスト
-docker compose exec app bundle exec rspec spec/models/user_spec.rb     # ファイル指定
-docker compose exec app bundle exec rspec spec/models/user_spec.rb:7   # 行指定
+### 重要なルール
 
-# Lint
-docker compose exec app bundle exec rubocop
-docker compose exec app bundle exec rubocop -a   # 自動修正
+#### ドキュメント作成時
+
+**1ファイルずつ作成し、必ずユーザーの承認を得てから次に進む**
+
+承認待ちの際は、明確に伝える:
+```
+「[ドキュメント名]の作成が完了しました。内容を確認してください。
+承認いただけたら次のドキュメントに進みます。」
 ```
 
-※ `Makefile` にショートカットあり（`make rspec`, `make db-migrate` など）
+#### 実装前の確認
 
-## Architecture
+新しい実装を始める前に、必ず以下を確認:
 
-### Key Models
-- `User` - パスワード認証 or Google OAuth2
-- `Record` - 待ち時間記録（User と RamenShop を紐付け）
-- `RamenShop` - 店舗情報（Geocoder で座標管理）
-- `LineStatus` - 待ち中の行列状況
-- `Favorite` / `Like` - お気に入り・いいね機能
+1. CLAUDE.mdを読む
+2. 関連する永続ドキュメント(`docs/`)を読む
+3. Grepで既存の類似実装を検索
+4. 既存パターンを理解してから実装開始
 
-### Services (`app/services/`)
-- `DocumentFetcher` - Webスクレイピング
-- `ShopInfoExtractor` / `ShopInfoInserter` - 店舗データの抽出・登録
-- `GoogleSpreadSheet` - スクレイピングワークフロー用
+#### ステアリングファイル管理
 
-### Background Jobs (GoodJob)
-- `AutoRetireRecordJob` - 1日経過した記録を自動終了
-- `SpeakCheerMessageJob` - OpenAI で応援メッセージ生成
+作業ごとに `.steering/[YYYYMMDD]-[タスク名]/` を作成:
 
-### External Integrations
-- Google OAuth2 - 認証
-- OpenAI API - 応援メッセージ生成
-- Geocoder - 位置情報
-- Active Storage + S3 (本番) - ファイルアップロード
+- `requirements.md`: 今回の要求内容
+- `design.md`: 実装アプローチ
+- `tasklist.md`: 具体的なタスクリスト
 
-## Code Style
+命名規則: `20250115-add-user-profile` 形式
 
-RuboCop 設定 (`.rubocop.yml`):
-- Ruby 1.9+ ハッシュ記法
-- Lambda は `->` を使用
-- RSpec: `to_not` スタイル
-- RSpec context: when, with, without, if, unless, for, before, after, during
-- ブロック: `braces_for_chaining`
+#### ステアリングファイルの管理
 
-## Credentials
+**作業計画・実装・検証時は`steering`スキルを使用してください。**
 
-Rails credentials (`rails credentials:edit`):
-- `gcp.client_id` / `gcp.client_secret` - Google OAuth
-- `openai.secret_key` - OpenAI API
+- **作業計画時**: `Skill('steering')`でモード1(ステアリングファイル作成)
+- **実装時**: `Skill('steering')`でモード2(実装とtasklist.md更新管理)
+- **検証時**: `Skill('steering')`でモード3(振り返り)
+
+詳細な手順と更新管理のルールはsteeringスキル内に定義されています。
+
+## ディレクトリ構造
+
+### 永続的ドキュメント(`docs/`)
+
+アプリケーション全体の「何を作るか」「どう作るか」を定義:
+
+#### 下書き・アイデア（`docs/ideas/`）
+- 壁打ち・ブレインストーミングの成果物
+- 技術調査メモ
+- 自由形式（構造化は最小限）
+- `/setup-project`実行時に自動的に読み込まれる
+
+#### 正式版ドキュメント
+- **product-requirements.md** - プロダクト要求定義書
+- **functional-design.md** - 機能設計書
+- **architecture.md** - 技術仕様書
+- **repository-structure.md** - リポジトリ構造定義書
+- **development-guidelines.md** - 開発ガイドライン
+- **glossary.md** - ユビキタス言語定義
+
+### 作業単位のドキュメント(`.steering/`)
+
+特定の開発作業における「今回何をするか」を定義:
+
+- `requirements.md`: 今回の作業の要求内容
+- `design.md`: 変更内容の設計
+- `tasklist.md`: タスクリスト
+
+## 開発プロセス
+
+### 初回セットアップ
+
+1. このテンプレートを使用
+2. `/setup-project` で永続的ドキュメント作成(対話的に6つ作成)
+3. `/add-feature [機能]` で機能実装
+
+### 日常的な使い方
+
+**基本は普通に会話で依頼してください:**
+
+```bash
+# ドキュメントの編集
+> PRDに新機能を追加してください
+> architecture.mdのパフォーマンス要件を見直して
+> glossary.mdに新しいドメイン用語を追加
+
+# 機能追加(定型フローはコマンド)
+> /add-feature ユーザープロフィール編集
+
+# 詳細レビュー(詳細なレポートが必要なとき)
+> /review-docs docs/product-requirements.md
+```
+
+**ポイント**: スペック駆動開発の詳細を意識する必要はありません。Claude Codeが適切なスキルを判断してロードします。
+
+## ドキュメント管理の原則
+
+### 永続的ドキュメント(`docs/`)
+
+- 基本設計を記述
+- 頻繁に更新されない
+- プロジェクト全体の「北極星」
+
+### 作業単位のドキュメント(`.steering/`)
+
+- 特定の作業に特化
+- 作業ごとに新規作成
+- 履歴として保持
