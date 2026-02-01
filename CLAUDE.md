@@ -1,59 +1,66 @@
-# CLAUDE.md
+## Project Overview
 
-Claude Code 向けの開発ガイドです。環境構築手順は [README.md](./README.md) を参照してください。
+**プロジェクト名:** tyakudon (ちゃくどん)
 
-## Development Commands
+**概要:** ラーメン店の待ち時間を記録・共有するWebアプリケーション。ユーザーは店舗の待ち時間を投稿し、他のユーザーと共有できます。OpenAI を活用した応援メッセージ機能も提供しています。
 
-開発は Docker Compose で行います。アプリは port 3000 で起動します。
+**技術スタック:**
 
-```bash
-# テスト
-docker compose exec app bundle exec rspec                              # 全テスト
-docker compose exec app bundle exec rspec spec/models/user_spec.rb     # ファイル指定
-docker compose exec app bundle exec rspec spec/models/user_spec.rb:7   # 行指定
+- Ruby on Rails 7.0
+- PostgreSQL
+- GoodJob (バックグラウンドジョブ)
+- Hotwire (Turbo + Stimulus)
+- Docker Compose (開発環境)
+- Fly.io (本番環境)
 
-# Lint
-docker compose exec app bundle exec rubocop
-docker compose exec app bundle exec rubocop -a   # 自動修正
-```
+**主要機能:**
 
-※ `Makefile` にショートカットあり（`make rspec`, `make db-migrate` など）
+- 待ち時間記録の投稿・閲覧
+- 店舗情報の管理（Geocoder による位置情報）
+- いいね・お気に入り機能
+- OpenAI による応援メッセージ生成
+- Google OAuth2 認証
+- Webスクレイピングによる店舗データ自動取得
 
-## Architecture
+## Critical Rules
 
-### Key Models
-- `User` - パスワード認証 or Google OAuth2
-- `Record` - 待ち時間記録（User と RamenShop を紐付け）
-- `RamenShop` - 店舗情報（Geocoder で座標管理）
-- `LineStatus` - 待ち中の行列状況
-- `Favorite` / `Like` - お気に入り・いいね機能
+### Code Organization
 
-### Services (`app/services/`)
-- `DocumentFetcher` - Webスクレイピング
-- `ShopInfoExtractor` / `ShopInfoInserter` - 店舗データの抽出・登録
-- `GoogleSpreadSheet` - スクレイピングワークフロー用
+- 多数の小さいファイルを、少数の大きいファイルよりも優先
+- 高凝集・低結合を意識
+- ドメイン/機能単位で整理
+- ビジネスロジックはモデル app/models/ に配置
+    1. ActiveRecord: DBテーブルに紐づくモデル
+    2. Concerns: 共有する振る舞いや、機能をまとめたモジュール
+    3. PORO: それ以外の単独ロジック
+- app/services/ は非推奨 (既存ファイルはモデルに移行予定で、新規実装では使わない)
 
-### Background Jobs (GoodJob)
-- `AutoRetireRecordJob` - 1日経過した記録を自動終了
-- `SpeakCheerMessageJob` - OpenAI で応援メッセージ生成
+### Code Style
 
-### External Integrations
-- Google OAuth2 - 認証
-- OpenAI API - 応援メッセージ生成
-- Geocoder - 位置情報
-- Active Storage + S3 (本番) - ファイルアップロード
+- 可能な限り不変性を保つ（オブジェクトや配列を変更しない）
+- 本番環境に `puts` や `p` を残さない
+- `rescue` で適切にエラーを処理する
+- バリデーションはモデルに集約する
 
-## Code Style
+### Testing
 
-RuboCop 設定 (`.rubocop.yml`):
-- Ruby 1.9+ ハッシュ記法
-- Lambda は `->` を使用
-- RSpec: `to_not` スタイル
-- RSpec context: when, with, without, if, unless, for, before, after, during
-- ブロック: `braces_for_chaining`
+- TDD: まずテストを書いてから実装
+- カバレッジ: 80%以上
+- Unit tests: モデル、ユーティリティ
+- Integration tests: API エンドポイント、コントローラー (RequestSpec)
+- E2E tests: 重要なユーザーフローに適用 (Capybara)
 
-## Credentials
+### Security
 
-Rails credentials (`rails credentials:edit`):
-- `gcp.client_id` / `gcp.client_secret` - Google OAuth
-- `openai.secret_key` - OpenAI API
+- シークレットは Rails credentials または `.env` で管理
+- 全てのユーザー入力をバリデーションする
+- SQL インジェクション防止（受付はパラメータ化クエリのみ）
+- XSS 防止（HTML サニタイズ）
+- 認証・認可を確認
+
+## Git Workflow
+
+- Conventional commits: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`
+- Never commit to main directly
+- PRs require review
+- All tests must pass before merge
