@@ -13,7 +13,7 @@
     </div>
     <% if record.is_retired? %>
       <span class="record-status retired">リタイア</span>
-    <% else %>
+    <% elsif record.wait_time.present? %>
       <span class="record-status finished">ちゃくどん</span>
     <% end %>
     <%= render 'likes/like_form', record: record %>

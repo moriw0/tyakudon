@@ -21,7 +21,7 @@ module ApplicationHelper
 
   # rubocop:disable Metrics/MethodLength
   def wait_time_tag(wait_time)
-    return unless wait_time
+    return tag.span('接続中...', class: 'connecting-label') unless wait_time
 
     hours, remainder = wait_time.divmod(3600)
     minutes, remainder_seconds = remainder.divmod(60)
