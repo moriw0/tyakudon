@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/terms', to: 'statics#terms'
   get '/privacy_policy', to: 'statics#privacy_policy'
   get '/ranking', to: 'ranking_records#index'
-  get '/new_records', to: 'home#new_records'
+  get '/new_records', to: 'new_records#index'
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
   get '/signup', to: 'users#new'
