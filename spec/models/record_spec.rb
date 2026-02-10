@@ -132,6 +132,47 @@ RSpec.describe Record do
     end
   end
 
+  describe 'Scopes' do
+    describe '.not_retired_or_connecting' do
+      let!(:finished_record) { create(:record, is_retired: false, ramen_shop: create(:ramen_shop, :many_shops)) }
+      let!(:connecting_record) do
+        create(:record_only_has_started_at, is_retired: false, ramen_shop: create(:ramen_shop, :many_shops))
+      end
+      let!(:retired_record) { create(:record, is_retired: true, ramen_shop: create(:ramen_shop, :many_shops)) }
+      let!(:auto_retired_record) { create(:record, auto_retired: true, ramen_shop: create(:ramen_shop, :many_shops)) }
+      let!(:test_record) { create(:record, is_test: true, ramen_shop: create(:ramen_shop, :many_shops)) }
+
+      it 'includes both finished and connecting records' do
+        results = described_class.not_retired_or_connecting
+        expect(results).to include(finished_record, connecting_record)
+        expect(results).to_not include(retired_record, auto_retired_record, test_record)
+      end
+
+      it 'includes records with nil wait_time' do
+        results = described_class.not_retired_or_connecting
+        expect(results).to include(connecting_record)
+        expect(connecting_record.wait_time).to be_nil
+      end
+    end
+
+    describe '.new_records' do
+      let!(:finished_record) { create(:record, is_retired: false, ramen_shop: create(:ramen_shop, :many_shops)) }
+      let!(:connecting_record) do
+        create(:record_only_has_started_at, is_retired: false, ramen_shop: create(:ramen_shop, :many_shops))
+      end
+
+      it 'includes both finished and connecting records' do
+        results = described_class.new_records
+        expect(results).to include(finished_record, connecting_record)
+      end
+
+      it 'orders by created_at descending' do
+        results = described_class.new_records
+        expect(results.first.created_at).to be >= results.last.created_at
+      end
+    end
+  end
+
   describe 'Model methods' do
     # rubocop:disable Rails/SkipsModelValidations
     describe '#favorite_records_from' do
