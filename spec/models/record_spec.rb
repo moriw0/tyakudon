@@ -160,10 +160,17 @@ RSpec.describe Record do
       let!(:connecting_record) do
         create(:record_only_has_started_at, is_retired: false, ramen_shop: create(:ramen_shop, :many_shops))
       end
+      let!(:retired_record) { create(:record, is_retired: true, ramen_shop: create(:ramen_shop, :many_shops)) }
+      let!(:test_record) { create(:record, is_test: true, ramen_shop: create(:ramen_shop, :many_shops)) }
 
-      it 'includes both finished and connecting records' do
+      it 'includes finished, connecting and retired records' do
         results = described_class.new_records
-        expect(results).to include(finished_record, connecting_record)
+        expect(results).to include(finished_record, connecting_record, retired_record)
+      end
+
+      it 'excludes test records' do
+        results = described_class.new_records
+        expect(results).to_not include(test_record)
       end
 
       it 'orders by created_at descending' do
