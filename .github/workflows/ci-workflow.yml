@@ -1,4 +1,4 @@
-name: CI flow for Amazon ECS
+name: CI flow
 
 on:
   pull_request:
