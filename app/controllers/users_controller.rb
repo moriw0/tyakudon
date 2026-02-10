@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def index
     @users_count = User.all.count
-    @users = User.order(created_at: :desc).page(params[:page])
+    @users = User.with_attached_avatar.order(created_at: :desc).page(params[:page])
   end
 
   def show
