@@ -20,11 +20,11 @@ RSpec.describe 'NewRecords' do
         expect(controller.instance_variable_get(:@records)).to be_present
       end
 
-      it 'only includes non-retired records' do
+      it 'includes retired records' do
         get new_records_path
         assigned = controller.instance_variable_get(:@records)
         expect(assigned).to include(active_records.first)
-        expect(assigned).to_not include(retired_record)
+        expect(assigned).to include(retired_record)
       end
 
       it 'orders by created_at descending' do

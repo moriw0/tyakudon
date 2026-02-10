@@ -26,6 +26,7 @@ class Record < ApplicationRecord
 
   scope :not_retired, -> { where(is_retired: false, auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :not_retired_or_connecting, -> { where(is_retired: false, auto_retired: false, is_test: false) }
+  scope :not_auto_retired, -> { where(auto_retired: false, is_test: false) }
   scope :active, -> { where(auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :order_by_longest_wait, -> { order('wait_time DESC') }
   scope :order_by_shortest_wait, -> { order('wait_time ASC') }
@@ -54,7 +55,7 @@ class Record < ApplicationRecord
   end
 
   def self.new_records
-    not_retired_or_connecting.ordered_by_created_at.with_associations
+    not_auto_retired.ordered_by_created_at.with_associations
   end
 
   def self.favorite_records_from(user)
