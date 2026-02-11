@@ -37,6 +37,10 @@ class Record < ApplicationRecord
     eager_load(:user, :ramen_shop)
       .preload(:line_statuses, :likes, image_attachment: :blob, user: { avatar_attachment: :blob })
   }
+  scope :with_associations_for_ranking, -> {
+    eager_load(:user, :ramen_shop)
+      .preload(:line_statuses, :likes, user: { avatar_attachment: :blob })
+  }
   scope :order_by_most_likes, -> {
     likes_subquery = Like.group(:record_id).select('record_id, COUNT(id) AS likes_count')
     joins("LEFT JOIN (#{likes_subquery.to_sql}) likes_subquery ON likes_subquery.record_id = records.id")
@@ -47,11 +51,11 @@ class Record < ApplicationRecord
   def self.ranking_by(sort_type:, page:)
     case sort_type
     when 'shortest'
-      not_retired.with_associations.order_by_shortest_wait.page(page)
+      not_retired.with_associations_for_ranking.order_by_shortest_wait.page(page)
     when 'most_likes'
-      not_retired.with_associations.order_by_most_likes.page(page)
+      not_retired.with_associations_for_ranking.order_by_most_likes.page(page)
     else
-      not_retired.with_associations.order_by_longest_wait.page(page)
+      not_retired.with_associations_for_ranking.order_by_longest_wait.page(page)
     end
   end
 
