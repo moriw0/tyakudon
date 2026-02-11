@@ -34,7 +34,8 @@ class Record < ApplicationRecord
   scope :active_ordered, -> { active.ordered_by_created_at }
   scope :top_five, -> { limit(5) }
   scope :with_associations, -> {
-    eager_load(:user, :ramen_shop).preload(:line_statuses, :likes, image_attachment: :blob, user: :avatar_attachment)
+    eager_load(:user, :ramen_shop)
+      .preload(:line_statuses, :likes, image_attachment: :blob, user: { avatar_attachment: :blob })
   }
   scope :order_by_most_likes, -> {
     likes_subquery = Like.group(:record_id).select('record_id, COUNT(id) AS likes_count')
