@@ -1,7 +1,7 @@
 <% move_icon ||= false %>
-<%= form_with model: current_user.likes.find_by(record: record), html: { method: :delete, data: { controller: "like", action: "click->like#submit" } } do |f| %>
+<%= form_with model: user_like_for_record(current_user, record), html: { method: :delete, data: { controller: "like", action: "click->like#submit" } } do |f| %>
   <%= f.button :type => "button", class: 'like-button clicked' do %>
     <i class="fa-solid fa-thumbs-up like-icon <%= 'like-beat' if move_icon %>"></i>
-    <span class="like-count"><%= record.likes.count %></span>
+    <span class="like-count"><%= record.likes.length %></span>
   <% end %>
 <% end %>

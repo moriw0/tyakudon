@@ -1,6 +1,6 @@
 <%= tag.div id: dom_id(record) do %>
   <% if logged_in? %>
-    <% if current_user.likes?(record) %>
+    <% if user_liked_record?(current_user, record) %>
       <%= render 'likes/remove_like', record: record %>
     <% else %>
       <%= render 'likes/add_like', record: record %>

@@ -112,7 +112,13 @@ class User < ApplicationRecord
   end
 
   def likes?(record)
-    like_records.include?(record)
+    if like_records.loaded?
+      # Use in-memory collection if already loaded
+      like_records.include?(record)
+    else
+      # Use efficient query if not loaded
+      likes.exists?(record_id: record.id)
+    end
   end
 
   def add_like(record)
