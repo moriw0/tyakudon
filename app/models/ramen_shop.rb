@@ -10,7 +10,7 @@ class RamenShop < ApplicationRecord
   validates :address, presence: true
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }, allow_blank: true
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }, allow_blank: true
-  scope :with_associations, -> { preload(records: :line_statuses) }
+  scope :with_associations, -> { preload(records: %i[user line_statuses]) }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[name address]
