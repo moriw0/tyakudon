@@ -53,4 +53,4 @@ scraping:
 	docker compose run --rm app bundle exec thor scraping:scrape_ramen_shops --limit=3 --resume=true --wait_seconds=3
 
 c:
-	docker compose run --rm app bundle exec rails c
+	docker compose exec app bundle exec rails c
