@@ -56,7 +56,7 @@ gem "bootstrap"
 gem "jquery-rails"
 gem 'enum_help'
 gem 'kaminari'
-gem 'ransack'
+gem 'ransack', '< 4.3'
 gem "bootstrap_form"
 gem 'faker'
 gem 'seed-fu'
