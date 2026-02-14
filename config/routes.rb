@@ -48,4 +48,6 @@ Rails.application.routes.draw do
     get 'complete', on: :member
   end
   resources :faqs
+
+  get "up", to: proc { [200, {}, ["OK"]] }
 end

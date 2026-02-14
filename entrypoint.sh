@@ -12,10 +12,5 @@ rm -f /tyakudon/tmp/pids/server.pid
 echo "Checking bundle status..."
 bundle check || bundle install
 
-# Production-specific tasks
-if [ "$RAILS_ENV" = "production" ]; then
-  RAILS_ENV=production bundle exec rails db:migrate
-  RAILS_ENV=production bundle exec rails assets:precompile
-fi
 
 exec "$@"
