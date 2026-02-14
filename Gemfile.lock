@@ -351,7 +351,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    ransack (4.0.0)
+    ransack (4.2.1)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
@@ -521,7 +521,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
-  ransack
+  ransack (< 4.3)
   rspec-rails
   rubocop
   rubocop-performance
