@@ -36,3 +36,5 @@
 !/app/assets/builds/.keep
 
 /.claude/settings.local.json
+
+/coverage
