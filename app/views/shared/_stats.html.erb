@@ -1,7 +1,7 @@
 <% @user ||= current_user %>
 
 <%= link_to user_path(@user) do %>
-  <%= @user.records.count %><br>
+  <%= @user.records.not_auto_retired.count %><br>
   レコード数
 <% end %>
 <% if current_user? @user %>

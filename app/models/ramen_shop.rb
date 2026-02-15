@@ -41,4 +41,12 @@ class RamenShop < ApplicationRecord
   def favorited_by?(user)
     favorite_users.include?(user)
   end
+
+  def last_active_record
+    if records.loaded?
+      records.reverse.find { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
+    else
+      records.active_ordered.first
+    end
+  end
 end

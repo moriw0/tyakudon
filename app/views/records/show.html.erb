@@ -51,7 +51,7 @@
         <%= @record.user.name %>
       </span>
       <span class="user-record-count">
-        (<%= @record.user.records.count %>)
+        (<%= @record.user.records.not_auto_retired.count %>)
       </span>
     <% end %>
     <% unless @record.comment.blank? %>

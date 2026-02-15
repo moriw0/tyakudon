@@ -5,7 +5,7 @@
       <small class="mb-1 shop-address"><%= ramen_shop.address %></small>
     </div>
     <div class="recent-record">
-      <% last_record = ramen_shop.records.last %>
+      <% last_record = ramen_shop.last_active_record %>
       <% if last_record %>
         <div class="record-line_status d-flex align-items-center">
           <small class='badge bg-dark me-2'>New</small>
