@@ -83,6 +83,23 @@ RSpec.describe RamenShop do
     end
   end
 
+  describe '.order_by_records_count' do
+    let!(:shop_with_many_records) { create(:ramen_shop, :many_shops) }
+    let!(:shop_with_no_records)   { create(:ramen_shop, :many_shops) }
+    let!(:shop_with_few_records)  { create(:ramen_shop, :many_shops) }
+
+    before do
+      create_list(:record, 5, ramen_shop: shop_with_many_records)
+      create_list(:record, 2, ramen_shop: shop_with_few_records)
+    end
+
+    it 'returns shops ordered by records count descending' do
+      result = described_class.order_by_records_count.to_a
+      expect(result.first).to eq shop_with_many_records
+      expect(result.last).to eq shop_with_no_records
+    end
+  end
+
   describe 'search_by_keywords' do
     let!(:tokyo_ramen_shop) { create(:ramen_shop, name: 'Tokyo Ramen', address: 'Tokyo') }
     let!(:osaka_ramen_shop) { create(:ramen_shop, name: 'Osaka Ramen', address: 'Osaka') }
