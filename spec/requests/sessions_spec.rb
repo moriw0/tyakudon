@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Sessions' do
+  describe 'GET /login #new' do
+    it 'returns 200 OK for unauthenticated user' do
+      get login_path
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe 'POST /sessions #create' do
     let(:user) { create(:user) }
 
@@ -34,6 +41,16 @@ RSpec.describe 'Sessions' do
         it 'does not remember the cookie' do
           log_in_as(user, remember_me: '0')
           expect(cookies[:remember_token]).to be_nil
+        end
+      end
+
+      context 'when user is not activated' do
+        let(:inactive_user) { create(:user, :not_activated) }
+
+        it 'logs in successfully (activation not checked at session level)' do
+          post login_path, params: { session: { email: inactive_user.email,
+                                                password: inactive_user.password } }
+          expect(is_logged_in?).to be_truthy
         end
       end
     end
