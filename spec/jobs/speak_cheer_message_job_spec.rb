@@ -8,11 +8,12 @@ RSpec.describe SpeakCheerMessageJob do
   let(:openai_response) do
     { 'choices' => [{ 'message' => { 'content' => '応援メッセージどん！' } }] }
   end
+  let(:openai_client) { instance_double(OpenAI::Client, chat: openai_response) }
 
   before do
     clear_enqueued_jobs
     clear_performed_jobs
-    allow_any_instance_of(OpenAI::Client).to receive(:chat).and_return(openai_response) # rubocop:disable RSpec/AnyInstance
+    allow(OpenAI::Client).to receive(:new).and_return(openai_client)
   end
 
   describe '#perform' do
