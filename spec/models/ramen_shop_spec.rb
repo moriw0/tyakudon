@@ -98,6 +98,47 @@ RSpec.describe RamenShop do
       expect(result.first).to eq shop_with_many_records
       expect(result.last).to eq shop_with_no_records
     end
+
+    context 'when some records are auto_retired' do
+      let!(:shop_with_auto_retired) { create(:ramen_shop, :many_shops) }
+
+      before do
+        create_list(:record, 10, ramen_shop: shop_with_auto_retired, auto_retired: true)
+      end
+
+      it 'excludes auto_retired records from count' do
+        result = described_class.order_by_records_count.to_a
+        expect(result.index(shop_with_auto_retired)).to be > result.index(shop_with_few_records)
+      end
+
+      it 'does not rank shop_with_auto_retired above shop_with_few_records' do
+        result = described_class.order_by_records_count.to_a
+        expect(result.index(shop_with_few_records)).to be < result.index(shop_with_auto_retired)
+      end
+    end
+
+    context 'when all records of a shop are auto_retired' do
+      let!(:shop_all_retired) { create(:ramen_shop, :many_shops) }
+
+      before do
+        create_list(:record, 3, ramen_shop: shop_all_retired, auto_retired: true)
+      end
+
+      it 'counts the shop as having 0 active records' do
+        result = described_class.order_by_records_count.to_a
+        expect(result.index(shop_all_retired)).to be > result.index(shop_with_few_records)
+      end
+
+      it 'still includes the shop in results (LEFT JOIN maintained)' do
+        result = described_class.order_by_records_count.to_a
+        expect(result).to include(shop_all_retired)
+      end
+    end
+
+    it 'includes shops with no records in results (LEFT JOIN maintained)' do
+      result = described_class.order_by_records_count.to_a
+      expect(result).to include(shop_with_no_records)
+    end
   end
 
   describe 'search_by_keywords' do

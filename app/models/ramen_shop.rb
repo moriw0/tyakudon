@@ -11,7 +11,11 @@ class RamenShop < ApplicationRecord
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }, allow_blank: true
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }, allow_blank: true
   scope :with_associations, -> { preload(records: %i[user line_statuses]) }
-  scope :order_by_records_count, -> { left_joins(:records).group(:id).order('COUNT(records.id) DESC') }
+  scope :order_by_records_count, -> {
+    left_joins(:records)
+      .group(:id)
+      .order(Arel.sql('COUNT(CASE WHEN records.auto_retired = false THEN records.id END) DESC'))
+  }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[name address]
