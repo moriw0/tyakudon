@@ -20,6 +20,50 @@ RSpec.describe 'RamenShops' do
     end
   end
 
+  describe 'GET /ramen_shops #index' do
+    before { ramen_shop }
+
+    it 'returns 200 OK without keyword' do
+      get ramen_shops_path
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns results filtered by keyword' do
+      create(:ramen_shop, name: '特別なラーメン屋', address: '東京都新宿区')
+      get ramen_shops_path, params: { q: { name_or_address_cont: '特別' } }
+      expect(response.body).to include '特別なラーメン屋'
+    end
+
+    it 'returns JSON when requested' do
+      get ramen_shops_path, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to include 'application/json'
+    end
+  end
+
+  describe 'GET /ramen_shops/:id #show' do
+    it 'returns 200 OK' do
+      get ramen_shop_path(ramen_shop)
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns JSON when requested' do
+      get ramen_shop_path(ramen_shop), as: :json
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to include 'application/json'
+    end
+  end
+
+  describe 'GET /near_shops' do
+    before { ramen_shop }
+
+    it 'returns JSON with nearby shops' do
+      get near_shops_path, params: { lat: ramen_shop.latitude, lng: ramen_shop.longitude }
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to include 'application/json'
+    end
+  end
+
   describe 'GET /ramen_shops/new #new' do
     subject(:do_request) { get new_ramen_shop_path }
 
@@ -156,6 +200,23 @@ RSpec.describe 'RamenShops' do
       log_in_as admin
       do_request
       expect(ramen_shop.reload.name).to eq 'ラーメン店'
+    end
+
+    context 'with invalid params (blank name)' do
+      subject(:do_request) { patch ramen_shop_path(ramen_shop), params: { ramen_shop: { name: '' } } }
+
+      it 'returns unprocessable_entity when logged in as an admin' do
+        log_in_as admin
+        do_request
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'does not update the ramen_shop name' do
+        original_name = ramen_shop.name
+        log_in_as admin
+        do_request
+        expect(ramen_shop.reload.name).to eq original_name
+      end
     end
   end
 end
