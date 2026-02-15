@@ -261,5 +261,72 @@ RSpec.describe Record do
       end
     end
     # rubocop:enable Rails/SkipsModelValidations
+
+    describe '.ranking_by' do
+      # rubocop:disable Rails/SkipsModelValidations
+      let!(:ramen_shop) { create(:ramen_shop) }
+      let!(:user) { create(:user) }
+      let!(:records) do
+        [
+          build_stubbed(:record, :many_records, ramen_shop: ramen_shop, user: user, wait_time: 100),
+          build_stubbed(:record, :many_records, ramen_shop: ramen_shop, user: user, wait_time: 300),
+          build_stubbed(:record, :many_records, ramen_shop: ramen_shop, user: user, wait_time: 200)
+        ]
+      end
+
+      before do
+        described_class.insert_all records.map(&:attributes)
+      end
+
+      it 'orders by longest wait time by default' do
+        result = described_class.ranking_by(sort_type: 'longest', page: 1)
+        wait_times = result.map(&:wait_time)
+        expect(wait_times).to eq wait_times.sort.reverse
+      end
+
+      it 'orders by shortest wait time' do
+        result = described_class.ranking_by(sort_type: 'shortest', page: 1)
+        wait_times = result.map(&:wait_time)
+        expect(wait_times).to eq wait_times.sort
+      end
+
+      it 'orders by most likes with unknown sort_type falls back to longest' do
+        result = described_class.ranking_by(sort_type: 'unknown', page: 1)
+        wait_times = result.map(&:wait_time)
+        expect(wait_times).to eq wait_times.sort.reverse
+      end
+      # rubocop:enable Rails/SkipsModelValidations
+    end
+
+    describe '#calculate_wait_time_for_retire!' do
+      let!(:record) { create(:record_only_has_started_at) }
+
+      it 'sets is_retired to true' do
+        record.calculate_wait_time_for_retire!
+        expect(record.reload.is_retired).to be true
+      end
+
+      it 'sets ended_at to current time' do
+        freeze_time = Time.zone.now
+        allow(Time).to receive(:current).and_return(freeze_time)
+        record.calculate_wait_time_for_retire!
+        expect(record.reload.ended_at).to be_within(1.second).of(freeze_time)
+      end
+
+      it 'sets wait_time based on elapsed time' do
+        record.update_column(:started_at, 10.minutes.ago) # rubocop:disable Rails/SkipsModelValidations
+        record.calculate_wait_time_for_retire!
+        expect(record.reload.wait_time).to be_within(2).of(600)
+      end
+    end
+
+    describe '#auto_retire!' do
+      let!(:record) { create(:record) }
+
+      it 'sets auto_retired to true' do
+        record.auto_retire!
+        expect(record.reload.auto_retired).to be true
+      end
+    end
   end
 end
