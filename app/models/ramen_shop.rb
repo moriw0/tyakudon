@@ -10,7 +10,7 @@ class RamenShop < ApplicationRecord
   validates :address, presence: true
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }, allow_blank: true
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }, allow_blank: true
-  scope :with_associations, -> { preload(records: %i[user line_statuses]) }
+  scope :with_associations, -> { preload(:records) }
   scope :order_by_records_count, -> {
     left_joins(:records)
       .group(:id)
@@ -47,6 +47,25 @@ class RamenShop < ApplicationRecord
       records.reverse.find { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
     else
       records.active_ordered.first
+    end
+  end
+
+  def active_records_count
+    if records.loaded?
+      records.count { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
+    else
+      records.active.count
+    end
+  end
+
+  def average_wait_time
+    if records.loaded?
+      active = records.select { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
+      return nil if active.empty?
+
+      active.sum(&:wait_time) / active.size.to_f
+    else
+      records.active.average(:wait_time)&.to_f
     end
   end
 end

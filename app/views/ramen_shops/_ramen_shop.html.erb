@@ -4,18 +4,17 @@
       <h5><%= ramen_shop.name %></h5>
       <small class="mb-1 shop-address"><%= ramen_shop.address %></small>
     </div>
-    <div class="recent-record">
-      <% last_record = ramen_shop.last_active_record %>
-      <% if last_record %>
-        <div class="record-line_status d-flex align-items-center">
-          <small class='badge bg-dark me-2'>New</small>
-          <span class="fs-2 me-2"><%= wait_time_tag last_record.wait_time %></span>
-          <% first_status = last_record.line_statuses.first %>
-          <%= line_type_badge(first_status) %>
+    <div class="shop-stats pb-2">
+      <% count = ramen_shop.active_records_count %>
+      <% if count > 0 %>
+        <div class="d-flex align-items-center">
+          <i class="fa-solid fa-chart-simple me-1"></i>
+          <span class="fs-2 me-2"><%= wait_time_tag(ramen_shop.average_wait_time) %></span>
+          <span class="badge bg-secondary"><%= count %>件</span>
         </div>
       <% else %>
         <div class="no-record">
-          <small class='ms-2'>まだ記録がありません</small>
+          <small class="ms-2">まだ記録がありません</small>
         </div>
       <% end %>
     </div>
