@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :cheer_message do
     content { 'MyText' }
-    record { nil }
+    role { :user }
+    record
   end
 end
