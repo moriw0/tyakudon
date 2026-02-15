@@ -141,6 +141,89 @@ RSpec.describe RamenShop do
     end
   end
 
+  describe '#active_records_count' do
+    let(:ramen_shop) { create(:ramen_shop) }
+
+    it 'counts only active records with wait_time' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 900)
+      expect(ramen_shop.active_records_count).to eq(2)
+    end
+
+    it 'excludes auto_retired records' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: true, is_test: false, wait_time: 900)
+      expect(ramen_shop.active_records_count).to eq(1)
+    end
+
+    it 'excludes test records' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: true, wait_time: 900)
+      expect(ramen_shop.active_records_count).to eq(1)
+    end
+
+    it 'excludes records with nil wait_time' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: nil)
+      expect(ramen_shop.active_records_count).to eq(1)
+    end
+
+    it 'returns 0 when no active records exist' do
+      expect(ramen_shop.active_records_count).to eq(0)
+    end
+
+    context 'when records are loaded' do
+      it 'uses in-memory filtering' do
+        create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+        ramen_shop.records.load
+        expect(ramen_shop.records).to be_loaded
+        expect(ramen_shop.active_records_count).to eq(1)
+      end
+    end
+  end
+
+  describe '#average_wait_time' do
+    let(:ramen_shop) { create(:ramen_shop) }
+
+    it 'returns the average wait_time of active records' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 900)
+      expect(ramen_shop.average_wait_time).to eq(750.0)
+    end
+
+    it 'returns nil when no active records exist' do
+      expect(ramen_shop.average_wait_time).to be_nil
+    end
+
+    it 'excludes auto_retired records from average' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: true, is_test: false, wait_time: 9000)
+      expect(ramen_shop.average_wait_time).to eq(600.0)
+    end
+
+    it 'excludes test records from average' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: true, wait_time: 9000)
+      expect(ramen_shop.average_wait_time).to eq(600.0)
+    end
+
+    it 'excludes records with nil wait_time' do
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: nil)
+      expect(ramen_shop.average_wait_time).to eq(600.0)
+    end
+
+    context 'when records are loaded' do
+      it 'uses in-memory calculation' do
+        create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 300)
+        create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 900)
+        ramen_shop.records.load
+        expect(ramen_shop.records).to be_loaded
+        expect(ramen_shop.average_wait_time).to eq(600.0)
+      end
+    end
+  end
+
   describe 'search_by_keywords' do
     let!(:tokyo_ramen_shop) { create(:ramen_shop, name: 'Tokyo Ramen', address: 'Tokyo') }
     let!(:osaka_ramen_shop) { create(:ramen_shop, name: 'Osaka Ramen', address: 'Osaka') }
