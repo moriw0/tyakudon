@@ -8,6 +8,7 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "actiontext" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "trix" %>
     <%= javascript_importmap_tags %>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" defer data-turbo-evals="false"></script>
     <%= render 'shared/google_tag_manager' if Rails.env.production? %>
