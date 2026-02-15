@@ -27,6 +27,30 @@ RSpec.describe 'Likes' do
     end
   end
 
+  describe 'GET /likes/:id/prepare #prepare' do
+    let!(:user) { create(:user) }
+    let!(:other_user) { create(:user, :other_user) }
+    let!(:record) { create(:record, user: other_user) }
+
+    context 'when not logged in' do
+      it 'redirects to login_path' do
+        get prepare_like_path(record)
+        expect(response).to redirect_to login_path
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        log_in_as user
+      end
+
+      it 'redirects to record_path' do
+        get prepare_like_path(record)
+        expect(response).to redirect_to record_path(record)
+      end
+    end
+  end
+
   describe 'DELETE /likes/:id #destory' do
     let!(:user) { create(:user) }
     let!(:record) { create(:record, user: other_user) }
