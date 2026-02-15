@@ -7,7 +7,7 @@
   </section>
   <section class="content">
     <h2 class="border-bottom">ちゃくどんレコード
-      <span><%= @ramen_shop.records.count %>件</span>
+      <span><%= @ramen_shop.records.active.count %>件</span>
     </h2>
     <% if @records.any? %>
       <div class="records pb-2">
