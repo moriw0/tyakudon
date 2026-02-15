@@ -136,4 +136,154 @@ RSpec.describe User do
     user.remove_favorite(ramen_shop)
     expect(user).to_not be_favorites(ramen_shop)
   end
+
+  describe '.digest' do
+    it 'returns a BCrypt hash string' do
+      digest = described_class.digest('test_string')
+      expect(BCrypt::Password.new(digest).is_password?('test_string')).to be true
+    end
+  end
+
+  describe '.new_token' do
+    it 'returns a URL-safe base64 token' do
+      token = described_class.new_token
+      expect(token).to match(/\A[A-Za-z0-9\-_]+\z/)
+    end
+
+    it 'returns a unique token each time' do
+      expect(described_class.new_token).to_not eq(described_class.new_token)
+    end
+  end
+
+  describe '#authenticated?' do
+    let(:saved_user) { create(:user) }
+
+    it 'returns true with correct activation token' do
+      token = saved_user.activation_token
+      expect(saved_user.authenticated?(:activation, token)).to be true
+    end
+
+    it 'returns false with wrong activation token' do
+      expect(saved_user.authenticated?(:activation, 'wrong_token')).to be false
+    end
+
+    it 'returns false when digest is nil' do
+      saved_user.remember_digest = nil
+      expect(saved_user.authenticated?(:remember, '')).to be false
+    end
+  end
+
+  describe '#remember and #forget' do
+    let(:saved_user) { create(:user) }
+
+    it 'sets remember_digest when remembered' do
+      saved_user.remember
+      expect(saved_user.reload.remember_digest).to_not be_nil
+    end
+
+    it 'clears remember_digest when forgotten' do
+      saved_user.remember
+      saved_user.forget
+      expect(saved_user.reload.remember_digest).to be_nil
+    end
+  end
+
+  describe '#session_token' do
+    let(:saved_user) { create(:user) }
+
+    context 'when remember_digest exists' do
+      it 'returns the existing remember_digest' do
+        saved_user.remember
+        digest = saved_user.reload.remember_digest
+        expect(saved_user.session_token).to eq digest
+      end
+    end
+
+    context 'when remember_digest is nil' do
+      it 'calls remember and returns a new digest' do
+        expect(saved_user.remember_digest).to be_nil
+        token = saved_user.session_token
+        expect(token).to_not be_nil
+        expect(saved_user.reload.remember_digest).to_not be_nil
+      end
+    end
+  end
+
+  describe '#activate' do
+    let(:inactive_user) { create(:user, :not_activated) }
+
+    it 'sets activated to true' do
+      inactive_user.activate
+      expect(inactive_user.reload.activated).to be true
+    end
+
+    it 'sets activated_at' do
+      inactive_user.activate
+      expect(inactive_user.reload.activated_at).to_not be_nil
+    end
+  end
+
+  describe '#create_reset_digest' do
+    let(:saved_user) { create(:user) }
+
+    it 'sets reset_digest' do
+      saved_user.create_reset_digest
+      expect(saved_user.reload.reset_digest).to_not be_nil
+    end
+
+    it 'sets reset_sent_at' do
+      saved_user.create_reset_digest
+      expect(saved_user.reload.reset_sent_at).to_not be_nil
+    end
+  end
+
+  describe '#password_reset_expired?' do
+    let(:saved_user) { create(:user) }
+
+    it 'returns true when reset_sent_at is more than 2 hours ago' do
+      saved_user.create_reset_digest
+      saved_user.update_column(:reset_sent_at, 3.hours.ago) # rubocop:disable Rails/SkipsModelValidations
+      expect(saved_user.password_reset_expired?).to be true
+    end
+
+    it 'returns false when reset_sent_at is within 2 hours' do
+      saved_user.create_reset_digest
+      expect(saved_user.password_reset_expired?).to be false
+    end
+  end
+
+  describe '#forget_reset_digest' do
+    let(:saved_user) { create(:user) }
+
+    it 'sets reset_digest to nil' do
+      saved_user.create_reset_digest
+      saved_user.forget_reset_digest
+      expect(saved_user.reload.reset_digest).to be_nil
+    end
+  end
+
+  describe '#build_with_omniauth' do
+    let(:auth) do
+      {
+        'provider' => 'google_oauth2',
+        'uid' => '987654',
+        'info' => { 'email' => 'oauth@example.com' }
+      }
+    end
+
+    it 'assigns provider from auth data' do
+      user.build_with_omniauth(auth)
+      expect(user.provider).to eq 'google_oauth2'
+    end
+
+    it 'assigns uid from auth data' do
+      user.build_with_omniauth(auth)
+      expect(user.uid).to eq '987654'
+    end
+
+    it 'assigns email from auth data' do
+      user.build_with_omniauth(auth)
+      expect(user.email).to eq 'oauth@example.com'
+    end
+  end
 end
