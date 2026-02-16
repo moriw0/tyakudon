@@ -29,10 +29,9 @@ RSpec.describe 'CheerMessages' do
     end
 
     context 'when record does not exist' do
-      it 'raises ActiveRecord::RecordNotFound' do
-        expect {
-          post cheer_messages_path, params: { id: 0, current_wait_time: 600 }, as: :json
-        }.to raise_error(ActiveRecord::RecordNotFound)
+      it 'returns 404 not found' do
+        post cheer_messages_path, params: { id: 0, current_wait_time: 600 }, as: :json
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
