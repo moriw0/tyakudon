@@ -18,7 +18,7 @@
 
 ## 技術スタック
 
-Ruby 3.2.2 / Rails 7.0 / PostgreSQL 14 / Bootstrap / Hotwire (Turbo + Stimulus)
+Ruby 3.3.8 / Rails 7.1 / PostgreSQL 16 / Bootstrap / Hotwire (Turbo + Stimulus)
 
 ## 本番環境
 

@@ -6,7 +6,7 @@
 
 **技術スタック:**
 
-- Ruby on Rails 7.0
+- Ruby on Rails 7.1
 - PostgreSQL
 - GoodJob (バックグラウンドジョブ)
 - Hotwire (Turbo + Stimulus)
