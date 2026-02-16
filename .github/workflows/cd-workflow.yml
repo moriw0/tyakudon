@@ -13,6 +13,7 @@ jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     concurrency: deploy-group # optional: ensure only one action runs at a time
     steps:
       - name: Checkout repo
