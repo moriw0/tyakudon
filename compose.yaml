@@ -14,11 +14,14 @@ services:
   app:
     build:
       context: .
+      args:
+        BUNDLE_WITHOUT: ""
+        BUNDLE_DEPLOYMENT: ""
     volumes:
-      - .:/tyakudon
-      - bundle:/usr/local/bundle
+      - .:/rails
     environment:
       TZ: Asia/Tokyo
+      RAILS_ENV: development
     ports:
       - "3000:3000"
     command: bin/dev
@@ -31,4 +34,3 @@ services:
 
 volumes:
   postgresql-data:
-  bundle:
