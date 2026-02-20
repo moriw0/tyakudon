@@ -11,11 +11,7 @@ class RamenShop < ApplicationRecord
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }, allow_blank: true
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }, allow_blank: true
   scope :with_associations, -> { preload(:records) }
-  scope :order_by_records_count, -> {
-    left_joins(:records)
-      .group(:id)
-      .order(Arel.sql('COUNT(CASE WHEN records.auto_retired = false THEN records.id END) DESC'))
-  }
+  scope :order_by_records_count, -> { order(visible_records_count: :desc) }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[name address]
@@ -50,12 +46,9 @@ class RamenShop < ApplicationRecord
     end
   end
 
-  def active_records_count
-    if records.loaded?
-      records.count { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
-    else
-      records.active.count
-    end
+  def recalculate_visible_records_count!
+    count = records.where(auto_retired: false, is_test: false).where.not(wait_time: nil).count
+    update_columns(visible_records_count: count)
   end
 
   def average_wait_time

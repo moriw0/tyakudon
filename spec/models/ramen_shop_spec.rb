@@ -141,44 +141,41 @@ RSpec.describe RamenShop do
     end
   end
 
-  describe '#active_records_count' do
+  describe '#visible_records_count (column)' do
     let(:ramen_shop) { create(:ramen_shop) }
 
-    it 'counts only active records with wait_time' do
-      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
-      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 900)
-      expect(ramen_shop.active_records_count).to eq(2)
+    it 'is 0 on a new shop with no records' do
+      expect(ramen_shop.visible_records_count).to eq(0)
     end
 
-    it 'excludes auto_retired records' do
+    it 'increments when an active record is created' do
       create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      expect(ramen_shop.reload.visible_records_count).to eq(1)
+    end
+
+    it 'does not increment for auto_retired records' do
       create(:record, ramen_shop: ramen_shop, auto_retired: true, is_test: false, wait_time: 900)
-      expect(ramen_shop.active_records_count).to eq(1)
+      expect(ramen_shop.reload.visible_records_count).to eq(0)
     end
 
-    it 'excludes test records' do
-      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+    it 'does not increment for is_test records' do
       create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: true, wait_time: 900)
-      expect(ramen_shop.active_records_count).to eq(1)
+      expect(ramen_shop.reload.visible_records_count).to eq(0)
     end
 
-    it 'excludes records with nil wait_time' do
-      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
-      create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: nil)
-      expect(ramen_shop.active_records_count).to eq(1)
+    it 'does not increment for records with nil wait_time' do
+      create(:record_only_has_started_at, ramen_shop: ramen_shop)
+      expect(ramen_shop.reload.visible_records_count).to eq(0)
     end
 
-    it 'returns 0 when no active records exist' do
-      expect(ramen_shop.active_records_count).to eq(0)
+    it 'decrements when an active record is destroyed' do
+      record = create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      expect { record.destroy }.to change { ramen_shop.reload.visible_records_count }.from(1).to(0)
     end
 
-    context 'when records are loaded' do
-      it 'uses in-memory filtering' do
-        create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
-        ramen_shop.records.load
-        expect(ramen_shop.records).to be_loaded
-        expect(ramen_shop.active_records_count).to eq(1)
-      end
+    it 'decrements when auto_retired changes to true' do
+      record = create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      expect { record.auto_retire! }.to change { ramen_shop.reload.visible_records_count }.from(1).to(0)
     end
   end
 
