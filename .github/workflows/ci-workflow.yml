@@ -54,6 +54,7 @@ jobs:
       - name: Run Rspec
         run: bundle exec rspec
         env:
+          COVERAGE: "true"
           GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
 
   rubocop:
