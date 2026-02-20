@@ -17,6 +17,7 @@ services:
       args:
         BUNDLE_WITHOUT: ""
         BUNDLE_DEPLOYMENT: ""
+        INSTALL_BUILD_TOOLS: "1"
     volumes:
       - .:/rails
     environment:

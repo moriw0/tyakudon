@@ -20,6 +20,10 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
+# binstubs を RubyMine が期待するパス（$BUNDLE_PATH/bin/）に生成する
+# build ステージ限定の設定のため、final ステージには引き継がれない
+ENV BUNDLE_BIN="/usr/local/bundle/bin"
+
 # Install packages needed to build gems
 # libpq-dev: pg gem のビルドに必要（PostgreSQL を使用するため）
 # nodejs: autoprefixer-rails (bootstrap 経由) のアセットビルドに必要
@@ -46,11 +50,15 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 
+ARG INSTALL_BUILD_TOOLS=""
+
 # Install packages needed for deployment
 # libpq5: PostgreSQL クライアントライブラリ（runtime）
 # nodejs: autoprefixer-rails (bootstrap 経由) が起動時に JS ランタイムを要求するため必要
+# build-essential: 開発時に RubyMine の debase gem（ネイティブ拡張）のコンパイルに必要
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libpq5 libvips nodejs && \
+    apt-get install --no-install-recommends -y curl libpq5 libvips nodejs \
+    ${INSTALL_BUILD_TOOLS:+build-essential} && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
