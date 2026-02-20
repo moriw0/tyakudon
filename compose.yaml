@@ -23,6 +23,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       RAILS_ENV: development
+      SELENIUM_REMOTE_URL: http://selenium:4444
     ports:
       - "3000:3000"
     command: bin/dev
@@ -32,6 +33,12 @@ services:
     init: true
     tty: true
     stdin_open: true
+
+  selenium:
+    # ARM64 (Apple Silicon): seleniarm/standalone-chromium
+    # x86_64 (Intel/CI):     selenium/standalone-chromium
+    image: ${SELENIUM_IMAGE:-seleniarm/standalone-chromium}
+    shm_size: '2gb'
 
 volumes:
   postgresql-data:
