@@ -329,4 +329,34 @@ RSpec.describe Record do
       end
     end
   end
+
+  describe 'visible_records_count callbacks' do
+    let!(:ramen_shop) { create(:ramen_shop) }
+
+    it 'updates shop visible_records_count after active record is created' do
+      expect {
+        create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      }.to change { ramen_shop.reload.visible_records_count }.from(0).to(1)
+    end
+
+    it 'does not change shop visible_records_count when inactive record is created' do
+      expect {
+        create(:record, ramen_shop: ramen_shop, auto_retired: true, is_test: false, wait_time: 600)
+      }.to_not(change { ramen_shop.reload.visible_records_count })
+    end
+
+    it 'updates shop visible_records_count after record is destroyed' do
+      record = create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      expect {
+        record.destroy
+      }.to change { ramen_shop.reload.visible_records_count }.from(1).to(0)
+    end
+
+    it 'updates shop visible_records_count after auto_retire!' do
+      record = create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
+      expect {
+        record.auto_retire!
+      }.to change { ramen_shop.reload.visible_records_count }.from(1).to(0)
+    end
+  end
 end

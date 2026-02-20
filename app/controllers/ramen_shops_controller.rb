@@ -5,8 +5,9 @@ class RamenShopsController < ApplicationController
 
   def index
     @search = RamenShop.search_by_keywords(params[:q])
-    @result_count = @search.result.count
-    @ramen_shops = @search.result.with_associations.order_by_records_count.page(params[:page])
+    base_result = @search.result
+    @result_count = base_result.count
+    @ramen_shops = base_result.with_associations.order_by_records_count.page(params[:page])
 
     respond_to do |format|
       format.html

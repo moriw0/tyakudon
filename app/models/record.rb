@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Record < ApplicationRecord
   belongs_to :user
   belongs_to :ramen_shop
@@ -23,6 +24,8 @@ class Record < ApplicationRecord
 
   before_create :set_is_test_based_on_user unless Rails.env.development?
   after_create :schedule_auto_retire
+  after_destroy :update_shop_visible_records_count
+  after_save    :update_shop_visible_records_count, if: :counter_relevant_change?
 
   scope :not_retired, -> { where(is_retired: false, auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :not_retired_or_connecting, -> { where(is_retired: false, auto_retired: false, is_test: false) }
@@ -86,6 +89,17 @@ class Record < ApplicationRecord
 
   private
 
+  def counter_relevant_change?
+    saved_change_to_id? ||
+      saved_change_to_auto_retired? ||
+      saved_change_to_is_test? ||
+      saved_change_to_wait_time?
+  end
+
+  def update_shop_visible_records_count
+    ramen_shop.recalculate_visible_records_count!
+  end
+
   def set_is_test_based_on_user
     self.is_test = true if user.is_test_mode?
   end
@@ -123,3 +137,4 @@ class Record < ApplicationRecord
     (wait_time - calculated_wait_time).abs <= 1
   end
 end
+# rubocop:enable Metrics/ClassLength
