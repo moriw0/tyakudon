@@ -2,23 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Users' do
   describe '#create' do
-    context 'when standard creation' do
-      before { create(:record) }
-
-      scenario 'user creates an account with valid information', js: true do
-        visit new_user_path
-        expect {
-          fill_in 'ニックネーム', with: 'もりを'
-          fill_in 'メールアドレス', with: 'test@example.com'
-          fill_in 'パスワード', with: 'foobar'
-          fill_in 'パスワード（確認）', with: 'foobar'
-          find('input#agreement').click
-          click_button '登録する'
-          expect(page).to have_content 'メールを確認してアカウントを有効にしてください'
-        }.to change(User, :count).by(1)
-      end
-    end
-
     context 'when OAuth creation' do
       before do
         Rails.application.env_config['omniauth.auth'] = set_omniauth

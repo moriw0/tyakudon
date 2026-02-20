@@ -71,10 +71,10 @@ RSpec.describe 'Records', js: true do
     expect(page).to have_content '着丼しました'
     expect(page).to have_selector("img[src$='1000x800_4.2MB.png']")
 
-    # measureまでブラウザバックするとranking_pathへリダイレクト
+    # measureまでブラウザバックするとroot_pathへリダイレクト
     go_back
     go_back
-    expect(page).to have_current_path(ranking_path)
+    expect(page).to have_current_path(root_path)
     expect(page).to have_link '現在地から接続'
   end
 end

@@ -3,14 +3,6 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
 
-  def route_based_on_authentication
-    if ENV['FORCE_REDIRECT_TO_RANKING'] == 'true' || logged_in?
-      redirect_to ranking_path
-    else
-      redirect_to lp_path
-    end
-  end
-
   private
 
   def redirect_subdomain
