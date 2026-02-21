@@ -20,6 +20,16 @@ module Tyakudon
     # of the bootsnap cache if you use it.
     config.add_autoload_paths_to_load_path = false # New default is false
 
+    # Change the format of the cache entry.
+    #
+    # Changing this default means that all new cache entries added to the cache
+    # will have a different format that is not supported by Rails 7.0
+    # applications.
+    #
+    # Only change this value after your application is fully deployed to Rails 7.1
+    # and you have no plans to rollback.
+    config.active_support.cache_format_version = 7.1 # New default is 7.1
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
