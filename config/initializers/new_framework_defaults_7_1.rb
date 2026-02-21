@@ -277,4 +277,4 @@ Rails.application.config.active_record.encryption.support_sha1_for_non_determini
 #
 # In previous versions of Rails, these test helpers always used an HTML4 parser.
 #++
-# Rails.application.config.dom_testing_default_html_version = :html5
+Rails.application.config.dom_testing_default_html_version = :html5
