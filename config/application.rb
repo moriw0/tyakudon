@@ -13,6 +13,11 @@ module Tyakudon
 
     # Rails 7.1
     #
+    # Enable validating only parent-related columns for presence when the parent is mandatory.
+    # The previous behavior was to validate the presence of the parent record, which performed an extra query
+    # to get the parent every time the child record was updated, even when parent has not changed.
+    config.active_record.belongs_to_required_validates_foreign_key = false # New default is false
+
     # No longer add autoloaded paths into `$LOAD_PATH`. This means that you won't be able
     # to manually require files that are managed by the autoloader, which you shouldn't do anyway.
     #
