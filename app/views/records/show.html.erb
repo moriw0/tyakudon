@@ -39,13 +39,8 @@
       </div>
     </div>
     <% if @record.image.attached? %>
-      <% if @record.image.blob.variant_records.exists? %>
-        <%= render partial: 'records/image', locals: { record: @record } %>
-      <% else %>
-        <%= turbo_stream_from @record, "image" %>
-        <div id="<%= dom_id(@record, :image) %>">
-          <%= skeleton_background_tag 'record-image' %>
-        </div>
+      <%= skeleton_background_tag 'record-image' do %>
+        <%= lazy_image_tag @record.image.variant(:display) %>
       <% end %>
     <% end %>
     <%= link_to user_path(@record.user), class: 'user-info' do %>
