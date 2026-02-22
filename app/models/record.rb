@@ -4,7 +4,7 @@ class Record < ApplicationRecord
   belongs_to :ramen_shop
   has_many :line_statuses, dependent: :destroy
   has_one_attached :image do |attachable|
-    attachable.variant :display, resize_to_limit: [750, 750]
+    attachable.variant :display, resize_to_limit: [750, 750], preprocessed: true
   end
   has_many :likes, dependent: :destroy
   has_many :cheer_messages, dependent: :destroy
