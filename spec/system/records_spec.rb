@@ -69,7 +69,7 @@ RSpec.describe 'Records', js: true do
     expect(page).to have_content '投稿しました'
     expect(page).to have_content '00:00:05'
     expect(page).to have_content '着丼しました'
-    expect(page).to have_selector('.record-image')
+    expect(page).to have_selector("img[src$='1000x800_4.2MB.png']")
 
     # measureまでブラウザバックするとroot_pathへリダイレクト
     go_back
