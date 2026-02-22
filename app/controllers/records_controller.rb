@@ -63,6 +63,7 @@ class RecordsController < ApplicationController
 
   def update
     if @record.update(update_record_params)
+      BroadcastImageJob.perform_later(@record.id) if @record.image.attached?
       redirect_to record_path(@record), notice: '投稿しました', status: :see_other
     else
       render :result, status: :unprocessable_entity
