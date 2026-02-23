@@ -35,7 +35,7 @@ module Tyakudon
     config.active_job.queue_adapter = :good_job
     config.good_job = {
       execution_mode: :async,
-      max_threads: 4
+      max_threads: ENV.fetch("GOOD_JOB_MAX_THREADS", 2).to_i
     }
   end
 end
