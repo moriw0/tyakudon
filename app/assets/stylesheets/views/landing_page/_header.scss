@@ -1,51 +1,46 @@
-.header-content {
-  .button-big {
-    display: block;
-    margin: 0 auto;
-    width: 400px;
-  }
-  .logo {
-    width: 500px;
-  }
-  .new-user-path-link {
-    color: #e26b5d;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 30px;
-    text-decoration: none;
-  }
-  h1 {
-    color: black;
-    font-size: 2.5em;
-    line-height: 1.5;
-    margin-bottom: 3rem;
-    span {
-      display: inline-block;
-    }
-  }
-  p {
-    font-size: 1.3em;
-    line-height: 1.7;
-    margin: 0 auto;
-    margin-bottom: 3rem;
-    span {
-      display: inline-block;
-    }
-    width: 80%;
-  }
-  @media screen and (max-width: 768px) {
-    .button-big {
-      width: 80%;
-    }
-    .logo {
-      width: 200px;
-    }
-    h1 {
-      font-size: 2em;
-    }
-    p {
-      font-size: 1em;
-      width: 100%;
+.landing-page {
+  .hero {
+    .container {
+      .button-big {
+        display: block;
+        margin: 0 auto;
+        width: 400px;
+      }
+      .definitions {
+        margin: 0 auto;
+        margin-bottom: 3rem;
+        width: 90%;
+      }
+      .logo {
+        width: 500px;
+      }
+      .new-user-path-link {
+        color: #e26b5d;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 30px;
+        text-decoration: none;
+      }
+      h1 {
+        color: black;
+        font-size: 2em;
+        line-height: 1.5;
+        margin-bottom: 3rem;
+        span {
+          display: inline-block;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .button-big {
+          width: 80%;
+        }
+        .logo {
+          width: 200px;
+        }
+        h1 {
+          font-size: 2em;
+        }
+      }
     }
   }
 }
