@@ -15,17 +15,6 @@
     </div>
   <% end %>
 </section>
-<section class="ranking mb-4">
-  <h2 class="d-flex justify-content-center py-2 mt-3">ちゃくどんランキング</h2>
-  <div class="records pb-2">
-    <% @ranking_records.each_with_index do |record, index| %>
-      <%= render partial: 'records/ranking_record', locals: { record: record, rank: index + 1 } %>
-    <% end %>
-  </div>
-  <div class="more d-grid gap-2">
-    <%= link_to 'もっとみる', ranking_path, class: 'btn btn-outline-dark' %>
-  </div>
-</section>
 <section class="new-records mb-3">
   <h2 class="d-flex justify-content-center py-2 mt-3">新着ちゃくどん</h2>
   <div class="records pb-2">

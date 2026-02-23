@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 class Record < ApplicationRecord
   belongs_to :user
   belongs_to :ramen_shop
@@ -31,8 +30,6 @@ class Record < ApplicationRecord
   scope :not_retired_or_connecting, -> { where(is_retired: false, auto_retired: false, is_test: false) }
   scope :not_auto_retired, -> { where(auto_retired: false, is_test: false) }
   scope :active, -> { where(auto_retired: false, is_test: false).where.not(wait_time: nil) }
-  scope :order_by_longest_wait, -> { order('wait_time DESC') }
-  scope :order_by_shortest_wait, -> { order('wait_time ASC') }
   scope :ordered_by_created_at, -> { order('records.created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
   scope :with_associations, -> {
@@ -121,4 +118,3 @@ class Record < ApplicationRecord
     (wait_time - calculated_wait_time).abs <= 1
   end
 end
-# rubocop:enable Metrics/ClassLength
