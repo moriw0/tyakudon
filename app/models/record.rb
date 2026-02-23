@@ -35,14 +35,9 @@ class Record < ApplicationRecord
   scope :order_by_shortest_wait, -> { order('wait_time ASC') }
   scope :ordered_by_created_at, -> { order('records.created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
-  scope :top_five, -> { limit(5) }
   scope :with_associations, -> {
     eager_load(:user, :ramen_shop)
       .preload(:line_statuses, :likes, image_attachment: :blob, user: { avatar_attachment: :blob })
-  }
-  scope :with_associations_for_ranking, -> {
-    eager_load(:user, :ramen_shop)
-      .preload(:line_statuses, :likes, user: { avatar_attachment: :blob })
   }
   scope :order_by_most_likes, -> {
     likes_subquery = Like.group(:record_id).select('record_id, COUNT(id) AS likes_count')
@@ -50,17 +45,6 @@ class Record < ApplicationRecord
       .select('records.*, likes_subquery.likes_count')
       .order('likes_subquery.likes_count DESC NULLS LAST')
   }
-
-  def self.ranking_by(sort_type:, page:)
-    case sort_type
-    when 'shortest'
-      not_retired.with_associations_for_ranking.order_by_shortest_wait.page(page)
-    when 'most_likes'
-      not_retired.with_associations_for_ranking.order_by_most_likes.page(page)
-    else
-      not_retired.with_associations_for_ranking.order_by_longest_wait.page(page)
-    end
-  end
 
   def self.new_records
     not_auto_retired.ordered_by_created_at.with_associations

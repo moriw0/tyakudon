@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get '/lp', to: 'landing_page#index'
   get '/terms', to: 'statics#terms'
   get '/privacy_policy', to: 'statics#privacy_policy'
-  get '/ranking', to: 'ranking_records#index'
   get '/new_records', to: 'new_records#index'
   get '/search', to: 'home#search'
   get '/near_shops', to: 'ramen_shops#near_shops'
