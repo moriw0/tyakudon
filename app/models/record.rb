@@ -29,7 +29,7 @@ class Record < ApplicationRecord
   scope :not_retired, -> { where(is_retired: false, auto_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :not_retired_or_connecting, -> { where(is_retired: false, auto_retired: false, is_test: false) }
   scope :not_auto_retired, -> { where(auto_retired: false, is_test: false) }
-  scope :active, -> { where(auto_retired: false, is_test: false).where.not(wait_time: nil) }
+  scope :active, -> { where(auto_retired: false, is_retired: false, is_test: false).where.not(wait_time: nil) }
   scope :ordered_by_created_at, -> { order('records.created_at DESC') }
   scope :active_ordered, -> { active.ordered_by_created_at }
   scope :with_associations, -> {

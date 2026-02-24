@@ -40,7 +40,7 @@ class RamenShop < ApplicationRecord
 
   def last_active_record
     if records.loaded?
-      records.reverse.find { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
+      records.reverse.find { |r| !r.auto_retired && !r.is_retired && !r.is_test && r.wait_time.present? }
     else
       records.active_ordered.first
     end
@@ -53,7 +53,7 @@ class RamenShop < ApplicationRecord
 
   def average_wait_time
     if records.loaded?
-      active = records.select { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
+      active = records.select { |r| !r.auto_retired && !r.is_retired && !r.is_test && r.wait_time.present? }
       return nil if active.empty?
 
       active.sum(&:wait_time) / active.size.to_f
