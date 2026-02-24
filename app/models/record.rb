@@ -68,6 +68,10 @@ class Record < ApplicationRecord
     update!(auto_retired: true)
   end
 
+  def not_retired?
+    !auto_retired && !is_retired && !is_test && wait_time.present?
+  end
+
   private
 
   def counter_relevant_change?
