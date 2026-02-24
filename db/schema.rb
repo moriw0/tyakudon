@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_02_19_145901) do
+ActiveRecord::Schema[7.1].define(version: 2026_02_24_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -198,7 +198,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_19_145901) do
     t.boolean "is_retired", default: false
     t.boolean "auto_retired", default: false
     t.boolean "is_test", default: false
-    t.index ["ramen_shop_id", "auto_retired", "is_test"], name: "index_records_on_shop_and_active_conditions", where: "(wait_time IS NOT NULL)"
+    t.index ["ramen_shop_id", "auto_retired", "is_retired", "is_test"], name: "index_records_on_shop_and_active_conditions", where: "(wait_time IS NOT NULL)"
     t.index ["ramen_shop_id"], name: "index_records_on_ramen_shop_id"
     t.index ["user_id", "created_at"], name: "index_records_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_records_on_user_id"

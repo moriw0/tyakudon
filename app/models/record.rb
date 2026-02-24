@@ -73,6 +73,7 @@ class Record < ApplicationRecord
   def counter_relevant_change?
     saved_change_to_id? ||
       saved_change_to_auto_retired? ||
+      saved_change_to_is_retired? ||
       saved_change_to_is_test? ||
       saved_change_to_wait_time?
   end

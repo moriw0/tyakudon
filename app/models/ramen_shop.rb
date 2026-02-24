@@ -47,7 +47,7 @@ class RamenShop < ApplicationRecord
   end
 
   def recalculate_visible_records_count!
-    count = records.where(auto_retired: false, is_test: false).where.not(wait_time: nil).count
+    count = records.where(auto_retired: false, is_retired: false, is_test: false).where.not(wait_time: nil).count
     update_columns(visible_records_count: count)
   end
 

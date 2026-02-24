@@ -177,6 +177,19 @@ RSpec.describe RamenShop do
       record = create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 600)
       expect { record.auto_retire! }.to change { ramen_shop.reload.visible_records_count }.from(1).to(0)
     end
+
+    it 'does not increment for is_retired records' do
+      create(:record, ramen_shop: ramen_shop, is_retired: true, auto_retired: false, is_test: false, wait_time: 900)
+      expect(ramen_shop.reload.visible_records_count).to eq(0)
+    end
+
+    it 'decrements when is_retired changes to true' do
+      record = create(:record, ramen_shop: ramen_shop, is_retired: false, auto_retired: false, is_test: false,
+                               wait_time: 600)
+      expect { record.calculate_wait_time_for_retire! }.to change {
+                                                             ramen_shop.reload.visible_records_count
+                                                           }.from(1).to(0)
+    end
   end
 
   describe '#average_wait_time' do
