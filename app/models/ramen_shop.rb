@@ -53,12 +53,12 @@ class RamenShop < ApplicationRecord
 
   def average_wait_time
     if records.loaded?
-      active = records.select { |r| !r.auto_retired && !r.is_test && r.wait_time.present? }
+      active = records.select(&:not_retired?)
       return nil if active.empty?
 
       active.sum(&:wait_time) / active.size.to_f
     else
-      records.active.average(:wait_time)&.to_f
+      records.not_retired.average(:wait_time)&.to_f
     end
   end
 end

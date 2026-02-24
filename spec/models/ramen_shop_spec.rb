@@ -223,6 +223,19 @@ RSpec.describe RamenShop do
       expect(ramen_shop.average_wait_time).to eq(600.0)
     end
 
+    it 'excludes is_retired records' do
+      create(:record, ramen_shop: ramen_shop, is_retired: true, auto_retired: false, is_test: false, wait_time: 52_948)
+      create(:record, ramen_shop: ramen_shop, is_retired: false, auto_retired: false, is_test: false, wait_time: 600)
+      expect(ramen_shop.average_wait_time).to eq(600.0)
+    end
+
+    it 'excludes is_retired records when records are preloaded' do
+      create(:record, ramen_shop: ramen_shop, is_retired: true, auto_retired: false, is_test: false, wait_time: 52_948)
+      create(:record, ramen_shop: ramen_shop, is_retired: false, auto_retired: false, is_test: false, wait_time: 600)
+      ramen_shop.records.load
+      expect(ramen_shop.average_wait_time).to eq(600.0)
+    end
+
     context 'when records are loaded' do
       it 'uses in-memory calculation' do
         create(:record, ramen_shop: ramen_shop, auto_retired: false, is_test: false, wait_time: 300)
