@@ -129,6 +129,13 @@ class User < ApplicationRecord
     like_records.delete(record) if likes?(record)
   end
 
+  def unread_announcements?
+    latest = Announcement.published.maximum(:published_at)
+    return false if latest.nil?
+
+    last_read_announcement_at.nil? || last_read_announcement_at < latest
+  end
+
   private
 
   def downcase_email
