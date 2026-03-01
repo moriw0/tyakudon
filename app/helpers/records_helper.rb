@@ -1,4 +1,17 @@
 module RecordsHelper
+  ALLOWED_BACK_SOURCES = {
+    'new_records' => :new_records_path,
+    'ramen_shops' => :ramen_shops_path,
+    'favorite_records' => :favorite_records_path
+  }.freeze
+
+  def back_path_for(source, ramen_shop)
+    route_name = ALLOWED_BACK_SOURCES[source]
+    return ramen_shop_path(ramen_shop) unless route_name
+
+    send(route_name)
+  end
+
   def shop_or_user(record, name)
     record.send(name).name
   end
