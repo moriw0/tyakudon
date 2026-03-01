@@ -133,6 +133,7 @@
           li:nth-child(7) { order: 7; } // よくある質問
           li:nth-child(8) { order: 8; } // Users
           li:nth-child(9) { order: 9; } // 店舗登録
+          li:nth-child(10) { order: 10; } // お知らせ管理（admin）
         }
         .order-for-all-users {
           li:nth-child(5) { order: 1; } // ちゃくどんについて

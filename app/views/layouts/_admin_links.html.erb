@@ -1,4 +1,5 @@
 <% if current_user.admin? %>
   <li><%= link_to 'Users', users_path, class: 'nav-link' %></li>
   <li><%= link_to '店舗登録', new_ramen_shop_path, class: 'nav-link' %></li>
+  <li><%= link_to 'お知らせ管理', admin_announcements_path, class: 'nav-link' %></li>
 <% end %>

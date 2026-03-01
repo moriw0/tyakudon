@@ -51,4 +51,7 @@ Rails.application.routes.draw do
   end
   resources :faqs
 
+  namespace :admin do
+    resources :announcements
+  end
 end

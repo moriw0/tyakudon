@@ -1,0 +1,13 @@
+<section class="admin-announcements-section">
+  <h1><%= @announcement.title %></h1>
+  <p>公開日時: <%= @announcement.published_at.strftime('%Y/%m/%d %H:%M') %></p>
+  <div class="announcement-body">
+    <%= @announcement.body %>
+  </div>
+  <div>
+    <%= link_to '編集', edit_admin_announcement_path(@announcement) %> |
+    <%= link_to '削除', admin_announcement_path(@announcement),
+                data: { 'turbo-method': :delete, turbo_confirm: '本当に削除しますか？' } %> |
+    <%= link_to '一覧に戻る', admin_announcements_path %>
+  </div>
+</section>
