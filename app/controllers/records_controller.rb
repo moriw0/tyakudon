@@ -11,6 +11,7 @@ class RecordsController < ApplicationController
 
   def show
     @tweet_url = generate_tweet_url(@record, request.url)
+    @back_path = back_path_for(params[:back], @record.ramen_shop)
   end
 
   def new

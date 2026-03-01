@@ -1,5 +1,5 @@
 <div class="records-record">
-  <%= link_to record_path(record), class: 'list-group-item-action list-item' do %>
+  <%= link_to record_path(record, back: local_assigns[:source]), class: 'list-group-item-action list-item' do %>
     <div class="content">
       <div class="record-overview">
         <%= render partial: 'records/record_overview', locals: { record: record, name: name } %>

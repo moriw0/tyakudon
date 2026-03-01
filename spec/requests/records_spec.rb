@@ -12,6 +12,49 @@ RSpec.describe 'Records' do
     end
   end
 
+  describe 'GET /records/:id #show' do
+    let(:record) { create(:record, :with_line_status, ramen_shop: ramen_shop, user: user) }
+    let(:do_request) { get record_path(record) }
+
+    it 'returns 200' do
+      do_request
+      expect(response).to have_http_status(:ok)
+    end
+
+    context 'when back=new_records' do
+      it 'includes new_records_path in response' do
+        get record_path(record, back: 'new_records')
+        expect(response.body).to include new_records_path
+      end
+    end
+
+    context 'when back=ramen_shops' do
+      it 'includes ramen_shops_path in response' do
+        get record_path(record, back: 'ramen_shops')
+        expect(response.body).to include ramen_shops_path
+      end
+    end
+
+    context 'when back=favorite_records' do
+      it 'includes favorite_records_path in response' do
+        get record_path(record, back: 'favorite_records')
+        expect(response.body).to include favorite_records_path
+      end
+    end
+
+    context 'when back param is unknown or absent' do
+      it 'falls back to ramen_shop_path' do
+        get record_path(record, back: 'malicious')
+        expect(response.body).to include ramen_shop_path(record.ramen_shop)
+      end
+
+      it 'falls back when back param absent' do
+        do_request
+        expect(response.body).to include ramen_shop_path(record.ramen_shop)
+      end
+    end
+  end
+
   describe 'GET /ramen_shops/:ramen_shop_id/records/new #new' do
     let(:do_request) { get new_ramen_shop_record_path(ramen_shop), as: :turbo_stream }
 

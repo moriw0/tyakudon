@@ -1,7 +1,7 @@
 <%= render 'home/tabmenu' %>
 <section class="new-records mb-3">
   <div class="records pb-2">
-    <%= render @records, name: :ramen_shop %>
+    <%= render @records, name: :ramen_shop, source: 'new_records' %>
   </div>
   <div class="d-flex justify-content-center">
     <%= paginate @records %>
