@@ -24,6 +24,18 @@ class CheerMessage < ApplicationRecord
     content: SETTING_DESCRIPTION + EXAMPLE_MESSAGES
   }.freeze
 
+  def self.request!(record, line_status)
+    return if cooldown_active?(record)
+
+    wait_time = (Time.current - record.started_at).to_i
+    record.cheer_messages.create!(role: 'user', content: build_send_message(wait_time, line_status))
+    SpeakCheerMessageJob.perform_later(record.id)
+  end
+
+  def self.cooldown_active?(record, interval: 1.minute)
+    record.cheer_messages.user.exists?(['created_at > ?', interval.ago])
+  end
+
   def self.for_openai(messages)
     extracted_messages = messages.map { |message| { role: message.role, content: message.content } }
     extracted_messages.unshift(SYSTEM_MESSAGE)
