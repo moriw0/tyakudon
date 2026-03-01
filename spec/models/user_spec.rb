@@ -262,6 +262,44 @@ RSpec.describe User do
     end
   end
 
+  describe '#unread_announcements?' do
+    let(:saved_user) { create(:user) }
+
+    context 'when last_read_announcement_at is nil' do
+      it 'returns true when published announcements exist' do
+        create(:announcement)
+        expect(saved_user.unread_announcements?).to be true
+      end
+    end
+
+    context 'when last_read_announcement_at is older than the latest published_at' do
+      it 'returns true' do
+        create(:announcement, published_at: 1.hour.ago)
+        saved_user.update_column(:last_read_announcement_at, 2.hours.ago) # rubocop:disable Rails/SkipsModelValidations
+        expect(saved_user.unread_announcements?).to be true
+      end
+    end
+
+    context 'when last_read_announcement_at is equal to or newer than the latest published_at' do
+      it 'returns false' do
+        create(:announcement, published_at: 2.hours.ago)
+        saved_user.update_column(:last_read_announcement_at, 1.hour.ago) # rubocop:disable Rails/SkipsModelValidations
+        expect(saved_user.unread_announcements?).to be false
+      end
+    end
+
+    context 'when no published announcements exist' do
+      it 'returns false' do
+        create(:announcement, :draft)
+        expect(saved_user.unread_announcements?).to be false
+      end
+
+      it 'returns false when there are no announcements at all' do
+        expect(saved_user.unread_announcements?).to be false
+      end
+    end
+  end
+
   describe '#build_with_omniauth' do
     let(:auth) do
       {
