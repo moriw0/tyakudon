@@ -1,0 +1,10 @@
+<section class="announcements-show">
+  <p class="announcements-date"><%= @announcement.published_at.strftime('%Y/%m/%d') %></p>
+  <h1 class="announcements-title"><%= @announcement.title %></h1>
+  <div class="announcements-body">
+    <%= @announcement.body %>
+  </div>
+  <div class="back-to-link">
+    <%= link_to 'お知らせ一覧に戻る', announcements_path %>
+  </div>
+</section>

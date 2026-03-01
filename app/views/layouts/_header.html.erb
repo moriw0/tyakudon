@@ -2,6 +2,12 @@
   <nav>
     <%= link_to 'ちゃくどん', root_path, class: 'navbar-brand' %>
     <div class='right-side-section'>
+      <% if logged_in? && current_user.unread_announcements? %>
+        <%= link_to announcements_path, class: 'bell-icon-link' do %>
+          <i class='fa-solid fa-bell'></i>
+          <span class='unread-badge'></span>
+        <% end %>
+      <% end %>
       <input id='menu' type='checkbox'/>
       <label for='menu' class='back'></label>
       <% if logged_in? %>

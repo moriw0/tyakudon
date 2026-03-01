@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     get 'complete', on: :member
   end
   resources :faqs
+  resources :announcements, only: %i[index show]
 
   namespace :admin do
     resources :announcements

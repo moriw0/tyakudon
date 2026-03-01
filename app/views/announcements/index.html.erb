@@ -1,0 +1,17 @@
+<section class="announcements-index">
+  <h1>お知らせ</h1>
+  <% if @announcements.empty? %>
+    <p class="announcements-empty">お知らせはありません。</p>
+  <% else %>
+    <ul class="announcements-list">
+      <% @announcements.each do |announcement| %>
+        <li class="announcements-item">
+          <%= link_to announcement_path(announcement), class: 'announcements-link' do %>
+            <span class="announcements-date"><%= announcement.published_at.strftime('%Y/%m/%d') %></span>
+            <span class="announcements-title"><%= announcement.title %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</section>
