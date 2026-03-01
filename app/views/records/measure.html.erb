@@ -1,4 +1,3 @@
-<%= turbo_stream_from @record, "cheer_messages" %>
 <div id="cheer_messages">
 </div>
 <div class="shop-info pt-5 text-center">
@@ -6,9 +5,7 @@
   <small class="shop-address"><%= @ramen_shop.address %></small>
 </div>
 <div data-controller="timer" class="timer">
-  <div data-controller="time-post" data-time-post-interval-value="120000">
-    <div data-time-post-target="startedAt" data-timer-target="startedAt" hidden><%= @record.started_at&.iso8601 %></div>
-  </div>
+  <div data-timer-target="startedAt" hidden><%= @record.started_at&.iso8601 %></div>
   <div data-timer-target="time">00:00:00.000</div>
   <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
