@@ -1,0 +1,29 @@
+<section class="admin-announcements-section">
+  <h1>お知らせ管理</h1>
+  <%= link_to '新規作成', new_admin_announcement_path %>
+  <table class="admin-announcements-table">
+    <thead>
+      <tr>
+        <th>タイトル</th>
+        <th>公開日時</th>
+        <th>状態</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @announcements.each do |announcement| %>
+        <tr>
+          <td><%= announcement.title %></td>
+          <td><%= announcement.published_at.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= announcement.published_at <= Time.current ? '公開中' : '予約投稿' %></td>
+          <td>
+            <%= link_to '詳細', admin_announcement_path(announcement) %>
+            <%= link_to '編集', edit_admin_announcement_path(announcement) %>
+            <%= link_to '削除', admin_announcement_path(announcement),
+                        data: { 'turbo-method': :delete, turbo_confirm: '本当に削除しますか？' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

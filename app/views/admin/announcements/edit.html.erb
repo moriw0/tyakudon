@@ -1,0 +1,8 @@
+<h1>お知らせ編集</h1>
+
+<%= render 'form', announcement: @announcement %>
+
+<div>
+  <%= link_to '詳細を見る', admin_announcement_path(@announcement) %> |
+  <%= link_to '一覧に戻る', admin_announcements_path %>
+</div>
