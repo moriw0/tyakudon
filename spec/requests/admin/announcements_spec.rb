@@ -97,7 +97,7 @@ RSpec.describe '/admin/announcements' do
 
     let!(:admin) { create(:user, :admin) }
     let(:valid_attributes) do
-      { announcement: { title: 'テストお知らせ', published_at: 1.hour.ago } }
+      { announcement: { title: 'テストお知らせ', published_at: 1.hour.ago, ends_at: 1.day.from_now } }
     end
 
     it_behaves_like 'when not logged in'

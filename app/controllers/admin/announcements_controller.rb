@@ -46,7 +46,7 @@ module Admin
     end
 
     def announcement_params
-      params.require(:announcement).permit(:title, :published_at, :body)
+      params.require(:announcement).permit(:title, :published_at, :ends_at, :body)
     end
   end
 end

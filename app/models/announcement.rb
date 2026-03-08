@@ -4,6 +4,6 @@ class Announcement < ApplicationRecord
   validates :title,        presence: true
   validates :published_at, presence: true
 
-  scope :published, -> { where(published_at: ..Time.current) }
+  scope :published, -> { where(published_at: ..Time.current).where(ends_at: [nil, Time.current..]) }
   scope :recent,    -> { order(published_at: :desc) }
 end
