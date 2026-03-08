@@ -1,6 +1,9 @@
 <section class="admin-announcements-section">
   <h1><%= @announcement.title %></h1>
   <p>公開日時: <%= @announcement.published_at.strftime('%Y/%m/%d %H:%M') %></p>
+  <% if @announcement.ends_at %>
+    <p>公開終了日時: <%= @announcement.ends_at.strftime('%Y/%m/%d %H:%M') %></p>
+  <% end %>
   <div class="announcement-body">
     <%= @announcement.body %>
   </div>

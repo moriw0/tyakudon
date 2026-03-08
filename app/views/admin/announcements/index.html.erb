@@ -15,7 +15,15 @@
         <tr>
           <td><%= announcement.title %></td>
           <td><%= announcement.published_at.strftime('%Y/%m/%d %H:%M') %></td>
-          <td><%= announcement.published_at <= Time.current ? '公開中' : '予約投稿' %></td>
+          <td>
+            <% if announcement.ends_at && announcement.ends_at <= Time.current %>
+              公開終了
+            <% elsif announcement.published_at <= Time.current %>
+              公開中
+            <% else %>
+              予約投稿
+            <% end %>
+          </td>
           <td>
             <%= link_to '詳細', admin_announcement_path(announcement) %>
             <%= link_to '編集', edit_admin_announcement_path(announcement) %>

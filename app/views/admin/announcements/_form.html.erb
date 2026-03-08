@@ -1,6 +1,7 @@
 <%= bootstrap_form_with model: [:admin, announcement] do |form| %>
   <%= form.text_field :title %>
   <%= form.datetime_local_field :published_at %>
+  <%= form.datetime_local_field :ends_at %>
   <%= form.rich_text_area :body %>
   <%= form.submit %>
 <% end %>

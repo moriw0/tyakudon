@@ -36,6 +36,21 @@ RSpec.describe Announcement do
       draft = create(:announcement, :draft)
       expect(described_class.published).to_not include(draft)
     end
+
+    it 'does not return announcements with ends_at in the past' do
+      ended = create(:announcement, :ended)
+      expect(described_class.published).to_not include(ended)
+    end
+
+    it 'returns announcements with ends_at in the future' do
+      future_end = create(:announcement, ends_at: 1.hour.from_now)
+      expect(described_class.published).to include(future_end)
+    end
+
+    it 'returns announcements with ends_at nil' do
+      no_end = create(:announcement)
+      expect(described_class.published).to include(no_end)
+    end
   end
 
   describe '.recent' do

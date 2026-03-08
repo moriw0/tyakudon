@@ -6,5 +6,9 @@ FactoryBot.define do
     trait :draft do
       published_at { 1.hour.from_now }
     end
+
+    trait :ended do
+      ends_at { 1.hour.ago }
+    end
   end
 end
