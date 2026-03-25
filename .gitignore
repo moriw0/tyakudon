@@ -40,3 +40,6 @@
 /.claude/settings.local.json
 
 /coverage
+
+# Playwright MCP artifacts
+/.playwright-mcp/

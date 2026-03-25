@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["time", "startedAt", "endedAt", "waitTime"];
+  static values = { milliseconds: { type: Boolean, default: true } };
 
   connect() {
     const timeElement = this.timeTarget;
@@ -11,10 +12,12 @@ export default class extends Controller {
       const hours = String(Math.floor(time / 3600)).padStart(2, "0");
       const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, "0");
       const seconds = String(Math.floor(time % 60)).padStart(2, "0");
+
+      if (!this.millisecondsValue) return `${hours}:${minutes}:${seconds}`;
+
       const milliseconds = String(time % 1)
         .slice(2, 5)
         .padStart(3, "0");
-
       return `${hours}:${minutes}:${seconds}.${milliseconds}`;
     };
 

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>デザインシステム - 着丼</title>
+  <link rel="stylesheet" href="base.css">
+  <style>
+    /* スタイルガイド専用: セクション区切り */
+    .sg-section { margin: 32px 0; }
+    .sg-label {
+      font-size: 11px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .sg-swatch {
+      display: inline-block;
+      width: 80px;
+      height: 40px;
+      border: 1px solid #999;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .sg-box {
+      border: 1px dashed #ccc;
+      padding: 12px;
+      margin: 8px 0;
+    }
+    #modal-example { display: none; }
+  </style>
+</head>
+<body>
+
+<p><strong>着丼 デザインシステム</strong></p>
+<p><small>base.css を参照するすべてのページが従うべき標準</small></p>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>1. コンセプト</h2>
+<p>
+  素朴さを最大の強みとする。ブラウザのデフォルトに近い外観を維持し、
+  CSS は最小限に留める。装飾より情報密度を優先する。
+  モバイルでは列を減らすことで表形式を維持する。
+</p>
+<ul>
+  <li>テーブル形式で統一（リスト形式と混在させない）</li>
+  <li>外部フォント・アイコンライブラリ不使用</li>
+  <li>JavaScript は最低限</li>
+</ul>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>2. デザイントークン</h2>
+
+<h3>カラー</h3>
+<table>
+  <thead>
+    <tr><th>用途</th><th>値</th><th>サンプル</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>テキスト</td>
+      <td><code>#000000</code>（ブラウザデフォルト）</td>
+      <td><span class="sg-swatch" style="background:#000;"></span></td>
+    </tr>
+    <tr>
+      <td>リンク</td>
+      <td><code>#0000ee</code> / visited: <code>#551a8b</code></td>
+      <td><span class="sg-swatch" style="background:#0000ee;"></span><span class="sg-swatch" style="background:#551a8b;"></span></td>
+    </tr>
+    <tr>
+      <td>ボーダー</td>
+      <td><code>#999999</code></td>
+      <td><span class="sg-swatch" style="background:#999;"></span></td>
+    </tr>
+    <tr>
+      <td>テーブルヘッダー背景</td>
+      <td><code>#eeeeee</code></td>
+      <td><span class="sg-swatch" style="background:#eee;"></span></td>
+    </tr>
+    <tr>
+      <td>ボタン背景</td>
+      <td><code>#dddddd</code></td>
+      <td><span class="sg-swatch" style="background:#ddd;"></span></td>
+    </tr>
+    <tr>
+      <td>モーダルテキスト補助</td>
+      <td><code>#666666</code></td>
+      <td><span class="sg-swatch" style="background:#666;"></span></td>
+    </tr>
+    <tr>
+      <td>モーダルオーバーレイ</td>
+      <td><code>rgba(0,0,0,0.5)</code></td>
+      <td><span class="sg-swatch" style="background:rgba(0,0,0,0.5);"></span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>サイズ</h3>
+<table>
+  <tr><th class="col-th">最大幅</th><td>800px</td></tr>
+  <tr><th class="col-th">ページ余白</th><td>0 12px</td></tr>
+  <tr><th class="col-th">基本フォントサイズ</th><td>15px（モバイル: 14px）</td></tr>
+  <tr><th class="col-th">行間</th><td>1.6</td></tr>
+  <tr><th class="col-th">ヒントテキスト</th><td>13px</td></tr>
+  <tr><th class="col-th">フッターテキスト</th><td>12px</td></tr>
+  <tr><th class="col-th">縦テーブル th 幅（SP）</th><td>90px</td></tr>
+  <tr><th class="col-th">モバイルブレークポイント</th><td>480px 以下</td></tr>
+</table>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>3. ページ構造パターン</h2>
+
+<p>全ページ共通のヘッダー・フッター構造：</p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- パンくずリスト or サービス名 --&gt;
+&lt;p&gt;&lt;a href="#"&gt;着丼&lt;/a&gt; &gt; &lt;a href="#"&gt;上位ページ&lt;/a&gt; &gt; 現在のページ&lt;/p&gt;
+&lt;hr&gt;
+
+&lt;!-- ログイン状態（ログイン必要なページのみ） --&gt;
+&lt;p&gt;ログイン中: username | &lt;a href="#"&gt;ログアウト&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+
+&lt;!-- ナビゲーション（ホームと関連ページのみ） --&gt;
+&lt;p&gt;
+  &lt;a href="#"&gt;ホーム&lt;/a&gt; |
+  &lt;a href="#"&gt;お気に入り&lt;/a&gt; |
+  ...
+&lt;/p&gt;
+&lt;hr&gt;
+
+&lt;!-- メインコンテンツ --&gt;
+
+&lt;hr&gt;
+&lt;p&gt;&lt;small&gt;着丼 - ラーメン待ち時間記録システム&lt;/small&gt;&lt;/p&gt;</pre>
+</div>
+
+<p><small>ページの性格に応じてヘッダー内のブロックは省略可。ナビゲーションはホーム・お気に入り・近くの店舗など主要ページに絞る。</small></p>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>4. 見出し</h2>
+
+<h3>階層ルール</h3>
+<table>
+  <thead>
+    <tr><th>レベル</th><th>用途</th><th>ルール</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>h1</code></td>
+      <td>ページの主エンティティ（店舗名・ユーザー名・記録ID）</td>
+      <td>1ページ1つ。ダッシュボード（home）は省略可</td>
+    </tr>
+    <tr>
+      <td><code>h2</code></td>
+      <td>ページ内セクション区切り</td>
+      <td>h1 の下、または h1 省略ページのトップレベル</td>
+    </tr>
+    <tr>
+      <td><code>h3</code></td>
+      <td>セクション内のサブセクション</td>
+      <td>h2 の下にのみ置く</td>
+    </tr>
+    <tr>
+      <td><code>h4 以下</code></td>
+      <td>—</td>
+      <td>使用しない</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>各ページの構造</h3>
+<table>
+  <thead>
+    <tr><th>ページ</th><th>h1</th><th>h2</th><th>備考</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>home</td>
+      <td>（省略）</td>
+      <td>本日の状況 / 最新の着丼記録</td>
+      <td>ダッシュボード。主エンティティなし</td>
+    </tr>
+    <tr>
+      <td>nearby</td>
+      <td>現在地周辺の店舗</td>
+      <td>—</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>connect</td>
+      <td>（店舗名）</td>
+      <td>—</td>
+      <td>フォームのみ。セクション分割不要</td>
+    </tr>
+    <tr>
+      <td>measure</td>
+      <td>（店舗名）</td>
+      <td>応援メッセージ / 行列の様子</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>result</td>
+      <td>着丼記録 No.xxx</td>
+      <td>行列の様子</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>shop</td>
+      <td>（店舗名）</td>
+      <td>店舗情報 / 地図 / みんなの着丼記録</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>（ユーザー名）</td>
+      <td>ちゃくどんレコード</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>見た目サンプル</h3>
+<div class="sg-box">
+  <h1>饗 くろ㐂</h1>
+  <h1>着丼記録 <small>No.239</small></h1>
+  <h2>店舗情報</h2>
+  <h2>みんなの着丼記録 <small>15件</small></h2>
+</div>
+
+<p><small>h1/h2/h3 の補足（識別子・件数など）は <code>&lt;small&gt;</code> タグを使う。</small></p>
+
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>5. マージン・パディング</h2>
+
+<h3>スペーシングトークン</h3>
+<table>
+  <thead>
+    <tr><th>値</th><th>用途</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>6px</td><td>th/td の縦 padding、ボタンの縦 padding（SP: 5px）</td></tr>
+    <tr><td>8px</td><td>th/td の横 padding、input / textarea の padding</td></tr>
+    <tr><td>12px</td><td>body の横 padding（ページ端の余白）</td></tr>
+    <tr><td>16px</td><td>modal の padding、.record-photo の margin-top</td></tr>
+    <tr><td>24px</td><td>table の margin-bottom（テーブル後のブロック間余白）</td></tr>
+  </tbody>
+</table>
+
+<h3>縦方向のリズムルール</h3>
+<table>
+  <thead>
+    <tr><th>パターン</th><th>実装方法</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>主要セクション区切り</td>
+      <td><code>&lt;hr&gt;</code> を使う</td>
+    </tr>
+    <tr>
+      <td>テーブルと次のブロックの間</td>
+      <td><code>table { margin-bottom: 24px }</code> が自動で効く</td>
+    </tr>
+    <tr>
+      <td>ブロック要素同士の間（p, h2 など）</td>
+      <td>ブラウザのデフォルト margin（1em 上下）をそのまま使う</td>
+    </tr>
+    <tr>
+      <td>記録写真の上</td>
+      <td><code>.record-photo { margin-top: 16px }</code> が自動で効く</td>
+    </tr>
+    <tr>
+      <td><code>&lt;br&gt;</code> によるスペーサー</td>
+      <td><strong>禁止。</strong>テキスト内の改行のみに使用する</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">/* br を使わない。CSS が自動で余白を作る */
+
+&lt;table&gt;...&lt;/table&gt;              &lt;!-- margin-bottom: 24px が効く --&gt;
+&lt;p&gt;&lt;a class="btn btn-block"&gt;...&lt;/p&gt;  &lt;!-- p のデフォルト margin-top と合わせて余白確保 --&gt;
+&lt;p&gt;&lt;a&gt;リタイアする&lt;/a&gt;&lt;/p&gt;
+
+&lt;!-- セクション間は hr で区切る --&gt;
+&lt;hr&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>6. ボタン</h2>
+
+<h3>基本ボタン <code>.btn</code></h3>
+<p>
+  <a href="#" class="btn">接続する</a>
+  &nbsp;
+  <a href="#" class="btn">お気に入りに追加</a>
+  &nbsp;
+  <button class="btn">報告する</button>
+  &nbsp;
+  <button class="btn" style="font-size: 13px; padding: 3px 10px;">小ボタン</button>
+</p>
+
+<h3>ブロックボタン <code>.btn.btn-block</code></h3>
+<p><a href="#" class="btn btn-block">着丼！（計測を完了する）</a></p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- インラインボタン --&gt;
+&lt;a href="#" class="btn"&gt;ラベル&lt;/a&gt;
+&lt;button class="btn"&gt;ラベル&lt;/button&gt;
+
+&lt;!-- 全幅ボタン --&gt;
+&lt;a href="#" class="btn btn-block"&gt;ラベル&lt;/a&gt;
+
+&lt;!-- ヘッダー内小ボタン（h2/h3 の隣に置く場合） --&gt;
+&lt;button class="btn" style="font-size: 13px; padding: 3px 10px;"&gt;ラベル&lt;/button&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>7. テーブル</h2>
+
+<h3>縦テーブル（詳細表示）</h3>
+<p><small><code>th.col-th</code> を付けることで SP 時に th 幅が 90px に固定される。</small></p>
+<table>
+  <tr><th class="col-th">店舗名</th><td><a href="#">家系らーめん 武将家 外伝</a></td></tr>
+  <tr><th class="col-th">待ち時間</th><td><strong>35分</strong></td></tr>
+  <tr><th class="col-th">記録者</th><td>jiro_seeker</td></tr>
+  <tr><th class="col-th">日時</th><td>2026.03.22(日) 14:32</td></tr>
+</table>
+
+<h3>横テーブル（一覧表示）</h3>
+<p><small>SP で不要な列には responsive クラスを付与する（後述）。横スクロールが必要な場合は <code>.table-scroll</code> で囲む。</small></p>
+<div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>店舗名</th>
+        <th>待ち時間</th>
+        <th class="col-author">記録者</th>
+        <th class="col-comment">ひとこと</th>
+        <th>時刻</th>
+        <th class="col-photo">写真</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="#">ラーメン二郎 三田本店</a></td>
+        <td>87分</td>
+        <td class="col-author">masumashi_king</td>
+        <td class="col-comment">ヤサイマシマシ。覚悟して来い</td>
+        <td>14:32</td>
+        <td class="col-photo">-</td>
+      </tr>
+      <tr>
+        <td><a href="#">一蘭 渋谷店</a></td>
+        <td>35分</td>
+        <td class="col-author">ramen_taro</td>
+        <td class="col-comment">平日でも混んでる</td>
+        <td>14:15</td>
+        <td class="col-photo">-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;div class="table-scroll"&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;店舗名&lt;/th&gt;
+        &lt;th class="col-author"&gt;記録者&lt;/th&gt;  &lt;!-- SP 非表示 --&gt;
+        &lt;th class="col-comment"&gt;ひとこと&lt;/th&gt; &lt;!-- SP 非表示 --&gt;
+        &lt;th&gt;時刻&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    ...
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>8. フォーム</h2>
+
+<p><small>全フォーム要素に <code>width: 100%; box-sizing: border-box;</code> が適用される。幅を個別指定したい場合のみ inline style で上書き。</small></p>
+
+<p>
+  <label for="sg-text"><strong>テキスト入力</strong></label><br>
+  <input type="text" id="sg-text" placeholder="例: テキスト">
+</p>
+<p>
+  <label for="sg-num"><strong>数値入力（幅指定あり）</strong></label><br>
+  <small>前の人数など固定幅が適切な場合は inline style で width を上書きする</small><br>
+  <input type="number" id="sg-num" placeholder="例: 8" style="width: 120px;">
+  <span> 人</span>
+</p>
+<p>
+  <label for="sg-select"><strong>セレクト</strong></label><br>
+  <select id="sg-select">
+    <option>選択してください</option>
+    <option>選択肢A</option>
+    <option>選択肢B</option>
+  </select>
+</p>
+<p>
+  <label for="sg-textarea"><strong>テキストエリア</strong></label><br>
+  <small>行列の様子や心境をどうぞ！</small><br>
+  <textarea id="sg-textarea" placeholder="自由入力"></textarea>
+</p>
+<p>
+  <label for="sg-file"><strong>ファイル（写真）</strong></label><br>
+  <input type="file" id="sg-file" accept="image/*">
+</p>
+
+<h3>ラジオボタングループ</h3>
+<p><small>label を inline-block で並べる。クラス不要（ブラウザデフォルト使用）。</small></p>
+<p>
+  <strong>今どこにいますか？</strong><br>
+  <small>接続先を選択してください</small><br>
+  <label><input type="radio" name="sg-loc" value="outside" checked> 店外（行列中）</label>
+  <label><input type="radio" name="sg-loc" value="inside"> 店内（待ち席）</label>
+  <label><input type="radio" name="sg-loc" value="seated"> 着席済み</label>
+</p>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>9. 補足テキスト <code>&lt;small&gt;</code></h2>
+
+<p>補足説明・メタ情報・フォームの説明文に使用。CSS 不要、ブラウザデフォルト（やや小さめ、色変化なし）のまま使う。</p>
+
+<p><small>現在地: 東京都千代田区外神田</small></p>
+<p><small>半径 1km 以内、4件表示</small></p>
+<p><small>家系 / 東京・千代田区 / 現在地から 120m</small></p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- ブロック --&gt;
+&lt;p&gt;&lt;small&gt;補足説明&lt;/small&gt;&lt;/p&gt;
+
+&lt;!-- インライン --&gt;
+&lt;small&gt;インライン補足&lt;/small&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>10. モーダル</h2>
+
+<p>追加報告など「ページ遷移させずに入力させたい」場合に使用。</p>
+<p>
+  <button class="btn" onclick="document.getElementById('overlay-sg').classList.add('active'); document.getElementById('modal-example').style.display='block'; document.body.style.overflow='hidden';">モーダルを開く</button>
+</p>
+
+<div class="overlay" id="overlay-sg" onclick="document.getElementById('overlay-sg').classList.remove('active'); document.getElementById('modal-example').style.display='none'; document.body.style.overflow='';"></div>
+<div class="modal" id="modal-example">
+  <p>
+    <strong>モーダルタイトル</strong><br>
+    <a href="#" onclick="document.getElementById('overlay-sg').classList.remove('active'); document.getElementById('modal-example').style.display='none'; document.body.style.overflow=''; return false;">× 閉じる</a>
+  </p>
+  <hr>
+  <p>モーダル内のコンテンツ。フォームや確認事項を配置する。</p>
+  <p><button type="button" class="btn btn-block" onclick="document.getElementById('overlay-sg').classList.remove('active'); document.getElementById('modal-example').style.display='none'; document.body.style.overflow='';">送信する</button></p>
+</div>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- HTML --&gt;
+&lt;div class="overlay" id="overlay" onclick="closeModal()"&gt;&lt;/div&gt;
+&lt;div class="modal" id="modal" style="display: none;"&gt;
+  &lt;p&gt;&lt;strong&gt;タイトル&lt;/strong&gt;&lt;br&gt;
+  &lt;a href="#" onclick="closeModal(); return false;"&gt;× 閉じる&lt;/a&gt;&lt;/p&gt;
+  &lt;hr&gt;
+  &lt;!-- フォームなど --&gt;
+&lt;/div&gt;
+
+&lt;!-- JS --&gt;
+&lt;script&gt;
+  function openModal() {
+    document.getElementById('overlay').classList.add('active');
+    document.getElementById('modal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('active');
+    document.getElementById('modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+&lt;/script&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>11. サムネイル・写真</h2>
+
+<h3><code>.thumb</code> — 52×52px（一覧用）</h3>
+<img class="thumb"
+  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='52' height='52' fill='%23ddd'/%3E%3Ctext x='26' y='30' text-anchor='middle' font-size='9' fill='%23999'%3E写真%3C/text%3E%3C/svg%3E"
+  alt="写真">
+
+<h3><code>.record-photo</code> — 全幅（詳細ページ用）</h3>
+<img class="record-photo"
+  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='200'%3E%3Crect width='600' height='200' fill='%23ddd'/%3E%3Ctext x='300' y='108' text-anchor='middle' font-size='16' fill='%23999'%3E投稿写真%3C/text%3E%3C/svg%3E"
+  alt="投稿写真">
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>12. レスポンシブ列クラス（≤480px で非表示）</h2>
+
+<p><small>th と td の両方に同じクラスを付ける。</small></p>
+<table>
+  <thead>
+    <tr><th>クラス名</th><th>用途</th><th>使用ページ</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>.col-author</code></td><td>記録者</td><td>home, shop</td></tr>
+    <tr><td><code>.col-comment</code></td><td>ひとこと</td><td>home, shop, measure, result</td></tr>
+    <tr><td><code>.col-photo</code></td><td>写真</td><td>home</td></tr>
+    <tr><td><code>.col-genre</code></td><td>ジャンル / 状況</td><td>nearby, user</td></tr>
+    <tr><td><code>.col-queue</code></td><td>行列数</td><td>shop</td></tr>
+    <tr><td><code>.col-detail</code></td><td>詳細リンク列</td><td>user</td></tr>
+    <tr><td><code>.col-th</code></td><td>縦テーブルの th（width: 90px 固定）</td><td>全詳細ページ</td></tr>
+  </tbody>
+</table>
+
+<p><small>新しいページを追加する際、SP で省略したい列に上記クラスを付与する。既存クラスで意味が合わない場合は base.css の @media ブロックに追加する。</small></p>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>13. ページネーション</h2>
+
+<p>一覧ページで複数ページにわたる場合に使用。テキストリンクのみで構成し、現在位置を中央に表示する。</p>
+
+<p>
+  <a href="#">← 前のページ</a>
+  &nbsp; 1 / 3 &nbsp;
+  <a href="#">次のページ →</a>
+</p>
+
+<p><small>先頭ページでは「← 前のページ」を非表示（または disabled 状態）にする。末尾ページでは「次のページ →」を非表示にする。</small></p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;p&gt;
+  &lt;a href="#"&gt;← 前のページ&lt;/a&gt;
+  &amp;nbsp; 1 / 3 &amp;nbsp;
+  &lt;a href="#"&gt;次のページ →&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;!-- 先頭ページ --&gt;
+&lt;p&gt;
+  1 / 3 &amp;nbsp;
+  &lt;a href="#"&gt;次のページ →&lt;/a&gt;
+&lt;/p&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>14. インラインアクションバー</h2>
+
+<p>詳細ページ下部などで、複数のテキストアクションを横並びに配置する場合に使用。<code>&amp;nbsp;|&amp;nbsp;</code> で区切る。</p>
+
+<p>
+  <a href="#">← 戻る</a>
+  &nbsp;|&nbsp;
+  <a href="#">いいね（6）</a>
+  &nbsp;|&nbsp;
+  <a href="#">シェア</a>
+</p>
+
+<p><small>ボタン（.btn）はページの主アクション用。インラインアクションバーはサブアクション（戻る・いいね・シェアなど）に使い、両者を混在させない。</small></p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;p&gt;
+  &lt;a href="#"&gt;← 戻る&lt;/a&gt;
+  &amp;nbsp;|&amp;nbsp;
+  &lt;a href="#"&gt;いいね（6）&lt;/a&gt;
+  &amp;nbsp;|&amp;nbsp;
+  &lt;a href="#"&gt;シェア&lt;/a&gt;
+&lt;/p&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>15. インライン強調（<code>&lt;strong&gt;</code> / <code>&lt;code&gt;</code>）</h2>
+
+<h3><code>&lt;strong&gt;</code> — 主要な数値・最重要情報</h3>
+<p>そのページで最も重要な値に使用する。意味的な重要度の強調であり、見た目の太字化は副次的な効果。<strong>1ページで多用しない（1〜2箇所まで）。</strong></p>
+
+<table>
+  <thead>
+    <tr><th>ページ</th><th>使用箇所</th><th>理由</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>result</td><td>待ち時間（例: <strong>5分18秒</strong>）</td><td>記録の主役となる値</td></tr>
+  </tbody>
+</table>
+
+<h3><code>&lt;code&gt;</code> — 等幅表示が必要な値</h3>
+<p>タイマー・時刻など、等幅フォントで視認性を上げたい数値に使用する。スタイル上書きは行わない。</p>
+
+<table>
+  <thead>
+    <tr><th>ページ</th><th>使用箇所</th><th>理由</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>measure</td><td>経過時間（例: <code>23:47</code>）</td><td>カウントアップ中の数値。等幅で桁ズレを防ぐ</td></tr>
+  </tbody>
+</table>
+
+<h3>使い分けまとめ</h3>
+<table>
+  <thead>
+    <tr><th>タグ</th><th>使う場面</th><th>使わない場面</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>&lt;strong&gt;</code></td><td>ページの主要な結果値（待ち時間など）</td><td>装飾目的の太字、複数箇所への多用</td></tr>
+    <tr><td><code>&lt;code&gt;</code></td><td>タイマー・時刻など等幅が意味を持つ値</td><td>通常の数値（待ち時間の表示など）</td></tr>
+    <tr><td>装飾なし</td><td>上記以外のすべての値</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- result: 待ち時間（ページの主役） --&gt;
+&lt;td&gt;&lt;strong&gt;5分18秒&lt;/strong&gt;&lt;/td&gt;
+
+&lt;!-- measure: 経過時間（等幅表示） --&gt;
+&lt;td&gt;&lt;code&gt;23:47&lt;/code&gt;&lt;/td&gt;
+
+&lt;!-- 通常の数値（装飾なし） --&gt;
+&lt;td&gt;35分&lt;/td&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>16. 地図リンク</h2>
+
+<p>店舗情報テーブルの住所セルに <code>[地図]</code> リンクを添える。地図の埋め込みは行わない。</p>
+
+<table>
+  <tr><th class="col-th">住所</th><td>東京都新宿区西新宿1-1-1 <a href="#" target="_blank">[地図]</a></td></tr>
+</table>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;tr&gt;
+  &lt;th class="col-th"&gt;住所&lt;/th&gt;
+  &lt;td&gt;住所テキスト &lt;a href="https://maps.google.com/?q=緯度,経度" target="_blank"&gt;[地図]&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;</pre>
+</div>
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>17. Flash メッセージ</h2>
+
+<p>
+  Flash は <strong>alert（警告）のみ表示する</strong>。<br>
+  notice（通知）は表示しない。ページのコンテンツ自体が状態を伝えるため。
+</p>
+
+<table>
+  <thead>
+    <tr><th>種類</th><th>表示</th><th>用途例</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>alert</td>
+      <td><span class="flash-alert">メッセージ（赤字）</span></td>
+      <td>不正アクセス、認証エラー</td>
+    </tr>
+    <tr>
+      <td>notice</td>
+      <td>表示しない</td>
+      <td>接続完了、投稿完了（ページ内容で伝わる）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>実装</h3>
+<pre>&lt;% if flash[:alert] %&gt;&lt;p class="flash-alert"&gt;&lt;%= flash[:alert] %&gt;&lt;/p&gt;&lt;% end %&gt;</pre>
+
+<h3>表示例</h3>
+<div class="sg-box">
+  <p class="flash-alert">不正なアクセスです</p>
+  <p><a href="#">着丼</a> - 待機中</p>
+  <h1>ラーメン二郎 三田本店</h1>
+</div>
+
+</div>
+<hr>
+
+<!-- ============================================================ -->
+<div class="sg-section">
+<h2>18. ページ一覧</h2>
+
+<table>
+  <thead>
+    <tr><th>ページ</th><th>ファイル</th><th>備考</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>ホーム</td><td><a href="home_a_responsive.html">home_a_responsive.html</a></td><td>最新着丼一覧、写真列あり</td></tr>
+    <tr><td>近くの店舗</td><td><a href="nearby_final.html">nearby_final.html</a></td><td>位置情報ベース、地図なし</td></tr>
+    <tr><td>接続フォーム</td><td><a href="connect_final.html">connect_final.html</a></td><td>計測開始前の入力</td></tr>
+    <tr><td>待機中（計測）</td><td><a href="measure_final.html">measure_final.html</a></td><td>タイマー＋追加報告モーダル</td></tr>
+    <tr><td>着丼記録詳細</td><td><a href="result_final.html">result_final.html</a></td><td>記録の詳細・写真・行列履歴</td></tr>
+    <tr><td>店舗詳細</td><td><a href="shop_final.html">shop_final.html</a></td><td>店舗情報・Leaflet地図・記録一覧</td></tr>
+    <tr><td>ユーザープロフィール</td><td><a href="user_final.html">user_final.html</a></td><td>記録一覧テーブル</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+<p><small>着丼 - ラーメン待ち時間記録システム</small></p>
+
+</body>
+</html>

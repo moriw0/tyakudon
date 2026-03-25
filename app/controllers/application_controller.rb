@@ -1,9 +1,33 @@
 class ApplicationController < ActionController::Base
   before_action :redirect_subdomain
+  before_action :handle_v2_flag
+
+  layout :resolve_layout
 
   include SessionsHelper
 
   private
+
+  def resolve_layout
+    cookies[:v2_ui].present? && v2_layout_opted_in? ? 'v2' : 'application'
+  end
+
+  def v2_layout_opted_in?
+    @v2_layout == true
+  end
+
+  def use_v2_layout!
+    @v2_layout = true
+    request.variant = :v2 if cookies[:v2_ui].present? # rubocop:disable Naming/VariableNumber
+  end
+
+  def handle_v2_flag
+    if params[:v2] == '1' # rubocop:disable Naming/VariableNumber
+      cookies.permanent[:v2_ui] = '1'
+    elsif params[:v2] == '0' # rubocop:disable Naming/VariableNumber
+      cookies.delete(:v2_ui)
+    end
+  end
 
   def redirect_subdomain
     return unless request.host == 'tyakudon.fly.dev'
