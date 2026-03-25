@@ -1,0 +1,129 @@
+/* ===========================
+   着丼 base.css
+   sample4 共通スタイル
+   =========================== */
+
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 12px;
+  font-family: sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+a { color: #0000ee; }
+a:visited { color: #551a8b; }
+
+/* テーブル */
+table { border-collapse: collapse; width: 100%; margin-bottom: 24px; }
+th, td { border: 1px solid #999; padding: 6px 8px; text-align: left; }
+th { background-color: #eeeeee; }
+
+/* ボタン */
+button, .btn {
+  display: inline-block;
+  padding: 6px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
+  background-color: #dddddd;
+  border: 1px solid #999;
+  font-size: 15px;
+}
+
+.btn-block {
+  width: 100%;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* フォーム */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="file"],
+textarea,
+select {
+  font-size: 15px;
+  padding: 6px 8px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #999;
+}
+
+textarea { height: 80px; resize: vertical; }
+
+/* サムネイル */
+.thumb {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #ccc;
+}
+
+/* 記録写真（詳細ページ） */
+.record-photo {
+  max-width: 100%;
+  border: 1px solid #999;
+  display: block;
+  margin-top: 16px;
+}
+
+/* モーダル */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.overlay.active { display: block; }
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background: #fff;
+  border: 1px solid #999;
+  padding: 16px;
+  width: calc(100vw - 24px);
+  max-width: 520px;
+  box-sizing: border-box;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* 見出し */
+h1 { font-size: 1.3em; }
+
+
+
+/* Flash アラート */
+.flash-alert { color: #c00; }
+
+/* テーブル横スクロールラッパー */
+.table-scroll {
+  overflow-x: auto;
+}
+
+
+/* レスポンシブ: 480px 以下で非表示にする列 */
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  th, td { padding: 5px 6px; }
+  th.col-th { width: 90px; } /* 縦テーブルのth固定幅 */
+
+  .col-author  { display: none; }
+  .col-comment { display: none; }
+  .col-photo   { display: none; }
+  .col-genre   { display: none; }
+  .col-queue   { display: none; }
+  .col-detail  { display: none; }
+}

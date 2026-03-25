@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>接続する - 着丼</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<p><a href="#">着丼</a> &gt; <a href="nearby_final.html">近くの店舗</a> &gt; 接続する</p>
+<hr>
+
+<h1>家系らーめん 武将家 外伝</h1>
+<p><small>家系 / 東京・千代田区 / 現在地から 120m</small></p>
+
+<hr>
+
+<form action="#" method="post" enctype="multipart/form-data">
+
+  <p>
+    <strong>接続先</strong><br>
+    <small>今どこにいますか？</small><br>
+    <label><input type="radio" name="location" value="outside" checked> 店外（行列中）</label>
+    <label><input type="radio" name="location" value="inside"> 店内（待ち席）</label>
+    <label><input type="radio" name="location" value="seated"> 着席済み</label>
+  </p>
+
+  <p>
+    <label for="queue_count"><strong>待ち行列数</strong></label><br>
+    <small>あなたの前に何人並んでいますか？（わからなければ空欄で）</small><br>
+    <input type="number" id="queue_count" name="queue_count" min="0" max="999" placeholder="例: 8" style="width: 120px;">
+    <span> 人</span>
+  </p>
+
+  <p>
+    <label for="comment"><strong>ひとこと</strong></label><br>
+    <textarea id="comment" name="comment" placeholder="行列の様子や心境をどうぞ！"></textarea>
+  </p>
+
+  <p>
+    <label for="photo"><strong>写真</strong>（任意）</label><br>
+    <input type="file" id="photo" name="photo" accept="image/*">
+  </p>
+
+  <p>
+    <button type="submit" class="btn btn-block">接続する</button>
+  </p>
+
+</form>
+
+<p><a href="nearby_final.html">キャンセル（店舗選択に戻る）</a></p>
+
+<hr>
+<p><small>着丼 - ラーメン待ち時間記録システム</small></p>
+
+</body>
+</html>
