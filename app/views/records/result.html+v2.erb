@@ -1,0 +1,48 @@
+<p><%= link_to '着丼', root_path %> &gt; <%= link_to @ramen_shop.name, @ramen_shop %></p>
+<hr>
+
+<h1>ちゃくどんレコード <small>No.<%= @record.id %></small></h1>
+
+<table>
+  <tr><th class="col-th">店舗名</th><td><%= link_to @ramen_shop.name, @ramen_shop %></td></tr>
+  <tr><th class="col-th">待ち時間</th><td><strong><%= format_wait_time_human @record.wait_time %></strong></td></tr>
+  <tr><th class="col-th">接続日時</th><td><%= format_datetime_detail @record.started_at %></td></tr>
+  <tr><th class="col-th">着丼日時</th><td><%= format_datetime_detail @record.ended_at %></td></tr>
+</table>
+
+<%= form_with model: @record do |f| %>
+  <p>
+    <label for="record_comment">コメント（任意）</label><br>
+    <%= f.text_area :comment, placeholder: '感想や状況など' %>
+  </p>
+  <div data-controller="image-uploader">
+    <p>
+      <label for="record_image">写真（任意）</label><br>
+      <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", direct_upload: true,
+            data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
+      <%= image_tag '', data: { image_uploader_target: "imagePrev" }, style: 'display:none; max-height: 120px; margin-top: 8px;' %>
+    </p>
+  </div>
+  <p><%= f.submit '投稿する', class: "btn btn-block" %></p>
+<% end %>
+
+<hr>
+
+<h2>行列の様子</h2>
+<div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>時刻</th>
+        <th>状況</th>
+        <th class="col-comment">コメント</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @record.line_statuses %>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+<p><small>着丼 - ラーメン待ち時間記録システム</small></p>
