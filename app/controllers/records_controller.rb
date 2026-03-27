@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
   before_action :set_ramen_shop, except: %i[new create retire]
   before_action :check_auto_retired, only: %i[measure calculate retire]
   before_action :disable_connect_button, only: %i[measure result]
-  before_action :use_v2_layout!, only: %i[measure]
+  before_action :use_v2_layout!, only: %i[measure result]
 
   def show
     @tweet_url = generate_tweet_url(@record, request.url)

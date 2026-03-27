@@ -19,6 +19,20 @@ module ApplicationHelper
     datetime.strftime('%H:%M:%S')
   end
 
+  def format_wait_time_human(wait_time)
+    return unless wait_time
+
+    hours, remainder = wait_time.divmod(3600)
+    minutes, seconds = remainder.divmod(60)
+    seconds = seconds.round
+
+    parts = []
+    parts << "#{hours}時間" if hours.positive?
+    parts << "#{minutes}分" if minutes.positive?
+    parts << "#{seconds}秒" if seconds.positive? || parts.empty?
+    parts.join
+  end
+
   # rubocop:disable Metrics/MethodLength
   def wait_time_tag(wait_time)
     return tag.span('接続中...', class: 'connecting-label') unless wait_time
