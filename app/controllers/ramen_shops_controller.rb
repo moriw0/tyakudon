@@ -2,6 +2,8 @@ class RamenShopsController < ApplicationController
   before_action :logged_in_user, only: %i[new edit create update prepare_favorite]
   before_action :admin_user,     only: %i[new edit create update]
   before_action :set_ramen_shop, only: %i[show edit update prepare_favorite]
+  before_action :redirect_if_connecting, only: %i[near_shops]
+  before_action :use_v2_layout!, only: %i[near_shops]
 
   def index
     @search = RamenShop.search_by_keywords(params[:q])
@@ -59,7 +61,10 @@ class RamenShopsController < ApplicationController
     current_lng = params[:lng].to_f
 
     @ramen_shops = RamenShop.near([current_lat, current_lng], TARGET_RADIUS)
-    render json: @ramen_shops
+    respond_to do |format|
+      format.json { render json: @ramen_shops }
+      format.html
+    end
   end
 
   def prepare_favorite

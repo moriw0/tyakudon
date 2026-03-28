@@ -1,0 +1,37 @@
+<p><%= link_to '着丼', root_path %></p>
+<hr>
+
+<h1>現在地周辺の店舗</h1>
+
+<% if @ramen_shops.any? %>
+<div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>店舗名</th>
+        <th>距離</th>
+        <th>最新の待ち時間</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ramen_shops.each do |shop| %>
+        <tr>
+          <td><%= link_to shop.name, shop %></td>
+          <td><%= format_near_distance(shop.distance) %></td>
+          <td><%= near_shop_wait_time(shop) %></td>
+          <td><%= link_to '接続する', new_ramen_shop_record_path(shop), class: 'btn', data: { turbo_stream: true } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<p><small><%= @ramen_shops.size %>件表示</small></p>
+<% else %>
+  <p>周辺に店舗が見つかりませんでした。</p>
+<% end %>
+
+<hr>
+<p>探している店舗が見つからない場合は <%= link_to '店舗を検索する', ramen_shops_path %></p>
+<hr>
+<p><small>着丼 - ラーメン待ち時間記録システム</small></p>

@@ -1,0 +1,23 @@
+<% if @record.errors.any? %>
+  <p>
+    <% @record.errors.full_messages.each do |msg| %>
+      <span class="flash-alert"><%= msg %></span><br>
+    <% end %>
+  </p>
+<% end %>
+
+<%= form_with model: @record, url: ramen_shop_records_path(@ramen_shop),
+      data: { controller: "record-form" } do |f| %>
+  <%= f.hidden_field :ramen_shop_id, value: @ramen_shop.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.hidden_field :started_at, data: { record_form_target: "startedAt" } %>
+
+  <%= f.fields_for :line_statuses do |lf| %>
+    <%= render 'line_statuses/form_fields', f: lf %>
+  <% end %>
+
+  <p>
+    <%= f.submit '接続する', class: 'btn btn-block',
+          data: { action: "click->record-form#fetchStartAt", disable_with: '接続中...' } %>
+  </p>
+<% end %>

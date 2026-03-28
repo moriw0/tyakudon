@@ -1,0 +1,11 @@
+<div data-controller="v2-modal" id="modal">
+  <div class="overlay active" data-action="click->v2-modal#close"></div>
+  <div class="modal" style="display:block;">
+    <p><strong>接続する</strong> &mdash; <%= @ramen_shop.name %></p>
+    <hr>
+    <div id="new_record_form">
+      <%= render 'form' %>
+    </div>
+    <a href="#" data-action="click->v2-modal#close">閉じる</a>
+  </div>
+</div>
