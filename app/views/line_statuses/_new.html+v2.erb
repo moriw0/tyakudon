@@ -6,23 +6,7 @@
     </p>
     <hr>
     <%= form_with model: [@record, @line_status], data: { turbo_stream: true } do |f| %>
-      <p>
-        <strong>接続先</strong><br>
-        <small>今どこにいますか？</small><br>
-        <label><%= f.radio_button :line_type, :outside_the_store, checked: true %> 店外</label><br>
-        <label><%= f.radio_button :line_type, :inside_the_store %> 店内</label><br>
-        <label><%= f.radio_button :line_type, :seated %> 着席</label>
-      </p>
-      <p>
-        <label for="line_status_line_number"><strong>待ち行列数</strong></label><br>
-        <small>あなたの前に何人いますか？（わからなければ空欄で）</small><br>
-        <%= f.number_field :line_number, inputmode: "numeric", pattern: '\d*', placeholder: "例: 8", style: "width: 120px;" %>
-        人
-      </p>
-      <p>
-        <label for="line_status_comment"><strong>ひとこと</strong></label><br>
-        <%= f.text_area :comment, placeholder: '例: 30人くらいに接続した' %>
-      </p>
+      <%= render 'line_statuses/form_fields', f: f %>
       <p><%= f.submit '報告する', class: "btn btn-block" %></p>
     <% end %>
     <a href="#" data-action="click->v2-modal#close">閉じる</a>

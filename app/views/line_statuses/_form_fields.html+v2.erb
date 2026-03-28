@@ -1,0 +1,26 @@
+<div data-controller="line-status">
+  <div>
+    <strong>接続先</strong><br>
+    <small>今どこにいますか？</small><br>
+    <div data-action="change->line-status#updateNumberInput">
+      <label><%= f.radio_button :line_type, :outside_the_store,
+                  checked: f.object.outside_the_store? || f.object.line_type.nil? %> 店外（行列中）</label>
+      <label><%= f.radio_button :line_type, :inside_the_store %> 店内（待ち席）</label>
+      <label><%= f.radio_button :line_type, :seated %> 着席済み</label>
+    </div>
+  </div>
+  <div data-line-status-target="lineNumberField">
+    <p>
+      <label><strong>待ち行列数</strong></label><br>
+      <small>あなたの前に何人いますか？（わからなければ空欄で）</small><br>
+      <%= f.number_field :line_number, inputmode: "numeric", pattern: '\d*', min: 0, max: 999,
+            placeholder: '例: 8', style: 'width: 120px;',
+            data: { line_status_target: "lineNumberInput" } %>
+      <span> 人</span>
+    </p>
+  </div>
+  <p>
+    <label><strong>コメント</strong></label><br>
+    <%= f.text_area :comment, placeholder: '例: 店外に20人ほど' %>
+  </p>
+</div>
