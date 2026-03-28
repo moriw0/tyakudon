@@ -61,6 +61,10 @@ class ApplicationController < ActionController::Base
     @show_connect_button = false
   end
 
+  def redirect_if_connecting
+    redirect_to root_path, status: :see_other if cookies[:record_id]
+  end
+
   def capture_message_with_user_info(message)
     set_user_info
     Sentry.capture_message(message, level: :info)
