@@ -58,7 +58,7 @@ RSpec.describe 'RamenShops' do
     before { ramen_shop }
 
     it 'returns JSON with nearby shops' do
-      get near_shops_path, params: { lat: ramen_shop.latitude, lng: ramen_shop.longitude }
+      get near_shops_path, params: { lat: ramen_shop.latitude, lng: ramen_shop.longitude }, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to include 'application/json'
     end
