@@ -1,0 +1,4 @@
+<%= button_to "いいね済み（#{record.likes.length}）", user_like_for_record(current_user, record),
+      method: :delete,
+      form: { style: "display:inline" },
+      class: "btn-link" %>

@@ -1,0 +1,11 @@
+<%= tag.span id: dom_id(record) do %>
+  <% if logged_in? %>
+    <% if user_liked_record?(current_user, record) %>
+      <%= render 'likes/remove_like', record: record %>
+    <% else %>
+      <%= render 'likes/add_like', record: record %>
+    <% end %>
+  <% else %>
+    <%= link_to "いいね（#{record.likes.length}）", prepare_like_path(record) %>
+  <% end %>
+<% end %>

@@ -32,6 +32,16 @@ button, .btn {
   font-size: 15px;
 }
 
+.btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+  color: #0000ee;
+  text-decoration: underline;
+}
+
 .btn-block {
   width: 100%;
   display: block;
