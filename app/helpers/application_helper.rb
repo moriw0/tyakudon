@@ -56,6 +56,18 @@ module ApplicationHelper
     turbo_stream.update 'flash', partial: 'flash'
   end
 
+  def format_near_distance(distance_in_miles)
+    meters = (distance_in_miles * 1609.344).round
+    meters >= 1000 ? "#{format('%.1f', meters / 1000.0)}km" : "#{meters}m"
+  end
+
+  def near_shop_wait_time(shop)
+    record = shop.last_active_record
+    return '記録なし' unless record&.wait_time
+
+    "#{format_wait_time_human(record.wait_time)}（#{format_only_detatil_time(record.ended_at)}）"
+  end
+
   # rubocop:disable Rails/HelperInstanceVariable
   def show_connect_button?
     defined?(@show_connect_button) ? @show_connect_button : true
