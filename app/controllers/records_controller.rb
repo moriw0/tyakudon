@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
   before_action :set_ramen_shop, except: %i[new create retire]
   before_action :check_auto_retired, only: %i[measure calculate retire]
   before_action :disable_connect_button, only: %i[measure result]
-  before_action :use_v2_layout!, only: %i[measure result show]
+  before_action :use_v2_layout!, only: %i[measure result show new create]
 
   def show
     @tweet_url = generate_tweet_url(@record, request.url)
@@ -19,6 +19,7 @@ class RecordsController < ApplicationController
     @ramen_shop = RamenShop.find(params[:ramen_shop_id])
     @record = current_user.records.build(ramen_shop: @ramen_shop)
     @record.line_statuses.build
+    @back_path = request.referer || ramen_shop_path(@ramen_shop)
   end
 
   def edit
