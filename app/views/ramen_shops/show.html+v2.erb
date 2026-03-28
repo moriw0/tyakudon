@@ -28,18 +28,18 @@
 
 <hr>
 
-<h2>着丼記録 <small><%= @ramen_shop.records.active.count %>件</small></h2>
+<h2>着丼記録 <small><%= @records.total_count %>件</small></h2>
 
 <% if @records.any? %>
   <div class="table-scroll">
     <table>
       <thead>
         <tr>
-          <th>待ち時間</th>
-          <th class="col-author">記録者</th>
-          <th class="col-queue">行列</th>
-          <th class="col-comment">ひとこと</th>
-          <th>日時</th>
+          <th scope="col">待ち時間</th>
+          <th scope="col" class="col-author">記録者</th>
+          <th scope="col" class="col-queue">行列</th>
+          <th scope="col" class="col-comment">ひとこと</th>
+          <th scope="col">日時</th>
         </tr>
       </thead>
       <tbody>

@@ -113,7 +113,8 @@ textarea { height: 80px; resize: vertical; }
 /* 見出し */
 h1 { font-size: 1.3em; }
 
-
+/* インラインフォーム */
+.form-inline { display: inline; }
 
 /* Flash アラート */
 .flash-alert { color: #c00; }
