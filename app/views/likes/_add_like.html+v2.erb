@@ -1,0 +1,4 @@
+<%= button_to "いいね（#{record.likes.count}）", likes_path,
+      params: { record_id: record.id },
+      form: { style: "display:inline" },
+      class: "btn-link" %>
