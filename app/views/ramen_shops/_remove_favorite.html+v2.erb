@@ -1,0 +1,5 @@
+<% favorite = current_user.favorites.find_by(ramen_shop: @ramen_shop) %>
+<%= button_to 'お気に入り解除', favorite_path(favorite),
+      method: :delete,
+      form: { style: "display:inline" },
+      class: 'btn-link' %>

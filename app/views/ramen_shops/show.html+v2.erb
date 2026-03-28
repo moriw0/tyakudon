@@ -1,0 +1,67 @@
+<p><%= link_to '着丼', root_path %> &gt; <%= link_to '店舗一覧', ramen_shops_path %> &gt; <%= @ramen_shop.name %></p>
+<hr>
+
+<h1><%= @ramen_shop.name %></h1>
+
+<hr>
+
+<h2>店舗情報</h2>
+<table>
+  <tr>
+    <th class="col-th">店舗名</th>
+    <td><%= @ramen_shop.name %></td>
+  </tr>
+  <tr>
+    <th class="col-th">住所</th>
+    <td>
+      <%= @ramen_shop.address %>
+      <% if @ramen_shop.latitude.present? && @ramen_shop.longitude.present? %>
+        <%= link_to '[地図]', "https://maps.google.com/?q=#{@ramen_shop.latitude},#{@ramen_shop.longitude}", target: '_blank', rel: 'noopener noreferrer' %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<div id="favorite_form">
+  <%= render 'favorite_form' %>
+</div>
+
+<hr>
+
+<h2>着丼記録 <small><%= @ramen_shop.records.active.count %>件</small></h2>
+
+<% if @records.any? %>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>待ち時間</th>
+          <th class="col-author">記録者</th>
+          <th class="col-queue">行列</th>
+          <th class="col-comment">ひとこと</th>
+          <th>日時</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @records.each do |record| %>
+          <tr>
+            <td><%= link_to format_wait_time_human(record.wait_time), record_path(record, back: 'ramen_shops') %></td>
+            <td class="col-author"><%= link_to record.user.name, user_path(record.user) %></td>
+            <td class="col-queue">
+              <% ls = record.line_statuses.first %>
+              <%= ls ? line_status_content(ls) : '-' %>
+            </td>
+            <td class="col-comment"><%= record.comment.presence || '-' %></td>
+            <td><%= format_datetime(record.ended_at) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @records %>
+<% else %>
+  <p>まだ着丼記録がありません</p>
+<% end %>
+
+<hr>
+<p><small>着丼 - ラーメン待ち時間記録システム</small></p>

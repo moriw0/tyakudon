@@ -123,6 +123,35 @@ h1 { font-size: 1.3em; }
   overflow-x: auto;
 }
 
+/* ページネーション（Kaminari） */
+nav ul.pagination {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+nav ul.pagination li a {
+  text-decoration: none;
+  color: #0000ee;
+  padding: 2px 4px;
+}
+
+nav ul.pagination li.active a {
+  color: #000;
+  text-decoration: underline;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+nav ul.pagination li.disabled a,
+nav ul.pagination li.disabled span {
+  color: #999;
+  padding: 2px 4px;
+}
+
 
 /* レスポンシブ: 480px 以下で非表示にする列 */
 @media (max-width: 480px) {
