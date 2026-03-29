@@ -12,7 +12,7 @@ RSpec.describe 'Users' do
       end
 
       context 'with valid information' do
-        scenario 'user creates an account and logins', js: true do
+        it 'user creates an account and logins', js: true do
           visit new_user_path
           click_button 'Googleアカウントでログインする'
 
@@ -34,7 +34,7 @@ RSpec.describe 'Users' do
       end
 
       context 'with invalid information' do
-        scenario 'user does not create an account', js: true do
+        it 'user does not create an account', js: true do
           visit new_user_path
           click_button 'Googleアカウントでログインする'
 
@@ -54,7 +54,7 @@ RSpec.describe 'Users' do
   describe '#update' do
     let!(:user) { create(:user) }
 
-    scenario 'user update the account with valid information' do
+    it 'user update the account with valid information' do
       log_in_as(user)
       visit edit_user_path(user)
       expect {
@@ -67,7 +67,7 @@ RSpec.describe 'Users' do
       }.to_not change(User, :count)
     end
 
-    scenario 'user cannot update the account with invalid information' do
+    it 'user cannot update the account with invalid information' do
       log_in_as(user)
       visit edit_user_path(user)
       expect {
@@ -79,7 +79,7 @@ RSpec.describe 'Users' do
       }.to_not change(User, :count)
     end
 
-    scenario 'user receives an alert when trying to upload a file larger than 9MB', js: true do
+    it 'user receives an alert when trying to upload a file larger than 9MB', js: true do
       log_in_as(user)
       visit edit_user_path(user)
       attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png')
@@ -126,7 +126,7 @@ RSpec.describe 'Users' do
         let!(:non_admin) { create(:user, :other_user, admin: false) }
         let!(:users) { User.all }
 
-        scenario ['admin can see users', 'delete non admin user'].join(', ') do
+        it ['admin can see users', 'delete non admin user'].join(', ') do
           visit users_path
 
           users.each do |user|
@@ -145,7 +145,7 @@ RSpec.describe 'Users' do
         let!(:not_activated_user) { create(:user, :not_activated) }
         let!(:users) { User.all }
 
-        scenario 'admin can see not an activated user with tag' do
+        it 'admin can see not an activated user with tag' do
           visit users_path
 
           users.each do |user|

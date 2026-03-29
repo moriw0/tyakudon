@@ -5,7 +5,7 @@ RSpec.describe 'Logins' do
 
   before { create(:record, :with_line_status, user: user) }
 
-  scenario 'login with valid email and invalid password' do
+  it 'login with valid email and invalid password' do
     visit login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: 'invalid'
@@ -15,7 +15,7 @@ RSpec.describe 'Logins' do
     expect(page).to_not have_content 'ログインに失敗しました'
   end
 
-  scenario 'login with valid information followed by logout' do
+  it 'login with valid information followed by logout' do
     visit login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: user.password

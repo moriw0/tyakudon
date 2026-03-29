@@ -9,7 +9,7 @@ RSpec.describe 'Records', js: true do
     mock_geolocation(50.455755, 30.511565)
   end
 
-  scenario 'user creates a record of the nearby ramen shop' do
+  it 'user creates a record of the nearby ramen shop' do
     click_link '現在地から接続'
 
     # searchページ
