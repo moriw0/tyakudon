@@ -419,18 +419,37 @@
 
 <p><small>全フォーム要素に <code>width: 100%; box-sizing: border-box;</code> が適用される。幅を個別指定したい場合のみ inline style で上書き。</small></p>
 
+<h3>ラベルとフィールドのレイアウト</h3>
+<p><small>
+  <code>label { display: block }</code> が v2.css で適用されているため、<code>&lt;br&gt;</code> なしでラベルが独立行に表示される。<br>
+  チェックボックス・ラジオボタンの直後の label には <code>input[type="checkbox"] + label, input[type="radio"] + label { display: inline }</code> が効くため inline 表示になる。
+</small></p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">/* v2.css */
+label { display: block; }
+input[type="checkbox"] + label,
+input[type="radio"] + label { display: inline; }
+
+/* ビュー: br 不要 */
+&lt;p&gt;
+  &lt;%= f.label :email %&gt;
+  &lt;%= f.email_field :email %&gt;
+&lt;/p&gt;</pre>
+</div>
+
 <p>
-  <label for="sg-text"><strong>テキスト入力</strong></label><br>
+  <label for="sg-text"><strong>テキスト入力</strong></label>
   <input type="text" id="sg-text" placeholder="例: テキスト">
 </p>
 <p>
-  <label for="sg-num"><strong>数値入力（幅指定あり）</strong></label><br>
-  <small>前の人数など固定幅が適切な場合は inline style で width を上書きする</small><br>
+  <label for="sg-num"><strong>数値入力（幅指定あり）</strong></label>
+  <small>前の人数など固定幅が適切な場合は inline style で width を上書きする</small>
   <input type="number" id="sg-num" placeholder="例: 8" style="width: 120px;">
   <span> 人</span>
 </p>
 <p>
-  <label for="sg-select"><strong>セレクト</strong></label><br>
+  <label for="sg-select"><strong>セレクト</strong></label>
   <select id="sg-select">
     <option>選択してください</option>
     <option>選択肢A</option>
@@ -438,23 +457,26 @@
   </select>
 </p>
 <p>
-  <label for="sg-textarea"><strong>テキストエリア</strong></label><br>
-  <small>行列の様子や心境をどうぞ！</small><br>
+  <label for="sg-textarea"><strong>テキストエリア</strong></label>
+  <small>行列の様子や心境をどうぞ！</small>
   <textarea id="sg-textarea" placeholder="自由入力"></textarea>
 </p>
 <p>
-  <label for="sg-file"><strong>ファイル（写真）</strong></label><br>
+  <label for="sg-file"><strong>ファイル（写真）</strong></label>
   <input type="file" id="sg-file" accept="image/*">
 </p>
 
 <h3>ラジオボタングループ</h3>
-<p><small>label を inline-block で並べる。クラス不要（ブラウザデフォルト使用）。</small></p>
+<p><small><code>input + label</code> の隣接セレクタで label が inline 表示になる。</small></p>
 <p>
-  <strong>今どこにいますか？</strong><br>
-  <small>接続先を選択してください</small><br>
-  <label><input type="radio" name="sg-loc" value="outside" checked> 店外（行列中）</label>
-  <label><input type="radio" name="sg-loc" value="inside"> 店内（待ち席）</label>
-  <label><input type="radio" name="sg-loc" value="seated"> 着席済み</label>
+  <strong>今どこにいますか？</strong>
+  <small>接続先を選択してください</small>
+  <input type="radio" id="sg-loc-out" name="sg-loc" value="outside" checked>
+  <label for="sg-loc-out">店外（行列中）</label>
+  <input type="radio" id="sg-loc-in" name="sg-loc" value="inside">
+  <label for="sg-loc-in">店内（待ち席）</label>
+  <input type="radio" id="sg-loc-seat" name="sg-loc" value="seated">
+  <label for="sg-loc-seat">着席済み</label>
 </p>
 
 <h3>チェックボックスグループ（フィルタ用）</h3>
@@ -722,10 +744,7 @@ nav ul.pagination li.active a { color:#000; font-weight:bold; pointer-events:non
 <div class="sg-section">
 <h2>17. Flash メッセージ</h2>
 
-<p>
-  Flash は <strong>alert（警告）のみ表示する</strong>。<br>
-  notice（通知）は表示しない。ページのコンテンツ自体が状態を伝えるため。
-</p>
+<p>notice と alert を両方表示する。</p>
 
 <table>
   <thead>
@@ -733,26 +752,26 @@ nav ul.pagination li.active a { color:#000; font-weight:bold; pointer-events:non
   </thead>
   <tbody>
     <tr>
-      <td>alert</td>
-      <td><span class="flash-alert">メッセージ（赤字）</span></td>
-      <td>不正アクセス、認証エラー</td>
+      <td>notice</td>
+      <td>通常テキスト（黒）</td>
+      <td>登録完了、送信完了など</td>
     </tr>
     <tr>
-      <td>notice</td>
-      <td>表示しない</td>
-      <td>接続完了、投稿完了（ページ内容で伝わる）</td>
+      <td>alert</td>
+      <td><span class="flash-alert">赤字テキスト</span></td>
+      <td>不正アクセス、認証エラー</td>
     </tr>
   </tbody>
 </table>
 
 <h3>実装</h3>
-<pre>&lt;% if flash[:alert] %&gt;&lt;p class="flash-alert"&gt;&lt;%= flash[:alert] %&gt;&lt;/p&gt;&lt;% end %&gt;</pre>
+<pre>&lt;% if flash[:notice] %&gt;&lt;p&gt;&lt;%= flash[:notice] %&gt;&lt;/p&gt;&lt;% end %&gt;
+&lt;% if flash[:alert] %&gt;&lt;p class="flash-alert"&gt;&lt;%= flash[:alert] %&gt;&lt;/p&gt;&lt;% end %&gt;</pre>
 
 <h3>表示例</h3>
 <div class="sg-box">
+  <p>パスワードリセットメールを送信しました</p>
   <p class="flash-alert">不正なアクセスです</p>
-  <p><a href="#">着丼</a> - 待機中</p>
-  <h1>ラーメン二郎 三田本店</h1>
 </div>
 
 </div>
