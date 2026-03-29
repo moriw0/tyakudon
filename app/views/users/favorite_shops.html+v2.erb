@@ -1,0 +1,29 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %> - <%= link_to @user.name, @user %> - <%= t('.breadcrumb_title') %></p>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<% if @ramen_shops.any? %>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"><%= t('.shop_name_header') %></th>
+          <th scope="col"><%= t('.wait_time_header') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ramen_shops.each do |shop| %>
+          <% record = shop.last_active_record %>
+          <tr>
+            <td><%= link_to shop.name, shop %></td>
+            <td><%= record&.wait_time ? format_wait_time_human(record.wait_time) : t('.no_record') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @ramen_shops %>
+<% else %>
+  <p><%= t('.no_shops') %></p>
+<% end %>

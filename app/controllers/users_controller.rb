@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :use_v2_layout!, only: %i[show]
+  before_action :use_v2_layout!, only: %i[show favorite_shops]
   before_action :logged_in_user, except: %i[new show create]
   before_action :correct_user, only: %i[edit update favorite_shops]
   before_action :admin_user, only: %i[index destroy update_test_mode]
