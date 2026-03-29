@@ -305,12 +305,6 @@ ja:
 
 ## 未移行ページ
 
-### Phase 2a: コアユーザーフロー（プロトタイプあり）
-
-| ページ | アクション | プロトタイプ | 備考 |
-|--------|-----------|------------|------|
-| お気に入り記録 | `favorite_records#index` | `result_final.html` | 店舗セレクタ、記録一覧 |
-
 ### Phase 2b: 認証フロー
 
 | ページ | アクション | プロトタイプ | 備考 |
@@ -348,6 +342,32 @@ ja:
 ### ランディングページ（別レイアウト・対象外）
 
 `landing_page#index` は `lp.html.erb` レイアウトを使用するマーケティングページ。v2 移行対象外。
+
+---
+
+### favorite_records#index（お気に入り記録）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/favorite_records/index.html+v2.erb` | メインビュー |
+| `app/views/favorite_records/_filter_form.html+v2.erb` | 絞り込みモーダル |
+| `app/views/favorite_records/filter.turbo_stream+v2.erb` | フィルタ後のモーダル差し替え |
+
+**v1 からの変更点:**
+
+- タブメニュー (`home/tabmenu`) を廃止
+- `bootstrap_form_with` → `form_with`
+- フィルタ UI をモーダル構造で維持しつつ v2 スタイルに変更
+- `_filter_form.html+v2.erb` でチェックボックス `id` を明示し、店舗名ラベルクリックでトグル可能に
+- テーブル列: 店舗名 / 待ち時間（詳細リンク付き）/ 接続日時 / 状況
+- 未ログイン・お気に入りなし・記録なしの3状態を個別に処理
+
+**注意点:**
+
+- `use_v2_layout!` を `filter` アクションにも適用が必要（Turbo Stream レスポンス時に `request.variant = :v2` をセットするため）
+- `filter.turbo_stream+v2.erb` がないと `filter.turbo_stream.erb` が使われ、v1 パーシャル（`_filter_form.html.erb`）が描画される
 
 ---
 
