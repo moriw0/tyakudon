@@ -6,6 +6,14 @@ RSpec.describe 'Sessions' do
       get login_path
       expect(response).to have_http_status(:ok)
     end
+
+    context 'with v2_ui cookie' do
+      it 'renders the v2 layout' do
+        cookies[:v2_ui] = '1'
+        get login_path
+        expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+      end
+    end
   end
 
   describe 'POST /sessions #create' do
