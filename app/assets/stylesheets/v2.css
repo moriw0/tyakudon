@@ -50,6 +50,10 @@ button, .btn {
 }
 
 /* フォーム */
+label { display: block; }
+input[type="checkbox"] + label,
+input[type="radio"] + label { display: inline; }
+
 input[type="text"],
 input[type="email"],
 input[type="password"],
