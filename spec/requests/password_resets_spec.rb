@@ -34,6 +34,16 @@ RSpec.describe 'PasswordResets' do
     end
   end
 
+  describe 'GET /password_resets/new #new' do
+    context 'with v2_ui cookie' do
+      it 'renders the v2 layout' do
+        cookies[:v2_ui] = '1'
+        get new_password_reset_path
+        expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+      end
+    end
+  end
+
   describe 'GET /password_resets/:id/edit #edit' do
     let(:user) { controller.instance_variable_get(:@user) }
 
@@ -42,6 +52,15 @@ RSpec.describe 'PasswordResets' do
         post password_resets_path, params: { password_reset: { email: create(:user).email } }
         get edit_password_reset_path(user.reset_token, email: user.email)
         expect(response.body).to include "type=\"hidden\" name=\"email\" id=\"email\" value=\"#{user.email}\""
+      end
+
+      context 'with v2_ui cookie' do
+        it 'renders the v2 layout' do
+          cookies[:v2_ui] = '1'
+          post password_resets_path, params: { password_reset: { email: create(:user).email } }
+          get edit_password_reset_path(user.reset_token, email: user.email)
+          expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
       end
     end
 

@@ -1,0 +1,18 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<%= form_with model: @user, url: password_reset_path(params[:id]) do |f| %>
+  <%= hidden_field_tag :email, @user.email %>
+  <p>
+    <%= f.label :password, t('.password_label') %>
+    <small><%= t('.password_hint') %></small>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation, t('.password_confirmation_label') %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <p><%= f.submit t('.submit'), class: 'btn btn-block' %></p>
+<% end %>

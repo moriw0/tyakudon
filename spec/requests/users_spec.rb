@@ -6,6 +6,14 @@ RSpec.describe 'Users' do
       get signup_path
       expect(response).to have_http_status(:success)
     end
+
+    context 'with v2_ui cookie' do
+      it 'renders the v2 layout' do
+        cookies[:v2_ui] = '1'
+        get signup_path
+        expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+      end
+    end
   end
 
   describe 'GET /users' do
@@ -67,6 +75,16 @@ RSpec.describe 'Users' do
         }.to_not change(User, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      context 'with v2_ui cookie' do
+        it 're-renders new with v2 layout on validation failure' do
+          cookies[:v2_ui] = '1'
+          post users_path, params: { user: { name: '', email: 'invalid', password: 'foo',
+                                             password_confirmation: 'bar' } }
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
       end
     end
 

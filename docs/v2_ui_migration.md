@@ -23,7 +23,7 @@ Bootstrap 5 + Google Fonts (Noto Sans JP) + 固定ヘッダーに依存した現
 | ボタン | Bootstrap `.btn-primary` 等 | `.btn` / `.btn-block` / `.btn-link` |
 | フォーム | `bootstrap_form_with` | `form_with` |
 | 表 | Bootstrap テーブル | ブラウザデフォルト |
-| Flash | notice/alert 両方 | alert のみ（赤字、記号なし） |
+| Flash | notice/alert 両方 | notice（通常）+ alert（赤字） |
 
 ### CSS 設計原則
 
@@ -305,14 +305,6 @@ ja:
 
 ## 未移行ページ
 
-### Phase 2b: 認証フロー
-
-| ページ | アクション | プロトタイプ | 備考 |
-|--------|-----------|------------|------|
-| ログイン | `sessions#new` | `connect_final.html` | メール・パスワード・Google OAuth |
-| 新規登録 | `users#new` | `connect_final.html` | アバター・Google OAuth |
-| パスワードリセット | `password_resets#new/edit` | なし | シンプルなフォーム2画面 |
-
 ### Phase 2c: ホーム・フィード
 
 | ページ | アクション | プロトタイプ | 備考 |
@@ -425,6 +417,81 @@ ja:
 - 状況列は `format_line_status(record.line_statuses.first)` で表示
 - 詳細リンクは `record_path(record, back: 'user')` で戻り先を指定
 - 未有効化ユーザーの表示をシンプルなテーブル行に変更
+
+---
+
+### sessions#new（ログイン）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/sessions/new.html+v2.erb` | メインビュー |
+| `app/views/shared/_google_login.html+v2.erb` | Googleログインボタン |
+
+**v1 からの変更点:**
+
+- `bootstrap_form_with` → `form_with`
+- メール・パスワード・ログイン保持チェックボックス・送信ボタン
+- Google OAuth ボタンを `_google_login.html+v2.erb` パーシャルに切り出し
+- パスワードを忘れた方・新規登録リンクを `<hr>` 後に配置
+
+---
+
+### users#new（新規登録）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/users/new.html+v2.erb` | メインビュー |
+| `app/views/shared/_google_login.html+v2.erb` | Googleログインボタン |
+| `app/views/shared/_agreement.html+v2.erb` | 利用規約・プライバシーポリシー表示 + 送信ボタン |
+
+**v1 からの変更点:**
+
+- アバター投稿フィールドを廃止（v2 デザイン方針：外部フォント・画像なし）
+- `_agreement` パーシャルの同意チェックボックス・Stimulus による submit disabled 制御を廃止（テキスト表示のみ）
+- バリデーションエラーは `@user.errors.full_messages` を `<ul>` で上部に表示
+- `use_v2_layout!` を `create` アクションにも適用（バリデーション失敗時の `render 'new'` で variant が効くように）
+
+**注意点:**
+
+- `create` アクションに `use_v2_layout!` を追加しないと、バリデーション失敗時に v1 レイアウトで `new` が再描画される
+
+---
+
+### password_resets#new / edit（パスワードリセット）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/password_resets/new.html+v2.erb` | メールアドレス入力フォーム |
+| `app/views/password_resets/edit.html+v2.erb` | 新パスワード設定フォーム |
+
+**v1 からの変更点:**
+
+- `bootstrap_form_with` → `form_with`
+- シンプルなフォーム 2 画面。v2 CSS のみでレイアウト
+- `new` にログイン画面への戻りリンクを追加
+
+---
+
+### 共通パーシャル（認証フロー）
+
+| ファイル | 用途 |
+|---------|------|
+| `app/views/shared/_google_login.html+v2.erb` | `button_to` で `/auth/google_oauth2` に POST。`turbo: false` が必要 |
+| `app/views/shared/_agreement.html+v2.erb` | 利用規約・プライバシーポリシーへのリンクテキスト + 送信ボタン |
+
+**Google ログインボタンの実装パターン:**
+
+```erb
+<%= button_to '/auth/google_oauth2', method: :post, data: { turbo: false }, class: 'btn btn-block' do %>
+  Googleアカウントでログインする
+<% end %>
+```
 
 ---
 

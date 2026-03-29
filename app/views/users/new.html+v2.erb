@@ -1,0 +1,36 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<% if @user.errors.any? %>
+  <ul role="alert">
+    <% @user.errors.full_messages.each do |msg| %>
+      <li class="flash-alert"><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @user do |f| %>
+  <p>
+    <%= f.label :name, t('.name_label') %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :email, t('.email_label') %>
+    <%= f.email_field :email %>
+  </p>
+  <p>
+    <%= f.label :password, t('.password_label') %>
+    <small><%= t('.password_hint') %></small>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation, t('.password_confirmation_label') %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <%= render 'shared/agreement', f: f %>
+<% end %>
+
+<hr>
+<%= render 'shared/google_login', label: 'Googleアカウントで登録する' %>

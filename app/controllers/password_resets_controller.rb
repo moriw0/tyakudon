@@ -1,4 +1,5 @@
 class PasswordResetsController < ApplicationController
+  before_action :use_v2_layout!, only: %i[new edit]
   before_action :find_user, only: %i[edit update]
   before_action :valid_user, only: %i[edit update]
   before_action :check_expiration, only: %i[edit update]
