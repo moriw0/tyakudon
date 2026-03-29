@@ -44,8 +44,8 @@ RSpec.describe 'V2 UI feature flag' do
     context 'when v2_ui cookie is present but use_v2_layout! was not called (no opt-in)' do
       it 'uses the default application layout' do
         cookies[:v2_ui] = '1'
-        # root_path renders NewRecordsController which does not call use_v2_layout!
-        get root_path
+        # announcements_path renders AnnouncementsController which does not call use_v2_layout!
+        get announcements_path
         expect(response.body).to_not match(/<link[^>]*v2\.css/)
       end
     end

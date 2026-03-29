@@ -1,4 +1,15 @@
 ja:
+  new_records:
+    index:
+      heading: "新着記録"
+      shop_name_header: "店舗名"
+      wait_time_header: "待ち時間"
+      datetime_header: "接続日時"
+      author_header: "記録者"
+      status_header: "接続行列"
+      connecting: "接続中"
+      no_records: "記録がありません"
+
   layouts:
     v2:
       nav:
