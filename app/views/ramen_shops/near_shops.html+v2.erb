@@ -1,16 +1,16 @@
-<p><%= link_to '着丼', root_path %></p>
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
 <hr>
 
-<h1>現在地周辺の店舗</h1>
+<h1><%= t('.heading') %></h1>
 
 <% if @ramen_shops.any? %>
 <div class="table-scroll">
   <table>
     <thead>
       <tr>
-        <th>店舗名</th>
-        <th>距離</th>
-        <th>最新の待ち時間</th>
+        <th><%= t('.shop_name_header') %></th>
+        <th><%= t('.distance_header') %></th>
+        <th><%= t('.wait_time_header') %></th>
         <th></th>
       </tr>
     </thead>
@@ -20,18 +20,16 @@
           <td><%= link_to shop.name, shop %></td>
           <td><%= format_near_distance(shop.distance) %></td>
           <td><%= near_shop_wait_time(shop) %></td>
-          <td><%= link_to '接続する', new_ramen_shop_record_path(shop), class: 'btn', data: { turbo_stream: true } %></td>
+          <td><%= link_to t('.connect_button'), new_ramen_shop_record_path(shop), class: 'btn', data: { turbo_stream: true } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-<p><small><%= @ramen_shops.size %>件表示</small></p>
+<p><small><%= t('.count_display', count: @ramen_shops.size) %></small></p>
 <% else %>
-  <p>周辺に店舗が見つかりませんでした。</p>
+  <p><%= t('.no_shops') %></p>
 <% end %>
 
 <hr>
-<p>探している店舗が見つからない場合は <%= link_to '店舗を検索する', ramen_shops_path %></p>
-<hr>
-<p><small>着丼 - ラーメン待ち時間記録システム</small></p>
+<p><%= t('.search_hint') %> <%= link_to t('.search_link'), ramen_shops_path %></p>

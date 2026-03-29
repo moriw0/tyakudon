@@ -1,23 +1,23 @@
-<p><%= link_to '着丼', root_path %> &gt; <%= link_to @record.ramen_shop.name, @record.ramen_shop %> &gt; 着丼記録 No.<%= @record.id %></p>
+<p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to @record.ramen_shop.name, @record.ramen_shop %> &gt; <%= t('.heading') %> No.<%= @record.id %></p>
 <hr>
 
-<h1>着丼記録 <small>No.<%= @record.id %></small></h1>
+<h1><%= t('.heading') %> <small>No.<%= @record.id %></small></h1>
 
 <table>
-  <tr><th class="col-th">店舗名</th><td><%= link_to @record.ramen_shop.name, @record.ramen_shop %></td></tr>
-  <tr><th class="col-th">待ち時間</th><td><strong><%= format_wait_time_human @record.wait_time %></strong></td></tr>
-  <tr><th class="col-th">接続日時</th><td><%= format_datetime_detail @record.started_at %></td></tr>
-  <tr><th class="col-th">着丼日時</th><td><%= format_datetime_detail @record.ended_at %></td></tr>
+  <tr><th class="col-th"><%= t('.shop_label') %></th><td><%= link_to @record.ramen_shop.name, @record.ramen_shop %></td></tr>
+  <tr><th class="col-th"><%= t('.wait_time_label') %></th><td><strong><%= format_wait_time_human @record.wait_time %></strong></td></tr>
+  <tr><th class="col-th"><%= t('.started_at_label') %></th><td><%= format_datetime_detail @record.started_at %></td></tr>
+  <tr><th class="col-th"><%= t('.ended_at_label') %></th><td><%= format_datetime_detail @record.ended_at %></td></tr>
   <tr>
-    <th class="col-th">記録者</th>
+    <th class="col-th"><%= t('.recorder_label') %></th>
     <td><%= link_to @record.user.name, user_path(@record.user) %>（<%= @record.user.records.not_auto_retired.count %>件）</td>
   </tr>
   <% unless @record.comment.blank? %>
-    <tr><th class="col-th">コメント</th><td><%= @record.comment %></td></tr>
+    <tr><th class="col-th"><%= t('.comment_label') %></th><td><%= @record.comment %></td></tr>
   <% end %>
   <% if @record.image.attached? %>
     <tr>
-      <th class="col-th">写真</th>
+      <th class="col-th"><%= t('.photo_label') %></th>
       <td>
         <%= link_to url_for(@record.image), target: '_blank', rel: 'noopener noreferrer' do %>
           <%= image_tag @record.image.variant(:display), class: 'thumb' %>
@@ -29,31 +29,16 @@
 
 <hr>
 
-<h2>行列の様子</h2>
-<div class="table-scroll">
-  <table>
-    <thead>
-      <tr>
-        <th>時刻</th>
-        <th>状況</th>
-        <th class="col-comment">コメント</th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= render @record.line_statuses %>
-    </tbody>
-  </table>
-</div>
+<h2><%= t('.queue_section') %></h2>
+<%= render 'line_statuses/queue_table', line_statuses: @record.line_statuses %>
 
 <hr>
 
 <div>
-  <%= link_to '← 戻る', @back_path %>
+  <%= link_to t('.back_link'), @back_path %>
   &nbsp;|&nbsp;
   <%= render 'likes/like_form', record: @record %>
   &nbsp;|&nbsp;
-  <%= link_to 'シェア（X）', @tweet_url, target: '_blank', rel: 'noopener noreferrer' %>
+  <%= link_to t('.share_link'), @tweet_url, target: '_blank', rel: 'noopener noreferrer' %>
 </div>
 
-<hr>
-<p><small>着丼 - ラーメン待ち時間記録システム</small></p>

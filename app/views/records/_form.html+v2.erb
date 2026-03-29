@@ -17,7 +17,7 @@
   <% end %>
 
   <p>
-    <%= f.submit '接続する', class: 'btn btn-block',
-          data: { action: "click->record-form#fetchStartAt", disable_with: '接続中...' } %>
+    <%= f.submit t('.submit'), class: 'btn btn-block',
+          data: { action: "click->record-form#fetchStartAt", disable_with: t('.submit_disable_with') } %>
   </p>
 <% end %>

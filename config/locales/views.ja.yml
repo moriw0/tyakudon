@@ -1,0 +1,113 @@
+ja:
+  layouts:
+    v2:
+      nav:
+        active_record: "接続中レコード"
+        connect: "現在地から接続"
+      footer: "着丼 - ラーメン待ち時間記録システム"
+
+  records:
+    measure:
+      title: "待ち時間計測中"
+      shop_label: "店舗"
+      start_time_label: "接続日時"
+      elapsed_label: "経過時間"
+      submit: "着丼"
+      submit_disable_with: "着丼中..."
+      retire_link: "リタイアする（記録を中止する）"
+      retire_confirm: "本当にリタイアしますか？"
+      queue_section: "行列状況"
+      add_report_link: "追加報告"
+    result:
+      breadcrumb_home: "着丼"
+      heading: "着丼記録"
+      shop_label: "店舗名"
+      wait_time_label: "待ち時間"
+      started_at_label: "接続日時"
+      ended_at_label: "着丼日時"
+      comment_label: "コメント（任意）"
+      comment_placeholder: "例: 待望の着丼"
+      photo_label: "写真（任意）"
+      submit: "投稿する"
+      queue_section: "行列状況"
+    show:
+      breadcrumb_home: "着丼"
+      heading: "着丼記録"
+      shop_label: "店舗名"
+      wait_time_label: "待ち時間"
+      started_at_label: "接続日時"
+      ended_at_label: "着丼日時"
+      recorder_label: "記録者"
+      comment_label: "コメント"
+      photo_label: "写真"
+      queue_section: "行列状況"
+      back_link: "← 戻る"
+      share_link: "シェア（X）"
+    form:
+      submit: "接続する"
+      submit_disable_with: "接続中..."
+
+  line_statuses:
+    queue_table:
+      time_header: "時刻"
+      status_header: "状況"
+      comment_header: "コメント"
+    form_fields:
+      shop_label: "接続先"
+      shop_hint: "今どこにいますか？"
+      outside: "店外（行列中）"
+      inside: "店内（待ち席）"
+      seated: "着席済み"
+      queue_label: "待ち行列数"
+      queue_hint: "あなたの前に何人いますか？（わからなければ空欄で）"
+      queue_placeholder: "例: 8"
+      queue_unit: "人"
+      comment_label: "コメント"
+      comment_placeholder: "例: 店外に20人ほど"
+    new:
+      heading: "追加報告"
+      submit: "報告する"
+      close: "閉じる"
+
+  ramen_shops:
+    show:
+      breadcrumb_home: "着丼"
+      breadcrumb_list: "店舗一覧"
+      shop_info_section: "店舗情報"
+      shop_name_label: "店舗名"
+      address_label: "住所"
+      map_link: "[地図]"
+      records_section: "着丼記録"
+      records_count: "%{count}件"
+      wait_time_header: "待ち時間"
+      recorder_header: "記録者"
+      queue_header: "接続行列"
+      comment_header: "コメント"
+      datetime_header: "接続日時"
+      retired_label: "[リタイア]"
+      no_records: "まだ着丼記録がありません"
+    near_shops:
+      breadcrumb_home: "着丼"
+      heading: "現在地周辺の店舗"
+      shop_name_header: "店舗名"
+      distance_header: "距離"
+      wait_time_header: "最新の待ち時間"
+      connect_button: "接続する"
+      no_shops: "周辺に店舗が見つかりませんでした。"
+      count_display: "%{count}件表示"
+      search_hint: "探している店舗が見つからない場合は"
+      search_link: "店舗を検索する"
+    add_favorite:
+      label: "お気に入り登録"
+    remove_favorite:
+      label: "お気に入り解除"
+    favorite_form:
+      not_logged_in: "お気に入り"
+
+  likes:
+    add_like:
+      label: "いいね（%{count}）"
+    remove_like:
+      label: "いいね済み（%{count}）"
+    like_form:
+      not_logged_in: "いいね（%{count}）"

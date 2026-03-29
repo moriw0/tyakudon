@@ -6,6 +6,6 @@
       <%= render 'likes/add_like', record: record %>
     <% end %>
   <% else %>
-    <%= link_to "いいね（#{record.likes.length}）", prepare_like_path(record) %>
+    <%= link_to t('.not_logged_in', count: record.likes.length), prepare_like_path(record) %>
   <% end %>
 <% end %>

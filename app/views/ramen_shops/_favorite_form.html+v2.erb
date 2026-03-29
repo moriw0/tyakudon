@@ -5,5 +5,5 @@
     <%= render 'add_favorite' %>
   <% end %>
 <% else %>
-  <%= link_to 'お気に入り', prepare_favorite_ramen_shop_path(@ramen_shop), class: 'btn-link' %>
+  <%= link_to t('.not_logged_in'), prepare_favorite_ramen_shop_path(@ramen_shop), class: 'btn-link' %>
 <% end %>

@@ -1,4 +1,4 @@
-<p><a href="<%= root_path %>">着丼</a> - 待ち時間計測中</p>
+<p><a href="<%= root_path %>">着丼</a> - <%= t('.title') %></p>
 <hr>
 
 <h1><%= @ramen_shop.name %></h1>
@@ -8,15 +8,15 @@
 
   <table>
     <tr>
-      <th class="col-th">店舗</th>
+      <th class="col-th"><%= t('.shop_label') %></th>
       <td><%= link_to @ramen_shop.name, @ramen_shop %></td>
     </tr>
     <tr>
-      <th class="col-th">開始時刻</th>
-      <td><%= l(@record.started_at, format: :short) %></td>
+      <th class="col-th"><%= t('.start_time_label') %></th>
+      <td><%= format_datetime(@record.started_at) %></td>
     </tr>
     <tr>
-      <th class="col-th">経過時間</th>
+      <th class="col-th"><%= t('.elapsed_label') %></th>
       <td><span data-timer-target="time">00:00:00.000</span></td>
     </tr>
   </table>
@@ -24,36 +24,21 @@
   <%= form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
     <%= f.hidden_field :wait_time, data: { timer_target: "waitTime" } %>
-    <p><%= f.submit '着丼',
-          data: { action: "click->timer#end", disable_with: 'ちゃくどん中...' },
+    <p><%= f.submit t('.submit'),
+          data: { action: "click->timer#end", disable_with: t('.submit_disable_with') },
           class: "btn btn-block" %></p>
   <% end %>
 
-  <p><%= link_to 'リタイアする（記録を中止する）', retire_record_path(@record),
-        data: { turbo_method: :post, turbo_confirm: "本当にリタイアしますか？" } %></p>
+  <p><%= link_to t('.retire_link'), retire_record_path(@record),
+        data: { turbo_method: :post, turbo_confirm: t('.retire_confirm') } %></p>
 </div>
 
 <hr>
 
-<h2>行列の様子
-  <%= link_to '追加報告', new_record_line_status_path(@record),
+<h2><%= t('.queue_section') %>
+  <%= link_to t('.add_report_link'), new_record_line_status_path(@record),
         data: { turbo_stream: true }, class: "btn" %>
 </h2>
 
-<div class="table-scroll">
-  <table>
-    <thead>
-      <tr>
-        <th>時刻</th>
-        <th>状況</th>
-        <th class="col-comment">コメント</th>
-      </tr>
-    </thead>
-    <tbody id="line_statuses">
-      <%= render @record.line_statuses %>
-    </tbody>
-  </table>
-</div>
+<%= render 'line_statuses/queue_table', line_statuses: @record.line_statuses, tbody_id: 'line_statuses' %>
 
-<hr>
-<p><small>着丼 - ラーメン待ち時間記録システム</small></p>
