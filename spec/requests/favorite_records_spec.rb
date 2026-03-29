@@ -61,9 +61,9 @@ RSpec.describe 'FavoriteRecords' do
       end
 
       context 'when ids are not provided' do
-        it 'sets @checked_ids as nil' do
+        it 'sets @checked_ids to the user favorite shop ids' do
           get filter_favorite_records_path, as: :turbo_stream
-          expect(controller.instance_variable_get(:@checked_ids)).to be_nil
+          expect(controller.instance_variable_get(:@checked_ids)).to eq user.favorite_shop_ids
         end
       end
     end
