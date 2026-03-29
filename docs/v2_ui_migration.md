@@ -333,6 +333,30 @@ ja:
 
 ---
 
+---
+
+### faqs#index / show（よくある質問）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/faqs/index.html+v2.erb` | よくある質問一覧 |
+| `app/views/faqs/show.html+v2.erb` | 質問詳細 |
+
+**v1 からの変更点:**
+
+- Bootstrap accordion を廃止 → `h2`（質問）+ `p`（回答）のシンプルな構造に変更
+- index: `detail` フィールドは表示せず、`detail` が存在する場合のみ「詳細を見る」リンクを表示
+- show: `h1` で質問を表示、`detail` を本文として出力
+- 管理者向け編集・削除リンクをページ末尾に配置
+
+**注意点:**
+
+- `v2_ui_flag_spec` の「opt-in なし」検証で使っていた `faqs_path` を `new_shop_register_request_path` に変更済み（`faqs_controller.rb` に `use_v2_layout!` を追加したため）
+
+---
+
 ## 未移行ページ
 
 ### Phase 2e: 管理・低優先度（対象外検討可）
@@ -564,7 +588,7 @@ ja:
 
 **注意点:**
 
-- `v2_ui_flag_spec` の「opt-in なし」検証で使っていた `announcements_path` を `faqs_path` に変更した。`FaqsController` が v2 対応になった場合は別ルートに更新すること
+- `v2_ui_flag_spec` の「opt-in なし」検証で使っていた `announcements_path` を `faqs_path` に変更し、その後 `FaqsController` が v2 対応になったため `new_shop_register_request_path` に更新済み
 
 ---
 
