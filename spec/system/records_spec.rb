@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Records', js: true do
+RSpec.describe 'Records', :js do
   let(:user) { create(:user, is_test_mode: true) }
   let!(:ramen_shop) { create(:ramen_shop) }
 

@@ -28,7 +28,7 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
-  config.before(:each, js: true, type: :system) do
+  config.before(:each, :js, type: :system) do
     if ENV['SELENIUM_REMOTE_URL'].present?
       ip = Socket.ip_address_list.detect(&:ipv4_private?)&.ip_address
       raise 'No private IPv4 address found. Cannot connect Selenium to the Capybara server.' unless ip

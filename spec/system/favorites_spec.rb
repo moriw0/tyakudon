@@ -83,7 +83,7 @@ RSpec.describe 'Favorites' do
           end
         end
 
-        it 'retrieves records that user selected', js: true do
+        it 'retrieves records that user selected', :js do
           visit favorite_records_path
 
           favorite_shops = user.favorite_shops

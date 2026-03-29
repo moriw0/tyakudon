@@ -46,7 +46,7 @@ class PasswordResetsController < ApplicationController
 
   def valid_user
     unless @user&.activated? &&
-           @user&.authenticated?(:reset, params[:id])
+           @user.authenticated?(:reset, params[:id])
       redirect_to root_path, alert: '無効なユーザーによるリクエストです'
     end
   end
