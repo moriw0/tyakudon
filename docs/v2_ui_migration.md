@@ -305,24 +305,16 @@ ja:
 
 ## 未移行ページ
 
-### Phase 2d: 静的・情報ページ
-
-移行完了。
-
 ### Phase 2e: 管理・低優先度（対象外検討可）
 
 | ページ | アクション | 備考 |
 |--------|-----------|------|
 | 記録編集 | `records#edit` | 管理者用 |
 | 店舗登録申請 | `shop_register_requests#new` | |
-| FAQ CRUD | `faqs#index/show/new/edit` | 管理者用 |
+| FAQ 管理 CRUD | `faqs#new/edit/create/update/destroy` | 管理者用 |
 | 管理者お知らせ CRUD | `admin/announcements#*` | 管理者用 |
 | ユーザー編集 | `users#edit` | 本人のみ |
 | ユーザー一覧 | `users#index` | 管理者用 |
-
-### ランディングページ（別レイアウト・対象外）
-
-`landing_page#index` は `lp.html.erb` レイアウトを使用するマーケティングページ。v2 移行対象外。
 
 ---
 

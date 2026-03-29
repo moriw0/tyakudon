@@ -1,6 +1,9 @@
 <p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to @ramen_shop.name, @ramen_shop %></p>
 <hr>
 
+<%= render 'shared/nav' %>
+<hr>
+
 <h1><%= t('.heading') %> <small>No.<%= @record.id %></small></h1>
 
 <table>

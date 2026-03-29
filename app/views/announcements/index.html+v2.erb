@@ -1,6 +1,9 @@
 <p><%= link_to t('.breadcrumb_home'), root_path %></p>
 <hr>
 
+<%= render 'shared/nav' %>
+<hr>
+
 <h1><%= t('.heading') %></h1>
 
 <% if @announcements.empty? %>

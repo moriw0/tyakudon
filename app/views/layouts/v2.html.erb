@@ -23,6 +23,14 @@
   <%= yield %>
   <div id="modal"></div>
   <hr>
+  <p>
+    <small>
+      <%= link_to t('layouts.v2.footer_faqs'), faqs_path %>
+      | <%= link_to t('layouts.v2.footer_about'), lp_path %>
+      | <%= link_to t('layouts.v2.footer_terms'), terms_path %>
+      | <%= link_to t('layouts.v2.footer_privacy'), privacy_policy_path %>
+    </small>
+  </p>
   <p><small><%= t('layouts.v2.footer') %></small></p>
 </body>
 </html>

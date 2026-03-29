@@ -28,6 +28,10 @@ ja:
         active_record: "接続中レコード"
         connect: "現在地から接続"
       footer: "着丼 - ラーメン待ち時間記録システム"
+      footer_faqs: "よくある質問"
+      footer_about: "ちゃくどんについて"
+      footer_terms: "利用規約"
+      footer_privacy: "プライバシーポリシー"
 
   sessions:
     new:
@@ -49,6 +53,13 @@ ja:
       heading: "プライバシーポリシー"
 
   shared:
+    nav:
+      home: "ホーム"
+      search: "店舗を検索する"
+      announcements: "お知らせ"
+      favorite_records: "お気に入り記録"
+      sign_up: "ユーザー登録"
+      login: "ログイン"
     agreement:
       terms: "利用規約"
       privacy_policy: "プライバシーポリシー"
