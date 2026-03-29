@@ -1,0 +1,5 @@
+<p>
+  <%= button_to '/auth/google_oauth2', method: :post, data: { turbo: false }, class: 'btn btn-block' do %>
+    <%= local_assigns.fetch(:label, 'Googleアカウントでログインする') %>
+  <% end %>
+</p>

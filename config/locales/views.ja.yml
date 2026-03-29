@@ -6,6 +6,40 @@ ja:
         connect: "現在地から接続"
       footer: "着丼 - ラーメン待ち時間記録システム"
 
+  sessions:
+    new:
+      breadcrumb_home: "着丼"
+      heading: "ログイン"
+      email_label: "メールアドレス"
+      password_label: "パスワード"
+      remember_me: "ログインしたままにする"
+      submit: "ログインする"
+      forgot_password: "パスワードをお忘れの方はこちら"
+      sign_up: "アカウントをお持ちでない方はこちら"
+
+  shared:
+    agreement:
+      terms: "利用規約"
+      privacy_policy: "プライバシーポリシー"
+      consent: "に同意の上、登録してください。"
+      submit: "登録する"
+
+  password_resets:
+    new:
+      breadcrumb_home: "着丼"
+      heading: "パスワード再設定"
+      description: "メールアドレスへパスワード再設定用のリンクを送付します。"
+      email_label: "メールアドレス"
+      submit: "再設定用リンクを申請する"
+      back_to_login: "ログインへ戻る"
+    edit:
+      breadcrumb_home: "着丼"
+      heading: "パスワード再設定"
+      password_label: "パスワード"
+      password_hint: "半角英数字6文字以上"
+      password_confirmation_label: "パスワード（確認）"
+      submit: "パスワードを再設定する"
+
   records:
     measure:
       title: "待ち時間計測中"
@@ -134,6 +168,14 @@ ja:
       close: "× 閉じる"
 
   users:
+    new:
+      breadcrumb_home: "着丼"
+      heading: "ユーザー登録"
+      name_label: "ニックネーム"
+      email_label: "メールアドレス"
+      password_label: "パスワード"
+      password_hint: "半角英数字6文字以上"
+      password_confirmation_label: "パスワード（確認）"
     favorite_shops:
       breadcrumb_home: "着丼"
       breadcrumb_title: "お気に入り店舗"

@@ -1,0 +1,17 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<p><%= t('.description') %></p>
+
+<%= form_with url: password_resets_path, scope: :password_reset do |f| %>
+  <p>
+    <%= f.label :email, t('.email_label') %>
+    <%= f.email_field :email %>
+  </p>
+  <p><%= f.submit t('.submit'), class: 'btn btn-block' %></p>
+<% end %>
+
+<hr>
+<p><%= link_to t('.back_to_login'), login_path %></p>

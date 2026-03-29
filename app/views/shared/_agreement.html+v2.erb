@@ -1,0 +1,9 @@
+<p>
+  <small>
+    <%= link_to t('.terms'), terms_path, target: :_blank, rel: 'noopener noreferrer' %>
+    と
+    <%= link_to t('.privacy_policy'), privacy_policy_path, target: :_blank, rel: 'noopener noreferrer' %>
+    <%= t('.consent') %>
+  </small>
+</p>
+<p><%= f.submit t('.submit'), class: 'btn btn-block' %></p>

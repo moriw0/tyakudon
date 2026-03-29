@@ -10,6 +10,7 @@
   <%= javascript_importmap_tags %>
 </head>
 <body>
+  <% if flash[:notice] %><p><%= flash[:notice] %></p><% end %>
   <% if flash[:alert] %><p class="flash-alert"><%= flash[:alert] %></p><% end %>
   <nav>
     <% if remember_record? %>
