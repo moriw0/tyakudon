@@ -1,0 +1,10 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to t('.breadcrumb_index'), announcements_path %></p>
+<hr>
+
+<p><small><%= @announcement.published_at.strftime('%Y/%m/%d') %></small></p>
+<h1><%= @announcement.title %></h1>
+
+<%= @announcement.body %>
+
+<hr>
+<p><%= link_to t('.back_to_index'), announcements_path %></p>

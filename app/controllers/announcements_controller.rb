@@ -1,4 +1,6 @@
 class AnnouncementsController < ApplicationController
+  before_action :use_v2_layout!, only: %i[index show]
+
   def index
     @announcements = Announcement.published.recent
     # rubocop:disable Rails/SkipsModelValidations
