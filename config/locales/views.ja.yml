@@ -150,12 +150,13 @@ ja:
   faqs:
     index:
       breadcrumb_home: "着丼"
-      heading: "よくある質問"
+      heading: "FAQ"
+      detail_link: "詳細を見る"
       new_faq: "新しい質問を追加する"
     show:
       breadcrumb_home: "着丼"
-      breadcrumb_index: "よくある質問"
-      back_to_index: "よくある質問に戻る"
+      breadcrumb_index: "FAQ"
+      back_to_index: "FAQに戻る"
       edit: "編集"
       destroy: "削除"
       destroy_confirm: "本当に削除しますか？"

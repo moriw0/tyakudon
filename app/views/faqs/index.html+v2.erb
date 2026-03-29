@@ -1,0 +1,20 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
+<hr>
+
+<%= render 'shared/nav' %>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<% @faqs.each do |faq| %>
+  <h2><%= faq.question %></h2>
+  <p><%= faq.answer %></p>
+  <% if faq.detail.present? %>
+    <p><small><%= link_to t('.detail_link'), faq_path(faq) %></small></p>
+  <% end %>
+  <hr>
+<% end %>
+
+<% if logged_in? && current_user.admin? %>
+  <p><%= link_to t('.new_faq'), new_faq_path %></p>
+<% end %>
