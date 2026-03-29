@@ -25,11 +25,12 @@ ja:
   layouts:
     v2:
       nav:
-        active_record: "接続中レコード"
+        active_record: "接続中記録"
         connect: "現在地から接続"
       footer: "着丼 - ラーメン待ち時間記録システム"
-      footer_faqs: "よくある質問"
-      footer_about: "ちゃくどんについて"
+      footer_announcements: "お知らせ"
+      footer_faqs: "FAQ"
+      footer_about: "着丼とは"
       footer_terms: "利用規約"
       footer_privacy: "プライバシーポリシー"
 
@@ -54,10 +55,11 @@ ja:
 
   shared:
     nav:
+      active_record: "接続中記録"
+      connect: "現在地から接続"
       home: "ホーム"
-      search: "店舗を検索する"
-      announcements: "お知らせ"
-      favorite_records: "お気に入り記録"
+      search: "店舗検索"
+      favorite_records: "お気に入り店舗"
       sign_up: "ユーザー登録"
       login: "ログイン"
     agreement:
@@ -144,6 +146,19 @@ ja:
       heading: "追加報告"
       submit: "報告する"
       close: "閉じる"
+
+  faqs:
+    index:
+      breadcrumb_home: "着丼"
+      heading: "よくある質問"
+      new_faq: "新しい質問を追加する"
+    show:
+      breadcrumb_home: "着丼"
+      breadcrumb_index: "よくある質問"
+      back_to_index: "よくある質問に戻る"
+      edit: "編集"
+      destroy: "削除"
+      destroy_confirm: "本当に削除しますか？"
 
   ramen_shops:
     index:

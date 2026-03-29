@@ -12,20 +12,13 @@
 <body>
   <% if flash[:notice] %><p><%= flash[:notice] %></p><% end %>
   <% if flash[:alert] %><p class="flash-alert"><%= flash[:alert] %></p><% end %>
-  <nav>
-    <% if remember_record? %>
-      <%= link_to t('layouts.v2.nav.active_record'), measure_record_path(fetch_record_id) %>
-    <% else %>
-      <button data-controller="geolocation" data-action="click->geolocation#navigate" class="btn-link"><%= t('layouts.v2.nav.connect') %></button>
-    <% end %>
-  </nav>
-  <hr>
   <%= yield %>
   <div id="modal"></div>
   <hr>
   <p>
     <small>
-      <%= link_to t('layouts.v2.footer_faqs'), faqs_path %>
+      <%= link_to t('layouts.v2.footer_announcements'), announcements_path %>
+      | <%= link_to t('layouts.v2.footer_faqs'), faqs_path %>
       | <%= link_to t('layouts.v2.footer_about'), lp_path %>
       | <%= link_to t('layouts.v2.footer_terms'), terms_path %>
       | <%= link_to t('layouts.v2.footer_privacy'), privacy_policy_path %>
