@@ -220,7 +220,7 @@
     <tr>
       <td>shop</td>
       <td>（店舗名）</td>
-      <td>店舗情報 / 地図 / みんなの着丼記録</td>
+      <td>店舗情報 / 着丼記録</td>
       <td></td>
     </tr>
     <tr>
@@ -312,8 +312,6 @@
 <p>
   <a href="#" class="btn">接続する</a>
   &nbsp;
-  <a href="#" class="btn">お気に入りに追加</a>
-  &nbsp;
   <button class="btn">報告する</button>
   &nbsp;
   <button class="btn" style="font-size: 13px; padding: 3px 10px;">小ボタン</button>
@@ -321,6 +319,16 @@
 
 <h3>ブロックボタン <code>.btn.btn-block</code></h3>
 <p><a href="#" class="btn btn-block">着丼！（計測を完了する）</a></p>
+
+<h3>リンク風ボタン <code>.btn-link</code></h3>
+<p>お気に入り・いいねなど、主アクション以外のフォーム送信に使用。テキストリンクと同じ見た目で POST/DELETE を発行する。</p>
+<p>
+  <button class="btn-link">お気に入り登録</button>
+  &nbsp;&nbsp;
+  <button class="btn-link">お気に入り解除</button>
+  &nbsp;&nbsp;
+  <button class="btn-link">いいね（3）</button>
+</p>
 
 <div class="sg-box">
 <pre style="margin:0; font-size: 13px;">&lt;!-- インラインボタン --&gt;
@@ -330,8 +338,11 @@
 &lt;!-- 全幅ボタン --&gt;
 &lt;a href="#" class="btn btn-block"&gt;ラベル&lt;/a&gt;
 
-&lt;!-- ヘッダー内小ボタン（h2/h3 の隣に置く場合） --&gt;
-&lt;button class="btn" style="font-size: 13px; padding: 3px 10px;"&gt;ラベル&lt;/button&gt;</pre>
+&lt;!-- リンク風ボタン（フォーム送信） --&gt;
+&lt;button_to 'お気に入り登録', favorites_path,
+  params: { ramen_shop_id: @ramen_shop.id },
+  form: { class: "form-inline" },
+  class: 'btn-link' /&gt;</pre>
 </div>
 </div>
 <hr>
@@ -559,28 +570,35 @@
 <div class="sg-section">
 <h2>13. ページネーション</h2>
 
-<p>一覧ページで複数ページにわたる場合に使用。テキストリンクのみで構成し、現在位置を中央に表示する。</p>
+<p>Kaminari が生成する <code>&lt;nav&gt;&lt;ul class="pagination"&gt;</code> に CSS を当てて横並びにする。現在ページは太字。</p>
 
-<p>
-  <a href="#">← 前のページ</a>
-  &nbsp; 1 / 3 &nbsp;
-  <a href="#">次のページ →</a>
-</p>
+<style>
+nav ul.pagination { list-style:none; padding:0; margin:0 0 24px; display:flex; flex-wrap:wrap; gap:8px; }
+nav ul.pagination li a { text-decoration:none; color:#0000ee; padding:2px 4px; }
+nav ul.pagination li.active a { color:#000; font-weight:bold; text-decoration:underline; pointer-events:none; }
+nav ul.pagination li.disabled a, nav ul.pagination li.disabled span { color:#999; padding:2px 4px; }
+</style>
 
-<p><small>先頭ページでは「← 前のページ」を非表示（または disabled 状態）にする。末尾ページでは「次のページ →」を非表示にする。</small></p>
+<nav>
+  <ul class="pagination">
+    <li class="page-item disabled"><span>‹</span></li>
+    <li class="page-item active"><a href="#">1</a></li>
+    <li class="page-item disabled"><span>…</span></li>
+    <li class="page-item"><a href="#">3</a></li>
+    <li class="page-item"><a href="#">4</a></li>
+    <li class="page-item"><a href="#">›</a></li>
+  </ul>
+</nav>
+
+<p><small>現在ページは太字・下線。前後ページがない場合は disabled（グレー）で表示。</small></p>
 
 <div class="sg-box">
-<pre style="margin:0; font-size: 13px;">&lt;p&gt;
-  &lt;a href="#"&gt;← 前のページ&lt;/a&gt;
-  &amp;nbsp; 1 / 3 &amp;nbsp;
-  &lt;a href="#"&gt;次のページ →&lt;/a&gt;
-&lt;/p&gt;
+<pre style="margin:0; font-size: 13px;">&lt;%= paginate @records, previous_label: '‹', next_label: '›' %&gt;
 
-&lt;!-- 先頭ページ --&gt;
-&lt;p&gt;
-  1 / 3 &amp;nbsp;
-  &lt;a href="#"&gt;次のページ →&lt;/a&gt;
-&lt;/p&gt;</pre>
+/* v2.css */
+nav ul.pagination { list-style:none; padding:0; display:flex; gap:8px; }
+nav ul.pagination li a { text-decoration:none; color:#0000ee; padding:2px 4px; }
+nav ul.pagination li.active a { color:#000; font-weight:bold; pointer-events:none; }</pre>
 </div>
 </div>
 <hr>
@@ -739,7 +757,7 @@
     <tr><td>接続フォーム</td><td><a href="connect_final.html">connect_final.html</a></td><td>計測開始前の入力</td></tr>
     <tr><td>待機中（計測）</td><td><a href="measure_final.html">measure_final.html</a></td><td>タイマー＋追加報告モーダル</td></tr>
     <tr><td>着丼記録詳細</td><td><a href="result_final.html">result_final.html</a></td><td>記録の詳細・写真・行列履歴</td></tr>
-    <tr><td>店舗詳細</td><td><a href="shop_final.html">shop_final.html</a></td><td>店舗情報・Leaflet地図・記録一覧</td></tr>
+    <tr><td>店舗詳細</td><td><a href="shop_final.html">shop_final.html</a></td><td>店舗情報・[地図]リンク・着丼記録テーブル・お気に入り</td></tr>
     <tr><td>ユーザープロフィール</td><td><a href="user_final.html">user_final.html</a></td><td>記録一覧テーブル</td></tr>
   </tbody>
 </table>

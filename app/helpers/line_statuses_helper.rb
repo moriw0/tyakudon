@@ -18,6 +18,13 @@ module LineStatusesHelper
     end
   end
 
+  def format_line_status(line_status)
+    return '-' unless line_status
+    return line_status.line_type_i18n.to_s if line_status.line_type == 'seated' || line_status.line_number.blank?
+
+    "#{line_status.line_type_i18n} #{line_status.line_number}人"
+  end
+
   def passed_time_from_first_line_status(line_status)
     first_line_status = line_status.record.line_statuses.first
     distance_of_time_in_words(first_line_status.created_at, line_status.created_at, compact: true)

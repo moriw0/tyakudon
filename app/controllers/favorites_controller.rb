@@ -1,5 +1,6 @@
 class FavoritesController < ApplicationController
   before_action :logged_in_user
+  before_action :use_v2_layout!, only: %i[create destroy]
 
   def create
     @ramen_shop = RamenShop.find(params[:ramen_shop_id])

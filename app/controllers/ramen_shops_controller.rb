@@ -3,7 +3,7 @@ class RamenShopsController < ApplicationController
   before_action :admin_user,     only: %i[new edit create update]
   before_action :set_ramen_shop, only: %i[show edit update prepare_favorite]
   before_action :redirect_if_connecting, only: %i[near_shops]
-  before_action :use_v2_layout!, only: %i[near_shops]
+  before_action :use_v2_layout!, only: %i[near_shops show]
 
   def index
     @search = RamenShop.search_by_keywords(params[:q])
