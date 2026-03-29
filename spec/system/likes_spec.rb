@@ -24,7 +24,7 @@ RSpec.describe 'Likes', js: true do
   # rubocop:enable Rails/SkipsModelValidations
 
   context 'with all user' do
-    scenario 'user redirects to login_path when click like button' do
+    it 'user redirects to login_path when click like button' do
       visit new_records_path
       all('.like-button').first.click
       expect(page).to have_content 'ログインが必要です'
@@ -34,7 +34,7 @@ RSpec.describe 'Likes', js: true do
   context 'with login other users' do
     before { log_in_as(user) }
 
-    scenario 'user adds and removes a like in both feed page and the record page' do
+    it 'user adds and removes a like in both feed page and the record page' do
       # フィードページ
       visit new_records_path
       top_record_id = Record.order_by_most_likes.first.id
