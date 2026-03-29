@@ -105,6 +105,14 @@ ja:
       not_logged_in: "お気に入り"
 
   users:
+    favorite_shops:
+      breadcrumb_home: "着丼"
+      breadcrumb_title: "お気に入り店舗"
+      heading: "お気に入り店舗"
+      shop_name_header: "店舗名"
+      wait_time_header: "最新の待ち時間"
+      no_record: "記録なし"
+      no_shops: "まだお気に入りの店舗がありません"
     show:
       breadcrumb_home: "着丼"
       breadcrumb_title: "ユーザー"
