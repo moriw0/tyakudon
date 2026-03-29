@@ -30,20 +30,7 @@
 <hr>
 
 <h2><%= t('.queue_section') %></h2>
-<div class="table-scroll">
-  <table>
-    <thead>
-      <tr>
-        <th><%= t('.time_header') %></th>
-        <th><%= t('.status_header') %></th>
-        <th class="col-comment"><%= t('.comment_header') %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= render @record.line_statuses %>
-    </tbody>
-  </table>
-</div>
+<%= render 'line_statuses/queue_table', line_statuses: @record.line_statuses %>
 
 <hr>
 
@@ -55,5 +42,3 @@
   <%= link_to t('.share_link'), @tweet_url, target: '_blank', rel: 'noopener noreferrer' %>
 </div>
 
-<hr>
-<p><small>着丼 - ラーメン待ち時間記録システム</small></p>

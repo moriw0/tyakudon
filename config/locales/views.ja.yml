@@ -4,6 +4,7 @@ ja:
       nav:
         active_record: "接続中レコード"
         connect: "現在地から接続"
+      footer: "着丼 - ラーメン待ち時間記録システム"
 
   records:
     measure:
@@ -17,9 +18,6 @@ ja:
       retire_confirm: "本当にリタイアしますか？"
       queue_section: "行列状況"
       add_report_link: "追加報告"
-      time_header: "時刻"
-      status_header: "状況"
-      comment_header: "コメント"
     result:
       breadcrumb_home: "着丼"
       heading: "着丼記録"
@@ -32,9 +30,6 @@ ja:
       photo_label: "写真（任意）"
       submit: "投稿する"
       queue_section: "行列状況"
-      time_header: "時刻"
-      status_header: "状況"
-      comment_header: "コメント"
     show:
       breadcrumb_home: "着丼"
       heading: "着丼記録"
@@ -46,9 +41,6 @@ ja:
       comment_label: "コメント"
       photo_label: "写真"
       queue_section: "行列状況"
-      time_header: "時刻"
-      status_header: "状況"
-      comment_header: "コメント"
       back_link: "← 戻る"
       share_link: "シェア（X）"
     form:
@@ -56,6 +48,10 @@ ja:
       submit_disable_with: "接続中..."
 
   line_statuses:
+    queue_table:
+      time_header: "時刻"
+      status_header: "状況"
+      comment_header: "コメント"
     form_fields:
       shop_label: "接続先"
       shop_hint: "今どこにいますか？"
@@ -101,7 +97,6 @@ ja:
       count_display: "%{count}件表示"
       search_hint: "探している店舗が見つからない場合は"
       search_link: "店舗を検索する"
-      footer: "着丼 - ラーメン待ち時間記録システム"
     add_favorite:
       label: "お気に入り登録"
     remove_favorite:
