@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   include Authenticatable
+
   before_action :use_v2_layout!, only: %i[new]
   before_action :disable_connect_button, only: %i[new]
 

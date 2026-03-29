@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Likes', js: true do
+RSpec.describe 'Likes', :js do
   let!(:ramen_shop) { create(:ramen_shop) }
   let!(:user) { create(:user) }
   let!(:users) { build_stubbed_list(:user, 5, :many_user) }

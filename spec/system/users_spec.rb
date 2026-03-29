@@ -12,7 +12,7 @@ RSpec.describe 'Users' do
       end
 
       context 'with valid information' do
-        it 'user creates an account and logins', js: true do
+        it 'user creates an account and logins', :js do
           visit new_user_path
           click_button 'Googleアカウントでログインする'
 
@@ -34,7 +34,7 @@ RSpec.describe 'Users' do
       end
 
       context 'with invalid information' do
-        it 'user does not create an account', js: true do
+        it 'user does not create an account', :js do
           visit new_user_path
           click_button 'Googleアカウントでログインする'
 
@@ -79,7 +79,7 @@ RSpec.describe 'Users' do
       }.to_not change(User, :count)
     end
 
-    it 'user receives an alert when trying to upload a file larger than 9MB', js: true do
+    it 'user receives an alert when trying to upload a file larger than 9MB', :js do
       log_in_as(user)
       visit edit_user_path(user)
       attach_file 'アバター', Rails.root.join('spec/fixtures/files/1000x800_9.5MB.png')
@@ -166,6 +166,7 @@ RSpec.describe 'Users' do
 
   describe '#show' do
     include ApplicationHelper
+
     let!(:user) { create(:user) }
 
     context 'when vist current user path' do

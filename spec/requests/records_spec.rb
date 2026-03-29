@@ -76,9 +76,9 @@ RSpec.describe 'Records' do
         user_id: user.id,
         started_at: Time.zone.now,
         line_statuses_attributes: [
-          line_number: 1,
-          line_type: 'inside_the_store',
-          comment: '並ぶぞ'
+          { line_number: 1,
+            line_type: 'inside_the_store',
+            comment: '並ぶぞ' }
         ]
       } }
     end
