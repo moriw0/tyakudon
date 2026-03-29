@@ -1,0 +1,25 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<% if @announcements.empty? %>
+  <p><%= t('.no_announcements') %></p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col"><%= t('.date_header') %></th>
+        <th scope="col"><%= t('.title_header') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @announcements.each do |announcement| %>
+        <tr>
+          <td><%= announcement.published_at.strftime('%Y/%m/%d') %></td>
+          <td><%= link_to announcement.title, announcement_path(announcement) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

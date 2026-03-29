@@ -307,10 +307,7 @@ ja:
 
 ### Phase 2d: 静的・情報ページ
 
-| ページ | アクション | 備考 |
-|--------|-----------|------|
-| お知らせ一覧 | `announcements#index` | |
-| お知らせ詳細 | `announcements#show` | |
+移行完了。
 
 ### Phase 2e: 管理・低優先度（対象外検討可）
 
@@ -524,6 +521,28 @@ ja:
 **注意点:**
 
 - `new_records#index` が root なため、`v2_ui_flag_spec` の「opt-in なし」テストで使用していた `root_path` を `announcements_path` に変更した。`AnnouncementsController` が v2 対応になった場合はテストの参照先を別ルートに更新すること
+
+---
+
+### announcements#index / show（お知らせ）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/announcements/index.html+v2.erb` | お知らせ一覧 |
+| `app/views/announcements/show.html+v2.erb` | お知らせ詳細 |
+
+**v1 からの変更点:**
+
+- `section` / Bootstrap クラスを除去
+- index: `ul` リスト → テーブル（日付 / タイトル列）に変更
+- show: パンくずリスト + `<hr>` を先頭に追加、日付を `<small>` で h1 の上に配置
+- show: Rich Text 本文（`@announcement.body`）はそのまま出力（ActionText が自動サニタイズ済み）
+
+**注意点:**
+
+- `v2_ui_flag_spec` の「opt-in なし」検証で使っていた `announcements_path` を `faqs_path` に変更した。`FaqsController` が v2 対応になった場合は別ルートに更新すること
 
 ---
 

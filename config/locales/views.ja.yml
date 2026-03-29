@@ -1,4 +1,16 @@
 ja:
+  announcements:
+    index:
+      breadcrumb_home: "着丼"
+      heading: "お知らせ"
+      date_header: "日付"
+      title_header: "タイトル"
+      no_announcements: "お知らせはありません"
+    show:
+      breadcrumb_home: "着丼"
+      breadcrumb_index: "お知らせ"
+      back_to_index: "お知らせ一覧に戻る"
+
   new_records:
     index:
       heading: "新着記録"
