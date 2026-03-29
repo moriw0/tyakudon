@@ -1,5 +1,5 @@
 <tr id="<%= dom_id(line_status) %>">
   <td><%= format_only_detatil_time(line_status.created_at) %></td>
-  <td><%= line_status_content(line_status) %></td>
+  <td><%= format_line_status(line_status) %></td>
   <td class="col-comment"><%= line_status.comment %></td>
 </tr>
