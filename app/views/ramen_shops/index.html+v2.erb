@@ -1,0 +1,38 @@
+<p><%= link_to t('.breadcrumb_home'), root_path %></p>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+
+<%= search_form_for @search, url: ramen_shops_path do |f| %>
+  <div class="search-form">
+    <%= f.search_field :name_or_address_cont, placeholder: t('.search_placeholder') %>
+    <%= f.submit t('.search_button') %>
+  </div>
+<% end %>
+
+<p><small><%= t('.result_count', count: @result_count) %></small></p>
+
+<% if @ramen_shops.any? %>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"><%= t('.shop_name_header') %></th>
+          <th scope="col"><%= t('.wait_time_header') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ramen_shops.each do |shop| %>
+          <tr>
+            <td><%= link_to shop.name, shop %></td>
+            <td><%= shop.average_wait_time ? format_wait_time_human(shop.average_wait_time) : t('.no_record') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @ramen_shops %>
+<% else %>
+  <p><%= t('.no_shops') %></p>
+  <p><%= link_to t('.register_request_link'), new_shop_register_request_path %></p>
+<% end %>
