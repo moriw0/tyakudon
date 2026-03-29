@@ -44,10 +44,11 @@ RSpec.describe 'V2 UI feature flag' do
     context 'when v2_ui cookie is present but use_v2_layout! was not called (no opt-in)' do
       it 'uses the default application layout' do
         cookies[:v2_ui] = '1'
-        # Use a controller that has NOT opted in to v2 layout.
-        # FaqsController is intentionally kept as v1-only for this assertion.
-        # If you migrate faqs to v2, update this to another non-v2 route.
-        get faqs_path
+        # Use a route that does NOT opt in to v2 layout.
+        # ShopRegisterRequestsController requires login and redirects to login_path.
+        # The redirect response body has no v2.css link, which is what we assert.
+        # If you migrate shop_register_requests to v2, update this to another non-v2 route.
+        get new_shop_register_request_path
         expect(response.body).to_not match(/<link[^>]*v2\.css/)
       end
     end

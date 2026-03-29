@@ -1,6 +1,9 @@
 <p><a href="<%= root_path %>">着丼</a> - <%= t('.title') %></p>
 <hr>
 
+<%= render 'shared/nav' %>
+<hr>
+
 <h1><%= @ramen_shop.name %></h1>
 
 <div data-controller="timer" data-timer-milliseconds-value="false">

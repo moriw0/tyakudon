@@ -1,0 +1,16 @@
+<p>
+  <% if remember_record? %>
+    <%= link_to t('.active_record'), measure_record_path(fetch_record_id) %>
+  <% else %>
+    <button data-controller="geolocation" data-action="click->geolocation#navigate" class="btn-link"><%= t('.connect') %></button>
+  <% end %>
+  | <%= link_to t('.home'), root_path %>
+  | <%= link_to t('.search'), ramen_shops_path %>
+  <% if logged_in? %>
+    | <%= link_to t('.favorite_records'), favorite_records_path %>
+    | <%= link_to current_user.name, current_user %>
+  <% else %>
+    | <%= link_to t('.sign_up'), new_user_path %>
+    | <%= link_to t('.login'), login_path %>
+  <% end %>
+</p>

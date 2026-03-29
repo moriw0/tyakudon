@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ナビゲーション手法比較 - 着丼</title>
+  <link rel="stylesheet" href="base.css">
+  <style>
+    .comparison-section {
+      border: 2px solid #ccc;
+      margin: 32px 0;
+      padding: 0;
+    }
+    .comparison-label {
+      background: #eee;
+      border-bottom: 2px solid #ccc;
+      padding: 6px 12px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .comparison-label span {
+      font-weight: normal;
+      color: #666;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    .comparison-body {
+      padding: 12px;
+    }
+    .pros-cons {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #444;
+      border-top: 1px dashed #ccc;
+      padding-top: 8px;
+    }
+    .pros-cons p { margin: 4px 0; }
+    /* 手法C用: スティッキーナビのデモ用に高さ制限 */
+    .sticky-demo-wrapper {
+      height: 180px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      position: relative;
+    }
+    .sticky-demo-wrapper .sticky-nav {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      border-bottom: 1px solid #999;
+      padding: 4px 0;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<p><strong>着丼 v2 ナビゲーション手法比較</strong></p>
+<p><small>v1 のハンバーガーメニューに代わる各種ページへの導線をどこに・どう置くかを比較する。</small></p>
+<hr>
+
+<!-- ============================================================ -->
+<div class="comparison-section">
+  <div class="comparison-label">
+    手法 A: ページ内インラインナビ
+    <span>— プロトタイプ（nearby_final.html）方式</span>
+  </div>
+  <div class="comparison-body">
+
+    <!-- ページのサンプル表示 -->
+    <p><a href="#">着丼</a> - ホーム</p>
+    <hr>
+    <p>ログイン中: jiro_seeker | <a href="#">ログアウト</a></p>
+    <hr>
+    <p>
+      <a href="#">ホーム</a> |
+      <a href="#">お気に入り記録</a> |
+      <a href="#">店舗を検索する</a>
+    </p>
+    <hr>
+    <h1>新着記録</h1>
+    <table>
+      <thead><tr><th>店舗名</th><th>待ち時間</th><th>接続日時</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#">ラーメン二郎 三田本店</a></td><td><a href="#">35分</a></td><td>14:32</td></tr>
+        <tr><td><a href="#">一蘭 渋谷店</a></td><td><a href="#">20分</a></td><td>13:50</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pros-cons">
+      <p>✔ JS 不要。ブラウザデフォルトのまま。</p>
+      <p>✔ ページの性格ごとにリンクをカスタマイズできる（例: shop ページでは「お気に入り記録」は不要など）。</p>
+      <p>✔ パーシャル化すれば重複を排除できる（<code>render 'shared/nav'</code>）。</p>
+      <p>✘ v2 レイアウトの <code>&lt;nav&gt;</code> と役割が重複する。整理が必要。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="comparison-section">
+  <div class="comparison-label">
+    手法 B: v2 レイアウトの &lt;nav&gt; を拡張
+    <span>— layouts/v2.html.erb の nav に追記</span>
+  </div>
+  <div class="comparison-body">
+
+    <!-- v2 レイアウト全体のサンプル -->
+    <nav>
+      <a href="#">接続中レコード</a>
+      &nbsp;|&nbsp;
+      <a href="#">ホーム</a> |
+      <a href="#">お気に入り記録</a> |
+      <a href="#">店舗を検索する</a>
+      &nbsp;|&nbsp;
+      ログイン中: jiro_seeker | <a href="#">ログアウト</a>
+    </nav>
+    <hr>
+    <h1>新着記録</h1>
+    <table>
+      <thead><tr><th>店舗名</th><th>待ち時間</th><th>接続日時</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#">ラーメン二郎 三田本店</a></td><td><a href="#">35分</a></td><td>14:32</td></tr>
+        <tr><td><a href="#">一蘭 渋谷店</a></td><td><a href="#">20分</a></td><td>13:50</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pros-cons">
+      <p>✔ 一箇所（レイアウト）に書くだけで全ページに自動適用。</p>
+      <p>✔ パーシャル不要。管理コスト最小。</p>
+      <p>✘ ページごとのカスタマイズが難しい（例: ホームでは「ホーム」リンクは不要）。</p>
+      <p>✘ ログイン状態・接続状態に応じた条件分岐がレイアウトに集まり複雑化しやすい。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="comparison-section">
+  <div class="comparison-label">
+    手法 C: スティッキーヘッダー
+    <span>— nav を position: sticky; top: 0 にする</span>
+  </div>
+  <div class="comparison-body">
+
+    <div class="sticky-demo-wrapper">
+      <div class="sticky-nav">
+        <p style="margin:0; padding: 4px 0;">
+          <a href="#">着丼</a> |
+          <a href="#">ホーム</a> |
+          <a href="#">お気に入り記録</a> |
+          <a href="#">店舗を検索する</a>
+          &nbsp;|&nbsp; jiro_seeker | <a href="#">ログアウト</a>
+        </p>
+      </div>
+      <div style="padding: 8px 0;">
+        <h1>新着記録</h1>
+        <table>
+          <thead><tr><th>店舗名</th><th>待ち時間</th><th>接続日時</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">ラーメン二郎 三田本店</a></td><td><a href="#">35分</a></td><td>14:32</td></tr>
+            <tr><td><a href="#">一蘭 渋谷店</a></td><td><a href="#">20分</a></td><td>13:50</td></tr>
+            <tr><td><a href="#">博多一幸舎 渋谷店</a></td><td><a href="#">45分</a></td><td>13:10</td></tr>
+            <tr><td><a href="#">麺屋武蔵 新宿店</a></td><td><a href="#">28分</a></td><td>12:55</td></tr>
+          </tbody>
+        </table>
+        <p>↑ 上にスクロールするとナビが追従します（このデモはボックス内スクロール）</p>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <p>✔ 長いページでもナビが常に見える。</p>
+      <p>✔ 手法 B と組み合わせ可能（レイアウト側で sticky 指定するだけ）。</p>
+      <p>✘ v2 のデザイン方針「ブラウザデフォルト重視・CSS 最小限」から外れる。</p>
+      <p>✘ モバイルでナビ領域がコンテンツを圧迫する。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="comparison-section">
+  <div class="comparison-label">
+    手法 D: パーシャル化したページ内ナビ
+    <span>— 手法 A をパーシャルに切り出す</span>
+  </div>
+  <div class="comparison-body">
+
+    <!-- ログイン済みユーザー向けナビパーシャルのイメージ -->
+    <p><a href="#">着丼</a> - ホーム</p>
+    <hr>
+    <!-- shared/_nav.html+v2.erb のイメージ -->
+    <p>
+      <a href="#">ホーム</a> |
+      <a href="#">お気に入り記録</a> |
+      <a href="#">店舗を検索する</a>
+      | ログイン中: <a href="#">jiro_seeker</a> | <a href="#">ログアウト</a>
+    </p>
+    <hr>
+    <h1>新着記録</h1>
+    <table>
+      <thead><tr><th>店舗名</th><th>待ち時間</th><th>接続日時</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#">ラーメン二郎 三田本店</a></td><td><a href="#">35分</a></td><td>14:32</td></tr>
+        <tr><td><a href="#">一蘭 渋谷店</a></td><td><a href="#">20分</a></td><td>13:50</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pros-cons">
+      <p>✔ 手法 A の重複をなくしつつ、ページごとに表示を制御できる。</p>
+      <p>✔ ログイン状態ごとのナビ変化を 1 ファイルに集約できる（<code>shared/_nav</code>）。</p>
+      <p>✔ 現行の v2 レイアウト構造を変えずに追加できる。</p>
+      <p>✘ 各ページで <code>render 'shared/nav'</code> を書く必要がある（手法 B より手間）。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<hr>
+<h2>比較まとめ</h2>
+<table>
+  <thead>
+    <tr>
+      <th>手法</th>
+      <th>管理コスト</th>
+      <th>ページ別カスタマイズ</th>
+      <th>v2 方針との整合</th>
+      <th>実装量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A. ページ内インライン</td>
+      <td>高（各ページに書く）</td>
+      <td>◎</td>
+      <td>◎</td>
+      <td>大</td>
+    </tr>
+    <tr>
+      <td>B. レイアウト nav 拡張</td>
+      <td>低（1ファイル）</td>
+      <td>△</td>
+      <td>○</td>
+      <td>小</td>
+    </tr>
+    <tr>
+      <td>C. スティッキーヘッダー</td>
+      <td>低</td>
+      <td>△</td>
+      <td>△（CSS追加）</td>
+      <td>小〜中</td>
+    </tr>
+    <tr>
+      <td><strong>D. パーシャル化ナビ</strong></td>
+      <td>中（1パーシャル）</td>
+      <td>○</td>
+      <td>◎</td>
+      <td>中</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  <strong>推奨:</strong>
+  <strong>手法 B（レイアウト nav 拡張）</strong>か<strong>手法 D（パーシャル化ナビ）</strong>。
+</p>
+<ul>
+  <li>全ページで同じリンクで十分 → <strong>手法 B</strong>（最小コスト）</li>
+  <li>ページによってリンクを出し分けたい → <strong>手法 D</strong>（柔軟性）</li>
+</ul>
+
+<hr>
+<p><small>着丼 - ラーメン待ち時間記録システム</small></p>
+
+</body>
+</html>

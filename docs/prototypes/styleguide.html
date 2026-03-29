@@ -119,32 +119,38 @@
 <div class="sg-section">
 <h2>3. ページ構造パターン</h2>
 
-<p>全ページ共通のヘッダー・フッター構造：</p>
+<p>全ページ共通のページ構造（v2 レイアウト + <code>shared/_nav</code> パーシャル）：</p>
 
 <div class="sg-box">
-<pre style="margin:0; font-size: 13px;">&lt;!-- パンくずリスト or サービス名 --&gt;
+<pre style="margin:0; font-size: 13px;">&lt;!-- パンくずリスト or サービス名（レイアウト外・ページ先頭） --&gt;
 &lt;p&gt;&lt;a href="#"&gt;着丼&lt;/a&gt; &gt; &lt;a href="#"&gt;上位ページ&lt;/a&gt; &gt; 現在のページ&lt;/p&gt;
 &lt;hr&gt;
 
-&lt;!-- ログイン状態（ログイン必要なページのみ） --&gt;
-&lt;p&gt;ログイン中: username | &lt;a href="#"&gt;ログアウト&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-
-&lt;!-- ナビゲーション（ホームと関連ページのみ） --&gt;
+&lt;!-- 共通ナビ（shared/_nav パーシャル）：全コンテンツページに挿入 --&gt;
 &lt;p&gt;
-  &lt;a href="#"&gt;ホーム&lt;/a&gt; |
-  &lt;a href="#"&gt;お気に入り&lt;/a&gt; |
-  ...
+  &lt;!-- 接続中は記録リンク、未接続は現在地から接続ボタン --&gt;
+  [接続中記録 or 現在地から接続] |
+  ホーム | 店舗検索 |
+  (logged_in)  お気に入り店舗 | ユーザー名 |
+  (not logged_in) ユーザー登録 | ログイン
 &lt;/p&gt;
 &lt;hr&gt;
 
 &lt;!-- メインコンテンツ --&gt;
+&lt;h1&gt;ページタイトル&lt;/h1&gt;
+...
 
+&lt;!-- フッター（v2 レイアウトが自動挿入） --&gt;
 &lt;hr&gt;
+&lt;p&gt;&lt;small&gt;お知らせ | FAQ | 着丼とは | 利用規約 | プライバシーポリシー&lt;/small&gt;&lt;/p&gt;
 &lt;p&gt;&lt;small&gt;着丼 - ラーメン待ち時間記録システム&lt;/small&gt;&lt;/p&gt;</pre>
 </div>
 
-<p><small>ページの性格に応じてヘッダー内のブロックは省略可。ナビゲーションはホーム・お気に入り・近くの店舗など主要ページに絞る。</small></p>
+<p><small>
+  <strong>ナビの配置ルール:</strong>
+  <code>shared/_nav.html+v2.erb</code> をパンくずの直後（<code>&lt;hr&gt;</code> の後）に <code>render 'shared/nav'</code> で挿入する。
+  ログアウトリンクはナビに置かず、ユーザーページ（<code>users#show</code>）に配置する。
+</small></p>
 </div>
 <hr>
 
