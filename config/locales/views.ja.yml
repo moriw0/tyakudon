@@ -17,6 +17,14 @@ ja:
       forgot_password: "パスワードをお忘れの方はこちら"
       sign_up: "アカウントをお持ちでない方はこちら"
 
+  statics:
+    terms:
+      breadcrumb_home: "着丼"
+      heading: "利用規約"
+    privacy_policy:
+      breadcrumb_home: "着丼"
+      heading: "プライバシーポリシー"
+
   shared:
     agreement:
       terms: "利用規約"
