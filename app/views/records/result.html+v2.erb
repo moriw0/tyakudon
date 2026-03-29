@@ -1,41 +1,41 @@
-<p><%= link_to '着丼', root_path %> &gt; <%= link_to @ramen_shop.name, @ramen_shop %></p>
+<p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to @ramen_shop.name, @ramen_shop %></p>
 <hr>
 
-<h1>着丼記録 <small>No.<%= @record.id %></small></h1>
+<h1><%= t('.heading') %> <small>No.<%= @record.id %></small></h1>
 
 <table>
-  <tr><th class="col-th">店舗名</th><td><%= link_to @ramen_shop.name, @ramen_shop %></td></tr>
-  <tr><th class="col-th">待ち時間</th><td><strong><%= format_wait_time_human @record.wait_time %></strong></td></tr>
-  <tr><th class="col-th">接続日時</th><td><%= format_datetime_detail @record.started_at %></td></tr>
-  <tr><th class="col-th">着丼日時</th><td><%= format_datetime_detail @record.ended_at %></td></tr>
+  <tr><th class="col-th"><%= t('.shop_label') %></th><td><%= link_to @ramen_shop.name, @ramen_shop %></td></tr>
+  <tr><th class="col-th"><%= t('.wait_time_label') %></th><td><strong><%= format_wait_time_human @record.wait_time %></strong></td></tr>
+  <tr><th class="col-th"><%= t('.started_at_label') %></th><td><%= format_datetime_detail @record.started_at %></td></tr>
+  <tr><th class="col-th"><%= t('.ended_at_label') %></th><td><%= format_datetime_detail @record.ended_at %></td></tr>
 </table>
 
 <%= form_with model: @record do |f| %>
   <p>
-    <label for="record_comment">コメント（任意）</label><br>
-    <%= f.text_area :comment, placeholder: '感想や状況など' %>
+    <label for="record_comment"><%= t('.comment_label') %></label><br>
+    <%= f.text_area :comment, placeholder: t('.comment_placeholder') %>
   </p>
   <div data-controller="image-uploader">
     <p>
-      <label for="record_image">写真（任意）</label><br>
+      <label for="record_image"><%= t('.photo_label') %></label><br>
       <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", direct_upload: true,
             data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
       <%= image_tag '', data: { image_uploader_target: "imagePrev" }, style: 'display:none; max-height: 120px; margin-top: 8px;' %>
     </p>
   </div>
-  <p><%= f.submit '投稿する', class: "btn btn-block" %></p>
+  <p><%= f.submit t('.submit'), class: "btn btn-block" %></p>
 <% end %>
 
 <hr>
 
-<h2>行列の様子</h2>
+<h2><%= t('.queue_section') %></h2>
 <div class="table-scroll">
   <table>
     <thead>
       <tr>
-        <th>時刻</th>
-        <th>状況</th>
-        <th class="col-comment">コメント</th>
+        <th><%= t('.time_header') %></th>
+        <th><%= t('.status_header') %></th>
+        <th class="col-comment"><%= t('.comment_header') %></th>
       </tr>
     </thead>
     <tbody>

@@ -2,13 +2,13 @@
   <div class="overlay active" data-action="click->v2-modal#close"></div>
   <div class="modal" style="display:block;">
     <p>
-      <strong>追加報告</strong> &mdash; <%= @record.ramen_shop.name %><br>
+      <strong><%= t('.heading') %></strong> &mdash; <%= @record.ramen_shop.name %><br>
     </p>
     <hr>
     <%= form_with model: [@record, @line_status], data: { turbo_stream: true } do |f| %>
       <%= render 'line_statuses/form_fields', f: f %>
-      <p><%= f.submit '報告する', class: "btn btn-block" %></p>
+      <p><%= f.submit t('.submit'), class: "btn btn-block" %></p>
     <% end %>
-    <a href="#" data-action="click->v2-modal#close">閉じる</a>
+    <a href="#" data-action="click->v2-modal#close"><%= t('.close') %></a>
   </div>
 </div>

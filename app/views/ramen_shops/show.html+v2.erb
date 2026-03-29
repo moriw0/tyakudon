@@ -1,22 +1,22 @@
-<p><%= link_to '着丼', root_path %> &gt; <%= link_to '店舗一覧', ramen_shops_path %> &gt; <%= @ramen_shop.name %></p>
+<p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to t('.breadcrumb_list'), ramen_shops_path %> &gt; <%= @ramen_shop.name %></p>
 <hr>
 
 <h1><%= @ramen_shop.name %></h1>
 
 <hr>
 
-<h2>店舗情報</h2>
+<h2><%= t('.shop_info_section') %></h2>
 <table>
   <tr>
-    <th class="col-th">店舗名</th>
+    <th class="col-th"><%= t('.shop_name_label') %></th>
     <td><%= @ramen_shop.name %></td>
   </tr>
   <tr>
-    <th class="col-th">住所</th>
+    <th class="col-th"><%= t('.address_label') %></th>
     <td>
       <%= @ramen_shop.address %>
       <% if @ramen_shop.latitude.present? && @ramen_shop.longitude.present? %>
-        <%= link_to '[地図]', "https://maps.google.com/?q=#{@ramen_shop.latitude},#{@ramen_shop.longitude}", target: '_blank', rel: 'noopener noreferrer' %>
+        <%= link_to t('.map_link'), "https://maps.google.com/?q=#{@ramen_shop.latitude},#{@ramen_shop.longitude}", target: '_blank', rel: 'noopener noreferrer' %>
       <% end %>
     </td>
   </tr>
@@ -28,18 +28,18 @@
 
 <hr>
 
-<h2>着丼記録 <small><%= @records.total_count %>件</small></h2>
+<h2><%= t('.records_section') %> <small><%= t('.records_count', count: @records.total_count) %></small></h2>
 
 <% if @records.any? %>
   <div class="table-scroll">
     <table>
       <thead>
         <tr>
-          <th scope="col">待ち時間</th>
-          <th scope="col" class="col-author">記録者</th>
-          <th scope="col" class="col-queue">行列</th>
-          <th scope="col" class="col-comment">ひとこと</th>
-          <th scope="col">日時</th>
+          <th scope="col"><%= t('.wait_time_header') %></th>
+          <th scope="col" class="col-queue"><%= t('.queue_header') %></th>
+          <th scope="col"><%= t('.datetime_header') %></th>
+          <th scope="col" class="col-author"><%= t('.recorder_header') %></th>
+          <th scope="col" class="col-comment"><%= t('.comment_header') %></th>
         </tr>
       </thead>
       <tbody>
@@ -47,12 +47,12 @@
           <tr>
             <td>
               <%= link_to format_wait_time_human(record.wait_time), record_path(record, back: 'ramen_shops') %>
-              <%= '[リタイア]' if record.is_retired? %>
+              <%= t('.retired_label') if record.is_retired? %>
             </td>
-            <td class="col-author"><%= link_to record.user.name, user_path(record.user) %></td>
             <td class="col-queue"><%= format_line_status(record.line_statuses.first) %></td>
+            <td><%= format_datetime(record.started_at) %></td>
+            <td class="col-author"><%= link_to record.user.name, user_path(record.user) %></td>
             <td class="col-comment"><%= record.comment.presence || '-' %></td>
-            <td><%= format_datetime(record.ended_at) %></td>
           </tr>
         <% end %>
       </tbody>
@@ -60,7 +60,7 @@
   </div>
   <%= paginate @records %>
 <% else %>
-  <p>まだ着丼記録がありません</p>
+  <p><%= t('.no_records') %></p>
 <% end %>
 
 <hr>

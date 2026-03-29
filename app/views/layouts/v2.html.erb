@@ -13,9 +13,9 @@
   <% if flash[:alert] %><p class="flash-alert"><%= flash[:alert] %></p><% end %>
   <nav>
     <% if remember_record? %>
-      <%= link_to '接続中レコード', measure_record_path(fetch_record_id) %>
+      <%= link_to t('layouts.v2.nav.active_record'), measure_record_path(fetch_record_id) %>
     <% else %>
-      <button data-controller="geolocation" data-action="click->geolocation#navigate" class="btn-link">現在地から接続</button>
+      <button data-controller="geolocation" data-action="click->geolocation#navigate" class="btn-link"><%= t('layouts.v2.nav.connect') %></button>
     <% end %>
   </nav>
   <hr>
