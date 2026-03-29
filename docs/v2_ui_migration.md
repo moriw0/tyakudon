@@ -305,12 +305,6 @@ ja:
 
 ## 未移行ページ
 
-### Phase 2c: ホーム・フィード
-
-| ページ | アクション | プロトタイプ | 備考 |
-|--------|-----------|------------|------|
-| ホーム（新着記録） | `new_records#index` | なし | お気に入り記録 + 新着フィード |
-
 ### Phase 2d: 静的・情報ページ
 
 | ページ | アクション | 備考 |
@@ -507,6 +501,29 @@ ja:
 - `div#statics-terms` / `div#statics-privacy_policy` ラッパーを除去
 - パンくずリスト + `<hr>` を先頭に追加
 - 本文テキストは変更なし
+
+---
+
+### new_records#index（ホーム・新着記録）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/new_records/index.html+v2.erb` | メインビュー |
+
+**v1 からの変更点:**
+
+- タブメニュー（`home/tabmenu`）を廃止
+- `render @records`（v1 パーシャル）→ シンプルなテーブルに変更
+- テーブル列: 店舗名（リンク）/ 待ち時間（詳細リンク）/ 接続行列 / 接続日時 / 記録者（リンク）
+- 接続中レコード（`wait_time: nil`）は「接続中」テキストで `record_path` へリンク
+- このページは root（ホーム）であるためパンくずリストなし（スタイルガイドの「ダッシュボードは h1 省略可」と同様の扱い）
+- お気に入り店舗の記録フィードは `favorite_records#index` へ分離済み
+
+**注意点:**
+
+- `new_records#index` が root なため、`v2_ui_flag_spec` の「opt-in なし」テストで使用していた `root_path` を `announcements_path` に変更した。`AnnouncementsController` が v2 対応になった場合はテストの参照先を別ルートに更新すること
 
 ---
 
