@@ -303,11 +303,75 @@ ja:
 
 ---
 
-## 未移行ページ（Phase 2 以降）
+## 未移行ページ
 
-| 優先度 | ページ | アクション | 参考 HTML |
-|--------|--------|-----------|-----------|
-| 1 | ユーザー画面 | `users#show` | `docs/prototypes/user_final.html` |
+### Phase 2a: コアユーザーフロー（プロトタイプあり）
+
+| ページ | アクション | プロトタイプ | 備考 |
+|--------|-----------|------------|------|
+| ユーザープロフィール | `users#show` | `user_final.html` | 着丼記録一覧、管理者条件分岐 |
+| お気に入り店舗 | `users#favorite_shops` | `user_final.html` | 店舗一覧 |
+| 店舗検索 | `ramen_shops#index` | `nearby_final.html` | 検索フォーム、結果一覧 |
+| お気に入り記録 | `favorite_records#index` | `result_final.html` | 店舗セレクタ、記録一覧 |
+
+### Phase 2b: 認証フロー
+
+| ページ | アクション | プロトタイプ | 備考 |
+|--------|-----------|------------|------|
+| ログイン | `sessions#new` | `connect_final.html` | メール・パスワード・Google OAuth |
+| 新規登録 | `users#new` | `connect_final.html` | アバター・Google OAuth |
+| パスワードリセット | `password_resets#new/edit` | なし | シンプルなフォーム2画面 |
+
+### Phase 2c: ホーム・フィード
+
+| ページ | アクション | プロトタイプ | 備考 |
+|--------|-----------|------------|------|
+| ホーム（新着記録） | `new_records#index` | なし | お気に入り記録 + 新着フィード |
+
+### Phase 2d: 静的・情報ページ
+
+| ページ | アクション | 備考 |
+|--------|-----------|------|
+| お知らせ一覧 | `announcements#index` | |
+| お知らせ詳細 | `announcements#show` | |
+| 利用規約 | `statics#terms` | 静的テキスト |
+| プライバシーポリシー | `statics#privacy_policy` | 静的テキスト |
+
+### Phase 2e: 管理・低優先度（対象外検討可）
+
+| ページ | アクション | 備考 |
+|--------|-----------|------|
+| 記録編集 | `records#edit` | 管理者用 |
+| 店舗登録申請 | `shop_register_requests#new` | |
+| FAQ CRUD | `faqs#index/show/new/edit` | 管理者用 |
+| 管理者お知らせ CRUD | `admin/announcements#*` | 管理者用 |
+| ユーザー編集 | `users#edit` | 本人のみ |
+| ユーザー一覧 | `users#index` | 管理者用 |
+
+### ランディングページ（別レイアウト・対象外）
+
+`landing_page#index` は `lp.html.erb` レイアウトを使用するマーケティングページ。v2 移行対象外。
+
+---
+
+### users#show（ユーザープロフィール）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/users/show.html+v2.erb` | メインビュー |
+
+**v1 からの変更点:**
+
+- v1 の `_show_layout` / `_show` 2段パーシャル構造 → 単一ビューに統合
+- アバター画像を廃止（v2 デザイン方針：外部フォント・画像なし）
+- `_stats` パーシャルをインライン展開（レコード数・お気に入り店）
+- 着丼記録を Bootstrap リスト（`_record_overview`）→ シンプルなテーブルに変更
+- テーブル列: 店舗名・待ち時間・接続日時・状況・詳細
+- 状況列は `format_line_status(record.line_statuses.first)` で表示
+- 詳細リンクは `record_path(record, back: 'user')` で戻り先を指定
+- 未有効化ユーザーの表示をシンプルなテーブル行に変更
 
 ---
 

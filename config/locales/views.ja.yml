@@ -104,6 +104,25 @@ ja:
     favorite_form:
       not_logged_in: "お気に入り"
 
+  users:
+    show:
+      breadcrumb_home: "着丼"
+      breadcrumb_title: "ユーザー"
+      email_label: "メールアドレス"
+      records_count_label: "記録数"
+      favorite_shops_label: "お気に入り店"
+      favorite_shops_count: "%{count}店"
+      not_activated: "アカウントが有効化されていません"
+      edit_profile: "プロフィールを編集する"
+      all_users: "すべてのユーザーをみる"
+      records_section: "着丼記録"
+      records_count: "%{count}件"
+      shop_name_header: "店舗名"
+      wait_time_header: "待ち時間"
+      datetime_header: "接続日時"
+      status_header: "接続行列"
+      no_records: "まだ着丼記録がありません"
+
   likes:
     add_like:
       label: "いいね（%{count}）"
