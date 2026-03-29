@@ -70,6 +70,17 @@ ja:
       close: "閉じる"
 
   ramen_shops:
+    index:
+      breadcrumb_home: "着丼"
+      heading: "店舗検索"
+      search_placeholder: "店名または住所"
+      search_button: "検索"
+      result_count: "%{count}件見つかりました"
+      shop_name_header: "店舗名"
+      wait_time_header: "平均待ち時間"
+      no_record: "記録なし"
+      no_shops: "店舗が見つかりませんでした"
+      register_request_link: "店舗登録をリクエストする"
     show:
       breadcrumb_home: "着丼"
       breadcrumb_list: "店舗一覧"
