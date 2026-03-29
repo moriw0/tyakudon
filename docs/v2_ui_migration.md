@@ -309,9 +309,6 @@ ja:
 
 | ページ | アクション | プロトタイプ | 備考 |
 |--------|-----------|------------|------|
-| ユーザープロフィール | `users#show` | `user_final.html` | 着丼記録一覧、管理者条件分岐 |
-| お気に入り店舗 | `users#favorite_shops` | `user_final.html` | 店舗一覧 |
-| 店舗検索 | `ramen_shops#index` | `nearby_final.html` | 検索フォーム、結果一覧 |
 | お気に入り記録 | `favorite_records#index` | `result_final.html` | 店舗セレクタ、記録一覧 |
 
 ### Phase 2b: 認証フロー
@@ -351,6 +348,42 @@ ja:
 ### ランディングページ（別レイアウト・対象外）
 
 `landing_page#index` は `lp.html.erb` レイアウトを使用するマーケティングページ。v2 移行対象外。
+
+---
+
+### users#favorite_shops（お気に入り店舗）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/users/favorite_shops.html+v2.erb` | メインビュー |
+
+**v1 からの変更点:**
+
+- `render 'show_layout'` + `_favorite_shops` パーシャル構造 → 単一ビューに統合
+- Bootstrap list-group → シンプルなテーブルに変更
+- テーブル列: 店舗名（リンク）/ 最新の待ち時間
+- 待ち時間は `format_wait_time_human` のみ（時刻なし）、記録なしは「記録なし」表示
+
+---
+
+### ramen_shops#index（店舗検索）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/ramen_shops/index.html+v2.erb` | メインビュー |
+
+**v1 からの変更点:**
+
+- タブメニュー (`home/tabmenu`) を廃止
+- `shared/_search_form` パーシャル → ビュー内インライン `search_form_for` に統合
+- `render @ramen_shops`（v1 パーシャル）→ シンプルなテーブルに変更
+- テーブル列: 店舗名（リンク）/ 平均待ち時間（`shop.average_wait_time`）
+- 件数は `@result_count` を `small` タグで表示
+- 0件時に店舗登録リクエストリンクを表示
 
 ---
 
