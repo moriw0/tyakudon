@@ -2,6 +2,7 @@ class FaqsController < ApplicationController
   before_action :logged_in_user, only: %i[new edit create update destroy]
   before_action :admin_user, only: %i[new create edit update destroy]
   before_action :set_faq, only: %i[show edit update destroy]
+  before_action :use_v2_layout!, only: %i[index show]
 
   def index
     @faqs = Faq.all
