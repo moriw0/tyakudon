@@ -1,0 +1,27 @@
+<div data-controller="v2-modal" id="modal">
+  <div class="overlay active" data-action="click->v2-modal#close"></div>
+  <div class="modal" style="display:block;">
+    <p>
+      <strong><%= t('.heading') %></strong><br>
+      <a href="#" data-action="click->v2-modal#close"><%= t('.close') %></a>
+    </p>
+    <hr>
+    <%= form_with url: favorite_records_path, method: :get do |f| %>
+      <div data-controller="checkboxes">
+        <p>
+          <%= check_box_tag 'toggle_all', true,
+                @checked_ids.size == @favorite_shops.size,
+                data: { action: 'change->checkboxes#toggle', checkboxes_target: 'toggleAllCheckbox' } %>
+          <%= label_tag 'toggle_all', t('.toggle_all') %>
+        </p>
+        <% @favorite_shops.each do |shop| %>
+          <p>
+            <%= check_box_tag 'shop_ids[]', shop.id, @checked_ids.include?(shop.id), id: "shop_ids_#{shop.id}" %>
+            <%= label_tag "shop_ids_#{shop.id}", shop.name %>
+          </p>
+        <% end %>
+        <p><%= f.submit t('.submit'), class: 'btn btn-block' %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,15 +1,18 @@
 class FavoriteRecordsController < ApplicationController
+  before_action :use_v2_layout!, only: %i[index filter]
   before_action :logged_in_user, only: %i[filter]
 
   def index
     return unless logged_in?
 
+    @favorite_shops = current_user.favorite_shops
     @checked_ids = set_checked_ids
     @records = fetch_records.page(params[:page])
   end
 
   def filter
-    @checked_ids = params[:shop_ids]&.compact_blank&.map(&:to_i)
+    @favorite_shops = current_user.favorite_shops
+    @checked_ids = params[:shop_ids]&.compact_blank&.map(&:to_i) || current_user.favorite_shop_ids
   end
 
   private

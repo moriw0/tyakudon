@@ -115,6 +115,24 @@ ja:
     favorite_form:
       not_logged_in: "お気に入り"
 
+  favorite_records:
+    index:
+      breadcrumb_home: "着丼"
+      heading: "お気に入り店舗の記録"
+      not_logged_in: "ログインしてお気に入り店舗の着丼記録を確認しましょう"
+      no_favorites: "まだお気に入り店舗が登録されていません"
+      filter_button: "店舗を絞り込む"
+      shop_name_header: "店舗名"
+      wait_time_header: "待ち時間"
+      datetime_header: "接続日時"
+      status_header: "状況"
+      no_records: "まだお気に入り店の着丼記録がありません"
+    filter_form:
+      heading: "絞り込む"
+      toggle_all: "全て"
+      submit: "適用する"
+      close: "× 閉じる"
+
   users:
     favorite_shops:
       breadcrumb_home: "着丼"
