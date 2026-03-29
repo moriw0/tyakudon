@@ -317,8 +317,6 @@ ja:
 |--------|-----------|------|
 | お知らせ一覧 | `announcements#index` | |
 | お知らせ詳細 | `announcements#show` | |
-| 利用規約 | `statics#terms` | 静的テキスト |
-| プライバシーポリシー | `statics#privacy_policy` | 静的テキスト |
 
 ### Phase 2e: 管理・低優先度（対象外検討可）
 
@@ -492,6 +490,23 @@ ja:
   Googleアカウントでログインする
 <% end %>
 ```
+
+---
+
+### statics#terms / statics#privacy_policy（静的ページ）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/views/statics/terms.html+v2.erb` | 利用規約 |
+| `app/views/statics/privacy_policy.html+v2.erb` | プライバシーポリシー |
+
+**v1 からの変更点:**
+
+- `div#statics-terms` / `div#statics-privacy_policy` ラッパーを除去
+- パンくずリスト + `<hr>` を先頭に追加
+- 本文テキストは変更なし
 
 ---
 
