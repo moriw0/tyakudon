@@ -114,6 +114,13 @@ textarea { height: 80px; resize: vertical; }
   overflow-y: auto;
 }
 
+/* 定義リスト */
+dd { margin-bottom: 0.75em; }
+
+/* 登録手順リスト */
+.steps-list li p { margin: 0.25em 0 0; }
+.steps-list li { margin-bottom: 0.5em; }
+
 /* 見出し */
 h1 { font-size: 1.3em; }
 

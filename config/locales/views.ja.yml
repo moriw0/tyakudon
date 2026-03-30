@@ -260,6 +260,34 @@ ja:
       status_header: "接続行列"
       no_records: "まだ着丼記録がありません"
 
+  landing_page:
+    index:
+      heading: "ラーメン待ち時間の記録・共有サービス"
+      connect_term: "接続"
+      connect_def: "ラーメン店に到着して行列に加わる瞬間。ここから待ち時間計測がスタートします。"
+      chakudon_term: "着丼"
+      chakudon_def: "注文したラーメンが提供される瞬間。待ち時間の計測が終了し、着丼記録を登録します。"
+      new_records_link: "全ての新着着丼記録を見る"
+      new_user_link: "ユーザー登録する"
+      new_records_heading: "新着着丼"
+      steps_heading: "着丼登録手順"
+      faqs_heading: "よくある質問"
+      all_faqs_link: "全てのFAQを見る"
+      sign_up_note: "記録にはユーザー登録が必要です。Googleアカウントでも登録できます。"
+    usage_steps:
+      step1_title: "来店"
+      step1_desc: "お店に着いたら、「現在地から接続」をタップする"
+      step2_title: "店舗選択"
+      step2_desc: "表示された現在地付近のラーメン店の中から、接続をタップする"
+      step3_title: "接続"
+      step3_desc: "接続時の行列の様子を報告して、着丼記録計測開始"
+      step4_title: "着丼"
+      step4_desc: "ラーメンが提供されたら「着丼」をタップ"
+      step5_title: "追加投稿"
+      step5_desc: "コメントや写真を追加投稿"
+    faqs:
+      all_faqs_link: "全てのよくある質問を見る"
+
   likes:
     add_like:
       label: "いいね（%{count}）"

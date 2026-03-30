@@ -291,6 +291,14 @@
       <td><code>.record-photo { margin-top: 16px }</code> が自動で効く</td>
     </tr>
     <tr>
+      <td>定義リスト（<code>dl/dt/dd</code>）の項目間</td>
+      <td><code>dd { margin-bottom: 0.75em }</code> が自動で効く</td>
+    </tr>
+    <tr>
+      <td>スコープ付きリスト（<code>.steps-list</code>）</td>
+      <td><code>.steps-list li { margin-bottom: 0.5em }</code>、<code>.steps-list li p { margin: 0.25em 0 0 }</code> で <code>p</code> のデフォルトマージンを上書き。グローバルの <code>p</code> に影響しない</td>
+    </tr>
+    <tr>
       <td><code>&lt;br&gt;</code> によるスペーサー</td>
       <td><strong>禁止。</strong>テキスト内の改行のみに使用する</td>
     </tr>
@@ -306,6 +314,52 @@
 
 &lt;!-- セクション間は hr で区切る --&gt;
 &lt;hr&gt;</pre>
+</div>
+
+<h3>定義リスト（用語説明・FAQ）</h3>
+<p><code>dl &gt; dt &gt; strong / dd</code> パターン。<code>dt</code> の視覚的強調には <code>&lt;strong&gt;</code> を使う（ブラウザ CSS リセットで <code>dt</code> の bold が外れる場合があるため）。<code>dd { margin-bottom: 0.75em }</code> で項目間に余白。</p>
+
+<dl>
+  <dt><strong>接続</strong></dt>
+  <dd>ラーメン店に到着して行列に加わる瞬間。ここから待ち時間計測がスタートします。</dd>
+  <dt><strong>着丼</strong></dt>
+  <dd>注文したラーメンが提供される瞬間。待ち時間の計測が終了します。</dd>
+</dl>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- 用語説明 / FAQ 共通パターン --&gt;
+&lt;dl&gt;
+  &lt;dt&gt;&lt;strong&gt;用語・質問&lt;/strong&gt;&lt;/dt&gt;
+  &lt;dd&gt;説明・回答&lt;/dd&gt;
+&lt;/dl&gt;</pre>
+</div>
+
+<h3>手順リスト（<code>.steps-list</code>）</h3>
+<p><code>ol.steps-list</code> にクラスを付け、<code>li p</code> のデフォルトマージンをスコープ内でのみ上書きする。グローバルの <code>p</code> margin には影響しない。</p>
+
+<ol class="steps-list" style="dd{margin-bottom:0.75em}">
+  <li>
+    <strong>来店</strong>
+    <p>お店に着いたら、「現在地から接続」をタップする</p>
+  </li>
+  <li>
+    <strong>接続</strong>
+    <p>接続時の行列の様子を報告して、着丼記録計測開始</p>
+  </li>
+</ol>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- 登録手順パターン --&gt;
+&lt;ol class="steps-list"&gt;
+  &lt;li&gt;
+    &lt;strong&gt;ステップタイトル&lt;/strong&gt;
+    &lt;p&gt;説明テキスト&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+/* v2.css */
+.steps-list li p { margin: 0.25em 0 0; }
+.steps-list li { margin-bottom: 0.5em; }</pre>
 </div>
 </div>
 <hr>

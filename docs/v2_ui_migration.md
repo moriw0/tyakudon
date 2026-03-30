@@ -159,7 +159,7 @@ ja:
 |---------|--------|------|
 | `format_datetime` | `2024/01/01(月) 12:34` | 一覧テーブルの日時列 |
 | `format_datetime_detail` | `2024/01/01(月) 12:34:56` | 詳細テーブルの接続日時・着丼日時 |
-| `format_only_detatil_time` | `12:34:56` | 行列状況テーブルの時刻列 |
+| `format_only_detail_time` | `12:34:56` | 行列状況テーブルの時刻列 |
 
 区切り文字は `/` に統一（`.` は使わない）。
 
@@ -354,6 +354,34 @@ ja:
 **注意点:**
 
 - `v2_ui_flag_spec` の「opt-in なし」検証で使っていた `faqs_path` を `new_shop_register_request_path` に変更済み（`faqs_controller.rb` に `use_v2_layout!` を追加したため）
+
+---
+
+### landing_page#index（ランディングページ）
+
+**対応ファイル:**
+
+| ファイル | 内容 |
+|---------|------|
+| `app/controllers/landing_page_controller.rb` | `resolve_lp_layout` で v2/lp を切り替え |
+| `app/views/landing_page/index.html+v2.erb` | メインビュー |
+| `app/views/landing_page/_usage_steps.html+v2.erb` | 登録ステップ（ol リスト） |
+| `app/views/landing_page/_faqs.html+v2.erb` | FAQ 抜粋（最大5件） |
+
+**v1 からの変更点:**
+
+- `LandingPageController` は `layout 'lp'` をハードコードしていたため、`ApplicationController#resolve_layout` が効かなかった。`layout :resolve_lp_layout` メソッドで `cookies[:v2_ui]` を確認して `'v2'` / `'lp'` を返すよう変更
+- ヘッダー画像・キャッチコピー画像を廃止。テキストのみのシンプルな構成に変更
+- `dl`（接続/着丼の用語説明）は `dt > strong` で用語を強調
+- CTA ボタンは 2 つとも `.btn` クラスで統一
+- 利用手順は `_usage_steps` パーシャル（`ol.steps-list` リスト）に切り出し。`<p>` マージンを `.steps-list li p { margin: 0.25em 0 0 }` でスコープして調整
+- FAQ は `_faqs` パーシャルで `@faqs`（最大3件、`created_at: :desc`）を `dl > dt > strong / dd` で表示し、末尾に「全てのよくある質問を見る」リンクを配置
+- 新着着丼テーブルは `new_records/_records_table` パーシャルを `records: @new_records`（5件）で呼び出し
+
+**注意点:**
+
+- `LandingPageController` は `before_action :disable_connect_button` を持つため、nav パーシャルの「現在地から接続」ボタンが無効化される（`remember_record?` の場合を除く）
+- `@faqs` は `LandingPageController#index` で `Faq.order(created_at: :desc).limit(3)` としてセットしている
 
 ---
 

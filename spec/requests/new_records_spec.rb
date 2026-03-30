@@ -7,6 +7,24 @@ RSpec.describe 'NewRecords' do
       expect(response).to have_http_status(:success)
     end
 
+    context 'with v2_ui cookie' do
+      before do
+        create(:record, :with_line_status, ramen_shop: create(:ramen_shop, :many_shops))
+      end
+
+      it 'uses the v2 layout' do
+        cookies[:v2_ui] = '1'
+        get new_records_path
+        expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+      end
+
+      it 'renders the _records_table partial' do
+        cookies[:v2_ui] = '1'
+        get new_records_path
+        expect(response.body).to include('table')
+      end
+    end
+
     context 'with records' do
       let!(:active_records) do
         create_list(:record, 3, :with_line_status, is_retired: false, ramen_shop: create(:ramen_shop, :many_shops))
