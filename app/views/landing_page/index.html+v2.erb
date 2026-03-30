@@ -1,0 +1,38 @@
+<%= render 'shared/nav' %>
+<hr>
+
+<h1><%= t('.heading') %></h1>
+<dl>
+  <dt><strong><%= t('.connect_term') %></strong></dt>
+  <dd><%= t('.connect_def') %></dd>
+  <dt><strong><%= t('.chakudon_term') %></strong></dt>
+  <dd><%= t('.chakudon_def') %></dd>
+</dl>
+
+<hr>
+
+<h2><%= t('.new_records_heading') %></h2>
+<%= render 'new_records/records_table', records: @new_records %>
+<p>
+  <%= link_to t('.new_records_link'), new_records_path %>
+</p>
+
+<hr>
+
+<h2><%= t('.steps_heading') %></h2>
+<%= render 'usage_steps' %>
+
+<hr>
+
+<h2><%= t('.faqs_heading') %></h2>
+<%= render 'faqs' %>
+<p>
+  <%= link_to t('.all_faqs_link'), faqs_path %>
+</p>
+
+<hr>
+
+<p><%= t('.sign_up_note') %></p>
+<p>
+  <%= link_to t('.new_user_link'), new_user_path, class: 'btn' %>
+</p>
