@@ -27,7 +27,12 @@
 </table>
 
 <% if logged_in? && current_user?(@user) %>
-  <p><%= link_to t('.edit_profile'), edit_user_path(@user), class: 'btn' %></p>
+  <p><%= link_to t('.edit_profile'), edit_user_path(@user) %></p>
+  <p>
+    <%= link_to logout_path, data: { 'turbo-method': :delete, turbo_confirm: t('.logout_confirm') } do %>
+      <%= t('.logout') %>
+    <% end %>
+  </p>
 <% end %>
 <% if logged_in? && current_user.admin? %>
   <p><%= link_to t('.all_users'), users_path %></p>
