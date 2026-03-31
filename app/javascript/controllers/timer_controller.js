@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["time", "startedAt", "endedAt", "waitTime"];
+  static targets = ["time", "startedAt", "endedAt"];
   static values = { milliseconds: { type: Boolean, default: true } };
 
   connect() {
@@ -35,10 +35,7 @@ export default class extends Controller {
   end() {
     clearInterval(this.timer);
     const endedAt = new Date();
-    const startedAt = new Date(this.startedAtTarget.textContent);
-    const waitTime = (endedAt - startedAt) / 1000;
-    this.endedAtTarget.value = endedAt;
-    this.waitTimeTarget.value = waitTime;
+    this.endedAtTarget.value = endedAt.toISOString();
   }
 
   disconnect() {

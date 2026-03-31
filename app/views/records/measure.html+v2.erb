@@ -26,7 +26,6 @@
 
   <%= form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
-    <%= f.hidden_field :wait_time, data: { timer_target: "waitTime" } %>
     <p><%= f.submit t('.submit'),
           data: { action: "click->timer#end", disable_with: t('.submit_disable_with') },
           class: "btn btn-block" %></p>

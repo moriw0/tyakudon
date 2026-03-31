@@ -53,8 +53,9 @@ class RecordsController < ApplicationController
     if @record.ended_at?
       redirect_to root_path, status: :see_other
     else
+      ended_at = Time.zone.parse(params.require(:record).permit(:ended_at)[:ended_at])
       @record.calculate_action = true
-      @record.update!(calculated_record_params)
+      @record.update!(ended_at: ended_at, wait_time: ended_at - @record.started_at)
       forget_record
       redirect_to result_record_path(@record), notice: 'ちゃくどんレコードを登録しました', status: :see_other
       capture_message_with_user_info('Record Calculated')
@@ -103,7 +104,7 @@ class RecordsController < ApplicationController
   end
 
   def calculated_record_params
-    params.require(:record).permit(:ended_at, :wait_time)
+    params.require(:record).permit(:ended_at)
   end
 
   def update_record_params

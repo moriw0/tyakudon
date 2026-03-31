@@ -19,7 +19,7 @@ class Record < ApplicationRecord
   validate :started_at_is_recent,         on: :create, unless: :skip_validation
   validate :ended_at_is_recent,           on: :update, if: :calculate_action
   validate :ended_at_is_after_started_at, on: :update
-  validate :wait_time_is_correct,         on: :update
+  validate :wait_time_is_correct,         on: :update, unless: :calculate_action
 
   before_create :set_is_test_based_on_user unless Rails.env.development?
   after_create :schedule_auto_retire
