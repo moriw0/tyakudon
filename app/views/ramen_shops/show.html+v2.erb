@@ -1,4 +1,6 @@
-<p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to t('.breadcrumb_list'), ramen_shops_path %> &gt; <%= @ramen_shop.name %></p>
+<% add_breadcrumb t('.breadcrumb_home'), root_path %>
+<% add_breadcrumb t('.breadcrumb_list'), ramen_shops_path %>
+<% add_breadcrumb @ramen_shop.name %>
 <hr>
 
 <%= render 'shared/nav' %>
