@@ -1,4 +1,5 @@
-<p><%= link_to t('.breadcrumb_home'), root_path %> - <%= t('.breadcrumb_title') %></p>
+<% add_breadcrumb t('.breadcrumb_home'), root_path %>
+<% add_breadcrumb t('.breadcrumb_title') %>
 <hr>
 
 <%= render 'shared/nav' %>

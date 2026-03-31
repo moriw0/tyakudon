@@ -1,4 +1,6 @@
-<p><%= link_to t('.breadcrumb_home'), root_path %> &gt; <%= link_to @record.ramen_shop.name, @record.ramen_shop %> &gt; <%= t('.heading') %> No.<%= @record.id %></p>
+<% add_breadcrumb t('.breadcrumb_home'), root_path %>
+<% add_breadcrumb @record.ramen_shop.name, @record.ramen_shop %>
+<% add_breadcrumb "#{t('.heading')} No.#{@record.id}" %>
 <hr>
 
 <%= render 'shared/nav' %>
