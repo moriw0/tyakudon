@@ -16,7 +16,7 @@ RSpec.describe BreadcrumbsHelper do
       end
 
       it 'renders the label as plain text inside li (no link, since it is the last item)' do
-        expect(helper.render_breadcrumbs).not_to have_selector('a')
+        expect(helper.render_breadcrumbs).to_not have_selector('a')
         expect(helper.render_breadcrumbs).to include('着丼')
       end
 
@@ -40,7 +40,7 @@ RSpec.describe BreadcrumbsHelper do
 
       it 'renders the last item as plain text without a link' do
         result = helper.render_breadcrumbs
-        expect(result).not_to have_selector('a', text: '麺屋さくら')
+        expect(result).to_not have_selector('a', text: '麺屋さくら')
         expect(result).to include('麺屋さくら')
       end
 
@@ -50,7 +50,7 @@ RSpec.describe BreadcrumbsHelper do
 
       it 'does not mark intermediate items with aria-current' do
         result = helper.render_breadcrumbs
-        expect(result).not_to have_selector('li[aria-current] a[href="/"]')
+        expect(result).to_not have_selector('li[aria-current] a[href="/"]')
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe BreadcrumbsHelper do
 
       it 'escapes the name to prevent XSS' do
         result = helper.render_breadcrumbs
-        expect(result).not_to include('<script>')
+        expect(result).to_not include('<script>')
         expect(result).to include('&lt;script&gt;')
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe BreadcrumbsHelper do
 
       it 'escapes the link text to prevent XSS' do
         result = helper.render_breadcrumbs
-        expect(result).not_to include('<script>')
+        expect(result).to_not include('<script>')
         expect(result).to include('&lt;script&gt;')
       end
     end
@@ -83,14 +83,14 @@ RSpec.describe BreadcrumbsHelper do
       helper.add_breadcrumb '着丼', '/'
       helper.add_breadcrumb '店舗一覧', '/ramen_shops'
       result = helper.render_breadcrumbs
-      expect(result).to have_selector('a[href="/"]')
+      expect(result).to have_link('着丼', href: '/')
       expect(result).to include('店舗一覧')
     end
 
     it 'accepts a breadcrumb without a path' do
       helper.add_breadcrumb '現在地'
       result = helper.render_breadcrumbs
-      expect(result).not_to have_selector('a')
+      expect(result).to_not have_selector('a')
       expect(result).to include('現在地')
     end
   end
