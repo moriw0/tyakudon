@@ -8,8 +8,8 @@
 
 <%= search_form_for @search, url: ramen_shops_path do |f| %>
   <div class="search-form">
-    <%= f.search_field :name_or_address_cont, placeholder: t('.search_placeholder') %>
-    <%= f.submit t('.search_button') %>
+    <%= f.search_field :name_or_address_cont, placeholder: t('.search_placeholder'), aria: { label: t('.search_placeholder') } %>
+    <%= f.submit t('.search_button'), class: 'btn' %>
   </div>
 <% end %>
 
