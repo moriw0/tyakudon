@@ -10,7 +10,6 @@
   <div data-timer-target="time">00:00:00.000</div>
   <%= bootstrap_form_with model: @record, url: calculate_record_path do |f| %>
     <%= f.hidden_field :ended_at, data: { timer_target: "endedAt" } %>
-    <%= f.hidden_field :wait_time, data: { timer_target: "waitTime" } %>
     <div class="d-grid mb-3">
       <%= f.submit 'ちゃくどん！', data: { action: "click->timer#end", disable_with: 'ちゃくどん中...' } , class: "button-primary" %>
     </div>
