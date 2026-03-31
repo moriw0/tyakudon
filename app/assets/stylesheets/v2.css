@@ -127,6 +127,19 @@ h1 { font-size: 1.3em; }
 /* インラインフォーム */
 .form-inline { display: inline; }
 
+/* パンくずリスト */
+ol.breadcrumb {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+ol.breadcrumb li + li::before {
+  content: " \003E ";
+  padding: 0 0.2em;
+}
+
 /* Flash アラート */
 .flash-alert { color: #c00; }
 

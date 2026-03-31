@@ -98,6 +98,7 @@ ja:
       add_report_link: "追加報告"
     result:
       breadcrumb_home: "着丼"
+      breadcrumb_result: "着丼記録"
       heading: "着丼記録"
       shop_label: "店舗名"
       wait_time_label: "待ち時間"
