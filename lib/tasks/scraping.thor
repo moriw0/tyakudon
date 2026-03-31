@@ -71,7 +71,7 @@ class Scraping < Thor
     start_index = shop_links.index(last_link)
 
     if start_index
-      shop_links[start_index + 1..]
+      shop_links[(start_index + 1)..]
     else
       puts 'Continuing from the beginning of the next page.'
       shop_links
