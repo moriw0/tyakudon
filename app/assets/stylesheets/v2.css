@@ -59,6 +59,7 @@ input[type="email"],
 input[type="password"],
 input[type="number"],
 input[type="file"],
+input[type="search"],
 textarea,
 select {
   font-size: 15px;
@@ -67,6 +68,8 @@ select {
   box-sizing: border-box;
   border: 1px solid #999;
 }
+
+input[type="search"] { width: 50%; }
 
 textarea { height: 80px; resize: vertical; }
 
@@ -123,6 +126,10 @@ dd { margin-bottom: 0.75em; }
 
 /* 見出し */
 h1 { font-size: 1.3em; }
+h2 { font-size: 1.2em; }
+
+/* 検索フォーム */
+.search-form { display: flex; gap: 8px; align-items: center; }
 
 /* インラインフォーム */
 .form-inline { display: inline; }
