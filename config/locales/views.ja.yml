@@ -190,6 +190,7 @@ ja:
       comment_header: "コメント"
       datetime_header: "接続日時"
       retired_label: "[リタイア]"
+      photo_header: "写真"
       no_records: "まだ着丼記録がありません"
     near_shops:
       breadcrumb_home: "着丼"
