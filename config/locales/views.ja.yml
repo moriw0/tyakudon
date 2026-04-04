@@ -50,6 +50,8 @@ ja:
 
   shared:
     breadcrumb_home: "着丼"
+    photo_header: "写真"
+    photo_thumb_alt: "%{shop_name} の写真"
     nav:
       active_record: "接続中記録"
       connect: "現在地から接続"

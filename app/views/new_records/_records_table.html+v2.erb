@@ -9,6 +9,7 @@
           <th scope="col" class="col-genre"><%= t('new_records.index.status_header') %></th>
           <th scope="col"><%= t('new_records.index.datetime_header') %></th>
           <th scope="col" class="col-author"><%= t('new_records.index.author_header') %></th>
+          <th scope="col"><%= t('shared.photo_header') %></th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,7 @@
             <td class="col-genre"><%= format_line_status(record.line_statuses.first) %></td>
             <td><%= format_datetime(record.started_at) %></td>
             <td class="col-author"><%= link_to record.user.name, record.user %></td>
+            <%= render 'records/photo_thumb', record: record %>
           </tr>
         <% end %>
       </tbody>

@@ -51,6 +51,7 @@
           <th scope="col"><%= t('.wait_time_header') %></th>
           <th scope="col"><%= t('.datetime_header') %></th>
           <th scope="col" class="col-genre"><%= t('.status_header') %></th>
+          <th scope="col"><%= t('shared.photo_header') %></th>
         </tr>
       </thead>
       <tbody>
@@ -60,6 +61,7 @@
             <td><%= link_to format_wait_time_human(record.wait_time), record_path(record, back: 'user') %></td>
             <td><%= format_datetime(record.started_at) %></td>
             <td class="col-genre"><%= format_line_status(record.line_statuses.first) %></td>
+            <%= render 'records/photo_thumb', record: record %>
           </tr>
         <% end %>
       </tbody>
