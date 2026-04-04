@@ -19,7 +19,7 @@
     <%= f.check_box :remember_me %>
     <%= f.label :remember_me, t('.remember_me') %>
   </p>
-  <p><%= f.submit t('.submit'), class: 'btn btn-block' %></p>
+  <p><%= f.submit t('.submit'), class: 'btn btn-block', data: { turbo_submits_with: t('.submit_disable_with') } %></p>
 <% end %>
 
 <hr>

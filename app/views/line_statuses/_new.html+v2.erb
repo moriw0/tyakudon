@@ -7,7 +7,7 @@
     <hr>
     <%= form_with model: [@record, @line_status], data: { turbo_stream: true } do |f| %>
       <%= render 'line_statuses/form_fields', f: f %>
-      <p><%= f.submit t('.submit'), class: "btn btn-block" %></p>
+      <p><%= f.submit t('.submit'), class: "btn btn-block", data: { turbo_submits_with: t('.submit_disable_with') } %></p>
     <% end %>
     <a href="#" data-action="click->v2-modal#close"><%= t('.close') %></a>
   </div>

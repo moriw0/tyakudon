@@ -13,7 +13,7 @@
     <%= f.label :email, t('.email_label') %>
     <%= f.email_field :email %>
   </p>
-  <p><%= f.submit t('.submit'), class: 'btn btn-block' %></p>
+  <p><%= f.submit t('.submit'), class: 'btn btn-block', data: { turbo_submits_with: t('.submit_disable_with') } %></p>
 <% end %>
 
 <hr>

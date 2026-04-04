@@ -18,6 +18,6 @@
 
   <p>
     <%= f.submit t('.submit'), class: 'btn btn-block',
-          data: { action: "click->record-form#fetchStartAt", disable_with: t('.submit_disable_with') } %>
+          data: { action: "click->record-form#fetchStartAt", turbo_submits_with: t('.submit_disable_with') } %>
   </p>
 <% end %>
