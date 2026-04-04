@@ -20,7 +20,6 @@ ja:
       author_header: "記録者"
       status_header: "接続行列"
       connecting: "接続中"
-      photo_header: "写真"
       no_records: "記録がありません"
 
   layouts:
@@ -55,6 +54,8 @@ ja:
       heading: "プライバシーポリシー"
 
   shared:
+    photo_header: "写真"
+    photo_thumb_alt: "%{shop_name} の写真"
     nav:
       active_record: "接続中記録"
       connect: "現在地から接続"
@@ -190,7 +191,6 @@ ja:
       comment_header: "コメント"
       datetime_header: "接続日時"
       retired_label: "[リタイア]"
-      photo_header: "写真"
       no_records: "まだ着丼記録がありません"
     near_shops:
       breadcrumb_home: "着丼"
@@ -221,7 +221,6 @@ ja:
       wait_time_header: "待ち時間"
       datetime_header: "接続日時"
       status_header: "状況"
-      photo_header: "写真"
       no_records: "まだお気に入り店の着丼記録がありません"
     filter_form:
       heading: "絞り込む"
@@ -262,7 +261,6 @@ ja:
       wait_time_header: "待ち時間"
       datetime_header: "接続日時"
       status_header: "接続行列"
-      photo_header: "写真"
       no_records: "まだ着丼記録がありません"
       logout: "ログアウトする"
       logout_confirm: "本当にログアウトしますか？"

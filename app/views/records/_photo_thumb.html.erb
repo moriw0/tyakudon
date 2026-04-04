@@ -1,0 +1,9 @@
+<td>
+  <% if record.image.attached? %>
+    <%= image_tag record.image.variant(:thumb),
+                  class: 'thumb',
+                  alt: t('shared.photo_thumb_alt', shop_name: record.ramen_shop.name) %>
+  <% else %>
+    -
+  <% end %>
+</td>
