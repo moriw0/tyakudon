@@ -260,6 +260,7 @@ ja:
       wait_time_header: "待ち時間"
       datetime_header: "接続日時"
       status_header: "接続行列"
+      photo_header: "写真"
       no_records: "まだ着丼記録がありません"
       logout: "ログアウトする"
       logout_confirm: "本当にログアウトしますか？"

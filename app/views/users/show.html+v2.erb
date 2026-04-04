@@ -52,6 +52,7 @@
           <th scope="col"><%= t('.wait_time_header') %></th>
           <th scope="col"><%= t('.datetime_header') %></th>
           <th scope="col" class="col-genre"><%= t('.status_header') %></th>
+          <th scope="col"><%= t('.photo_header') %></th>
         </tr>
       </thead>
       <tbody>
@@ -61,6 +62,15 @@
             <td><%= link_to format_wait_time_human(record.wait_time), record_path(record, back: 'user') %></td>
             <td><%= format_datetime(record.started_at) %></td>
             <td class="col-genre"><%= format_line_status(record.line_statuses.first) %></td>
+            <td>
+              <% if record.image.attached? %>
+                <%= link_to url_for(record.image), target: '_blank', rel: 'noopener noreferrer' do %>
+                  <%= image_tag record.image.variant(:thumb), class: 'thumb', alt: '' %>
+                <% end %>
+              <% else %>
+                -
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
