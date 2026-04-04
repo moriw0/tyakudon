@@ -421,7 +421,7 @@
 </table>
 
 <h3>横テーブル（一覧表示）</h3>
-<p><small>SP で不要な列には responsive クラスを付与する（後述）。横スクロールが必要な場合は <code>.table-scroll</code> で囲む。</small></p>
+<p><small>全ての横テーブルは <code>.table-scroll</code> で囲み、SP でも横スクロールで全列を表示する。列の非表示は行わない。</small></p>
 <div class="table-scroll">
   <table>
     <thead>
@@ -461,8 +461,8 @@
     &lt;thead&gt;
       &lt;tr&gt;
         &lt;th&gt;店舗名&lt;/th&gt;
-        &lt;th class="col-author"&gt;記録者&lt;/th&gt;  &lt;!-- SP 非表示 --&gt;
-        &lt;th class="col-comment"&gt;コメント&lt;/th&gt; &lt;!-- SP 非表示 --&gt;
+        &lt;th class="col-author"&gt;記録者&lt;/th&gt;
+        &lt;th class="col-comment"&gt;コメント&lt;/th&gt;
         &lt;th&gt;時刻&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
@@ -641,25 +641,21 @@ input[type="radio"] + label { display: inline; }
 
 <!-- ============================================================ -->
 <div class="sg-section">
-<h2>12. レスポンシブ列クラス（≤480px で非表示）</h2>
+<h2>12. 列識別クラス</h2>
 
-<p><small>th と td の両方に同じクラスを付ける。</small></p>
+<p><small>th と td の両方に同じクラスを付ける。SP でのカラム非表示は行わない（<code>.table-scroll</code> による横スクロールで対応）。</small></p>
 <table>
   <thead>
     <tr><th>クラス名</th><th>用途</th><th>使用ページ</th></tr>
   </thead>
   <tbody>
-    <tr><td><code>.col-author</code></td><td>記録者</td><td>home, shop</td></tr>
-    <tr><td><code>.col-comment</code></td><td>コメント</td><td>home, shop, measure, result</td></tr>
-    <tr><td><code>.col-photo</code></td><td>写真</td><td>home</td></tr>
-    <tr><td><code>.col-genre</code></td><td>ジャンル / 状況</td><td>nearby, user</td></tr>
+    <tr><td><code>.col-author</code></td><td>記録者</td><td>home, shop, user</td></tr>
+    <tr><td><code>.col-comment</code></td><td>コメント</td><td>shop</td></tr>
+    <tr><td><code>.col-genre</code></td><td>ジャンル / 状況</td><td>home, favorites, user</td></tr>
     <tr><td><code>.col-queue</code></td><td>行列数</td><td>shop</td></tr>
-    <tr><td><code>.col-detail</code></td><td>詳細リンク列</td><td>user</td></tr>
     <tr><td><code>.col-th</code></td><td>縦テーブルの th（width: 90px 固定）</td><td>全詳細ページ</td></tr>
   </tbody>
 </table>
-
-<p><small>新しいページを追加する際、SP で省略したい列に上記クラスを付与する。既存クラスで意味が合わない場合は base.css の @media ブロックに追加する。</small></p>
 </div>
 <hr>
 
