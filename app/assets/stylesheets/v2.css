@@ -49,6 +49,11 @@ button, .btn {
   box-sizing: border-box;
 }
 
+button:disabled, .btn:disabled, input[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* フォーム */
 label { display: block; }
 input[type="checkbox"] + label,

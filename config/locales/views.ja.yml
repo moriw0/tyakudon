@@ -38,6 +38,7 @@ ja:
       password_label: "パスワード"
       remember_me: "ログインしたままにする"
       submit: "ログインする"
+      submit_disable_with: "ログイン中..."
       forgot_password: "パスワードをお忘れの方はこちら"
       sign_up: "アカウントをお持ちでない方はこちら"
 
@@ -66,6 +67,7 @@ ja:
       privacy_policy: "プライバシーポリシー"
       consent: "に同意の上、登録してください。"
       submit: "登録する"
+      submit_disable_with: "登録中..."
 
   password_resets:
     new:
@@ -73,6 +75,7 @@ ja:
       description: "メールアドレスへパスワード再設定用のリンクを送付します。"
       email_label: "メールアドレス"
       submit: "再設定用リンクを申請する"
+      submit_disable_with: "申請中..."
       back_to_login: "ログインへ戻る"
     edit:
       heading: "パスワード再設定"
@@ -80,6 +83,7 @@ ja:
       password_hint: "半角英数字6文字以上"
       password_confirmation_label: "パスワード（確認）"
       submit: "パスワードを再設定する"
+      submit_disable_with: "再設定中..."
 
   records:
     measure:
@@ -104,6 +108,7 @@ ja:
       comment_placeholder: "例: 待望の着丼"
       photo_label: "写真（任意）"
       submit: "投稿する"
+      submit_disable_with: "投稿中..."
       queue_section: "行列状況"
     show:
       heading: "着丼記録"
@@ -141,6 +146,7 @@ ja:
     new:
       heading: "追加報告"
       submit: "報告する"
+      submit_disable_with: "報告中..."
       close: "閉じる"
 
   faqs:
