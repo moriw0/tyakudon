@@ -17,7 +17,6 @@ ja:
       datetime_header: "接続日時"
       author_header: "記録者"
       status_header: "接続行列"
-      connecting: "接続中"
       no_records: "記録がありません"
 
   layouts:
@@ -52,6 +51,8 @@ ja:
     breadcrumb_home: "着丼"
     photo_header: "写真"
     photo_thumb_alt: "%{shop_name} の写真"
+    retired_label: "[リタイア]"
+    connecting: "接続中"
     nav:
       active_record: "接続中記録"
       connect: "現在地から接続"
@@ -178,7 +179,6 @@ ja:
       queue_header: "接続行列"
       comment_header: "コメント"
       datetime_header: "接続日時"
-      retired_label: "[リタイア]"
       no_records: "まだ着丼記録がありません"
     near_shops:
       heading: "現在地周辺の店舗"
