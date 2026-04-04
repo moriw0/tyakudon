@@ -220,6 +220,7 @@ ja:
       wait_time_header: "待ち時間"
       datetime_header: "接続日時"
       status_header: "状況"
+      photo_header: "写真"
       no_records: "まだお気に入り店の着丼記録がありません"
     filter_form:
       heading: "絞り込む"
