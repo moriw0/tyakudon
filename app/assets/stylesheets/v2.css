@@ -157,6 +157,11 @@ ol.breadcrumb li + li::before {
 /* テーブル横スクロールラッパー */
 .table-scroll {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll table {
+  white-space: nowrap;
 }
 
 /* ページネーション（Kaminari） */
@@ -189,16 +194,9 @@ nav ul.pagination li.disabled span {
 }
 
 
-/* レスポンシブ: 480px 以下で非表示にする列 */
+/* レスポンシブ: 480px 以下 */
 @media (max-width: 480px) {
   body { font-size: 14px; }
   th, td { padding: 5px 6px; }
   th.col-th { width: 90px; } /* 縦テーブルのth固定幅 */
-
-  .col-author  { display: none; }
-  .col-comment { display: none; }
-  .col-photo   { display: none; }
-  .col-genre   { display: none; }
-  .col-queue   { display: none; }
-  .col-detail  { display: none; }
 }
