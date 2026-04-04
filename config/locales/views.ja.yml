@@ -1,13 +1,11 @@
 ja:
   announcements:
     index:
-      breadcrumb_home: "着丼"
       heading: "お知らせ"
       date_header: "日付"
       title_header: "タイトル"
       no_announcements: "お知らせはありません"
     show:
-      breadcrumb_home: "着丼"
       breadcrumb_index: "お知らせ"
       back_to_index: "お知らせ一覧に戻る"
 
@@ -36,7 +34,6 @@ ja:
 
   sessions:
     new:
-      breadcrumb_home: "着丼"
       heading: "ログイン"
       email_label: "メールアドレス"
       password_label: "パスワード"
@@ -47,17 +44,16 @@ ja:
 
   statics:
     terms:
-      breadcrumb_home: "着丼"
       heading: "利用規約"
     privacy_policy:
-      breadcrumb_home: "着丼"
       heading: "プライバシーポリシー"
 
   shared:
+    breadcrumb_home: "着丼"
     nav:
       active_record: "接続中記録"
       connect: "現在地から接続"
-      home: "ホーム"
+      home: "新着記録"
       search: "店舗検索"
       favorite_records: "お気に入り店舗"
       sign_up: "ユーザー登録"
@@ -70,14 +66,12 @@ ja:
 
   password_resets:
     new:
-      breadcrumb_home: "着丼"
       heading: "パスワード再設定"
       description: "メールアドレスへパスワード再設定用のリンクを送付します。"
       email_label: "メールアドレス"
       submit: "再設定用リンクを申請する"
       back_to_login: "ログインへ戻る"
     edit:
-      breadcrumb_home: "着丼"
       heading: "パスワード再設定"
       password_label: "パスワード"
       password_hint: "半角英数字6文字以上"
@@ -97,7 +91,6 @@ ja:
       queue_section: "行列状況"
       add_report_link: "追加報告"
     result:
-      breadcrumb_home: "着丼"
       breadcrumb_result: "着丼記録"
       heading: "着丼記録"
       shop_label: "店舗名"
@@ -110,7 +103,6 @@ ja:
       submit: "投稿する"
       queue_section: "行列状況"
     show:
-      breadcrumb_home: "着丼"
       heading: "着丼記録"
       shop_label: "店舗名"
       wait_time_label: "待ち時間"
@@ -150,12 +142,10 @@ ja:
 
   faqs:
     index:
-      breadcrumb_home: "着丼"
       heading: "FAQ"
       detail_link: "詳細を見る"
       new_faq: "新しい質問を追加する"
     show:
-      breadcrumb_home: "着丼"
       breadcrumb_index: "FAQ"
       back_to_index: "FAQに戻る"
       edit: "編集"
@@ -164,7 +154,6 @@ ja:
 
   ramen_shops:
     index:
-      breadcrumb_home: "着丼"
       heading: "店舗検索"
       search_placeholder: "店名または住所"
       search_button: "検索"
@@ -175,7 +164,6 @@ ja:
       no_shops: "店舗が見つかりませんでした"
       register_request_link: "店舗登録をリクエストする"
     show:
-      breadcrumb_home: "着丼"
       breadcrumb_list: "店舗一覧"
       shop_info_section: "店舗情報"
       shop_name_label: "店舗名"
@@ -191,7 +179,6 @@ ja:
       retired_label: "[リタイア]"
       no_records: "まだ着丼記録がありません"
     near_shops:
-      breadcrumb_home: "着丼"
       heading: "現在地周辺の店舗"
       shop_name_header: "店舗名"
       distance_header: "距離"
@@ -210,7 +197,6 @@ ja:
 
   favorite_records:
     index:
-      breadcrumb_home: "着丼"
       heading: "お気に入り店舗の記録"
       not_logged_in: "ログインしてお気に入り店舗の着丼記録を確認しましょう"
       no_favorites: "まだお気に入り店舗が登録されていません"
@@ -228,7 +214,6 @@ ja:
 
   users:
     new:
-      breadcrumb_home: "着丼"
       heading: "ユーザー登録"
       name_label: "ニックネーム"
       email_label: "メールアドレス"
@@ -236,7 +221,6 @@ ja:
       password_hint: "半角英数字6文字以上"
       password_confirmation_label: "パスワード（確認）"
     favorite_shops:
-      breadcrumb_home: "着丼"
       breadcrumb_title: "お気に入り店舗"
       heading: "お気に入り店舗"
       shop_name_header: "店舗名"
@@ -244,8 +228,6 @@ ja:
       no_record: "記録なし"
       no_shops: "まだお気に入りの店舗がありません"
     show:
-      breadcrumb_home: "着丼"
-      breadcrumb_title: "ユーザー"
       email_label: "メールアドレス"
       records_count_label: "記録数"
       favorite_shops_label: "お気に入り店"
