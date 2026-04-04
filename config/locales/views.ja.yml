@@ -20,6 +20,7 @@ ja:
       author_header: "記録者"
       status_header: "接続行列"
       connecting: "接続中"
+      photo_header: "写真"
       no_records: "記録がありません"
 
   layouts:
