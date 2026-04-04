@@ -404,6 +404,20 @@
   form: { class: "form-inline" },
   class: 'btn-link' /&gt;</pre>
 </div>
+
+<h3>送信中の disabled 状態</h3>
+<p>フォーム送信中はボタンを disabled にして二重投稿を防ぐ。<code>opacity: 0.5</code> と <code>cursor: not-allowed</code> で視覚化する。</p>
+<p><button class="btn btn-block" disabled>投稿中...</button></p>
+
+<div class="sg-box">
+<pre style="margin:0; font-size: 13px;">&lt;!-- Turbo のフォーム送信中に自動で disabled + 文言変更 --&gt;
+&lt;%= f.submit t('.submit'), class: 'btn btn-block',
+      data: { turbo_submits_with: t('.submit_disable_with') } %&gt;
+
+&lt;!-- locales/views.ja.yml --&gt;
+submit: "投稿する"
+submit_disable_with: "投稿中..."</pre>
+</div>
 </div>
 <hr>
 
@@ -421,7 +435,7 @@
 </table>
 
 <h3>横テーブル（一覧表示）</h3>
-<p><small>SP で不要な列には responsive クラスを付与する（後述）。横スクロールが必要な場合は <code>.table-scroll</code> で囲む。</small></p>
+<p><small>全ての横テーブルは <code>.table-scroll</code> で囲み、SP でも横スクロールで全列を表示する。列の非表示は行わない。</small></p>
 <div class="table-scroll">
   <table>
     <thead>
@@ -431,25 +445,33 @@
         <th class="col-author">記録者</th>
         <th class="col-comment">コメント</th>
         <th>時刻</th>
-        <th class="col-photo">写真</th>
+        <th>写真</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><a href="#">ラーメン二郎 三田本店</a></td>
-        <td>87分</td>
+        <td><a href="#">87分</a> [リタイア]</td>
         <td class="col-author">masumashi_king</td>
         <td class="col-comment">ヤサイマシマシ。覚悟して来い</td>
         <td>14:32</td>
-        <td class="col-photo">-</td>
+        <td><img class="thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='52' height='52' fill='%23ddd'/%3E%3Ctext x='26' y='30' text-anchor='middle' font-size='9' fill='%23999'%3E写真%3C/text%3E%3C/svg%3E" alt="ラーメン二郎 三田本店 の写真"></td>
       </tr>
       <tr>
         <td><a href="#">一蘭 渋谷店</a></td>
-        <td>35分</td>
+        <td><a href="#">接続中</a></td>
         <td class="col-author">ramen_taro</td>
         <td class="col-comment">平日でも混んでる</td>
         <td>14:15</td>
-        <td class="col-photo">-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><a href="#">博多一風堂 渋谷店</a></td>
+        <td><a href="#">35分</a></td>
+        <td class="col-author">tonkotsu_fan</td>
+        <td class="col-comment">-</td>
+        <td>13:50</td>
+        <td>-</td>
       </tr>
     </tbody>
   </table>
@@ -461,12 +483,25 @@
     &lt;thead&gt;
       &lt;tr&gt;
         &lt;th&gt;店舗名&lt;/th&gt;
-        &lt;th class="col-author"&gt;記録者&lt;/th&gt;  &lt;!-- SP 非表示 --&gt;
-        &lt;th class="col-comment"&gt;コメント&lt;/th&gt; &lt;!-- SP 非表示 --&gt;
+        &lt;th&gt;待ち時間&lt;/th&gt;
+        &lt;th class="col-author"&gt;記録者&lt;/th&gt;
+        &lt;th class="col-comment"&gt;コメント&lt;/th&gt;
         &lt;th&gt;時刻&lt;/th&gt;
+        &lt;th&gt;写真&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
-    ...
+    &lt;tbody&gt;
+      &lt;% records.each do |record| %&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;%= link_to record.ramen_shop.name, record.ramen_shop %&gt;&lt;/td&gt;
+          &lt;%= render 'records/wait_time_cell', record: record %&gt;
+          &lt;td class="col-author"&gt;&lt;%= link_to record.user.name, record.user %&gt;&lt;/td&gt;
+          &lt;td class="col-comment"&gt;&lt;%= record.comment.presence || '-' %&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;%= format_datetime(record.started_at) %&gt;&lt;/td&gt;
+          &lt;%= render 'records/photo_thumb', record: record %&gt;
+        &lt;/tr&gt;
+      &lt;% end %&gt;
+    &lt;/tbody&gt;
   &lt;/table&gt;
 &lt;/div&gt;</pre>
 </div>
@@ -641,25 +676,21 @@ input[type="radio"] + label { display: inline; }
 
 <!-- ============================================================ -->
 <div class="sg-section">
-<h2>12. レスポンシブ列クラス（≤480px で非表示）</h2>
+<h2>12. 列識別クラス</h2>
 
-<p><small>th と td の両方に同じクラスを付ける。</small></p>
+<p><small>th と td の両方に同じクラスを付ける。SP でのカラム非表示は行わない（<code>.table-scroll</code> による横スクロールで対応）。</small></p>
 <table>
   <thead>
     <tr><th>クラス名</th><th>用途</th><th>使用ページ</th></tr>
   </thead>
   <tbody>
-    <tr><td><code>.col-author</code></td><td>記録者</td><td>home, shop</td></tr>
-    <tr><td><code>.col-comment</code></td><td>コメント</td><td>home, shop, measure, result</td></tr>
-    <tr><td><code>.col-photo</code></td><td>写真</td><td>home</td></tr>
-    <tr><td><code>.col-genre</code></td><td>ジャンル / 状況</td><td>nearby, user</td></tr>
+    <tr><td><code>.col-author</code></td><td>記録者</td><td>home, shop, user</td></tr>
+    <tr><td><code>.col-comment</code></td><td>コメント</td><td>shop</td></tr>
+    <tr><td><code>.col-genre</code></td><td>ジャンル / 状況</td><td>home, favorites, user</td></tr>
     <tr><td><code>.col-queue</code></td><td>行列数</td><td>shop</td></tr>
-    <tr><td><code>.col-detail</code></td><td>詳細リンク列</td><td>user</td></tr>
     <tr><td><code>.col-th</code></td><td>縦テーブルの th（width: 90px 固定）</td><td>全詳細ページ</td></tr>
   </tbody>
 </table>
-
-<p><small>新しいページを追加する際、SP で省略したい列に上記クラスを付与する。既存クラスで意味が合わない場合は base.css の @media ブロックに追加する。</small></p>
 </div>
 <hr>
 
