@@ -135,6 +135,10 @@ h2 { font-size: 1.2em; }
 .form-inline { display: inline; }
 
 /* パンくずリスト */
+nav[aria-label="Breadcrumb"] {
+  margin-top: 1rem;
+}
+
 ol.breadcrumb {
   list-style: none;
   padding: 0;
