@@ -51,10 +51,7 @@
       <tbody>
         <% @records.each do |record| %>
           <tr>
-            <td>
-              <%= link_to format_wait_time_human(record.wait_time), record_path(record, back: 'ramen_shops') %>
-              <%= t('.retired_label') if record.is_retired? %>
-            </td>
+            <%= render 'records/wait_time_cell', record: record, back: 'ramen_shops' %>
             <td class="col-queue"><%= format_line_status(record.line_statuses.first) %></td>
             <td><%= format_datetime(record.started_at) %></td>
             <td class="col-author"><%= link_to record.user.name, user_path(record.user) %></td>
