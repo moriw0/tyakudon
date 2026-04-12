@@ -17,12 +17,12 @@
 
 <%= form_with model: @record do |f| %>
   <p>
-    <label for="record_comment"><%= t('.comment_label') %></label><br>
+    <label for="record_comment"><%= t('.comment_label') %></label>
     <%= f.text_area :comment, placeholder: t('.comment_placeholder') %>
   </p>
   <div data-controller="image-uploader">
     <p>
-      <label for="record_image"><%= t('.photo_label') %></label><br>
+      <label for="record_image"><%= t('.photo_label') %></label>
       <%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png", direct_upload: true,
             data: { action: "change->image-uploader#displayAfterCheck", image_uploader_target: "image" } %>
       <%= image_tag '', data: { image_uploader_target: "imagePrev" }, style: 'display:none; max-height: 120px; margin-top: 8px;' %>
