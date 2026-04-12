@@ -33,7 +33,7 @@ class RecordsController < ApplicationController
       capture_message_with_user_info('Record created')
     else
       set_ramen_shop
-      render :new_with_errors, status: :unprocessable_entity
+      render :new_with_errors, status: :unprocessable_content
     end
   end
 
@@ -69,7 +69,7 @@ class RecordsController < ApplicationController
     if @record.update(update_record_params)
       redirect_to record_path(@record), notice: '投稿しました', status: :see_other
     else
-      render :result, status: :unprocessable_entity
+      render :result, status: :unprocessable_content
     end
   end
 

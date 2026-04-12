@@ -21,7 +21,7 @@ class OmniauthUsersController < ApplicationController
       handle_authentication(@user, remember: true)
       capture_message_with_user_info('Omniauth User created')
     else
-      render 'new', status: :unprocessable_entity
+      render 'new', status: :unprocessable_content
     end
   end
 

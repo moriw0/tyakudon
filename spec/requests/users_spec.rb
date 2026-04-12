@@ -74,7 +74,7 @@ RSpec.describe 'Users' do
                                              password_confirmation: 'bar' } }
         }.to_not change(User, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(422)
       end
 
       context 'with v2_ui cookie' do
@@ -82,7 +82,7 @@ RSpec.describe 'Users' do
           cookies[:v2_ui] = '1'
           post users_path, params: { user: { name: '', email: 'invalid', password: 'foo',
                                              password_confirmation: 'bar' } }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(422)
           expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
         end
       end
