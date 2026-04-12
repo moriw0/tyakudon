@@ -1,7 +1,7 @@
 <div data-controller="line-status">
   <div>
     <strong><%= t('.shop_label') %></strong><br>
-    <small><%= t('.shop_hint') %></small><br>
+    <small><%= t('.shop_hint') %></small>
     <div data-action="change->line-status#updateNumberInput">
       <label><%= f.radio_button :line_type, :outside_the_store,
                   checked: f.object.outside_the_store? || f.object.line_type.nil? %> <%= t('.outside') %></label>
@@ -11,7 +11,7 @@
   </div>
   <div data-line-status-target="lineNumberField">
     <p>
-      <label><strong><%= t('.queue_label') %></strong></label><br>
+      <label><strong><%= t('.queue_label') %></strong></label>
       <small><%= t('.queue_hint') %></small><br>
       <%= f.number_field :line_number, inputmode: "numeric", pattern: '\d*', min: 0, max: 999,
             placeholder: t('.queue_placeholder'), style: 'width: 120px;',
@@ -20,7 +20,7 @@
     </p>
   </div>
   <p>
-    <label><strong><%= t('.comment_label') %></strong></label><br>
+    <label><strong><%= t('.comment_label') %></strong></label>
     <%= f.text_area :comment, placeholder: t('.comment_placeholder') %>
   </p>
 </div>
