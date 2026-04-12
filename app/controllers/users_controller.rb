@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       @user.send_activation_email
       redirect_to root_path, notice: 'メールを確認してアカウントを有効にしてください'
     else
-      render 'new', status: :unprocessable_entity
+      render 'new', status: :unprocessable_content
     end
   end
 
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
       flash.notice = 'ユーザー情報を更新しました'
       redirect_to @user
     else
-      render 'edit', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_content
     end
   end
 

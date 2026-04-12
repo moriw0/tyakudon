@@ -18,19 +18,19 @@ class PasswordResetsController < ApplicationController
       redirect_to root_path, notice: 'メールを確認してパスワードを再設定してください'
     else
       flash.now.notice = 'アカウントが見つかりませんでした'
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
   def update
     if params[:user][:password].empty?
       @user.errors.add(:password, 'を入力してください')
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     elsif @user.update(user_params)
       log_in_after_reset
       redirect_to @user, notice: 'パスワードを更新しました'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

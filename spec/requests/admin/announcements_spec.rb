@@ -132,7 +132,7 @@ RSpec.describe '/admin/announcements' do
 
         it 'renders a response with 422 status' do
           do_request
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(422)
         end
       end
     end
@@ -172,7 +172,7 @@ RSpec.describe '/admin/announcements' do
 
         it 'renders a response with 422 status' do
           do_request
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(422)
         end
       end
     end

@@ -65,6 +65,6 @@ class SessionsController < ApplicationController
 
   def handle_failed_authentication
     flash.now.alert = 'ログインに失敗しました'
-    render 'new', status: :unprocessable_entity
+    render 'new', status: :unprocessable_content
   end
 end
