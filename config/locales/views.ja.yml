@@ -221,6 +221,11 @@ ja:
       close: "× 閉じる"
 
   users:
+    edit:
+      heading: "プロフィール編集"
+      name_label: "ニックネーム"
+      submit: "更新する"
+      password_reset: "パスワードの再設定はこちら"
     new:
       heading: "ユーザー登録"
       name_label: "ニックネーム"
