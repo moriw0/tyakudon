@@ -62,6 +62,7 @@ ja:
       favorite_records: "お気に入り店舗"
       sign_up: "ユーザー登録"
       login: "ログイン"
+      switch_to_v1: "旧UIへ切り替え"
     agreement:
       terms: "利用規約"
       privacy_policy: "プライバシーポリシー"

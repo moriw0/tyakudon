@@ -69,6 +69,11 @@ module ApplicationHelper
   end
 
   # rubocop:disable Rails/HelperInstanceVariable
+  def toggle_ui_path(enable_v2:)
+    query = request.query_parameters.except('v2').merge('v2' => enable_v2 ? '1' : '0')
+    "#{request.path}?#{query.to_query}"
+  end
+
   def show_connect_button?
     defined?(@show_connect_button) ? @show_connect_button : true
   end

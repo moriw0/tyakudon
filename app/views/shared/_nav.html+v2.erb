@@ -13,4 +13,5 @@
     | <%= link_to t('.sign_up'), new_user_path %>
     | <%= link_to t('.login'), login_path %>
   <% end %>
+  | <%= link_to t('.switch_to_v1'), toggle_ui_path(enable_v2: false) %>
 </p>
