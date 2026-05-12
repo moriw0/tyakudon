@@ -43,7 +43,7 @@ class RamenShopsController < ApplicationController
     if @ramen_shop.save
       process_after_save
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -51,7 +51,7 @@ class RamenShopsController < ApplicationController
     if @ramen_shop.update(ramen_shop_params)
       redirect_to ramen_shop_path(@ramen_shop), notice: 'saved!'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

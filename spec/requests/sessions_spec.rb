@@ -24,7 +24,7 @@ RSpec.describe 'Sessions' do
         post login_path, params: { session: { email: user.email,
                                               password: 'invalid' } }
         expect(is_logged_in?).to_not be_truthy
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(422)
       end
 
       it 'logins with valid information follewd by logout' do

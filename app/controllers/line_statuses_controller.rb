@@ -23,7 +23,7 @@ class LineStatusesController < ApplicationController
       flash.now.notice = '行列の様子を報告しました'
       CheerMessage.request!(@record, @line_status)
     else
-      render :new_with_errors, status: :unprocessable_entity
+      render :new_with_errors, status: :unprocessable_content
     end
   end
 
@@ -33,7 +33,7 @@ class LineStatusesController < ApplicationController
     if @line_status.update(line_status_params)
       flash.now.notice = '待ち状況を更新しました'
     else
-      render :edit_with_errors, status: :unprocessable_entity
+      render :edit_with_errors, status: :unprocessable_content
     end
   end
 

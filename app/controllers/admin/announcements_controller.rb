@@ -22,7 +22,7 @@ module Admin
       if @announcement.save
         redirect_to admin_announcement_url(@announcement), notice: 'お知らせを作成しました。'
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -30,7 +30,7 @@ module Admin
       if @announcement.update(announcement_params)
         redirect_to admin_announcement_url(@announcement), notice: 'お知らせを更新しました。'
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

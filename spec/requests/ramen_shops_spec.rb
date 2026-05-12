@@ -208,7 +208,7 @@ RSpec.describe 'RamenShops' do
       it 'returns unprocessable_entity when logged in as an admin' do
         log_in_as admin
         do_request
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(422)
       end
 
       it 'does not update the ramen_shop name' do

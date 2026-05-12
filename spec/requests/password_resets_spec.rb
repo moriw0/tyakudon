@@ -29,7 +29,7 @@ RSpec.describe 'PasswordResets' do
     context 'when the account is not found' do
       it 'return unprocessable_entity' do
         post password_resets_path, params: { password_reset: { email: 'invalid' } }
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status(422)
       end
     end
   end
@@ -136,13 +136,13 @@ RSpec.describe 'PasswordResets' do
       it 'does not update password with blank password' do
         patch password_reset_path(user.reset_token, email: user.email),
               params: { user: { password: '', password_confirmation: '' } }
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status(422)
       end
 
       it 'does not update password with invalid password' do
         patch password_reset_path(user.reset_token, email: user.email),
               params: { user: { password: 'foo', password_confirmation: 'bar' } }
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status(422)
       end
     end
   end
