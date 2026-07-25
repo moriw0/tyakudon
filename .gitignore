@@ -44,3 +44,8 @@
 
 # Playwright MCP artifacts
 /.playwright-mcp/
+
+# docs/ はこのリポジトリでは追跡対象。
+# グローバル gitignore が docs/ を無視している環境でも新規ファイルを拾えるようにする。
+!/docs/
+
