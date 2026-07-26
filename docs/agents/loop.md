@@ -43,7 +43,15 @@ gh issue list --label ready-for-human
 - **draft PR** — エージェントが詰まったもの。PR 本文と issue コメントに「どこで詰まったか」「何を判断してほしいか」が書いてある。続きをやるか、閉じるかを決める
 - **`ready-for-human` ラベル** — 打ち切られたチケット。ループはもう掴まない
 
-ログは `tmp/ralph/<timestamp>-iter<n>.log`（gitignore 済み）。成功時の記録は PR に集約してあるので、ログを開くのは何かおかしいときだけでいい。
+ログは `tmp/ralph/<timestamp>-iter<n>.log`（gitignore 済み）。`--output-format stream-json` の**生の JSONL** が入っている。人が読むときは digest を通す。
+
+```
+scripts/ralph-digest.sh < tmp/ralph/20260726-171516-iter2.log
+```
+
+コンソールには実行中も同じ digest が流れる（`claude | tee "$LOG" | scripts/ralph-digest.sh`）。テキスト出力モードは完了時まで一括バッファされ、`--verbose` を足しても変わらないため、進行を見るには stream-json が必要。
+
+成功時の記録は PR に集約してあるので、ログを開くのは何かおかしいときだけでいい。生の JSONL には各ツール呼び出しの入出力が全部入っているので、詰まった箇所を追うときは `jq` で掘れる。
 
 ## ループが止まるとき
 
