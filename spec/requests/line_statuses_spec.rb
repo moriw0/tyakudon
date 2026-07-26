@@ -95,6 +95,12 @@ RSpec.describe 'LineStatuses' do
           do_request
         }.to change(LineStatus, :count).by(1)
       end
+
+      it 'does not enqueue SpeakCheerMessageJob' do
+        allow(SpeakCheerMessageJob).to receive(:perform_later)
+        do_request
+        expect(SpeakCheerMessageJob).to_not have_received(:perform_later)
+      end
     end
 
     context 'when logged in as other_user' do

@@ -21,7 +21,6 @@ class LineStatusesController < ApplicationController
 
     if @line_status.save
       flash.now.notice = '行列の様子を報告しました'
-      CheerMessage.request!(@record, @line_status)
     else
       render :new_with_errors, status: :unprocessable_content
     end
