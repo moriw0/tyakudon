@@ -53,6 +53,18 @@ RSpec.describe 'Records' do
         expect(response.body).to include ramen_shop_path(record.ramen_shop)
       end
     end
+
+    context 'when logged in with v2_ui cookie' do
+      before do
+        log_in_as(user)
+        cookies[:v2_ui] = '1'
+      end
+
+      it 'labels the favorite_records nav link distinctly from favorite shops' do
+        do_request
+        expect(response.body).to include 'お気に入り店舗の記録'
+      end
+    end
   end
 
   describe 'GET /ramen_shops/:ramen_shop_id/records/new #new' do
