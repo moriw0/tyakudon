@@ -52,6 +52,12 @@ RSpec.describe '/announcements' do
         get announcement_path(announcement)
         expect(response).to be_successful
       end
+
+      it 'loads the ActionText stylesheet in the v2 layout' do
+        cookies[:v2_ui] = '1'
+        get announcement_path(announcement)
+        expect(response.body).to match(/<link[^>]*actiontext[^"]*\.css/)
+      end
     end
 
     context 'with a draft announcement' do
