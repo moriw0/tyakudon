@@ -42,8 +42,12 @@ for ((i = 1; i <= MAX; i++)); do
   git worktree prune
 
   set +e
-  # --verbose なしだと出力が完了時まで一括バッファされ、途中経過が見えない
-  claude --permission-mode acceptEdits --model "$MODEL" --verbose -p "$PROMPT" 2>&1 | tee "$LOG"
+  # テキスト出力は完了時まで一括バッファされる。--verbose を足しても変わらない。
+  # stream-json はイベント発生順に届くので、生の JSONL を LOG に残しつつ、
+  # コンソールには digest を流す。
+  claude --permission-mode acceptEdits --model "$MODEL" \
+    --output-format stream-json --verbose -p "$PROMPT" 2>&1 \
+    | tee "$LOG" | scripts/ralph-digest.sh
   STATUS="${PIPESTATUS[0]}"
   set -e
 
