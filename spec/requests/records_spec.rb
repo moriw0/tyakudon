@@ -293,10 +293,18 @@ RSpec.describe 'Records' do
       end
 
       context 'with v2_ui cookie and long comment' do
+        let(:record_params) { { record: { comment: 'a' * 141 } } }
+
         it 'renders the v2 layout' do
           cookies[:v2_ui] = '1'
-          patch record_path(record), params: { record: { comment: 'a' * 141 } }
+          do_request
           expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
+
+        it 'shows the error message' do
+          cookies[:v2_ui] = '1'
+          do_request
+          expect(response.body).to include 'は140文字以内で入力してください'
         end
       end
     end

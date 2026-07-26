@@ -161,11 +161,25 @@ RSpec.describe 'PasswordResets' do
           expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
         end
 
+        it 'shows the error message with blank password' do
+          cookies[:v2_ui] = '1'
+          patch password_reset_path(user.reset_token, email: user.email),
+                params: { user: { password: '', password_confirmation: '' } }
+          expect(response.body).to include 'を入力してください'
+        end
+
         it 'renders the v2 layout with invalid password' do
           cookies[:v2_ui] = '1'
           patch password_reset_path(user.reset_token, email: user.email),
                 params: { user: { password: 'foo', password_confirmation: 'bar' } }
           expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
+
+        it 'shows the error message with invalid password' do
+          cookies[:v2_ui] = '1'
+          patch password_reset_path(user.reset_token, email: user.email),
+                params: { user: { password: 'foo', password_confirmation: 'bar' } }
+          expect(response.body).to include '一致しません'
         end
       end
     end

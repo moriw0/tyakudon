@@ -6,6 +6,14 @@
 
 <h1><%= t('.heading') %></h1>
 
+<% if @user.errors.any? %>
+  <ul role="alert">
+    <% @user.errors.full_messages.each do |msg| %>
+      <li class="flash-alert"><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_with model: @user, url: password_reset_path(params[:id]) do |f| %>
   <%= hidden_field_tag :email, @user.email %>
   <p>
