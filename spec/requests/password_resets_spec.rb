@@ -31,6 +31,14 @@ RSpec.describe 'PasswordResets' do
         post password_resets_path, params: { password_reset: { email: 'invalid' } }
         expect(response).to have_http_status(422)
       end
+
+      context 'with v2_ui cookie' do
+        it 'renders the v2 layout' do
+          cookies[:v2_ui] = '1'
+          post password_resets_path, params: { password_reset: { email: 'invalid' } }
+          expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
+      end
     end
   end
 
@@ -143,6 +151,22 @@ RSpec.describe 'PasswordResets' do
         patch password_reset_path(user.reset_token, email: user.email),
               params: { user: { password: 'foo', password_confirmation: 'bar' } }
         expect(response).to have_http_status(422)
+      end
+
+      context 'with v2_ui cookie' do
+        it 'renders the v2 layout with blank password' do
+          cookies[:v2_ui] = '1'
+          patch password_reset_path(user.reset_token, email: user.email),
+                params: { user: { password: '', password_confirmation: '' } }
+          expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
+
+        it 'renders the v2 layout with invalid password' do
+          cookies[:v2_ui] = '1'
+          patch password_reset_path(user.reset_token, email: user.email),
+                params: { user: { password: 'foo', password_confirmation: 'bar' } }
+          expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
       end
     end
   end

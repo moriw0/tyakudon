@@ -27,6 +27,15 @@ RSpec.describe 'Sessions' do
         expect(response).to have_http_status(422)
       end
 
+      context 'with v2_ui cookie and invalid password' do
+        it 'renders the v2 layout' do
+          cookies[:v2_ui] = '1'
+          post login_path, params: { session: { email: user.email,
+                                                password: 'invalid' } }
+          expect(response.body).to match(%r{href="/assets/v2[^"]*\.css})
+        end
+      end
+
       it 'logins with valid information follewd by logout' do
         post login_path, params: { session: { email: user.email,
                                               password: user.password } }
