@@ -45,7 +45,6 @@ Rails.application.routes.draw do
       get :prepare
     end
   end
-  resources :cheer_messages, only: %i[create]
   resources :shop_register_requests, only: [:new, :create, :edit] do
     get 'complete', on: :member
   end

@@ -69,9 +69,8 @@ RSpec.describe 'V2 UI feature flag' do
       it 'renders the v1 measure template' do
         log_in_as(user)
         get measure_record_path(record)
-        # v1 template uses Bootstrap with shop-name/cheer_messages; v2 uses a plain table
+        # v1 template uses Bootstrap with shop-name; v2 uses a plain table
         expect(response.body).to include('class="shop-name"')
-        expect(response.body).to include('id="cheer_messages"')
       end
     end
 
