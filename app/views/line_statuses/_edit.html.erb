@@ -1,8 +1,0 @@
-<%= render "modal", title: "編集" do %>
-  <%= turbo_frame_tag @line_status do %>
-    <%= bootstrap_form_with model: @line_status, data: { action: "turbo:submit-end->modal#close" } do |f| %>
-      <%= render "form", f: f %>
-      <%= f.submit class: "btn btn-sm btn-warning", data: { disable_with: '更新中...' } %>
-    <% end%>
-  <% end %>
-<% end %>

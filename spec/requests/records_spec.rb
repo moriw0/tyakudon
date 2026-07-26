@@ -113,12 +113,6 @@ RSpec.describe 'Records' do
     end
   end
 
-  describe 'GET /records/:id/edit #edit' do
-    let(:do_request) { get edit_record_path(record) }
-
-    it_behaves_like 'when not logged in'
-  end
-
   describe 'GET /records/:id/measure #measure' do
     let(:record) { create(:record_only_has_started_at, ramen_shop: ramen_shop, user: user) }
     let(:do_request) { get measure_record_path(record) }

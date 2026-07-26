@@ -19,14 +19,14 @@ Rails.application.routes.draw do
     member do
       get :prepare_favorite
     end
-    resources :records, only: [:show, :new, :create, :edit, :update], shallow: true do
+    resources :records, only: [:show, :new, :create, :update], shallow: true do
       member do
         get 'measure'
         patch 'calculate'
         get 'result'
         post 'retire'
       end
-      resources :line_statuses, except: [:index, :destroy]
+      resources :line_statuses, only: [:new, :create]
     end
   end
   resources :users do

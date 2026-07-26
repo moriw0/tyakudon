@@ -22,9 +22,6 @@ class RecordsController < ApplicationController
     @back_path = request.referer || ramen_shop_path(@ramen_shop)
   end
 
-  def edit
-  end
-
   def create
     @record = Record.new(create_record_params)
 
