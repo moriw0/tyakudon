@@ -21,9 +21,6 @@ ja:
 
   layouts:
     v2:
-      nav:
-        active_record: "接続中記録"
-        connect: "現在地から接続"
       footer: "着丼 - ラーメン待ち時間記録システム"
       footer_announcements: "お知らせ"
       footer_faqs: "FAQ"
@@ -59,7 +56,7 @@ ja:
       connect: "現在地から接続"
       home: "新着記録"
       search: "店舗検索"
-      favorite_records: "お気に入り店舗"
+      favorite_records: "お気に入り店舗の記録"
       sign_up: "ユーザー登録"
       login: "ログイン"
       switch_to_v1: "旧UIへ切り替え"
