@@ -56,7 +56,22 @@ for ((i = 1; i <= MAX; i++)); do
     exit "$STATUS"
   fi
 
-  if grep -q "<promise>QUEUE_EMPTY</promise>" "$LOG"; then
+  # 判定はエージェントの最終報告 (result イベントの .result) だけを見る。
+  # ログ全体を見てはいけない。stream-json にはツールの出力が丸ごと入るので、
+  # gh pr view や git log が拾ってきた文章に紛れた文字列で誤判定する。
+  # 実際、PR #351 の本文に書いた <promise>QUEUE_EMPTY</promise> という
+  # 引用がログに入り、キューが残っているのに空と判定して止まった。
+  if command -v jq >/dev/null 2>&1; then
+    FINAL="$(jq -r 'select(.type == "result") | .result // empty' "$LOG" 2>/dev/null)"
+    DENIALS="$(jq -r 'select(.type == "result") | (.permission_denials | length)' "$LOG" 2>/dev/null)"
+    [ -n "${DENIALS:-}" ] && echo "=== 権限で弾かれたツール呼び出し: ${DENIALS} 件 ==="
+  else
+    # jq がなければ判定材料はログ全体しかない。誤判定しうるが、
+    # 毎回止まるよりはましなので従来どおりにする。
+    FINAL="$(cat "$LOG")"
+  fi
+
+  if printf '%s' "$FINAL" | grep -q "<promise>QUEUE_EMPTY</promise>"; then
     notify "キューが空になりました (${i} 回で終了)"
     exit 0
   fi
@@ -66,7 +81,9 @@ for ((i = 1; i <= MAX; i++)); do
   # 空振りしている。承認待ちで止まった場合が代表例で、claude は exit 0 を
   # 返すため exit code では検知できない。放置すると残りの回数を
   # 黙って空振りし続けるので、ここで止める。
-  if ! grep -qE 'https://github\.com/[^ ]+/pull/[0-9]+' "$LOG"; then
+  # 最終報告そのものが取れなかった場合 (result イベントがない = 途中で
+  # 死んだ) も、ここで引っかかって止まる。
+  if ! printf '%s' "$FINAL" | grep -qE 'https://github\.com/[^ ]+/pull/[0-9]+'; then
     notify "イテレーション ${i} が PR を出さずに終了しました。ログを確認してください"
     exit 1
   fi

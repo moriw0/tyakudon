@@ -83,4 +83,6 @@ scripts/ralph-digest.sh < tmp/ralph/20260726-171516-iter2.log
 - **テスト DB はリポジトリ全体で 1 つ。** worktree を分けても並列には回せない。実行は直列
 - **`docker compose` は必ずリポジトリ本体のディレクトリから打つ。** プロジェクト名がカレントディレクトリ名から決まるため、worktree の中から `docker compose up` を打つと `issue-337` のような別プロジェクトが立ち上がり、空の DB volume を持つ二重のスタックができる。初回の実行で実際に起きたので、`up` / `down` は deny リストで塞いである
 - **権限は `.claude/settings.json` の allow / deny リスト**で制御する。`--dangerously-skip-permissions` は使わない。deny リストで `gh pr merge` / `gh issue close` / `main` への push / force push を機械的に塞いでいる
+- **停止判定はエージェントの最終報告だけを見る。** `stream-json` のログにはツールの出力が丸ごと入るので、ログ全体を grep すると `gh pr view` や `git log` が拾ってきた文章で誤判定する。実際 PR #351 の本文に書いた `<promise>QUEUE_EMPTY</promise>` という引用がログに入り、キューが残っているのに「空」と判定して止まった。判定材料は `result` イベントの `.result` に限る
+- **1 イテレーションあたり 10 件前後の権限拒否は正常。** `result` イベントの `permission_denials` に件数が出る（実測 12 件）。エージェントは弾かれた形を自分で言い換えて先へ進むので、ターンを数回損するだけで止まりはしない。プロンプトで先回りできるものは書いてあるが、ゼロにはならない
 - **複合コマンドは allow リストで通らない。** パイプやループを含むコマンドは個々のパターンに分解して照合できないため、構成要素がすべて allow でも承認要求になる。headless では答える相手がいないので、エージェントは何もせず終了する（`scripts/ralph.sh` の初回でキュー取得がこれに当たり、1 イテレーションが数秒で空振りした）。定型のパイプラインはスクリプトに切り出して、そのスクリプト自体を allow する（`scripts/ralph-queue.sh` がその例）

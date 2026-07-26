@@ -66,6 +66,8 @@ ln -s ../../../.ENV "$WT/.ENV"
 ln -s ../../../../config/master.key "$WT/config/master.key"
 ```
 
+**張れたかどうかを `ls` / `stat` / Read で確かめないでください。** ハーネスがシークレットの読み取りを機械的に拒否するため、必ず失敗します。symlink が張れていないときは後段の `dartsass:build` か rspec が落ちるので、そこで気づけば十分です。
+
 さらに、ビルド済み CSS（`app/assets/builds/application.css`）も gitignore されているため worktree にありません。これがないとレイアウトを描画する spec が `Sprockets::Rails::Helper::AssetNotFound` で落ちます。
 
 ```
@@ -73,6 +75,8 @@ docker compose exec -w "/rails/$WT" app bin/rails dartsass:build
 ```
 
 以降の**ファイルの変更**はすべて `$WT` の中で行います。リポジトリ本体の作業ツリーには一切触れないでください。
+
+**worktree に対する git は必ず `git -C "$WT" <サブコマンド>` の形で打ってください。** `cd "$WT" && git ...` は、対象ディレクトリの hook が走りうるためハーネスが拒否します。`status` / `diff` / `add` / `commit` / `push` / `show` すべて同じです。
 
 ただし `docker compose` だけは別です。**必ずリポジトリ本体のディレクトリから打ってください。** compose のプロジェクト名はカレントディレクトリ名から決まるため、worktree の中から `docker compose up` を打つと `issue-337` という別プロジェクトが立ち上がり、空の DB volume を持つ二重のスタックができます（初回の実行で実際に起きました）。
 
@@ -120,6 +124,14 @@ PR 本文は `generate-pr-body` スキルに従って組み立てます。必ず
 - `Closes #<issue番号>`
 - レビュー所見（7 で直さなかったもの。なければ「なし」と書く）
 - 範囲外で気づいたこと（起票した issue へのリンクを含む）
+
+**本文は `$WT/tmp/pr-body.md` に書き出して `--body-file` で渡してください。**
+
+```
+gh pr create --title "<タイトル>" --head "$BR" --body-file "$WT/tmp/pr-body.md"
+```
+
+`--body` に長文を直接渡すとコマンド置換や引用符でハーネスに拒否されます。`/tmp` などプロジェクト外には書けません。`tmp/` は gitignore 済みなのでコミットには入りません。
 
 ## 9. 後片付け
 
