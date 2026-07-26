@@ -42,7 +42,8 @@ for ((i = 1; i <= MAX; i++)); do
   git worktree prune
 
   set +e
-  claude --permission-mode acceptEdits --model "$MODEL" -p "$PROMPT" 2>&1 | tee "$LOG"
+  # --verbose なしだと出力が完了時まで一括バッファされ、途中経過が見えない
+  claude --permission-mode acceptEdits --model "$MODEL" --verbose -p "$PROMPT" 2>&1 | tee "$LOG"
   STATUS="${PIPESTATUS[0]}"
   set -e
 

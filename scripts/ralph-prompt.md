@@ -75,7 +75,15 @@ ln -s ../../../../config/master.key "$WT/config/master.key"
 docker compose exec -w "/rails/$WT" app bin/rails dartsass:build
 ```
 
-以降の作業はすべて `$WT` の中で行います。リポジトリ本体の作業ツリーには一切触れないでください。
+以降の**ファイルの変更**はすべて `$WT` の中で行います。リポジトリ本体の作業ツリーには一切触れないでください。
+
+ただし `docker compose` だけは別です。**必ずリポジトリ本体のディレクトリから打ってください。** compose のプロジェクト名はカレントディレクトリ名から決まるため、worktree の中から `docker compose up` を打つと `issue-337` という別プロジェクトが立ち上がり、空の DB volume を持つ二重のスタックができます（初回の実行で実際に起きました）。
+
+コンテナに対して打ってよいのは、本体のディレクトリからの `exec` だけです。
+
+```
+docker compose exec -w "/rails/$WT" app <コマンド>
+```
 
 ## 5. 実装する
 
@@ -102,7 +110,7 @@ docker compose exec -w "/rails/$WT" app bundle exec rubocop
 
 - **CRITICAL / HIGH で、かつチケットの範囲内**の指摘 → 直して 6 に戻る
 - **MEDIUM 以下**の指摘 → 直さない。PR 本文の「レビュー所見」に列挙する
-- **CRITICAL / HIGH でも、チケットの範囲外**の指摘（例: このコントローラー全体が太い）→ 直さない。PR 本文に書き、必要なら 禁止事項 5 に従って新規 issue を立てる
+- **CRITICAL / HIGH でも、チケットの範囲外**の指摘（例: このコントローラー全体が太い）→ 直さない。PR 本文に書き、必要なら 禁止事項 7 に従って新規 issue を立てる
 
 ## 8. PR を出す
 
@@ -156,18 +164,19 @@ worktree を残したまま終了しないでください。次のイテレー�
 2. チケットに列挙されていないファイルの削除。ADR-0001 が「廃止機能のコードとデータは温存する」と決めているため、削除してよいのはチケットが明示的に列挙したものだけ
 3. `Gemfile` / `Gemfile.lock` / `db/schema.rb` / マイグレーション / `.github/workflows/` / `compose.yaml` の変更
 4. テストを通すためにテストを緩めること。ただし**チケットが名指ししている spec ファイルの書き換えは作業対象**（system spec の v2 化などは、その書き換え自体がチケットの中身）
-5. リポジトリ本体の作業ツリーでの作業。すべて worktree の中で行う
+5. リポジトリ本体の作業ツリーでのファイル変更。すべて worktree の中で行う
+6. `docker compose up` / `docker compose down`。コンテナはすでに起動している。触ってよいのは本体のディレクトリからの `docker compose exec -w "/rails/$WT" app ...` だけ
 
 **やらずに記録すること**
 
-6. チケットの範囲外で見つけた問題は直さない。`gh issue create --label needs-triage` で新規 issue を立て、PR 本文からリンクする
-7. `CONTEXT.md` / `docs/adr/` / `docs/v2_ui_migration.md` は変更しない。矛盾を見つけたら issue コメントに書く。これらは「変わらない情報」として置かれており、黙って書き換えると設計判断の履歴が壊れる
-8. 追跡 issue（#332 など）のチェックボックスは触らない。マージ時に人間が更新する
+7. チケットの範囲外で見つけた問題は直さない。`gh issue create --label needs-triage` で新規 issue を立て、PR 本文からリンクする
+8. `CONTEXT.md` / `docs/adr/` / `docs/v2_ui_migration.md` は変更しない。矛盾を見つけたら issue コメントに書く。これらは「変わらない情報」として置かれており、黙って書き換えると設計判断の履歴が壊れる
+9. 追跡 issue（#332 など）のチェックボックスは触らない。マージ時に人間が更新する
 
 **必ず守ること**
 
-9. 1 イテレーション = 1 チケット = 1 PR
-10. コミットメッセージと PR 本文で、ドメイン概念は `CONTEXT.md` の用語をそのまま使う
+10. 1 イテレーション = 1 チケット = 1 PR
+11. コミットメッセージと PR 本文で、ドメイン概念は `CONTEXT.md` の用語をそのまま使う
 
 ---
 

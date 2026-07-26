@@ -73,4 +73,5 @@ gh issue list --label ready-for-human
 - **`.ENV` と `config/master.key`** は gitignore されていて worktree に存在しない。symlink で通す
 - **`app/assets/builds/application.css`** も gitignore。worktree では `bin/rails dartsass:build` が要る。これがないとレイアウトを描画する spec が `Sprockets::Rails::Helper::AssetNotFound` で落ちる
 - **テスト DB はリポジトリ全体で 1 つ。** worktree を分けても並列には回せない。実行は直列
+- **`docker compose` は必ずリポジトリ本体のディレクトリから打つ。** プロジェクト名がカレントディレクトリ名から決まるため、worktree の中から `docker compose up` を打つと `issue-337` のような別プロジェクトが立ち上がり、空の DB volume を持つ二重のスタックができる。初回の実行で実際に起きたので、`up` / `down` は deny リストで塞いである
 - **権限は `.claude/settings.json` の allow / deny リスト**で制御する。`--dangerously-skip-permissions` は使わない。deny リストで `gh pr merge` / `gh issue close` / `main` への push / force push を機械的に塞いでいる

@@ -38,4 +38,5 @@ git worktree prune
 echo "=== ralph-once (model: ${MODEL}${ISSUE:+, issue: #$ISSUE}) ==="
 echo "=== log: ${LOG} ==="
 
-claude --permission-mode acceptEdits --model "$MODEL" -p "$PROMPT" 2>&1 | tee "$LOG"
+# --verbose なしだと出力が完了時まで一括バッファされ、途中経過が見えない
+claude --permission-mode acceptEdits --model "$MODEL" --verbose -p "$PROMPT" 2>&1 | tee "$LOG"
