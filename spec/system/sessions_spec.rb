@@ -15,7 +15,7 @@ RSpec.describe 'Logins' do
     expect(page).to_not have_content 'ログインに失敗しました'
   end
 
-  it 'login with valid information followed by logout' do
+  it 'login with valid information followed by logout', :js do
     visit login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: user.password
@@ -24,7 +24,7 @@ RSpec.describe 'Logins' do
     expect(page).to have_link user.name, href: user_path(user)
     click_link user.name
     expect(page).to have_link 'ログアウトする', href: logout_path
-    click_link 'ログアウトする'
+    accept_confirm { click_link 'ログアウトする' }
     expect(page).to have_content 'ログアウトしました'
     expect(page).to have_link 'ログイン', href: login_path
     expect(page).to_not have_link user.name, href: user_path(user)
