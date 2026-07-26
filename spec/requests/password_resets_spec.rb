@@ -165,7 +165,7 @@ RSpec.describe 'PasswordResets' do
           cookies[:v2_ui] = '1'
           patch password_reset_path(user.reset_token, email: user.email),
                 params: { user: { password: '', password_confirmation: '' } }
-          expect(response.body).to include 'を入力してください'
+          expect(response.body).to include 'パスワードを入力してください'
         end
 
         it 'renders the v2 layout with invalid password' do

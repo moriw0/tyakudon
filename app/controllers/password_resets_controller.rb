@@ -24,7 +24,7 @@ class PasswordResetsController < ApplicationController
 
   def update
     if params[:user][:password].empty?
-      @user.errors.add(:password, 'を入力してください')
+      @user.errors.add(:password, :blank)
       render :edit, status: :unprocessable_content
     elsif @user.update(user_params)
       log_in_after_reset
