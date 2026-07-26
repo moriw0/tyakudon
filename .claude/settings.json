@@ -30,6 +30,7 @@
       "Bash(wc:*)",
       "Bash(bundle exec rspec:*)",
       "Bash(bundle exec rubocop:*)",
+      "Bash(scripts/ralph-queue.sh:*)",
       "Bash(scripts/ralph-once.sh:*)",
       "Bash(scripts/ralph.sh:*)"
     ],
