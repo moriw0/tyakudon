@@ -1,5 +1,5 @@
 class PasswordResetsController < ApplicationController
-  before_action :use_v2_layout!, only: %i[new edit]
+  before_action :use_v2_layout!, only: %i[new create edit update]
   before_action :find_user, only: %i[edit update]
   before_action :valid_user, only: %i[edit update]
   before_action :check_expiration, only: %i[edit update]
@@ -24,7 +24,7 @@ class PasswordResetsController < ApplicationController
 
   def update
     if params[:user][:password].empty?
-      @user.errors.add(:password, 'を入力してください')
+      @user.errors.add(:password, :blank)
       render :edit, status: :unprocessable_content
     elsif @user.update(user_params)
       log_in_after_reset
