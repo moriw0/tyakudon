@@ -20,16 +20,13 @@
 - `blocked_by == 0`（GitHub ネイティブの issue dependencies で判定する。本文の散文ではない）
 - assignee がいない
 
+この 4 条件での絞り込みは `scripts/ralph-queue.sh` にしてあります。**これをそのまま実行してください。** 1 行 1 チケットで `<番号>\t<タイトル>` が出ます。空なら 1 行も出ません。
+
 ```
-gh issue list --label ready-for-agent --state open --json number,title \
-  --jq '.[] | .number' \
-| while read -r n; do
-    gh api "repos/{owner}/{repo}/issues/$n" \
-      --jq 'select(.issue_dependencies_summary.blocked_by == 0)
-            | select((.assignees | length) == 0)
-            | "\(.number)\t\(.title)"'
-  done
+scripts/ralph-queue.sh
 ```
+
+同等のコマンドを自分で組み立て直さないでください。パイプとループを含む複合コマンドは allow リストのパターンに分解できず、headless では承認待ちのまま止まります。
 
 **キューが空なら、他に何もせず `<promise>QUEUE_EMPTY</promise>` とだけ出力して終了してください。** 「全部終わった」場合と「残りが全部 blocked か `ready-for-human` になった」場合を区別する必要はありません。どちらも「いま自動で進められる仕事がない」であり、停止が正しい。ただし最終出力の 1 段落で、どちらなのかは書いてください。
 

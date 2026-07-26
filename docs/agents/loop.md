@@ -22,7 +22,7 @@ RALPH_MODEL=sonnet scripts/ralph-once.sh 337
 
 手順の本体は [`scripts/ralph-prompt.md`](../../scripts/ralph-prompt.md) にある。スクリプトはそれを毎回そのまま `claude -p` に渡すだけ。
 
-1. キューを引く（open / `ready-for-agent` / `blocked_by == 0` / assignee なし）
+1. キューを引く（`scripts/ralph-queue.sh` = open / `ready-for-agent` / `blocked_by == 0` / assignee なし）
 2. 1 件選ぶ — **どれをやるかはエージェントが判断する**
 3. `gh issue edit --add-assignee @me` で claim
 4. `.claude/worktrees/issue-<n>/` に worktree を作る
@@ -75,3 +75,4 @@ gh issue list --label ready-for-human
 - **テスト DB はリポジトリ全体で 1 つ。** worktree を分けても並列には回せない。実行は直列
 - **`docker compose` は必ずリポジトリ本体のディレクトリから打つ。** プロジェクト名がカレントディレクトリ名から決まるため、worktree の中から `docker compose up` を打つと `issue-337` のような別プロジェクトが立ち上がり、空の DB volume を持つ二重のスタックができる。初回の実行で実際に起きたので、`up` / `down` は deny リストで塞いである
 - **権限は `.claude/settings.json` の allow / deny リスト**で制御する。`--dangerously-skip-permissions` は使わない。deny リストで `gh pr merge` / `gh issue close` / `main` への push / force push を機械的に塞いでいる
+- **複合コマンドは allow リストで通らない。** パイプやループを含むコマンドは個々のパターンに分解して照合できないため、構成要素がすべて allow でも承認要求になる。headless では答える相手がいないので、エージェントは何もせず終了する（`scripts/ralph.sh` の初回でキュー取得がこれに当たり、1 イテレーションが数秒で空振りした）。定型のパイプラインはスクリプトに切り出して、そのスクリプト自体を allow する（`scripts/ralph-queue.sh` がその例）
