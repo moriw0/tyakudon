@@ -49,3 +49,6 @@
 # グローバル gitignore が docs/ を無視している環境でも新規ファイルを拾えるようにする。
 !/docs/
 
+# 同上。グローバル gitignore が ralph-once.sh を無視している環境がある。
+!/scripts/ralph-once.sh
+

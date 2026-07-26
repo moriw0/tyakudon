@@ -1,8 +1,18 @@
-## Project Overview
+## tyakudon (ちゃくどん)
 
-**プロジェクト名:** tyakudon (ちゃくどん)
+このファイルは、このリポジトリで**どう働くか**だけを持つ。サービスが何であるか、どんな用語を使うか、なぜその設計になっているかは別のファイルにある。
 
-**概要:** ラーメン店の待ち時間を記録・共有するWebアプリケーション。ユーザーは店舗の待ち時間を投稿し、他のユーザーと共有できます。OpenAI を活用した応援メッセージ機能も提供しています。
+| 知りたいこと | 読む場所 |
+| --- | --- |
+| サービスの説明とドメイン語彙（接続 / 着丼 / 着丼記録 / お気に入り店舗 など） | [`CONTEXT.md`](./CONTEXT.md) |
+| 設計判断の記録と、その理由 | [`docs/adr/`](./docs/adr/) |
+| v2 UI 移行の方針・命名規則・実装パターン | [`docs/v2_ui_migration.md`](./docs/v2_ui_migration.md) |
+| Issue / PRD の扱い（GitHub Issues + `gh` CLI） | [`docs/agents/issue-tracker.md`](./docs/agents/issue-tracker.md) |
+| triage ラベルの対応表 | [`docs/agents/triage-labels.md`](./docs/agents/triage-labels.md) |
+| ドメインドキュメントの読み方（single-context 構成） | [`docs/agents/domain.md`](./docs/agents/domain.md) |
+| 自律ループ (Ralph) の回し方 | [`docs/agents/loop.md`](./docs/agents/loop.md) |
+
+ドメイン概念を名指しするとき（issue のタイトル、テスト名、UI のラベル、コミットメッセージ）は `CONTEXT.md` の用語をそのまま使う。用語集が `_Avoid_` に挙げた言い換えを持ち込まない。
 
 **技術スタック:**
 
@@ -12,15 +22,6 @@
 - Hotwire (Turbo + Stimulus)
 - Docker Compose (開発環境)
 - Fly.io (本番環境)
-
-**主要機能:**
-
-- 待ち時間記録の投稿・閲覧
-- 店舗情報の管理（Geocoder による位置情報）
-- いいね・お気に入り機能
-- OpenAI による応援メッセージ生成
-- Google OAuth2 認証
-- Webスクレイピングによる店舗データ自動取得
 
 ## Critical Rules
 
